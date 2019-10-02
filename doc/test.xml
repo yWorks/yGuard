@@ -1,0 +1,172 @@
+<!DOCTYPE build [
+        <!ELEMENT obfuscate (property|patch|adjust|map|exclude)*>
+        <!ELEMENT patch (class)*>
+        <!ELEMENT yguard (inoutpair|externalclasses|shrink|obfuscate)*>
+        <!ELEMENT attribute (patternset)*>
+        <!ELEMENT patternset (include|exclude)*>
+        <!ATTLIST patternset
+                type CDATA #IMPLIED>
+        <!ELEMENT exclude (class|method|field|sourcefile|linenumbertable|attribute)*>
+        <!ATTLIST exclude
+                linenumbertable CDATA #IMPLIED
+                localvariabletable CDATA #IMPLIED
+                localvariabletypetable CDATA #IMPLIED
+                name CDATA #IMPLIED
+                runtimeinvisibleannotations CDATA #IMPLIED
+                runtimeinvisibletypeannotations CDATA #IMPLIED
+                runtimevisibleannotations CDATA #IMPLIED
+                runtimevisibletypeannotations CDATA #IMPLIED
+                sourcefile CDATA #IMPLIED>
+        <!ELEMENT class (patternset)*>
+        <!ATTLIST class
+                classes CDATA #IMPLIED
+                fields CDATA #IMPLIED
+                map CDATA #IMPLIED
+                methods CDATA #IMPLIED
+                name CDATA #IMPLIED>
+        <!ELEMENT property (#PCDATA)>
+        <!ATTLIST property
+                name CDATA #REQUIRED
+                value CDATA #REQUIRED>
+        <!ELEMENT include (#PCDATA)>
+        <!ATTLIST include
+                name CDATA #REQUIRED>
+        <!ELEMENT adjust (#PCDATA)>
+        <!ATTLIST adjust
+                replaceName CDATA #REQUIRED
+                replaceContent CDATA #REQUIRED
+                replacePath CDATA #REQUIRED>
+        <!ELEMENT shrink (exclude)*>
+        <!ELEMENT externalclasses (patternset)*>
+        <!ELEMENT build (yguard)*>
+        <!ELEMENT linenumbertable (property|patternset)*>
+        <!ELEMENT inoutpair (#PCDATA)>
+        <!ATTLIST inoutpair
+                in CDATA #REQUIRED
+                out CDATA #REQUIRED>
+        <!ELEMENT map (class|method|field|package)*>
+        <!ELEMENT field (patternset)*>
+        <!ATTLIST field
+                map CDATA #IMPLIED
+                name CDATA #IMPLIED>
+        <!ELEMENT sourcefile (property|patternset)*>
+        <!ELEMENT package (#PCDATA)>
+        <!ATTLIST package
+                name CDATA #REQUIRED
+                map CDATA #REQUIRED>
+        <!ELEMENT method (patternset)*>
+        <!ATTLIST method
+                map CDATA #IMPLIED
+                name CDATA #IMPLIED>
+        ]>
+<build>
+  <yguard>
+
+    <inoutpair in="in" out="out"/>
+    <externalclasses>
+      <patternset>
+        <include name=""/>
+        <exclude name=""/>
+      </patternset>
+    </externalclasses>
+
+    <shrink>
+
+      <exclude>
+
+        <class name="" classes="" methods="" fields="">
+          <patternset type="name">
+            <include name=""/>
+            <exclude name=""/>
+          </patternset>
+        </class>
+
+        <method>
+          <patternset type="class">
+            <include name=""/>
+            <exclude name=""/>
+          </patternset>
+        </method>
+
+        <field>
+          <patternset type="name">
+            <include name=""/>
+            <exclude name=""/>
+          </patternset>
+        </field>
+
+      </exclude>
+
+    </shrink>
+
+    <obfuscate>
+      <property name="" value=""/>
+
+      <patch>
+        <class/>
+      </patch>
+
+
+      <adjust replaceName="" replaceContent="" replacePath="">
+
+      </adjust>
+
+      <map>
+        <class></class>
+        <method></method>
+        <field></field>
+        <package name="" map=""/>
+      </map>
+
+      <exclude
+              linenumbertable="false"
+              localvariabletable="false"
+              sourcefile="false"
+              localvariabletypetable="false"
+              runtimevisibleannotations="false"
+              runtimevisibletypeannotations="false"
+              runtimeinvisibleannotations="false"
+              runtimeinvisibletypeannotations="false"
+              >
+
+        <class name="" map="">
+          <patternset type="name">
+            <include name=""/>
+            <exclude name=""/>
+          </patternset>
+        </class>
+
+        <method name="" map="">
+          <patternset type="class">
+            <include name=""/>
+            <exclude name=""/>
+          </patternset>
+        </method>
+
+        <field name="" map="">
+          <patternset type="name">
+            <include name=""/>
+            <exclude name=""/>
+          </patternset>
+        </field>
+
+        <sourcefile>
+          <property name="" value=""/>
+          <patternset></patternset>
+        </sourcefile>
+
+        <linenumbertable>
+          <property name="" value=""/>
+          <patternset></patternset>
+        </linenumbertable>
+
+        <attribute>
+          <patternset></patternset>
+        </attribute>
+
+
+      </exclude>
+    </obfuscate>
+
+  </yguard>
+</build>

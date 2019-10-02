@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="obfuscate" name="yguard">
+
+    <target name="init">
+
+        <echo>Using Java Version: ${ant.java.version}</echo>
+
+        <property name="versionMajor" value="2.x-DEV" />
+        <property name="versionMinor" value=""/>
+        <condition property="minorPostfix" value=".${versionMinor}" else="">
+            <and>
+                <isset property="versionMinor" />
+                <not>
+                    <equals arg1="${versionMinor}" arg2=""/>
+                </not>
+            </and>
+        </condition>
+
+        <property name="version" value="${versionMajor}${minorPostfix}" />
+        
+        <echo>yGuard Version: ${version}</echo>
+
+        <property name="srcDir" value="../src/main"/>
+        <property name="shrinkSrcDir" location="../src/main"/>
+
+        <property name="docDir" location="../doc"/>
+        <property name="distDir" location="../dist"/>
+        <property name="tgt.dir" location="../target"/>
+        <property name="testClassDir" value="${tgt.dir}/classes"/>
+        <property name="deploySrcDir" value="${tgt.dir}/src-deploy"/>
+        <property name="deployClassDir" value="${tgt.dir}/classes-deploy" />
+        <property name="deployAnnotationClassDir" value="${tgt.dir}/annotation-classes-deploy" />
+        <property name="zipDir" value="${tgt.dir}/zipTmp"/>
+
+        <!--external library-->
+        <property name="antjar" value="../lib/ant-1.10.7.jar"/>
+        <property name="asmjar" value="../lib/asm-7.2.jar"/>
+
+        <property name="guava" location="../lib/guava-28.1-android.jar"/>
+
+        <property name="yGuard-lgpl" location="../lib/yGuard-lgpl.jar"/>
+
+        <path id="yguard-classpath">
+            <pathelement location="${asmjar}" />
+            <pathelement location="${antjar}" />
+            <pathelement location="${guava}" />
+            <pathelement location="${yGuard-lgpl}"/>
+        </path>
+
+        <!--LGPL library-->
+        <property name="jarlibsourcefile" value="${tgt.dir}/yguardlib-${version}-src.jar"/>
+
+        <property name="ziplibsourcefile" value="${distDir}/yguardlib-${version}-src.zip"/>
+        <property name="ziplibfile" value="${distDir}/yguardlib-${version}.zip"/>
+
+        <!--Ant task-->
+        <property name="zipfile" value="${distDir}/yguard-${version}.zip"/>
+        <property name="jarfile" value="${tgt.dir}/yguard.jar"/>
+        <property name="jarfile-naked" value="${tgt.dir}/yguard-naked.jar"/>
+        <property name="obfjarfile" value="${tgt.dir}/yguardobf.jar"/>
+        <property name="annotationjar" value="${tgt.dir}/ObfuscationAnnotation.jar"/>
+        <property name="obfuscatelogfile" value="${tgt.dir}/yguard-${version}-obflog.xml.gz"/>
+        <property name="shrinklogfile" value="${tgt.dir}/yguard-${version}-shrinklog.xml.gz"/>
+
+        <!--test cases-->
+        <property name="testjarfile" value="${tgt.dir}/test.jar"/>
+        <property name="externaltestjarfile" value="${tgt.dir}/external.jar"/>
+        <property name="testlogfile" value="${tgt.dir}/testobflog.xml"/>
+        <property name="obftestjarfile" value="${tgt.dir}/testobf.jar"/>
+        <property name="patchtestlogfile" value="${tgt.dir}/obfpatchtestlog.xml.gz"/>
+        <property name="obfpatchtestjarfile" value="${tgt.dir}/testpatchobf.jar"/>
+
+
+        <fileset id="obfuscate-sources" dir="${srcDir}">
+            <include name="**/*"/>
+            <exclude name="com/yworks/yguard/test/**"/>
+            <exclude name="com/yworks/yguard/test"/>
+        </fileset>
+        <fileset id="shrink-sources" dir="${shrinkSrcDir}">
+            <include name="**/*"/>
+            <exclude name="com/yworks/yshrink/view/**"/>
+            <exclude name="**/Test*"/>
+        </fileset>
+
+        <tstamp>
+            <format pattern="yyyy" property="now.year"/>
+        </tstamp>
+        <filterset id="version.filterset">
+            <filter token="YEAR" value="${now.year}"/>
+            <filter token="VERSION" value="${version}"/>
+            <filter token="VERSION_MAJOR" value="${versionMajor}"/>
+        </filterset>
+    </target>
+
+    <target depends="prepare-src" name="compile">
+        <mkdir dir="${deployClassDir}"/>      
+        <mkdir dir="${deployAnnotationClassDir}"/>
+        <javac source="1.7" target="1.7" includeantruntime="false" debug="true" classpathref="yguard-classpath"
+               destdir="${deployClassDir}" srcdir="${deploySrcDir}">
+            <exclude name="com/yworks/yguard/test/**"/>
+            <exclude name="com/yworks/util/annotation/**/*"/>
+        </javac>
+        <javac source="1.7" target="1.7" includeantruntime="false" debug="true" classpathref="yguard-classpath"
+               destdir="${deployAnnotationClassDir}" srcdir="${deploySrcDir}">
+            <include name="com/yworks/util/annotation/**/*"/>
+        </javac>
+    </target>
+
+    <target depends="init" name="prepare-src">
+        <mkdir dir="${deploySrcDir}"/>
+        <copy preservelastmodified="true" todir="${deploySrcDir}">
+            <fileset refid="obfuscate-sources"/>
+        </copy>
+        <copy preservelastmodified="true" todir="${deploySrcDir}">
+            <fileset refid="shrink-sources"/>
+        </copy>
+        <copy filtering="true" overwrite="true" todir="${deploySrcDir}">
+            <fileset dir="${srcDir}">
+                <include name="com/yworks/yguard/obf/Version.java"/>
+            </fileset>
+            <filterset refid="version.filterset"/>
+        </copy>
+    </target>
+
+    <target depends="jar" name="compile-test">
+        <mkdir dir="${testClassDir}"/>
+        <javac
+         includeantruntime="true"
+         debug="true"
+         destdir="${testClassDir}"
+         srcdir="${srcDir}"
+         classpath="${jarfile}">
+            <include name="com/yworks/yguard/test/**"/>
+        </javac>
+    </target>
+
+    <target depends="init" name="copyresources">
+        <copy toDir="${deployClassDir}/com/yworks/yguard">
+            <fileset dir="../src/main/resources">
+                <include name="jdks.bits"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target depends="init" name="initzipcontents">
+        <delete dir="${zipDir}"/>
+        <mkdir dir="${zipDir}"/>
+        <mkdir dir="${distDir}"/>
+        <tstamp>
+            <format pattern="yyyy" property="now.year"/>
+        </tstamp>
+        <filter token="YEAR" value="${now.year}"/>
+        <filter token="VERSION" value="${version}"/>
+        <copy filtering="true" overwrite="true" todir="${zipDir}">
+            <fileset dir="${docDir}">
+                <include name="*.css"/>
+                <include name="*.htm?"/>
+                <include name="*.txt"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target depends="compile, copyresources" name="jar-without-libs">
+        <jar jarfile="${jarfile-naked}">
+            <fileset dir="${deployClassDir}">
+                <include name="**/*.class"/>
+                <include name="**/*.bits"/>
+                <exclude name="com/yworks/yguard/test/**/*.class"/>
+            </fileset>
+            <fileset dir="${srcDir}">
+                <include name="com/yworks/yguard/yguard.properties"/>
+            </fileset>
+
+            <manifest>
+                <attribute name="Main-Class" value="com.yworks.yguard.YGuardLogParser"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target depends="compile, copyresources" name="jar">
+        <jar jarfile="${jarfile}">
+            <fileset dir="${deployClassDir}">
+                <include name="**/*.class"/>
+                <include name="**/*.bits"/>
+                <exclude name="com/yworks/yguard/test/**/*.class"/>
+                <exclude name="com/yworks/util/annotation/**/*.class"/>
+            </fileset>
+            <fileset dir="${srcDir}">
+                <exclude name="com/yworks/util/annotation/**/*.java"/>
+                <include name="com/yworks/yguard/yguard.properties"/>
+            </fileset>
+
+            <zipfileset src="${guava}">
+                <exclude name="META-INF/*"/>
+            </zipfileset>
+
+            <zipfileset src="${yGuard-lgpl}">
+                <exclude name="META-INF/*"/>
+            </zipfileset>
+
+            <zipfileset src="${asmjar}">
+              <exclude name="META-INF/*"/>
+              <exclude name="module-info.class"/>
+            </zipfileset>
+
+            <manifest>
+                <attribute name="Main-Class" value="com.yworks.yguard.YGuardLogParser"/>
+            </manifest>
+        </jar>
+      <jar jarfile="${annotationjar}">
+        <fileset dir="${srcDir}">
+          <include name="com/yworks/util/annotation/**/*.java"/>
+        </fileset>
+        <fileset dir="${deployAnnotationClassDir}">
+          <include name="com/yworks/util/annotation/**/*.class"/>
+        </fileset>
+      </jar>
+    </target>
+
+  <target name="run" depends="jar">
+    <java jar="${jarfile}" fork="true">
+      <arg value="../yguardlog.xml"/>
+    </java>
+  </target>
+
+
+
+    <target depends="jar" name="obfuscate">
+        <taskdef classname="com.yworks.yguard.ObfuscatorTask" classpath="${jarfile}" name="obfuscate"/>
+        <obfuscate
+         shrink="true"
+         useExposeAsEntrypoints="true"
+         conservemanifest="false"
+         logfile="${obfuscatelogfile}"
+         shrinklog="${shrinklogfile}"
+         replaceclassnamestrings="true">
+            <inoutpair in="${jarfile}" out="${obfjarfile}"/>
+            <property name="naming-scheme" value="small"/>
+            <property name="language-conformity" value="compatible"/>
+            <expose>
+                <class classes="private" fields="private" methods="private">
+                    <patternset>
+                        <include name="com.yworks.yguard.obf."/>
+                        <include name="com.yworks.yguard.Conversion"/>
+                        <include name="com.yworks.yguard.ObfuscationListener"/>
+                        <include name="com.yworks.yguard.ParseException"/>
+                    </patternset>
+                </class>
+                <class classes="none" methods="public" fields="none">
+                    <patternset>
+                        <include name="com.yworks.yguard.ObfuscatorTask*"/>
+                        <include name="com.yworks.yguard.ant.*"/>
+                        <include name="com.yworks.yguard.common.ant.*"/>
+                        <include name="com.yworks.yshrink.ant.*"/>
+                    </patternset>
+                </class>
+                <class name="com.yworks.yguard.common.ant.YGuardBaseTask" classes="public" methods="public" fields="none"/>
+                <class name="com.yworks.yguard.ObfuscatorTask" classes="public" methods="public" fields="none"/>
+                <class name="com.yworks.yguard.yshrink.YShrinkModelImpl" classes="public" methods="public" fields="none" />
+                <class name="com.yworks.yguard.yshrink.YShrinkInvokerImpl" classes="public" methods="public" fields="none"/>
+                <class name="com.yworks.yguard.YGuardTask" classes="public" methods="public" fields="none"/>
+                <method class="com.yworks.yguard.YGuardLogParser" name="void main(java.lang.String[])" />
+            </expose>
+        </obfuscate>
+    </target>
+
+    <target depends="obfuscate, initzipcontents" name="deployzip">
+        <zip destfile="${zipfile}">
+            <zipfileset dir="${zipDir}" prefix="yguard-${version}">
+                <include name="README.html"/>
+                <include name="documentation.css"/>
+                <include name="yguard_ant_howto.html"/>
+            </zipfileset>
+            <zipfileset
+             dir="${docDir}/3rdPartyLicenses"
+             prefix="yguard-${version}/3rdPartyLicenses"/>
+            <zipfileset
+             file="${obfjarfile}"
+             fullpath="yguard-${version}/lib/yguard.jar"/>
+            <zipfileset
+             file="${annotationjar}"
+             prefix="yguard-${version}/lib"/>
+        </zip>
+    </target>
+
+    <target depends="jar-libsource" name="deploylibzip">
+        <zip destfile="${ziplibsourcefile}">
+            <zipfileset dir="." prefix="yguardlib-${version}">
+                <include name="LGPL.txt"/>
+            </zipfileset>
+            <zipfileset
+             file="${jarlibsourcefile}"
+             prefix="yguardlib-${version}/lib"/>
+        </zip>
+    </target>
+
+    <target depends="prepare-src" name="jar-libsource">
+        <jar jarfile="${jarlibsourcefile}">
+            <fileset dir="${deploySrcDir}">
+                <patternset refid="libsource"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target depends="jar-test" name="patch-test">
+        <taskdef classname="com.yworks.yguard.ObfuscatorTask" classpath="${jarfile}" name="obfuscate"/>
+        <obfuscate logfile="${patchtestlogfile}">
+            <inoutpair in="${testjarfile}" out="${obfpatchtestjarfile}"/>
+            <patch>
+                <class name="com.yworks.yguard.test.MySubSubClass"/>
+                <class>
+                    <patternset>
+                        <include name="com.yworks.yguard.test.*Interface"/>
+                        <exclude name="com.yworks.yguard.test.*Interface2"/>
+                    </patternset>
+                </class>
+            </patch>
+            <map logfile="${testlogfile}"/>
+        </obfuscate>
+    </target>
+
+    <target depends="jar-test, obfuscate" name="obfuscate-test">
+        <taskdef classname="com.yworks.yguard.ObfuscatorTask" classpath="${jarfile}" name="obfuscate"/>
+        <obfuscate conservemanifest="false" logfile="${testlogfile}" replaceClassNameStrings="true">
+            <!--<property name="error-checking" value="pedantic"/>-->
+            <property name="expose-attributes" value="Deprecated"/>
+            <property name="package-prefix" value="comyworksobfuscate.todo"/>
+            <!--           <property name="naming-scheme" value="best"/>
+           <property name="language-conformity" value="illegal"/>
+           <inoutpair in="YGTest.jar" out="YGTestObf.jar"/>
+            <expose>
+              <method class="YguardTest.YGTest" name="void main(java.lang.String[])"/>
+            </expose>-->
+            <!--            <externalclasses>
+              <pathelement location="${externaltestjarfile}"/>
+              <pathelement location=""/>
+           </externalclasses> -->
+            <inoutpair in="${testjarfile}" out="${obftestjarfile}"/>
+            <!--            <inoutpair in="${externaltestjarfile}" out="bla.jar"/>-->
+            <expose>
+                <!--            <expose sourcefile="true" linenumbertable="false">-->
+                <!--              <class name="com.yworks.yguard.test.Generics"/>-->
+                <!--              <class name="com.yworks.yguard.test.ExternalInterface" methods="private" fields="private"/>-->
+                <!--              <class name="com.yworks.yguard.test.B"/>-->
+                <!--<package name="test.simple"/>-->
+                <package>
+                  <patternset>
+                    <include name="**.ugly.*"/>
+                  </patternset>
+                  </package>
+                <method name="void main(java.lang.String[])">
+                    <patternset>
+                        <include name="**.*"/>
+                    </patternset>
+                </method>
+                <!--              <class classes="none" methods="private" fields="none" name="com.yworks.yguard.test.annotations.TestEnum"/>-->
+                <!--              <method class="com.yworks.yguard.test.TestMain" name="void main(java.lang.String[])"/>-->
+
+                <!--              <method class="com.yworks.yguard.test.TestMain" name="void main(java.lang.String[])"/>-->
+                <!--              <method class="com.yworks.yguard.test.Generics" name="void main(java.lang.String[])"/>-->
+                <!--              <method class="com.yworks.yguard.test.generics.TestGenerics" name="void main(java.lang.String[])"/>-->
+                <!--              <method class="com.yworks.yguard.test.A" name="void main(java.lang.String[])"/>-->
+                <!--              <method class="com.yworks.yguard.test.ConcreteClass" name="void main(java.lang.String[])"/>-->
+                <!--              <method class="com.yworks.yguard.test.ConcreteSubclass" name="void main(java.lang.String[])"/>-->
+
+                <!--              <method class="com.yworks.yguard.test.StaticClassA" name="void staticMember(double)"/>-->
+                <!--              <class methods="public" fields="none">
+                  <patternset>
+                      <include name="com.yworks.test.*"/>
+                  </patternset>
+                </class>-->
+                <!--              <sourcefile>-->
+                <!--                <property name="mapping" value="y"/>-->
+                <!--                <patternset>-->
+                <!--                  <include name="com.yworks.yguard.test.asdf*"/>-->
+                <!--                </patternset>-->
+                <!--              </sourcefile>-->
+                <!--   <linenumbertable/>-->
+                <linenumbertable>
+                    <property name="mapping-scheme" value="scramble"/>
+                    <property name="scrambling-salt" value="2342"/>
+                    <patternset id="GenericsPatternSet">
+                        <include name="com.yworks.yguard.test.*"/>
+                    </patternset>
+                </linenumbertable>
+                <sourcefile>
+                    <property name="mapping" value="y"/>
+                    <patternset refid="GenericsPatternSet"/>
+                </sourcefile>
+                <!--<attribute name="SourceFile, LineNumberTable, LocalVariableTable, LocalVariableTypeTable">
+                  <patternset>
+                    <include name="com.yworks.yguard.test.Generics"/>
+                  </patternset>
+                  <patternset>
+                    <include name="com.yworks.yguard.test.Concrete*"/>
+                  </patternset>
+                </attribute>-->
+            </expose>
+            <adjust replacename="true">
+                <include name="**/*.properties"/>
+            </adjust>
+            <!--<map>-->
+                <!--<class map="Peter" name="com.yworks.yguard.test.A"/>-->
+                <!--<class map="Hannes" name="com.yworks.yguard.test.B"/>-->
+                <!--<method class="com.yworks.yguard.test.StaticClassA" map="schtatischerMember"-->
+                        <!--name="void staticMember(double)"/>-->
+                <!--<field class="com.yworks.yguard.test.StaticClassA" map="pehesih" name="psi"/>-->
+                <!--<field class="com.yworks.yguard.test.StaticClassA" map="pehih" name="pi"/>-->
+                <!--<method class="com.yworks.yguard.test.StaticClassA" map="schtatischerMember"-->
+                        <!--name="void staticMember(double)"/>-->
+            <!--</map>-->
+        </obfuscate>
+    </target>
+
+    <patternset id="libsource">
+        <include name="com/yworks/yguard/obf/**/*.java"/>
+        <include name="com/yworks/yguard/Conversion.java"/>
+        <include name="com/yworks/yguard/ParseException.java"/>
+        <include name="com/yworks/yguard/ObfuscationListener.java"/>
+    </patternset>
+
+    <target depends="compile-test" name="jar-test">
+        <jar jarfile="${testjarfile}"><!-- manifest="${manifest}">-->
+            <fileset dir="${testClassDir}">
+                <include name="com/yworks/yguard/test/annotations/*.class"/>
+                <include name="com/yworks/yguard/test/*.properties"/>
+                <include name="com/yworks/yguard/test/*.class"/>
+                <include name="com/yworks/yguard/test/AbstractBase.class"/>
+                <include name="com/yworks/yguard/test/ConcreteClass.class"/>
+                <include name="com/yworks/yguard/test/ConcreteSubclass.class"/>
+                <exclude name="com/yworks/yguard/test/**/ExternalInterface.class"/>
+            </fileset>
+            <manifest>
+                <attribute name="Main-Class" value="com.yworks.yguard.test.TestMain"/>
+                <attribute name="Test-Element" value="TestValue"/>
+                <attribute name="Implementation-Title" value="MyImplementation"/>
+                <!--              <section name="com/yworks/yguard/test/generics/TestGenerics.class">
+                  <attribute name="Sealed" value="false"/>
+                </section>-->
+            </manifest>
+        </jar>
+        <jar jarfile="${externaltestjarfile}">
+            <fileset dir="${testClassDir}">
+                <include name="com/yworks/yguard/test/external/*.class"/>
+            </fileset>
+            <fileset dir="${testClassDir}">
+                <include name="com/yworks/yguard/test/*.class"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target depends="init" name="clean">
+        <delete dir="${distDir}"/>
+        <delete dir="${tgt.dir}"/>
+    </target>
+</project>

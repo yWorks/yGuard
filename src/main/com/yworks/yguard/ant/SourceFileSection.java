@@ -1,0 +1,42 @@
+package com.yworks.yguard.ant;
+
+import com.yworks.yguard.ant.PatternMatchedClassesSection;
+import com.yworks.yguard.ant.Mappable;
+import com.yworks.yguard.obf.YGuardRule;
+import com.yworks.yguard.obf.classfile.ClassConstants;
+import com.yworks.yguard.ObfuscatorTask;
+import com.yworks.yguard.common.ant.YGuardBaseTask;
+
+import java.util.Collection;
+
+/** Used by ant to handle the <code>attributes</code> element.
+ */
+public final class SourceFileSection extends PatternMatchedClassesSection implements Mappable {
+  private YGuardBaseTask obfuscatorTask;
+
+  public SourceFileSection( YGuardBaseTask obfuscatorTask ){
+    super();
+    this.obfuscatorTask = obfuscatorTask;
+    this.allowMatchAllPatternSet = true;
+  }
+
+    public void addEntries( Collection entries, String className){
+      YGuardRule rule = createRule(className);
+      entries.add(rule);
+    }
+
+  private YGuardRule createRule(String className) {
+    if (properties.containsKey("mapping")){
+      YGuardRule sourceRule = new YGuardRule(YGuardRule.TYPE_SOURCE_ATTRIBUTE_MAP, className);
+      sourceRule.obfName = (String) properties.get("mapping");
+      return sourceRule;
+    } else {
+      YGuardRule rule = new YGuardRule(YGuardRule.TYPE_ATTR2, ClassConstants.ATTR_SourceFile, className);
+      return rule;
+    }
+  }
+
+  public void addMapEntries(Collection entries)
+  {
+  }
+}

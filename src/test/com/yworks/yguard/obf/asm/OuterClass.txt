@@ -1,0 +1,6 @@
+package com.yworks.yguard.obf.asm;
+
+public class OuterClass {
+  private static class InnerClass {
+  }
+}

@@ -1,0 +1,8 @@
+package com.yworks.yguard.obf;
+
+/**
+ * @author Thomas Behr
+ */
+public class SimpleMethodParametersTest {
+  void f(int j, final int k) {}
+}
