@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- file build.xml in your project root directory -->
+    <!-- ANT build script for yfiles                       -->
+    <!-- The java based ANT tool is available from         -->
+    <!-- http://jakarta.apache.org/ant                     -->
+    <!-- This file demonstrates the use of the yGuard byte -->
+    <!-- code obfuscator from yWorks Gmbh                  -->
+    <!-- yGuard can be downloaded from                     -->
+    <!--- http://www.yworks.com/products/yguard            -->
+
+    <project name="project" default="obfuscate" basedir="">
+
+    <!-- edit the following lines to your needs            -->
+    <target name="init">
+        <property name="project_name"  value="DemoProject"/>
+        <property name="srcDir"        value="."/>
+        <property name="classDir"      value="classes"/>
+        <property name="jar"           value="${project_name}.jar"/>
+        <property name="obfjar"        value="${project_name}_obf.jar"/>
+        <property name="obfuscationlog" value="${project_name}_obflog.xml"/>
+        <property name="mainclass"     value="com.mycompany.myapp.Main"/>
+        <mkdir dir="${classDir}" />
+    </target>
+
+
+    <!-- obfuscate -->
+    <target depends="jar" name="obfuscate">
+    <taskdef name="obfuscate" classname="com.yworks.yguard.ObfuscatorTask" 
+            classpath="yguard.jar"/>
+        <!-- the following can be adjusted to your needs -->
+        <obfuscate mainclass="${mainclass}" logfile="${obfuscationlog}"
+                replaceclassnamestrings="true">
+           <property name="error-checking" value="pedantic"/>
+           <inoutpair in="${jar}" out="${obfjar}"/>
+           <expose>
+              <class classes="protected" methods="protected" fields="protected">
+                    <patternset>
+                        <include name="com.mycompany.publicapi.**.*"/>
+                        <exclude name="com.mycompany.publicapi.private.*"/>
+                    </patternset>
+                </class>
+            </expose>
+        </obfuscate>
+    </target>
+
+    <!-- compile -->
+    <target name="compile" depends="init">
+        <javac srcdir="${srcDir}" includes="com/mycompany/**/*.java" 
+            destdir="${classDir}">
+       </javac>
+    </target>
+
+    <!-- create .jar -->
+    <target name="jar" depends="compile">
+            <jar jarfile="${jar}"
+                    basedir="${classDir}"
+                    includes="com/mycompany/**">
+              <fileset dir="">
+                <include name="com/mycompany/resources/*.properties"/>
+              </fileset>
+            </jar>
+    </target>
+
+    <!-- run project -->
+    <target name="run" depends="obfuscate">
+            <java classname="${mainclass}" fork="true">
+                    <classpath>
+                      <pathelement location="${obfjar}"/>
+                    </classpath>
+            </java>
+    </target>
+
+    <!-- removes all that has been built -->
+    <target name="clean" depends="init">
+            <delete dir="${classDir}" includeEmptyDirs="true" />
+    </target>
+</project>
+<!-- end file build.xml -->
+
