@@ -1,0 +1,12 @@
+package com.yworks.impl.test;
+
+import com.yworks.ext.test.AbstractBaseClass;
+
+/**
+ * Will be completely obfuscated
+ */
+public class Sample {
+  public void run( AbstractBaseClass other ) {
+    other.run();
+  }
+}

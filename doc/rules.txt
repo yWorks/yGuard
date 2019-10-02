@@ -1,0 +1,35 @@
+
+
+1. Methodenaufruf C.m() in Methode A.g():
+    1.1 C konkrete Klasse:
+        1.1.1 A.g() hat Abhängigkeit zur Implementation von m(), entweder in
+              C oder in einer Superklasse B von C.
+              Falls C nicht g() implementiert: A.g() hat Abhängigkeit zur Klasse B
+        1.1.2 A.g() hat Abhängigkeit zu allen m() überschreibenden Methoden in
+              allen Klassen, die von C erben.
+              AUSNAHME: C.<init> hat nur Abhängigkeit zu B.<init>.
+    1.2 C interface:
+        1.2.1 A.g() hat Klassenabhängigkeit zu C.
+        1.2.2 Für alle Klassen die C implementieren wird Regel 1.1 angewendet.
+
+2. field reference C.o in Methode A.g():
+    2.1 A.g() hat Abhängigkeit zu C.o in C, einem Interface von C oder einer Superklasse von C.
+    2.2 A.g() hat Klassenabhänigkeit zu allen Klassen, die von der o deklarierenden Klasse(Interface) erben.
+
+
+3. InnerClass -> outerClass
+    3.1 InnerClass in Methode: Abhängigkeit zur Methode
+    3.2 Sonst: Abhängigkeit zur Klasse
+
+4. public/protected (Instanz-)Methoden A.g():
+    "künstliche" Abhängigkeiten: A.<init> -> A.g();
+
+5. C.m() throws Exception(s): C.m() hat Abhängigkeit zu Exception-Klassen
+
+6. Field declaration -> Class->Class-Dependency
+
+// TODO
+
+- <clinit>: artificial nodes
+- super
+- inner classes

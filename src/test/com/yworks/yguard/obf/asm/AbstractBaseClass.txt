@@ -1,0 +1,8 @@
+package com.yworks.ext.test;
+
+public abstract class AbstractBaseClass {
+  protected AbstractBaseClass() {
+  }
+
+  public abstract void run();
+}

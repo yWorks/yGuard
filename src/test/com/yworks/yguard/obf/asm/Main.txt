@@ -1,0 +1,10 @@
+package com.yworks.impl.test;
+
+public class Main {
+  private Main() {
+  }
+
+  public static void main( String[] args ) {
+    new Sample().run(new Impl());
+  }
+}

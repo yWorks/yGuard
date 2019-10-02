@@ -1,0 +1,12 @@
+package com.yworks.impl.test;
+
+import com.yworks.ext.test.AbstractBaseClass;
+
+public class Impl extends AbstractBaseClass {
+  public Impl() {
+  }
+
+  public void run() {
+    System.out.println("Impl: Hello world.");
+  }
+}

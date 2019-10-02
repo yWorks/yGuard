@@ -1,0 +1,41 @@
+package com.yworks.yguard.obf;
+
+import java.io.PrintStream;
+
+/**
+ * Uses string concatenation that results in the Java 11 compiler using
+ * {@link java.lang.invoke.StringConcatFactory} bootstrap methods.
+ * @author Thomas Behr
+ */
+public class StringConcatFactoryTest {
+  private StringConcatFactoryTest() {
+  }
+
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+
+  public static void run( final PrintStream out ) {
+    out.println(concat("Hello ", "world!"));
+    out.println(new MyInteger(1) + " < " + new MyInteger(2));
+  }
+
+  private static String concat( String s1, String s2 ) {
+    return s1 + s2;
+  }
+
+
+
+  private static final class MyInteger {
+    private final int i;
+
+    MyInteger( final int i ) {
+      this.i = i;
+    }
+
+    @Override
+    public String toString() {
+      return Integer.toString(i);
+    }
+  }
+}
