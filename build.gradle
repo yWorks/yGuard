@@ -4,6 +4,9 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application
     id 'application'
+
+    // Apply yWorks coding style with editorconfig
+    id 'org.ec4j.editorconfig' version '0.0.3'
 }
 
 repositories {
@@ -15,6 +18,7 @@ dependencies {
     implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
+
     testImplementation 'junit:junit:4.13-beta-3'
 }
 
@@ -26,3 +30,10 @@ compileJava {
 application {
     mainClassName = 'com.yworks.yguard.YGuardLogParser'
 }
+
+editorconfig {
+    includes = ['src/**', 'build.gradle']
+    excludes = ['**/*.properties', '**/*.bits', '**/resources']
+}
+
+check.dependsOn editorconfigCheck
