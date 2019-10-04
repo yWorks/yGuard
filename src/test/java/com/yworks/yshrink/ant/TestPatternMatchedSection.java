@@ -1,14 +1,18 @@
 package com.yworks.yshrink.ant;
 
+import org.junit.Test;
 import org.objectweb.asm.Opcodes;
-import junit.framework.TestCase;
 import com.yworks.yguard.common.ant.PatternMatchedSection;
+
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
-public class TestPatternMatchedSection extends TestCase {
+public class TestPatternMatchedSection {
 
+  @Test
   public void testIsAccessLevel() {
 
     assertTrue(
@@ -32,5 +36,4 @@ public class TestPatternMatchedSection extends TestCase {
             PatternMatchedSection.Access.FRIENDLY ) );
 
   }
-
 }

@@ -6,12 +6,18 @@ import com.yworks.yguard.common.ant.InOutPair;
 import com.yworks.yguard.yshrink.YShrinkModelImpl;
 import com.yworks.yshrink.core.URLCpResolver;
 import com.yworks.yshrink.model.Model;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
+
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Tests if {@code extends} attributes of yGuard's &lt;keep&gt; elements can
@@ -22,6 +28,10 @@ import java.util.ArrayList;
  * @author Thomas Behr
  */
 public class KeepExtendsTest extends AbstractObfuscationTest {
+  @Rule
+  public TestName name = new TestName();
+
+  @Test
   public void testExtends() throws Exception {
     impl(new TypeStruct("asm/AbstractBaseClass.txt", "com.yworks.ext.test.AbstractBaseClass"),
          new TypeStruct("asm/Impl.txt", "com.yworks.impl.test.Impl"),
@@ -29,6 +39,7 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
          new TypeStruct("asm/Sample.txt", "com.yworks.impl.test.Sample"));
   }
 
+  @Test
   public void testNests() throws Exception {
     impl(new TypeStruct("asm/OuterClass.txt", "com.yworks.yguard.obf.asm.OuterClass"));
   }
@@ -57,9 +68,8 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
 
 
     // store resulting bytecode in temporary files and ...
-    final String name = getName();
-    final File inTmp = File.createTempFile(name + "_in_", ".jar");
-    final File outTmp = File.createTempFile(name + "_out_", ".jar");
+    final File inTmp = File.createTempFile(name.getMethodName() + "_in_", ".jar");
+    final File outTmp = File.createTempFile(name.getMethodName() + "_out_", ".jar");
 
     try {
       write(baos.toByteArray(), inTmp);

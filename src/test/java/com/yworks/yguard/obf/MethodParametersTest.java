@@ -1,5 +1,8 @@
 package com.yworks.yguard.obf;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -19,17 +22,25 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * Tests if {@code MethodParameters} bytecode attributes are properly handled.
  * @author Thomas Behr
  */
 public class MethodParametersTest extends AbstractObfuscationTest {
+  @Rule
+  public TestName name = new TestName();
   static final int OPCODES_ASM = Opcodes.ASM7;
 
+  @Test
   public void testSimpleMethodParameters() throws Exception {
     impl(false);
   }
 
+  @Test
   public void testRetainMethodParameters() throws Exception {
     impl(true);
   }
@@ -59,9 +70,8 @@ public class MethodParametersTest extends AbstractObfuscationTest {
 
 
     // store resulting bytecode in temporary files and ...
-    final String name = getName();
-    final File inTmp = File.createTempFile(name + "_in_", ".jar");
-    final File outTmp = File.createTempFile(name + "_out_", ".jar");
+    final File inTmp = File.createTempFile(name.getMethodName() + "_in_", ".jar");
+    final File outTmp = File.createTempFile(name.getMethodName() + "_out_", ".jar");
 
     try {
       write(baos.toByteArray(), inTmp);

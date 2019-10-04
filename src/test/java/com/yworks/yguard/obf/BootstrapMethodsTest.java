@@ -1,5 +1,9 @@
 package com.yworks.yguard.obf;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
@@ -10,12 +14,20 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
+
 /**
  * Tests if {@link java.lang.invoke.StringConcatFactory} bootstrap methods are
  * properly obfuscated.
  * @author Thomas Behr
  */
 public class BootstrapMethodsTest extends AbstractObfuscationTest {
+  @Rule
+  public TestName name = new TestName();
+
+  @Test
   public void testStringConcatFactory() throws Exception {
     // StringConcatFactory bootstrap methods are used only in Java 11 and newer
     assertTrue("Invalid Java version", 11 <= getMajorVersion());
@@ -43,9 +55,8 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
 
 
     // store resulting bytecode in temporary files and ...
-    final String name = getName();
-    final File inTmp = File.createTempFile(name + "_in_", ".jar");
-    final File outTmp = File.createTempFile(name + "_out_", ".jar");
+    final File inTmp = File.createTempFile(name.getMethodName() + "_in_", ".jar");
+    final File outTmp = File.createTempFile(name.getMethodName() + "_out_", ".jar");
 
     try {
       write(baos.toByteArray(), inTmp);
