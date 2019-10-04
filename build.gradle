@@ -11,12 +11,18 @@ repositories {
 }
 
 dependencies {
+    implementation files('lib/yGuard-lgpl.jar')
     implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
     testImplementation 'junit:junit:4.13-beta-3'
 }
 
+compileJava {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
 application {
-    mainClassName = 'com.yworks.yguard.App'
+    mainClassName = 'com.yworks.yguard.YGuardLogParser'
 }
