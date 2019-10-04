@@ -9,16 +9,19 @@ plugins {
     id 'org.ec4j.editorconfig' version '0.0.3'
 }
 
+allprojects {
+    apply plugin: 'org.ec4j.editorconfig'
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation files('lib/yGuard-lgpl.jar')
+    implementation project(':lgpl')
     implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
-
     testImplementation 'junit:junit:4.13-beta-3'
 }
 
