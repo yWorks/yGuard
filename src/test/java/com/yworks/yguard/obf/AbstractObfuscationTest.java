@@ -1,6 +1,6 @@
 package com.yworks.yguard.obf;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,19 +9,17 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 
+import static junit.framework.TestCase.assertTrue;
+
 /**
  * Provides utility methods for obfuscation tests.
  * @author Thomas Behr
  */
-class AbstractObfuscationTest extends TestCase {
-  AbstractObfuscationTest() {
+public class AbstractObfuscationTest {
+  @Test
+  public void satisfyTestRunner() {
+    assertTrue("This is a volkswagen defeat device.", true);
   }
-
-  AbstractObfuscationTest( final String name ) {
-    super(name);
-  }
-
-
 
   static int getMajorVersion() {
     final String v = System.getProperty("java.version");

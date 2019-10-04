@@ -2,9 +2,12 @@ package com.yworks.yguard;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.junit.Test;
 import org.xml.sax.InputSource;
 
 import java.io.StringReader;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Tests {@link YGuardLogParser#translate(String)} and
@@ -12,7 +15,8 @@ import java.io.StringReader;
  * behavior.
  * @author Thomas Behr
  */
-public class LogParserTest extends TestCase {
+public class LogParserTest {
+  @Test
   public void testCommonMappings() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -32,6 +36,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testInvalidMappings() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -67,6 +72,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testLeadingDollarQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -82,6 +88,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testLeadingDollarStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -97,6 +104,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testModuleQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -114,6 +122,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testModuleStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -139,6 +148,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testOverloadQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -152,6 +162,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testOverloadStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -163,6 +174,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testPrefixedQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, "yguard/"),
@@ -178,6 +190,7 @@ public class LogParserTest extends TestCase {
       });
   }
 
+  @Test
   public void testPrefixedStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, "yguard/"),
@@ -197,7 +210,7 @@ public class LogParserTest extends TestCase {
           final String[] input,
           final String[] expected
   ) throws Exception {
-    Assert.assertEquals("Invalid expected line count", input.length, expected.length);
+    assertEquals("Invalid expected line count", input.length, expected.length);
 
     final YGuardLogParser parser = new YGuardLogParser();
     parser.parse(new InputSource(new StringReader(mappings)));
@@ -209,9 +222,9 @@ public class LogParserTest extends TestCase {
 //    }
 //    System.out.println(sb.toString());
 
-    Assert.assertEquals("Invalid result line count", input.length, out.length);
+    assertEquals("Invalid result line count", input.length, out.length);
     for (int i = 0; i < out.length; ++i) {
-      Assert.assertEquals("Invalid result", expected[i], out[i]);
+      assertEquals("Invalid result", expected[i], out[i]);
     }
   }
 

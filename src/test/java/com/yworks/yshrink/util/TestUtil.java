@@ -1,14 +1,14 @@
 package com.yworks.yshrink.util;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
-public class TestUtil extends TestCase {
-
-
-
+public class TestUtil {
+  @Test
   public void testVerboseToNativeType() {
 
     String query = "double[][][]";
@@ -27,5 +27,4 @@ public class TestUtil extends TestCase {
     assertEquals( expected, result );
 
   }
-
 }
