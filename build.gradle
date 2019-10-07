@@ -36,7 +36,7 @@ application {
 
 editorconfig {
     includes = ['src/**', 'build.gradle']
-    excludes = ['**/*.properties', '**/*.bits', '**/resources']
+    excludes = ['**/*.properties', '**/*.bits', '**/resources', '**/dist']
 }
 
 check.dependsOn editorconfigCheck
