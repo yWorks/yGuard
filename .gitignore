@@ -39,3 +39,7 @@ build
 gradlew*
 gradle
 
+# Ignore yGuard output
+yguardlog.xml
+yshrinklog.xml
+
