@@ -21,17 +21,28 @@ In subsequent releases the documentation _may_ be uploaded to GitHub directly.
 
 ## Building
 
-### Ant-based builds
+To build `yGuard` you will need `Java >= 7` and [Gradle](https://gradle.org/).
 
-All releases `<=2.8` are built using `ant`. The build system is subject to change in `>=2.9`.
-
-To build an `ant`-based version, follow below instructions:
-
+Once installed you can build `yGuard` like so:
 ```
-cd deploy
-ant deployzib
+gradle build
+gradle obfuscate # if you would like to obfuscate the library as well
 ```
 
-Which will produce an `archive` under `dist`. 
+The built files can be found in `build/libs/`.
 
-Using `-DversionMajor` and `-DversionMinor` flags will instruct the build to produce a distribution with the respective version.
+### Using IntellIJ with yGuard
+
+`yGuard` will be loaded without further ado from `IntellIJ` thanks to the Gradle integration.
+Opening the `yGuard` folder will set up Gradle and mark sources, tests and resources accordingly.
+
+### Using this repository with a wrapper
+
+This repository does not contain a copy of the Gradle wrapper. There has been [extensive discussions](https://stackoverflow.com/questions/20348451/why-should-the-gradle-wrapper-be-committed-to-vcs) about this topic, however committing a binary file to a `VCS` is simply considered bad practice.
+
+If you prefer to use the wrapper, you can always generate it yourself with an installation of Gradle at hand:
+```
+gradle wrapper --gradle-version 5.2.1
+```
+
+If you do not have an installation of Gradle, you may use [a workaround](http://blog.vorona.ca/init-gradle-wrapper-without-gradle.html).
