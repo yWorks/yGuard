@@ -1,0 +1,114 @@
+plugins {
+    // Apply the java plugin to add support for Java
+    id 'java'
+
+    // Apply the application plugin to add support for building a CLI application
+    id 'application'
+
+    // Apply yWorks coding style with editorconfig
+    id 'org.ec4j.editorconfig' version '0.0.3'
+}
+
+allprojects {
+    apply plugin: 'org.ec4j.editorconfig'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':lgpl')
+    implementation 'com.google.guava:guava:28.1-android'
+    implementation 'org.ow2.asm:asm:7.2'
+    implementation 'org.apache.ant:ant:1.10.7'
+    testImplementation 'junit:junit:4.13-beta-3'
+}
+
+compileJava {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+}
+
+application {
+    mainClassName = 'com.yworks.yguard.YGuardLogParser'
+}
+
+editorconfig {
+    includes = ['src/**', 'build.gradle']
+    excludes = ['**/*.properties', '**/*.bits', '**/resources', '**/dist']
+}
+
+distributions {
+  obfuscated {
+    contents {
+      from file("$projectDir/LICENSE")
+      into("libs") {
+        from "$buildDir/libs"
+      }
+      into("docs") {
+        from 'src/dist'
+        filter {
+          line -> line
+                  .replaceAll('@VERSION@', String.format("%s.%s", project.findProperty('VERSION_MAJOR'), project.findProperty('VERSION_MINOR')))
+                  .replaceAll('@VERSION_MAJOR@', project.findProperty('VERSION_MAJOR'))
+        }
+      }
+    }
+  }
+}
+
+task obfuscate {
+  dependsOn jar
+  group 'yGuard'
+  description 'Obfuscates and shrinks the java archive.'
+
+  doLast {
+    def classPath = configurations.runtimeClasspath.getAsPath()
+    def archivePath = jar.getArchiveFile().get().getAsFile().getPath();
+
+    ant.taskdef(
+      name: 'obfuscate',
+      classname: 'com.yworks.yguard.ObfuscatorTask',
+      classpath: String.format("%s:%s", classPath, archivePath)
+    )
+
+    ant.obfuscate(
+      shrink: true,
+      useExposeAsEntrypoints: true,
+      conservemanifest: false,
+      replaceclassnamestrings: true
+    ) {
+      property(name: "naming-scheme", value: "small")
+      property(name: "language-conformity", value: "compatible")
+      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obfuscated.jar"))
+      expose {
+        'class'(classes: "private", fields: "private", methods: "private") {
+          patternset {
+            include(name: "com.yworks.yguard.obf.")
+            include(name: "com.yworks.yguard.Conversion")
+            include(name: "com.yworks.yguard.ObfuscationListener")
+            include(name: "com.yworks.yguard.ParseException")
+          }
+        }
+        'class'(classes: "none", methods: "public", fields: "none") {
+          patternset {
+            include(name: "com.yworks.yguard.ObfuscatorTask*")
+            include(name: "com.yworks.yguard.ant.*")
+            include(name: "com.yworks.yguard.common.ant.*")
+            include(name: "com.yworks.yshrink.ant.*")
+          }
+        }
+        'class'(name: "com.yworks.yguard.common.ant.YGuardBaseTask", classes: "public", methods: "public", fields: "none")
+        'class'(name: "com.yworks.yguard.ObfuscatorTask", classes: "public", methods: "public", fields:"none")
+        'class'(name: "com.yworks.yguard.yshrink.YShrinkModelImpl", classes: "public", methods: "public", fields: "none")
+        'class'(name: "com.yworks.yguard.yshrink.YShrinkInvokerImpl", classes: "public", methods: "public", fields: "none")
+        'class'(name: "com.yworks.yguard.YGuardTask", classes: "public", methods: "public", fields: "none")
+        method(class: "com.yworks.yguard.YGuardLogParser", name: "void main(java.lang.String[])")
+      }
+    }
+  }
+}
+
+check.dependsOn editorconfigCheck
+assembleObfuscatedDist.dependsOn obfuscate

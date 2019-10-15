@@ -29,3 +29,17 @@ target/
 # IDE 
 .idea/
 
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# Ignore Gradle wrapper
+gradlew*
+gradle
+
+# Ignore yGuard output
+yguardlog.xml
+yshrinklog.xml
+
