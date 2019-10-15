@@ -7,7 +7,7 @@ yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of t
 
 ## Obtaining yGuard
 
-With the `2.8` release `yGuard` is now MIT-licensed. Releases can be downloaded directly from GitHub.
+Starting with the `2.8` release `yGuard` is MIT-licensed. Releases can be downloaded directly from GitHub.
 
 Legacy code ported from `retroguard` under `LGPL` is statically linked at compile time via `yGuard-lgpl.jar`.
 
