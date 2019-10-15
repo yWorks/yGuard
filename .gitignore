@@ -43,3 +43,5 @@ gradle
 yguardlog.xml
 yshrinklog.xml
 
+lib/
+node_modules/
