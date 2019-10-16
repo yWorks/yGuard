@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':lgpl')
+    implementation project(':retroguard')
     implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
@@ -42,7 +42,7 @@ editorconfig {
 jar {
   manifest {
     attributes(
-      'Class-Path': String.join(" ", "lgpl.jar", "asm-7.2.jar", "guava-28.1-android.jar")
+      'Class-Path': String.join(" ", "retroguard.jar", "asm-7.2.jar", "guava-28.1-android.jar")
     )
   }
 }
