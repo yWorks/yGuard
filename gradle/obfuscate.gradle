@@ -1,0 +1,51 @@
+task obfuscate {
+  dependsOn jar
+  group 'yGuard'
+  description 'Obfuscates and shrinks the java archive.'
+
+  doLast {
+    def classPath = configurations.runtimeClasspath.getAsPath()
+    def archivePath = jar.getArchiveFile().get().getAsFile().getPath();
+
+    ant.taskdef(
+            name: 'obfuscate',
+            classname: 'com.yworks.yguard.ObfuscatorTask',
+            classpath: String.format("%s:%s", classPath, archivePath)
+    )
+
+    ant.obfuscate(
+            shrink: true,
+            useExposeAsEntrypoints: true,
+            conservemanifest: false,
+            replaceclassnamestrings: true
+    ) {
+      property(name: "naming-scheme", value: "small")
+      property(name: "language-conformity", value: "compatible")
+      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obfuscated.jar"))
+      expose {
+        'class'(classes: "private", fields: "private", methods: "private") {
+          patternset {
+            include(name: "com.yworks.yguard.obf.")
+            include(name: "com.yworks.yguard.Conversion")
+            include(name: "com.yworks.yguard.ObfuscationListener")
+            include(name: "com.yworks.yguard.ParseException")
+          }
+        }
+        'class'(classes: "none", methods: "public", fields: "none") {
+          patternset {
+            include(name: "com.yworks.yguard.ObfuscatorTask*")
+            include(name: "com.yworks.yguard.ant.*")
+            include(name: "com.yworks.yguard.common.ant.*")
+            include(name: "com.yworks.yshrink.ant.*")
+          }
+        }
+        'class'(name: "com.yworks.yguard.common.ant.YGuardBaseTask", classes: "public", methods: "public", fields: "none")
+        'class'(name: "com.yworks.yguard.ObfuscatorTask", classes: "public", methods: "public", fields:"none")
+        'class'(name: "com.yworks.yguard.yshrink.YShrinkModelImpl", classes: "public", methods: "public", fields: "none")
+        'class'(name: "com.yworks.yguard.yshrink.YShrinkInvokerImpl", classes: "public", methods: "public", fields: "none")
+        'class'(name: "com.yworks.yguard.YGuardTask", classes: "public", methods: "public", fields: "none")
+        method(class: "com.yworks.yguard.YGuardLogParser", name: "void main(java.lang.String[])")
+      }
+    }
+  }
+}
