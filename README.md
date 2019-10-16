@@ -17,9 +17,9 @@ Previous releases _may_ still be downloaded from the [yWorks download center](ht
 
 ## Usage
 
-`yGuard` is distributed with usage instructions. In your distribution, `README.html` contains documentation about the bundled `ant` task.
+`yGuard` is distributed with usage instructions. In your distribution, `docs/index.html` contains documentation about the bundled `ant` task.
 
-In subsequent releases the documentation _may_ be uploaded to GitHub directly.
+An online version of this documentation [is available as well](https://yworks.github.io/yguard/).
 
 ## Building
 

@@ -47,7 +47,7 @@ distributions {
         from "$buildDir/libs"
       }
       into("docs") {
-        from 'src/dist'
+        from "$projectDir/docs"
         filter {
           line -> line
                   .replaceAll('@VERSION@', String.format("%s.%s", project.findProperty('VERSION_MAJOR'), project.findProperty('VERSION_MINOR')))
