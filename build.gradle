@@ -50,6 +50,12 @@ jar {
 
 def VERSION = String.format("%s.%s", project.findProperty('VERSION_MAJOR'), project.findProperty('VERSION_MINOR'))
 
+task ObfuscationAnnotation(type: Jar) {
+  setArchivesBaseName('ObfuscationAnnotation')
+  from sourceSets.main.output
+  include 'com/yworks/util/annotation/**'
+}
+
 distributions {
   bundle {
     baseName = String.format("yguard-%s", VERSION)
