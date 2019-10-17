@@ -17,6 +17,10 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    dependents.extendsFrom implementation
+}
+
 dependencies {
     implementation project(':retroguard')
     implementation 'com.google.guava:guava:28.1-android'
@@ -34,15 +38,12 @@ application {
     mainClassName = 'com.yworks.yguard.YGuardLogParser'
 }
 
-editorconfig {
-    includes = ['src/**', 'build.gradle']
-    excludes = ['**/*.properties', '**/*.bits', '**/resources', '**/dist']
-}
+def DEPENDANT_JARS = ["retroguard.jar", "asm-7.2.jar", "guava-28.1-android.jar", "failureaccess-1.0.1.jar"]
 
 jar {
   manifest {
     attributes(
-      'Class-Path': String.join(" ", "retroguard.jar", "asm-7.2.jar", "guava-28.1-android.jar")
+      'Class-Path': String.join(" ", *DEPENDANT_JARS)
     )
   }
 }
@@ -50,10 +51,14 @@ jar {
 def VERSION = String.format("%s.%s", project.findProperty('VERSION_MAJOR'), project.findProperty('VERSION_MINOR'))
 
 distributions {
-  main {
+  bundle {
     baseName = String.format("yguard-%s", VERSION)
     contents {
       from file("$projectDir/LICENSE")
+      into("lib") {
+        from configurations.dependents.filter { it.name in DEPENDANT_JARS }
+        from jar
+      }
       into("docs") {
         from "$projectDir/docs"
         filter {
@@ -64,6 +69,11 @@ distributions {
       }
     }
   }
+}
+
+editorconfig {
+  includes = ['src/**', 'build.gradle']
+  excludes = ['**/*.properties', '**/*.bits', '**/resources', '**/dist']
 }
 
 check.dependsOn editorconfigCheck
