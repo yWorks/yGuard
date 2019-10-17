@@ -1,8 +1,12 @@
 plugins {
-    id 'java-library'
+  id 'java-library'
 }
 
 compileJava {
   sourceCompatibility = 1.7
   targetCompatibility = 1.7
+}
+
+jar {
+  setArchivesBaseName('ObfuscationAnnotation')
 }
