@@ -13,10 +13,17 @@ cache:
 script:
 - gradle clean check
 
+before_deploy:
+  - major=`echo $TRAVIS_TAG | cut -d. -f1`
+  - minor=`echo $TRAVIS_TAG | cut -d. -f2`
+  - revision=`echo $TRAVIS_TAG | cut -d. -f3`
+  - version_major=`echo ${major}.${minor}`
+  - gradle build
+  - gradle assembleBundleDist -PVERSION_MAJOR=${version_major} -PVERSION_MINOR=${revision}
+
 deploy:
-  before_deploy:
-  - gradle assembleBundleDist
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: YxeU5GzokMXdEJqE0xpQGoOxBmJyhJA6O3y8Fl1uTGxvLCupIyTNv7AcBptCnK3YE7SHolFY9hmv9xSXVOJz+k6YqhP6k/7NAJ8TlKRatface5VDJ1zB463rGiaYdyYhJYz0jjO1j3aTHCapSGJuaBONvEQYuKh8yuR6i/GHKM1xo1hsrmU0GvSMFcMZmFN1r24JYBHFRupvEBeyo47qFNnP69XLN85lRRNy1YBVVWKPsUp/4KgU977gyxIjK1j0LlSXk/IfMh9aCQ6hly6kUa6azkKsEg6LGlc0UgHOdG6NIgsJlLT99f/YJczq2qxLPwZTT1P60A9Dp16CrVechNtiF9UulIJCXaiL9DENYB9HxmCwa+s4GtaGi/5xOcupnGgPhRYXiTM9N8J8Q5GpAKGc0yLh7dGNURi9YviJmo6uZ9YuYXB1mm+oieLi6vVoadLbGPpziX8H+j4fHKkru2QU4V73NegqAmzyOK9GdkzCT9Nqv2O55le80q16ubBrfYoyLdzOKmNo+6fY0w+pUTioZVXNovnz9vpuUR45ZBOD/3fn0kcd5YrFglpknyiJ0nLlA7TET4rDtmRqMULd23mXaNrNJf2WuCIh2AI9z3zoSeKjIFJ9YjOQzfSijM+amvVvfGNSphwGtlJhgcPOMZWSgIYuMLGLdqqnE9loQUc=
   file: build/distributions/yguard-${TRAVIS_TAG}.zip
