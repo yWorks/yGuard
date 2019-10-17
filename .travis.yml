@@ -2,13 +2,23 @@ language: java
 dist: bionic
 
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 
 script:
-  - gradle clean check
+- gradle clean check
+
+deploy:
+  before_deploy:
+  - gradle assembleBundleDist
+  provider: releases
+  api_key:
+    secure: YxeU5GzokMXdEJqE0xpQGoOxBmJyhJA6O3y8Fl1uTGxvLCupIyTNv7AcBptCnK3YE7SHolFY9hmv9xSXVOJz+k6YqhP6k/7NAJ8TlKRatface5VDJ1zB463rGiaYdyYhJYz0jjO1j3aTHCapSGJuaBONvEQYuKh8yuR6i/GHKM1xo1hsrmU0GvSMFcMZmFN1r24JYBHFRupvEBeyo47qFNnP69XLN85lRRNy1YBVVWKPsUp/4KgU977gyxIjK1j0LlSXk/IfMh9aCQ6hly6kUa6azkKsEg6LGlc0UgHOdG6NIgsJlLT99f/YJczq2qxLPwZTT1P60A9Dp16CrVechNtiF9UulIJCXaiL9DENYB9HxmCwa+s4GtaGi/5xOcupnGgPhRYXiTM9N8J8Q5GpAKGc0yLh7dGNURi9YviJmo6uZ9YuYXB1mm+oieLi6vVoadLbGPpziX8H+j4fHKkru2QU4V73NegqAmzyOK9GdkzCT9Nqv2O55le80q16ubBrfYoyLdzOKmNo+6fY0w+pUTioZVXNovnz9vpuUR45ZBOD/3fn0kcd5YrFglpknyiJ0nLlA7TET4rDtmRqMULd23mXaNrNJf2WuCIh2AI9z3zoSeKjIFJ9YjOQzfSijM+amvVvfGNSphwGtlJhgcPOMZWSgIYuMLGLdqqnE9loQUc=
+  file: build/distributions/yguard-${TRAVIS_TAG}.zip
+  on:
+    tags: true
