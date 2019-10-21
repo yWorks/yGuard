@@ -53,7 +53,6 @@
                   <id>obfuscate</id>
                   <configuration>
                       <tasks>
-                          <property refid="maven.compile.classpath" name="mvn.classpath"></property>
                           <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${project.build.directory}/lib/yguard.jar"/>
                           <yguard>
                               <inoutpair in="${project.build.directory}/${project.build.finalName}.jar" out="${project.build.directory}/${project.build.finalName}_obfuscated.jar" />
