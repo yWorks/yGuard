@@ -48,6 +48,6 @@ node_modules/
 
 # Ignore example files
 examples/*/build
+examples/*/target
 examples/*/lib
 examples/*/*log.xml
-

@@ -1,0 +1,91 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yworks.example</groupId>
+  <artifactId>HelloWorld</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>HelloWorld</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <mainclass>com.yworks.example.HelloWorld</mainclass>
+    <yversion>2.9.x</yversion>
+    <rootDir>../../</rootDir>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+          <executions>
+            <execution>
+                <phase>package</phase>
+                <id>copy-libs</id>
+                <configuration>
+                  <tasks>
+                      <unzip src="${rootDir}/build/distributions/yguard-${yversion}.zip" dest="${project.build.directory}/lib">
+                        <patternset>
+                            <include name="yguard-${yversion}/lib/**.jar"/>
+                        </patternset>
+                      </unzip>
+                      <move todir="${project.build.directory}/lib">
+                        <fileset dir="${project.build.directory}/lib/yguard-${yversion}/lib"/>
+                    </move>
+                  </tasks>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+            </execution>
+          </executions>
+      </plugin>
+      <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+          <executions>
+              <execution>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>run</goal>
+                  </goals>
+                  <id>obfuscate</id>
+                  <configuration>
+                      <tasks>
+                          <property refid="maven.compile.classpath" name="mvn.classpath"></property>
+                          <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${project.build.directory}/lib/yguard.jar"/>
+                          <yguard>
+                              <inoutpair in="${project.build.directory}/${project.build.finalName}.jar" out="${project.build.directory}/${project.build.finalName}_obfuscated.jar" />
+
+                              <shrink logfile="${project.build.directory}/yshrink.log.xml">
+                                  <keep>
+                                      <!-- main method -->
+                                      <method name="void main(java.lang.String[])" class="${mainclass}" />
+                                  </keep>
+                              </shrink>
+
+                              <rename mainclass="${mainclass}" logfile="${project.build.directory}/yguard.log.xml">
+                                  <property name="error-checking" value="pedantic"/>
+                              </rename>
+                          </yguard>
+                      </tasks>
+                  </configuration>
+              </execution>
+          </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+          <mainClass>com.yworks.example.HelloWorld</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
