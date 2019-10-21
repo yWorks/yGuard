@@ -2,13 +2,16 @@ plugins {
     // Apply the java and library plugin to add support for Java
     id 'java'
     id 'java-library-distribution'
+    // Apply the maven plugin to add support for publications
+    id 'maven-publish'
 
-    // Apply yWorks coding style with editorconfig
+  // Apply yWorks coding style with editorconfig
     id 'org.ec4j.editorconfig' version '0.0.3'
 }
 
 allprojects {
     apply plugin: 'org.ec4j.editorconfig'
+    version = String.format("%s.%s", VERSION_MAJOR, VERSION_MINOR)
 }
 
 repositories {
@@ -44,22 +47,20 @@ jar {
   }
 }
 
-def VERSION = String.format("%s.%s", project.findProperty('VERSION_MAJOR'), project.findProperty('VERSION_MINOR'))
-
 distributions {
   bundle {
-    baseName = String.format("yguard-%s", VERSION)
+    baseName = "yguard-bundle"
     contents {
       from file("$projectDir/LICENSE")
       into("lib") {
-        from configurations.dependents.filter { it.name in DEPENDANT_JARS.plus('ObfuscationAnnotation.jar') }
+        from configurations.dependents.filter { it.name in DEPENDANT_JARS.plus(String.format("ObfuscationAnnotation-%s.jar", version)) }
         from jar
       }
       into("docs") {
         from "$projectDir/docs"
         filter {
           line -> line
-                  .replaceAll('@VERSION@', VERSION)
+                  .replaceAll('@VERSION@', version)
                   .replaceAll('@VERSION_MAJOR@', project.findProperty('VERSION_MAJOR'))
         }
       }
@@ -73,3 +74,14 @@ editorconfig {
 }
 
 check.dependsOn editorconfigCheck
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      groupId = 'com.yworks'
+      artifactId = 'yguard'
+
+      from project.components.java
+    }
+  }
+}
