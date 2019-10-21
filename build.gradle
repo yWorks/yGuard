@@ -1,6 +1,5 @@
 plugins {
     // Apply the java and library plugin to add support for Java
-    id 'java'
     id 'java-library-distribution'
 
     // Apply yWorks coding style with editorconfig
