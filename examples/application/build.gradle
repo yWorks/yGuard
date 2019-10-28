@@ -15,16 +15,17 @@ jar {
   }
 }
 
-task copylibs(type: Copy) {
-  def zipFile = file("../../build/distributions/yguard-${VERSION}.zip")
-  def outputDir = file("${buildDir}/lib")
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
 
-  from zipTree(zipFile)
-  into outputDir
+dependencies {
+  compile 'com.yworks:yguard:2.9.x'
 }
 
 task yguard {
-  dependsOn jar, copylibs
+  dependsOn jar
   group 'yGuard'
   description 'Obfuscates and shrinks the java archive.'
 
@@ -32,7 +33,7 @@ task yguard {
     ant.taskdef(
             name: 'yguard',
             classname: 'com.yworks.yguard.YGuardTask',
-            classpath: "${buildDir}/lib/yguard-${VERSION}/lib/yguard.jar"
+            classpath: sourceSets.main.runtimeClasspath.asPath
     )
 
     def archivePath = jar.archiveFile.get().asFile.path
