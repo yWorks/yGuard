@@ -91,5 +91,19 @@ publishing {
 
       from project.components.java
     }
+
+    annotation(MavenPublication) {
+      groupId = 'com.yworks.yguard'
+      artifactId = 'annotation'
+
+      from project(':annotation').components.java
+    }
+
+    retroguard(MavenPublication) {
+      groupId = 'com.yworks.yguard'
+      artifactId = 'retroguard'
+
+      from project('retroguard').components.java
+    }
   }
 }
