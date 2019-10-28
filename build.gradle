@@ -38,7 +38,7 @@ compileJava {
     targetCompatibility = 1.7
 }
 
-def LIBRARIES = [String.format("retroguard-%s.jar", version), "guava-28.1-android.jar", "asm-7.2.jar"]
+def LIBRARIES = [String.format("retroguard-%s.jar", version), "guava-28.1-android.jar", "asm-7.2.jar", "ant-1.10.7.jar"]
 def LIBRARY_JARS = configurations.dependents.filter {
   file -> file.name in LIBRARIES
 }
