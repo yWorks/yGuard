@@ -19,12 +19,14 @@ repositories {
 }
 
 configurations {
+    annotation
     dependents.extendsFrom implementation
 }
 
 dependencies {
-    implementation project(':retroguard')
+    annotation project(':annotation')
     implementation project(':annotation')
+    implementation project(':retroguard')
     implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
@@ -36,12 +38,17 @@ compileJava {
     targetCompatibility = 1.7
 }
 
-def DEPENDANT_JARS = ["retroguard.jar", "asm-7.2.jar", "guava-28.1-android.jar", "failureaccess-1.0.1.jar"]
+def LIBRARIES = [String.format("retroguard-%s.jar", version), "guava-28.1-android.jar", "asm-7.2.jar"]
+def LIBRARY_JARS = configurations.dependents.filter {
+  file -> file.name in LIBRARIES
+}
 
 jar {
   manifest {
     attributes(
-      'Class-Path': String.join(" ", *DEPENDANT_JARS),
+      'Class-Path': String.join(" ", *LIBRARY_JARS.collect {
+        file -> file.name
+      }),
       'Main-Class': 'com.yworks.yguard.YGuardLogParser'
     )
   }
@@ -53,7 +60,8 @@ distributions {
     contents {
       from file("$projectDir/LICENSE")
       into("lib") {
-        from configurations.dependents.filter { it.name in DEPENDANT_JARS.plus(String.format("ObfuscationAnnotation-%s.jar", version)) }
+        from LIBRARY_JARS
+        from configurations.annotation
         from jar
       }
       into("docs") {
