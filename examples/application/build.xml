@@ -33,18 +33,18 @@
     </target>
 
     <target name="copylibs">
-        <unzip src="${rootDir}/build/distributions/yguard-${version}.zip" dest="${libraryDir}">
+        <unzip src="${rootDir}/build/distributions/yguard-bundle-${version}.zip" dest="${libraryDir}">
             <patternset>
-                <include name="yguard-${version}/lib/**.jar"/>
+                <include name="yguard-bundle-${version}/lib/**.jar"/>
             </patternset>
         </unzip>
         <move todir="${projectDir}/lib">
-            <fileset dir="${projectDir}/lib/yguard-${version}/lib"/>
+            <fileset dir="${projectDir}/lib/yguard-bundle-${version}/lib"/>
         </move>
     </target>
 
     <target name="yguard" depends="jar, copylibs">
-        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${projectDir}/lib/yguard.jar"/>
+        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${projectDir}/lib/yguard-${version}.jar"/>
         <yguard>
             <inoutpair in="${jar}" out="${obfjar}"/>
 
