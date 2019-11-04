@@ -13,6 +13,29 @@ The `yguard` task contains two nested elements that perform the name obfuscation
 - The [shrink](#the-shrink-element) element removes all code elements that are not reachable from the entrypoints given in the nested [keep](#the-keep-element) element.
 - The [rename](#the-rename-element) element performs name-obfuscation, renaming all packages, classes, methods and fields according to a selectable name-mapping scheme. Elements can be excluded from the renaming process by annotating them with a certain annotation class in the source code or using a nested [keep](#the-keep-element) element.
 
+## Table of contents
+
+- [`yguard` element](#the-yguard-element)
+    - [`inoutpair` element](#the-inoutpair-element)
+    - [`externalclasses` element](#the-externalclasses-element)
+    - [`attribute` element](#the-attribute-element)
+    - [`rename` element](#the-rename-element)
+        - [`property` element](#the-property-element)
+        - [`patch` element](#generating-patch-jars)
+        - [`adjust` element](#the-adjust-element)
+        - [`map` element](#the-map-element)
+            - [`package` element](#the-package-element)
+            - [`class` element](#the-class-element)
+            - [`method` element](#the-method-element)
+            - [`field` element](#the-field-element)
+    - [`shrink` element](#the-shrink-element)
+        - [`entrypointjar` element](#the-entrypointjar-element)
+    - [`keep` element](#the-keep-element)
+- [Controlling obfuscation exclusion with annotations](#controlling-obfuscation-exclusion-with-annotations)
+- [Generating patch JARs](#generating-patch-jars)
+- [Deobfuscating stacktraces](#deobfuscating-stacktraces)
+- [DTD used for Ant `<yguard>`](#dtd-used-for-ant-yguard)
+
 ## The yguard Element
 
 The yguard task contains elements that define basic properties common to the nested `rename` and `shrink` tasks.
@@ -880,7 +903,7 @@ The last example shows how to keep the `public` methods of certain classes only,
 </class>
 ```
 
-## The `method`  Element
+## The `method` Element
 Using the `method` element you can specify methods by signature which should be excluded from shrinking or name obfuscation.
 
 #### Attributes
@@ -1335,7 +1358,7 @@ Using the `patch` element one can generate jars, that can be used to serve as pa
 ```
 This will only include the MainClass class and all classes that belong to the bugs package in a patch jar. In order to work with the previously delivered obfuscated version, it is important to use the map element to specify the mapping of the elements from the previous run. This can most conveniently be achieved by specifying the log file from the corresponding run in the map element's logfile attribute.
 
-## Deobfuscating Stacktraces Etc.
+## Deobfuscating stacktraces
 
 yGuard provides a simple tool that makes it easy for the obfuscating party to deobfuscate stacktraces which have been obfuscated using yGuard. During the obfuscation yGuard produces an xml logfile which can automatically be gzipped for convenient storage. You should always keep those logfiles in order to be able to deobfuscate fully qualified classnames or methods or fields for debugging purposes e.g.
 In order to run the yGuard deobfuscation tool do the following:
