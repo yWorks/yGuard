@@ -20,6 +20,7 @@ yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of t
 - [Task documentation](/task)
 - [Examples](https://github.com/yWorks/yguard/tree/master/examples)
 - [Troubleshooting](/troubleshooting)
+- [License](/license)
 
 ### Problems and Bug Reports
 
