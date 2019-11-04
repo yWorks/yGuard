@@ -135,31 +135,31 @@ Additionally or alternatively to `inoutpair` elements this element can be specif
 </thead>
 
 <tr>
-    <td><span class="attribute">resources</span></td>
+    <td><code>resources</code></td>
     <td>
     Will only be considered if the
-    <a href="#yguard"><span class="element">yguard</span></a> element
+    <a href="#yguard"><code>yguard</code></a> element
     contains a nested
-    <a href="#shrink"><span class="element">shrink</span></a> element.
+    <a href="#shrink"><code>shrink</code></a> element.
     <br>
     Determines how the shrinking engine handles all non-.class files.
     <br>
     Currently the following three resource policies are supported:
     <ul>
-        <li><span class="attr-value">copy</span><br>
+        <li><code>copy</code><br>
         the default, simply copies all resource files to the output jar.
         </li>
-        <li><span class="attr-value">auto</span><br>
+        <li><code>auto</code><br>
         copies only those resource files that reside in a directory that
         still contains one or more .class files after shrinking.
         </li>
-        <li><span class="attr-value">none</span><br>
+        <li><code>none</code><br>
         discards all resource files.
         </li>
     </ul>
     </td>
     <td>
-    No, defaults to <span class="attr-value">copy</span>.
+    No, defaults to <code>copy</code>.
     </td>
 </tr>
 </table>
@@ -212,7 +212,7 @@ See [linked example] for an example of when to use this element.
         </tr>
     </thead>
 <tr>
-    <td><span class="attribute">name</span></td>
+    <td><code>name</code></td>
     <td>A comma-separated list of attribute names that are to
     be retained in the shrinked and/or
     obfuscated class
@@ -253,7 +253,7 @@ See the [examples]() explenation of some common use cases. If your code uses ref
 </tr>
 </thead>
 <tr>
-    <td><span class="attribute">logfile</span></td>
+    <td><code>logfile</code></td>
     <td>Determines the name of the logfile that is generated
     during the shrinking process. The logfile contains information about
     the entrypoints the shrinking engine uses, the removed classes,
@@ -269,16 +269,16 @@ See the [examples]() explenation of some common use cases. If your code uses ref
 </tr>
 <tr>
     <td>
-    <a name="createstubs"></a><span class="attribute">createStubs</span>
+    <a name="createstubs"></a><code>createStubs</code>
     </td>
     <td>
     Instead of removing methods completely, this attribute causes the
-    <span class="element">shrink</span> task to insert a method
+    <code>shrink</code> task to insert a method
     stub that throws a <code>java.lang.InternalError</code> if it is
     called. This attribute is very useful if the shrinking process
     causes your application to break and you are uncertain about which
     additional code entities you have to include in the
-    <a href="#keep"><span class="element">keep</span></a>element. <br/>
+    <a href="#keep"><code>keep</code></a>element. <br/>
     Note that classes considered as completely obsolete by the shrinking
     engine are still removed completely - this attribute only
     affects obsolete methods of non-obsolete classes.
@@ -310,7 +310,7 @@ The `entrypointjar` element can be used for convenience if your application uses
 </thead>
 
 <tr>
-    <td><span class="attribute">name</span></td>
+    <td><code>name</code></td>
     <td>Path to to the jar file to use as entrypointjar.</td>
     <td>Yes</td>
 </tr>
@@ -344,20 +344,20 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 </thead>
 
 <tr>
-    <td><span class="attribute">mainclass</span></td>
+    <td><code>mainclass</code></td>
     <td>Can be used as a shortcut to specify the mainclass
     of your application. Both the class name and the main method will be
     excluded from name obfuscation.
     Alternatively you may want to consider to exclude the main method
     only. If your jar contains a <code>Main-Class</code> attribute, the
-    <span class="element">rename</span> task will automatically adjust
+    <code>rename</code> task will automatically adjust
     the value to the obfuscated
     name.
     </td>
     <td>No</td>
 </tr>
 <tr>
-    <td><span class="attribute">logfile</span></td>
+    <td><code>logfile</code></td>
     <td>Determines the name of the logfile that is generated
     during the renaming process. The logfile contains information about
     the mappings the name obfuscator generates as well as any warnings.
@@ -370,7 +370,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     No, defaults to<code>yguardlog.xml</code></td>
 </tr>
 <tr>
-    <td><span class="attribute">conservemanifest</span></td>
+    <td><code>conservemanifest</code></td>
     <td>
     A boolean attribute (valid values:
     <code>true</code>/<code>false</code>) that determines whether the
@@ -384,7 +384,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 </tr>
 <tr>
     <td>
-    <a name="replaceclassnamestrings"></a><span class="attribute">replaceClassNameStrings</span>
+    <a name="replaceclassnamestrings"></a><code>replaceClassNameStrings</code>
     </td>
     <td>
     A boolean attribute (valid values:
@@ -415,7 +415,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     </td>
 </tr>
 <tr>
-    <td><a name="annotationClass"></a><span class="attribute">annotationClass</span></td>
+    <td><a name="annotationClass"></a><code>annotationClass</code></td>
     <td>
     Specifies the name of the annotation class that can be used to
     exclude elements by annotating them in the source code. The
@@ -452,14 +452,14 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 <tbody>
 
 <tr>
-    <td><span class="attribute">name</span></td>
+    <td><code>name</code></td>
     <td>
     Specifies a key which may be interpreted by the obfuscation task.
     </td>
     <td>Yes</td>
 </tr>
 <tr>
-    <td><span class="attribute">value</span></td>
+    <td><code>value</code></td>
     <td>
     Specifies the corresponding value of the property.
     </td>
@@ -480,15 +480,15 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 
 <tbody>
 <tr>
-    <td><span class="property">error-checking</span></td>
+    <td><code class="property">error-checking</code></td>
     <td>
     Can be used to tell yGuard to bail out if it detects any problems.
     Currently this property can be set to the following value:
     <ul>
         <li>
-        <span class="prop-value">pedantic</span><br>
+        <code class="prop-value">pedantic</code><br>
         Will make the obfuscation run fail, i.e. the target which uses
-        the <span class="element">rename</span>element will fail, if
+        the <code>rename</code>element will fail, if
         yGuard detects any problems.
         </li>
     </ul>
@@ -496,19 +496,19 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 </tr>
 
 <tr>
-    <td><span class="property">naming-scheme</span></td>
+    <td><code class="property">naming-scheme</code></td>
     <td>
     Can be used to tell the renaming engine to use a different naming
     scheme during the obfuscation.
     Currently this property can be set to one of the following values:
     <ul>
         <li>
-        <span class="prop-value">small</span><br>
+        <code class="prop-value">small</code><br>
         Will produce very short names, i.e. the resulting jar
         file will be as small as possible.
         </li>
         <li>
-        <span class="prop-value">best</span><br>
+        <code class="prop-value">best</code><br>
         Will produce names, that are very likely to be misunderstood by
         decompilers and disassemblers. Using this naming-scheme it is
         even impossible on most filesystems to successfully unjar or
@@ -519,7 +519,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
         size).
         </li>
         <li>
-        <span class="prop-value">mix</span><br>
+        <code class="prop-value">mix</code><br>
         Is a mixture of both the other two values, which leads to
         reasonable small but still hard to decompile jar files.
         </li>
@@ -528,7 +528,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 </tr>
 
 <tr>
-    <td><span class="property">language-conformity</span></td>
+    <td><code class="property">language-conformity</code></td>
     <td>
     Can be used to advise the renaming engine to produce names, that
     should be decompilable by most decompilers. On the other hand,
@@ -540,17 +540,17 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     Currently this property can be set to one of the following values:
     <ul>
         <li>
-        <span class="prop-value">compatible</span><br>
+        <code class="prop-value">compatible</code><br>
         Will produce names, that are ok for (most) decompilers, java,
         jar and manifest files and can be unzipped to most filesystems.
         </li>
         <li>
-        <span class="prop-value">legal</span><br>
+        <code class="prop-value">legal</code><br>
         Will produce names, that are ok for (some) decompilers, java,
         jar and manifest files.
         </li>
         <li>
-        <span class="prop-value">illegal</span><br>
+        <code class="prop-value">illegal</code><br>
         Will produce names, that will crash some tools but usually
         <b>not</b> the jvm, but JBuilder7 in many occasions for example.
         </li>
@@ -559,7 +559,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 </tr>
 
 <tr>
-    <td><span class="property">overload-enabled</span></td>
+    <td><code class="property">overload-enabled</code></td>
     <td>
     Determines whether the renaming engine tries to use the same names
     for methods with different signatures or whether it always generates
@@ -570,7 +570,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 </tr>
 
 <tr>
-    <td><span class="property">obfuscation-prefix</span></td>
+    <td><code class="property">obfuscation-prefix</code></td>
     <td>
     Can be used to instruct the renaming engine to prefix packages, that
     are fully obfuscated with a given package prefix, e.g.
@@ -579,18 +579,18 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 </tr>
 
 <tr>
-    <td><span class="property">digests</span></td>
+    <td><code class="property">digests</code></td>
     <td>
     Can be used to tell yGuard which digest algorithms should be used
     for the digest generation in the manifest file. Valid values are
-    either <span class="prop-value">none</span>, or a comma-separated
+    either <code class="prop-value">none</code>, or a comma-separated
     list of digest-algorithm identifiers, e.g.
-    <span class="prop-value">SHA-1, MD5</span> (which is the default).
+    <code class="prop-value">SHA-1, MD5</code> (which is the default).
     </td>
 </tr>
 
 <tr>
-    <td><span class="property">expose-attributes</span></td>
+    <td><code class="property">expose-attributes</code></td>
     <td>
     Can be used to give yGuard a list of attributes yGuard should expose
     in addition to the standard attributes.
@@ -628,94 +628,94 @@ Note that a more fine-grained control over which attributes to keep for which cl
 <tr>
     <th width="12%"><b>Attribute</b></th>
     <th width="58%"><b>Description</b></th>
-    <th width="15%"><b>Default (<span class="element">rename</span>)</b></th>
-    <th width="15%"><b>Default (<span class="element">shrink</span>)</b></th>
+    <th width="15%"><b>Default (<code>rename</code>)</b></th>
+    <th width="15%"><b>Default (<code>shrink</code>)</b></th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-    <td><span class="attribute">sourcefile</span></td>
+    <td><code>sourcefile</code></td>
     <td>
     Determines whether the name of the original source code file should
     be included in the output class files.
     </td>
-    <td><span class="attr-value">remove</span></td>
-    <td><span class="attr-value">remove</span></td>
+    <td><code>remove</code></td>
+    <td><code>remove</code></td>
 </tr>
 <tr>
-    <td><span class="attribute">linenumbertable</span></td>
+    <td><code>linenumbertable</code></td>
     <td>
     Determines whether the line number table, that contains a mapping
     from each opcode in the class file to the line number in the
     original source code file should be included in the output class
     files.
     </td>
-    <td><span class="attr-value">remove</span> </td>
-    <td><span class="attr-value">remove</span> </td>
+    <td><code>remove</code> </td>
+    <td><code>remove</code> </td>
 </tr>
 <tr>
-    <td><span class="attribute">localvariabletable</span></td>
+    <td><code>localvariabletable</code></td>
     <td>
     Determines whether the local variable table, that contains a mapping
     from each local variable in the class file to the name that has been
     used in the original source code file should be included in the
     output class files.
     </td>
-    <td><span class="attr-value">remove</span> </td>
-    <td><span class="attr-value">remove</span> </td>
+    <td><code>remove</code> </td>
+    <td><code>remove</code> </td>
 </tr>
 <tr>
-    <td><span class="attribute">localvariabletypetable</span></td>
+    <td><code>localvariabletypetable</code></td>
     <td>
     Determines whether the local variable type table, that contains a
     mapping from each local variable in the class file to the name and
     its generic type signature that has been used in the original source
     code file should be included in the output class files.
     </td>
-    <td><span class="attr-value">remove</span> </td>
-    <td><span class="attr-value">remove</span> </td>
+    <td><code>remove</code> </td>
+    <td><code>remove</code> </td>
 </tr>
 <tr>
-    <td><span class="attribute">runtimevisibleannotations</span></td>
+    <td><code>runtimevisibleannotations</code></td>
     <td>
     Determines whether annotations with the retention policy
     <code>RetentionPolicy.RUNTIME</code>should be included in the output
     class files.
     </td>
-    <td><span class="attr-value">keep</span> </td>
-    <td><span class="attr-value">keep</span> </td>
+    <td><code>keep</code> </td>
+    <td><code>keep</code> </td>
 </tr>
 <tr>
-    <td><span class="attribute">runtimevisibleparameterannotations</span></td>
+    <td><code>runtimevisibleparameterannotations</code></td>
     <td>
     Determines whether method paramater annotations with the retention
     policy <code>RetentionPolicy.RUNTIME</code> should be included in
     the output class files.
     </td>
-    <td><span class="attr-value">keep</span> </td>
-    <td><span class="attr-value">keep</span> </td>
+    <td><code>keep</code> </td>
+    <td><code>keep</code> </td>
 </tr>
 <tr>
-    <td><span class="attribute">runtimeinvisibleannotations</span></td>
+    <td><code>runtimeinvisibleannotations</code></td>
     <td>
     Determines whether annotations with the retention policy
     <code>RetentionPolicy.CLASS</code>should be included in the output
     class files.
     </td>
-    <td><span class="attr-value">keep</span> </td>
-    <td><span class="attr-value">remove</span> </td>
+    <td><code>keep</code> </td>
+    <td><code>remove</code> </td>
 </tr>
 <tr>
-    <td><span class="attribute">runtimeinvisibleparameterannotations</span>
+    <td><code>runtimeinvisibleparameterannotations</code>
     </td>
     <td>
     Determines whether method paramater annotations with the retention
     policy <code>RetentionPolicy.CLASS</code> should be included in the
     output class files.
     </td>
-    <td><span class="attr-value">keep</span> </td>
-    <td><span class="attr-value">remove</span> </td>
+    <td><code>keep</code> </td>
+    <td><code>remove</code> </td>
 </tr>
 </tbody>
 </table>
@@ -730,41 +730,41 @@ The `classes`, `methods` and `fields` attributes tell the shrinking and renaming
 <table class="matrix">
 <tr>
     <td><b>Value/Visibility</b></td>
-    <td><span class="keyword">public</span></td>
-    <td><span class="keyword">protected</span></td>
-    <td><span class="keyword">friendly</span></td>
-    <td><span class="keyword">private</span></td>
+    <td><code class="keyword">public</code></td>
+    <td><code class="keyword">protected</code></td>
+    <td><code class="keyword">friendly</code></td>
+    <td><code class="keyword">private</code></td>
 </tr>
 <tr>
-    <td><span class="keyword">none</span></td>
+    <td><code class="keyword">none</code></td>
     <td>-</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-</tr>
-<tr>
-    <td><span class="keyword">public</span></td>
-    <td>*</td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
 </tr>
 <tr>
-    <td><span class="keyword">protected</span></td>
+    <td><code class="keyword">public</code></td>
+    <td>*</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td><code class="keyword">protected</code></td>
     <td>*</td>
     <td>*</td>
     <td>-</td>
     <td>-</td>
 </tr>
 <tr>
-    <td><span class="keyword">friendly</span></td>
+    <td><code class="keyword">friendly</code></td>
     <td>*</td>
     <td>*</td>
     <td>*</td>
     <td>-</td>
 </tr>
 <tr>
-    <td><span class="keyword">private</span></td>
+    <td><code class="keyword">private</code></td>
     <td>*</td>
     <td>*</td>
     <td>*</td>
@@ -785,32 +785,32 @@ The `classes`, `methods` and `fields` attributes tell the shrinking and renaming
 
 <tbody>
 <tr>
-    <td><span class="attribute">name</span></td>
+    <td><code>name</code></td>
     <td>The name of the class to be kept.</td>
     <td>No</td>
 </tr>
 <tr>
-    <td><span class="attribute">classes</span></td>
+    <td><code>classes</code></td>
     <td>The visibility of the classes to be kept.</td>
     <td>
-    No, defaults to <span class="attr-value">none</span></td>
+    No, defaults to <code>none</code></td>
 </tr>
 <tr>
-    <td><span class="attribute">methods</span></td>
+    <td><code>methods</code></td>
     <td>The visibility of the methods to be kept.</td>
     <td>
-    No, defaults to <span class="attr-value">none</span></td>
+    No, defaults to <code>none</code></td>
 </tr>
 <tr>
-    <td><span class="attribute">fields</span></td>
+    <td><code>fields</code></td>
     <td>The visibility of the fields to be kept.</td>
     <td>
-    No, defaults to <span class="attr-value">none</span></td>
+    No, defaults to <code>none</code></td>
 </tr>
 <tr>
-    <td><a name="extends"></a><span class="attribute">extends</span></td>
+    <td><a name="extends"></a><code>extends</code></td>
     <td>
-    If no <span class="attribute">name</span> attribute is given, keeps
+    If no <code>name</code> attribute is given, keeps
     all classes that equal or extend the class defined by the given
     fully qualified classname.
     <br>
@@ -820,9 +820,9 @@ The `classes`, `methods` and `fields` attributes tell the shrinking and renaming
     <td>No</td>
 </tr>
 <tr>
-    <td><a name="implements"></a><span class="attribute">implements</span></td>
+    <td><a name="implements"></a><code>implements</code></td>
     <td>
-    If no <span class="attribute">name</span> attribute is given, keeps
+    If no <code>name</code> attribute is given, keeps
     all classes that equal or implement the class defined by the given
     fully qualified classname.
     <br>
@@ -917,7 +917,7 @@ Using the `method` element you can specify methods by signature which should be 
 </thead>
 
 <tr>
-    <td><span class="attribute">name</span></td>
+    <td><code>name</code></td>
     <td>
     Specifies the method to keep. Use the complete signature using
     fully qualified class names and the return type!
@@ -925,7 +925,7 @@ Using the `method` element you can specify methods by signature which should be 
     <td>Yes</td>
 </tr>
 <tr>
-    <td><span class="attribute">class</span></td>
+    <td><code>class</code></td>
     <td>
     Specifies the class which contains the method. Use the normal java
     syntax, i.e. the fully qualified name.
@@ -978,7 +978,7 @@ Using the `field` element you can specify fields by name which should be exclude
 </thead>
 
 <tr>
-    <td><span class="attribute">name</span></td>
+    <td><code>name</code></td>
     <td>
     Specifies the field to keep.
     Use the name of the field only, do not include its type!
@@ -986,12 +986,12 @@ Using the `field` element you can specify fields by name which should be exclude
     <td>Yes</td>
 </tr>
 <tr>
-    <td><span class="attribute">class</span></td>
+    <td><code>class</code></td>
     <td>
     Specifies the class which contains the field.
     Use the normal java syntax, i.e. the fully qualified name.
     This attribute can be omitted, if the
-    <span class="element">patternset</span> element is used as
+    <code>patternset</code> element is used as
     a child element, in which case the all classes matching the
     patternset will be searched and their corresponding fields will be
     kept.
@@ -1054,11 +1054,11 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 </thead>
 <tbody>
 <tr>
-    <td><span class="property">mapping</span></td>
+    <td><code class="property">mapping</code></td>
     <td>
     The value of this property determines the name all
-    <span class="attribute">sourceFile</span> attributes matched by the
-    <span class="element">sourcefile</span> element are mapped to.
+    <code>sourceFile</code> attributes matched by the
+    <code>sourcefile</code> element are mapped to.
     </td>
 </tr>
 </tbody>
@@ -1100,24 +1100,24 @@ Using nested `property` elements, the mapping of `linenumbertable` attributes in
 
 <tbody>
 <tr>
-    <td><span class="property">mapping-scheme</span></td>
+    <td><code class="property">mapping-scheme</code></td>
     <td>
     Can be used with the following two values:
     <ul>
         <li>
-        <span class="prop-value">scramble</span><br>
+        <code class="prop-value">scramble</code><br>
         This will use a non-trivial algorithm to scramble the line
         numbers in the existing file.
         The algorithm implemented uses a different scrambling scheme for
         each class. The optional
-        <span class="property">scrambling-salt</span> property can be
+        <code class="property">scrambling-salt</code> property can be
         used to provide an integer value that will be used to "salt"
         the algorithm's random seed for the scrambling.
         The size of the (uncompressed) .class file will not change using
         this mapping scheme.
         </li>
         <li>
-        <span class="prop-value">squeeze</span><br>
+        <code class="prop-value">squeeze</code><br>
         This will use a simple algorithm that virtually puts all of a
         method's code into the first line of code of the method. It will
         appear as if each method had been written in a single line of
@@ -1131,10 +1131,10 @@ Using nested `property` elements, the mapping of `linenumbertable` attributes in
     </td>
 </tr>
 <tr>
-    <td><span class="property">scrambling-salt</span></td>
+    <td><code class="property">scrambling-salt</code></td>
     <td>
     Can be used in conjunction with
-    <span class="property">mapping-scheme</span> to provide an integer
+    <code class="property">mapping-scheme</code> to provide an integer
     value that will be used to "salt" the algorithm's random seed for
     the scrambling.
     </td>
@@ -1192,7 +1192,7 @@ Using the `adjust` element one can specify resource files whose names and/or con
 </thead>
 
 <tr>
-    <td><span class="attribute">replaceName</span></td>
+    <td><code>replaceName</code></td>
     <td>
     Specifies whether or not the names of the specified resources should
     be adjusted.
@@ -1201,7 +1201,7 @@ Using the `adjust` element one can specify resource files whose names and/or con
     </td>
 </tr>
 <tr>
-    <td><span class="attribute">replaceContent</span></td>
+    <td><code>replaceContent</code></td>
     <td>
     Specifies whether or not the contents of resource files should be
     adjusted.
@@ -1210,7 +1210,7 @@ Using the `adjust` element one can specify resource files whose names and/or con
     </td>
 </tr>
 <tr>
-    <td><span class="attribute">replacePath</span></td>
+    <td><code>replacePath</code></td>
     <td>
     Specifies whether or not the paths to the resource files should be
     adjusted.
@@ -1304,7 +1304,7 @@ The convention for annotation classes that yGuard understands as obfuscation con
 </thead>
 
 <tr>
-    <td><span class="attribute">exclude</span></td>
+    <td><code>exclude</code></td>
     <td>
     Specifies whether the annotated element should be excluded from the
     obfuscation. Note, that when retaining a class, the hierarchy of
@@ -1314,7 +1314,7 @@ The convention for annotation classes that yGuard understands as obfuscation con
     <td><code>true</code></td>
 </tr>
 <tr>
-    <td><span class="attribute">applyToMembers</span></td>
+    <td><code>applyToMembers</code></td>
     <td>
     Specifies whether the child elements of the annotated element, if
     not otherwise specified, should be excluded from the obfuscation.
