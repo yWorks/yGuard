@@ -9,29 +9,30 @@ yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of t
 
 ## Obtaining yGuard
 
-Starting with the `2.8` release `yGuard` is MIT-licensed. Releases can be downloaded directly from GitHub.
+Recent `yGuard` releases can be downloaded from GitHub, or used from `Maven` central directly.
 
-Legacy code ported from `retroguard` under `LGPL` is statically linked at compile time via `yGuard-lgpl.jar`.
+Legacy code ported from `retroguard` under `LGPL` is compiled into a seperate archive called `retroguard-${VERSION}.jar`.
 
 Previous releases _may_ still be downloaded from the [yWorks download center](https://www.yworks.com/downloads#yGuard).
 
 ## Usage
 
-`yGuard` is distributed with usage instructions. In your distribution, `docs/index.html` contains documentation about the bundled `ant` task.
+An online version of this documentation [is available](https://yworks.github.io/yguard/).
 
-An online version of this documentation [is available as well](https://yworks.github.io/yguard/).
+Additionally, `yGuard` is distributed with usage instructions. In your distribution, the `docs` folder contains informtion about `yGuard`.
+In order to properly view the offline documentation, a web server is needed. A quick way to accomplish this is using:
+
+```
+cd docs/
+python3 -m http.server 4000
+```
+
 
 ## Building
 
 To build `yGuard` you will need `Java >= 7` and [Gradle](https://gradle.org/).
 
-Once installed you can build `yGuard` like so:
-```
-gradle build
-gradle obfuscate # if you would like to obfuscate the library as well
-```
-
-The built files can be found in `build/libs/`.
+Once installed you can build `yGuard` using `gradle build`.
 
 ### Using IntellIJ with yGuard
 
