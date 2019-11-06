@@ -29,7 +29,7 @@ dependencies {
   compile 'com.yworks:yguard:2.9.x'
 }
 
-task yguard {
+task obfuscate   {
   dependsOn jar
   group 'yGuard'
   description 'Obfuscates and shrinks the java archive.'
