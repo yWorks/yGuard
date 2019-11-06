@@ -1,0 +1,75 @@
+<project>
+    <property name="projectDir" value="."/>
+    <property name="rootDir" value="../../"/>
+    <property name="libraryDir" value="lib"/>
+    <property name="version" value="2.9.x"/>
+
+    <property name="project_name" value="HelloWorld"/>
+    <property name="jar" value="build/jar/${project_name}.jar"/>
+    <property name="obfjar" value="build/jar/${project_name}_obf.jar"/>
+    <property name="renamelog" value="${project_name}_renamelog.xml"/>
+    <property name="shrinklog" value="${project_name}_shrinklog.xml"/>
+
+    <target name="clean">
+        <delete dir="${projectDir}/build"/>
+        <delete dir="${projectDir}/lib/"/>
+        <delete file="${shrinklog}" />
+        <delete file="${renamelog}" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes" target="1.7" source="1.7"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="${jar}" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="com.yworks.example.HelloWorld"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="copylibs">
+        <unzip src="${rootDir}/build/distributions/yguard-bundle-${version}.zip" dest="${libraryDir}">
+            <patternset>
+                <include name="yguard-bundle-${version}/lib/**.jar"/>
+            </patternset>
+        </unzip>
+        <move todir="${projectDir}/lib">
+            <fileset dir="${projectDir}/lib/yguard-bundle-${version}/lib"/>
+        </move>
+    </target>
+
+    <target name="yguard" depends="jar, copylibs">
+        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${projectDir}/lib/yguard-${version}.jar"/>
+        <yguard>
+
+        <inoutpair in="${jar}" out="${obfjar}"/>
+        <!-- don't let the obfuscator remove the "Deprecated" -->
+        <!-- attributes from the .class file entries -->
+        <attribute name="Deprecated"/>
+        <shrink
+            logfile="shrinklog.xml">
+            <keep>
+            <class classes="protected"
+            methods="protected"
+            fields="protected"/>
+            </keep>
+        </shrink>
+        <rename mainclass="com.yworks.example.HelloWorld"
+            logfile="obflog.xml">
+            <keep>
+            <class classes="protected"
+            methods="protected"
+            fields="protected"/>
+            </keep>
+        </rename>
+        </yguard>
+    </target>
+
+    <target name="run" depends="yguard">
+        <java jar="${obfjar}" fork="true"/>
+    </target>
+</project>
