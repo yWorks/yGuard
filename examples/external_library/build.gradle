@@ -1,0 +1,73 @@
+plugins {
+  // Apply the java and library plugin to add support for Java
+  id 'application'
+}
+
+application {
+  mainClassName = 'com.yworks.example.HelloWorld'
+}
+
+compileJava {
+  sourceCompatibility '1.7'
+  targetCompatibility '1.7'
+}
+
+jar {
+  manifest {
+    attributes(
+      'Main-Class': application.mainClassName
+    )
+  }
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+configurations {
+  gson
+}
+
+dependencies {
+  compile 'com.yworks:yguard:2.9.x'
+  gson 'com.google.code.gson:gson:2.8.6'
+  implementation configurations.gson.dependencies
+}
+
+task obfuscate   {
+  dependsOn jar
+  group 'yGuard'
+  description 'Obfuscates and shrinks the java archive.'
+
+  doLast {
+    ant.taskdef(
+            name: 'yguard',
+            classname: 'com.yworks.yguard.YGuardTask',
+            classpath: sourceSets.main.runtimeClasspath.asPath
+    )
+
+    def archivePath = jar.archiveFile.get().asFile.path
+    ant.yguard {
+      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
+
+      externalclasses {
+        pathelement(location: configurations.gson.asPath)
+      }
+      shrink(logfile: "${buildDir}/yshrink.log.xml") {
+        property(name: "error-checking", value: "pedantic")
+        keep {
+          method(name: "void main(java.lang.String[])", "class": "com.yworks.example.HelloWorld")
+          'class'(classes: 'public')
+        }
+      }
+      rename(mainclass: application.mainClassName, logfile: "${buildDir}/yguard.log.xml") {
+        property(name: "error-checking", value: "pedantic")
+
+        keep {
+          'class'(classes: 'public')
+        }
+      }
+    }
+  }
+}
