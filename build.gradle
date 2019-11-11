@@ -3,8 +3,10 @@ plugins {
     id 'java-library-distribution'
     // Apply the maven plugin to add support for publications
     id 'maven-publish'
+    // Sign packages before sending them to Maven central
+    id 'signing'
 
-  // Apply yWorks coding style with editorconfig
+    // Apply yWorks coding style with editorconfig
     id 'org.ec4j.editorconfig' version '0.0.3'
 }
 
@@ -77,7 +79,7 @@ check.dependsOn editorconfigCheck
 
 publishing {
   publications {
-    maven(MavenPublication) {
+    yguard(MavenPublication) {
       artifactId = 'yguard'
 
       pom {
@@ -158,4 +160,10 @@ publishing {
       from project('retroguard').components.java
     }
   }
+}
+
+signing {
+  sign publishing.publications.yguard
+  sign publishing.publications.annotation
+  sign publishing.publications.retroguard
 }
