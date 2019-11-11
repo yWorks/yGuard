@@ -1,0 +1,66 @@
+plugins {
+  // Apply the java and library plugin to add support for Java
+  id 'application'
+}
+
+application {
+  mainClassName = 'com.yworks.example.HelloWorld'
+}
+
+jar {
+  manifest {
+    attributes(
+      'Main-Class': application.mainClassName
+    )
+  }
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  compile 'com.yworks:yguard:2.9.x'
+}
+
+task obfuscate {
+  dependsOn jar
+  group 'yGuard'
+  description 'Obfuscates and shrinks the java archive.'
+
+  doLast {
+    ant.taskdef(
+            name: 'yguard',
+            classname: 'com.yworks.yguard.YGuardTask',
+            classpath: sourceSets.main.runtimeClasspath.asPath
+    )
+
+    def archivePath = jar.archiveFile.get().asFile.path
+    ant.yguard {
+      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
+      shrink(logfile: "${buildDir}/yshrink.log.xml") {
+        keep {
+          method(name: "void main(java.lang.String[])", "class": application.mainClassName)
+        }
+      }
+      rename(mainclass: application.mainClassName, logfile: "${buildDir}/yguard.log.xml") {
+        adjust(replaceContent: true) {
+          // plain-text class names in the config files will
+          // be replaced with the obfuscated name versions
+          include(name: "**/*.properties")
+        }
+        adjust(replacePath: true) {
+          // keep the complete path to the resources even if
+          // package com.yworks.example gets obfuscated by name
+          include(name: "com/yworks/example/resources/*")
+        }
+        adjust(replaceName: true) {
+          // Replace the .properties files' names with the obfuscated
+          // versions if the corresponding .class files get obfuscated
+          include(name: "**/*.properties")
+        }
+      }
+    }
+  }
+}
