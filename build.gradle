@@ -77,6 +77,21 @@ editorconfig {
 
 check.dependsOn editorconfigCheck
 
+javadoc {
+  source = sourceSets.main.allJava
+  classpath = configurations.compileClasspath
+}
+
+task yguardSourceJar(type: Jar) {
+  archiveClassifier = 'sources'
+  from sourceSets.main.allJava
+}
+
+task yguardJavaDoc(type: Jar) {
+  archiveClassifier = 'javadoc'
+  from javadoc
+}
+
 publishing {
   publications {
     yguard(MavenPublication) {
@@ -107,6 +122,8 @@ publishing {
       }
 
       from project.components.java
+      artifact yguardSourceJar
+      artifact yguardJavaDoc
     }
 
     annotation(MavenPublication) {
