@@ -83,6 +83,9 @@ publishing {
       artifactId = 'yguard'
 
       pom {
+        name = 'yguard'
+        description = 'The open-source Java obfuscation tool working with Ant and Gradle by yWorks - the diagramming experts'
+        url = 'https://github.com/yWorks/yGuard'
         developers {
           developer {
             id = 'berger'
@@ -110,6 +113,9 @@ publishing {
       artifactId = 'annotation'
 
       pom {
+        name = 'annotation'
+        description = 'The open-source Java obfuscation tool working with Ant and Gradle by yWorks - the diagramming experts'
+        url = 'https://github.com/yWorks/yGuard'
         developers {
           developer {
             id = 'berger'
@@ -137,6 +143,9 @@ publishing {
       artifactId = 'retroguard'
 
       pom {
+        name = 'retroguard'
+        description = 'The open-source Java obfuscation tool working with Ant and Gradle by yWorks - the diagramming experts'
+        url = 'https://github.com/yWorks/yGuard'
         developers {
           developer {
             id = 'berger'
