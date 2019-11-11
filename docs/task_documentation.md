@@ -191,7 +191,7 @@ Additionally or alternatively to `inoutpair` elements this element can be specif
 ``` 
 
 ## The `externalclasses` Element
-If the jar to be processed by `yGuard` depends on external classes or libraries, this element can be used to specify classpaths to these entities. These libraries will neither be shrinked nor obfuscated. Use the `inoutpair` element for this purpose! See [external-example] for an example of when to use this element.
+If the jar to be processed by `yGuard` depends on external classes or libraries, this element can be used to specify classpaths to these entities. These libraries will neither be shrinked nor obfuscated. Use the `inoutpair` element for this purpose! See the `external_library` example for an example of when to use this element.
 In order to achieve a maximum shrinking effect by the `shrink` task, all external dependencies should be declared in the `externalclasses` element. Otherwise, all non-private methods of classes that inherit from unresolvable classes will not be shrinked.
 
 The elements attributes and child elements can be seen on the [Ant documentation page about using path elements](http://ant.apache.org/manual/using.html#path).
@@ -199,7 +199,7 @@ The elements attributes and child elements can be seen on the [Ant documentation
 ## The attribute Element
 Using the `attribute` element, you can specify which attributes present in the input classes should be kept in the obfuscated output classes.
 
-See [linked example] for an example of when to use this element.
+See the `linked_example` for an example of when to use this element.
 
 #### Attributes
 
@@ -814,7 +814,7 @@ The `classes`, `methods` and `fields` attributes tell the shrinking and renaming
     all classes that equal or extend the class defined by the given
     fully qualified classname.
     <br>
-    See <a href="#ex:extends">example 7</a> for an example usage of this
+    See <a href="#ex:extends">serializable_example</a> for an example usage of this
     attribute.
     </td>
     <td>No</td>
@@ -826,7 +826,7 @@ The `classes`, `methods` and `fields` attributes tell the shrinking and renaming
     all classes that equal or implement the class defined by the given
     fully qualified classname.
     <br>
-    See <a href="#ex:extends">example 7</a> for an example usage of this
+    See <a href="#ex:extends">serializable_example</a> for an example usage of this
     attribute.
     </td>
     <td>No</td>
