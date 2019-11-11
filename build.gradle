@@ -64,14 +64,6 @@ distributions {
         from configurations.annotation
         from jar
       }
-      into("docs") {
-        from "$projectDir/docs"
-        filter {
-          line -> line
-                  .replaceAll('@VERSION@', version)
-                  .replaceAll('@VERSION_MAJOR@', project.findProperty('VERSION_MAJOR'))
-        }
-      }
     }
   }
 }
@@ -88,17 +80,80 @@ publishing {
     maven(MavenPublication) {
       artifactId = 'yguard'
 
+      pom {
+        developers {
+          developer {
+            id = 'berger'
+            name = 'Lennard Berger'
+            email = 'lennard.berger@yworks.com'
+          }
+        }
+        scm {
+          connection = 'scm:git:git://github.com/yWorks/yguard.git'
+          developerConnection = 'scm:git:ssh://github.com/yWorks/yguard.git'
+          url = 'https://github.com/yWorks/yguard'
+        }
+        licenses {
+          license {
+            name = 'The MIT License'
+            url = 'https://choosealicense.com/licenses/mit/'
+          }
+        }
+      }
+
       from project.components.java
     }
 
     annotation(MavenPublication) {
       artifactId = 'annotation'
 
+      pom {
+        developers {
+          developer {
+            id = 'berger'
+            name = 'Lennard Berger'
+            email = 'lennard.berger@yworks.com'
+          }
+        }
+        scm {
+          connection = 'scm:git:git://github.com/yWorks/yguard.git'
+          developerConnection = 'scm:git:ssh://github.com/yWorks/yguard.git'
+          url = 'https://github.com/yWorks/yguard'
+        }
+        licenses {
+          license {
+            name = 'The MIT License'
+            url = 'https://choosealicense.com/licenses/mit/'
+          }
+        }
+      }
+
       from project(':annotation').components.java
     }
 
     retroguard(MavenPublication) {
       artifactId = 'retroguard'
+
+      pom {
+        developers {
+          developer {
+            id = 'berger'
+            name = 'Lennard Berger'
+            email = 'lennard.berger@yworks.com'
+          }
+        }
+        scm {
+          connection = 'scm:git:git://github.com/yWorks/yguard.git'
+          developerConnection = 'scm:git:ssh://github.com/yWorks/yguard.git'
+          url = 'https://github.com/yWorks/yguard'
+        }
+        licenses {
+          license {
+            name = 'GNU LESSER GENERAL PUBLIC LICENSE'
+            url = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html'
+          }
+        }
+      }
 
       from project('retroguard').components.java
     }
