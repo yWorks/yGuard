@@ -5,4 +5,16 @@ plugins {
 compileJava {
   sourceCompatibility = 1.7
   targetCompatibility = 1.7
+  source = "$buildDir/generated-src"
 }
+
+task generateSources(type: Copy) {
+  from 'src/main/java'
+  into "$buildDir/generated-src"
+  filter {
+    line -> line.replaceAll('@VERSION@', version)
+  }
+}
+
+// Use generated sources
+compileJava.dependsOn generateSources
