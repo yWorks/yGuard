@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.9.1] - 2019-11-18
+## Changed
+- Use a Jekyll-based documentation instead of our own HTML
+
+## Added
+- Added example projects for Gradle, Maven and Ant
+- Added installation instructions for Gradle, Maven and Ant
+- Published packages on Maven Central
+
 ## [2.9.0] - 2019-10-17
 ### Changed
 - Replaced legacy build system with Gradle. 

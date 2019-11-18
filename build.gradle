@@ -98,6 +98,7 @@ publishing {
       artifactId = 'yguard'
 
       pom {
+        name = 'yguard'
         description = POM_DESCRIPTION
         url = POM_URL
         developers {
@@ -129,6 +130,7 @@ publishing {
       artifactId = 'annotation'
 
       pom {
+        name = 'annotation'
         description = POM_DESCRIPTION
         url = POM_URL
         developers {
@@ -160,6 +162,7 @@ publishing {
       artifactId = 'retroguard'
 
       pom {
+        name = 'retroguard'
         description = POM_DESCRIPTION
         url = POM_URL
         developers {
