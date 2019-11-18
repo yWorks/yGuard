@@ -1,7 +1,10 @@
 plugins {
     // Apply the java and library plugin to add support for Java
-    id 'java'
     id 'java-library-distribution'
+    // Apply the maven plugin to add support for publications
+    id 'maven-publish'
+    // Sign packages before sending them to Maven central
+    id 'signing'
 
     // Apply yWorks coding style with editorconfig
     id 'org.ec4j.editorconfig' version '0.0.3'
@@ -9,6 +12,8 @@ plugins {
 
 allprojects {
     apply plugin: 'org.ec4j.editorconfig'
+    version = String.format("%s.%s", VERSION_MAJOR, VERSION_MINOR)
+    group = 'com.yworks'
 }
 
 repositories {
@@ -16,12 +21,14 @@ repositories {
 }
 
 configurations {
+    annotation
     dependents.extendsFrom implementation
 }
 
 dependencies {
-    implementation project(':retroguard')
+    annotation project(':annotation')
     implementation project(':annotation')
+    implementation project(':retroguard')
     implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
@@ -33,35 +40,31 @@ compileJava {
     targetCompatibility = 1.7
 }
 
-def DEPENDANT_JARS = ["retroguard.jar", "asm-7.2.jar", "guava-28.1-android.jar", "failureaccess-1.0.1.jar"]
+def LIBRARIES = [String.format("retroguard-%s.jar", version), "guava-28.1-android.jar", "asm-7.2.jar", "ant-1.10.7.jar"]
+def LIBRARY_JARS = configurations.dependents.filter {
+  file -> file.name in LIBRARIES
+}
 
 jar {
   manifest {
     attributes(
-      'Class-Path': String.join(" ", *DEPENDANT_JARS),
+      'Class-Path': String.join(" ", *LIBRARY_JARS.collect {
+        file -> file.name
+      }),
       'Main-Class': 'com.yworks.yguard.YGuardLogParser'
     )
   }
 }
 
-def VERSION = String.format("%s.%s", project.findProperty('VERSION_MAJOR'), project.findProperty('VERSION_MINOR'))
-
 distributions {
   bundle {
-    baseName = String.format("yguard-%s", VERSION)
+    baseName = "yguard-bundle"
     contents {
       from file("$projectDir/LICENSE")
       into("lib") {
-        from configurations.dependents.filter { it.name in DEPENDANT_JARS.plus('ObfuscationAnnotation.jar') }
+        from LIBRARY_JARS
+        from configurations.annotation
         from jar
-      }
-      into("docs") {
-        from "$projectDir/docs"
-        filter {
-          line -> line
-                  .replaceAll('@VERSION@', VERSION)
-                  .replaceAll('@VERSION_MAJOR@', project.findProperty('VERSION_MAJOR'))
-        }
       }
     }
   }
@@ -73,3 +76,139 @@ editorconfig {
 }
 
 check.dependsOn editorconfigCheck
+
+javadoc {
+  source = sourceSets.main.allJava
+  classpath = configurations.compileClasspath
+}
+
+task yguardSourceJar(type: Jar) {
+  archiveClassifier = 'sources'
+  from sourceSets.main.allJava
+}
+
+task yguardJavaDoc(type: Jar) {
+  archiveClassifier = 'javadoc'
+  from javadoc
+}
+
+publishing {
+  repositories {
+    maven {
+      url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+      credentials {
+        username SONATYPE_NEXUS_USERNAME
+        password SONATYPE_NEXUS_PASSWORD
+      }
+    }
+  }
+  publications {
+    yguard(MavenPublication) {
+      artifactId = 'yguard'
+
+      pom {
+        name = 'yguard'
+        description = POM_DESCRIPTION
+        url = POM_URL
+        developers {
+          developer {
+            id = POM_DEVELOPER_ID
+            name = POM_DEVELOPER_NAME
+            email = POM_DEVELOPER_EMAIL
+          }
+        }
+        scm {
+          connection = POM_SCM_CONNECTION
+          developerConnection = POM_SCM_DEV_CONNECTION
+          url = POM_SCM_URL
+        }
+        licenses {
+          license {
+            name = POM_LICENCE_NAME
+            url = POM_LICENCE_URL
+          }
+        }
+      }
+
+      from project.components.java
+      artifact yguardSourceJar
+      artifact yguardJavaDoc
+    }
+
+    annotation(MavenPublication) {
+      artifactId = 'annotation'
+
+      pom {
+        name = 'annotation'
+        description = POM_DESCRIPTION
+        url = POM_URL
+        developers {
+          developer {
+            id = POM_DEVELOPER_ID
+            name = POM_DEVELOPER_NAME
+            email = POM_DEVELOPER_EMAIL
+          }
+        }
+        scm {
+          connection = POM_SCM_CONNECTION
+          developerConnection = POM_SCM_DEV_CONNECTION
+          url = POM_SCM_URL
+        }
+        licenses {
+          license {
+            name = POM_LICENCE_NAME
+            url = POM_LICENCE_URL
+          }
+        }
+      }
+
+      from project(':annotation').components.java
+      artifact project(':annotation').annotationSourceJar
+      artifact project(':annotation').annotationJavaDoc
+    }
+
+    retroguard(MavenPublication) {
+      artifactId = 'retroguard'
+
+      pom {
+        name = 'retroguard'
+        description = POM_DESCRIPTION
+        url = POM_URL
+        developers {
+          developer {
+            id = POM_DEVELOPER_ID
+            name = POM_DEVELOPER_NAME
+            email = POM_DEVELOPER_EMAIL
+          }
+        }
+        scm {
+          connection = POM_SCM_CONNECTION
+          developerConnection = POM_SCM_DEV_CONNECTION
+          url = POM_SCM_URL
+        }
+        licenses {
+          license {
+            name = POM_LICENCE_NAME
+            url = POM_LICENCE_URL
+          }
+        }
+        licenses {
+          license {
+            name = 'GNU LESSER GENERAL PUBLIC LICENSE'
+            url = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html'
+          }
+        }
+      }
+
+      from project('retroguard').components.java
+      artifact project(':retroguard').retroguardSourceJar
+      artifact project(':retroguard').retroguardJavaDoc
+    }
+  }
+}
+
+signing {
+  sign publishing.publications.yguard
+  sign publishing.publications.annotation
+  sign publishing.publications.retroguard
+}

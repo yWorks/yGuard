@@ -1,0 +1,9 @@
+name: Continous Integration
+
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: MrRamych/gradle-actions/openjdk-11@3.1
