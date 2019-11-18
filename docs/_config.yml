@@ -22,7 +22,7 @@ title: yGuard
 email: yguard@yworks.com
 description: >- # this means to ignore newlines until "baseurl:"
   The open-source Java obfuscation tool working with Ant, Maven and Gradle by yWorks - the diagramming experts
-#baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/yGuard" # the subpath of your site, e.g. /blog
 #url: "" # the base hostname & protocol for your site, e.g. http://example.com
 plugins:
   - jemoji
@@ -31,7 +31,7 @@ github_username:  yWorks
 
 show_downloads: ["true"]
 github:
-  zip_url: https://github.com/yWorks/yguard/releases/download/2.9.0/yguard-2.9.0.zip
+  zip_url: https://github.com/yWorks/yGuard/releases/download/2.9.1/yguard-bundle-2.9.1.zip
 
 # Build settings
 theme: jekyll-theme-cayman
