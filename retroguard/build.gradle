@@ -18,3 +18,18 @@ task generateSources(type: Copy) {
 
 // Use generated sources
 compileJava.dependsOn generateSources
+
+javadoc {
+  source = sourceSets.main.allJava
+  classpath = configurations.compileClasspath
+}
+
+task retroguardSourceJar(type: Jar) {
+  archiveClassifier = 'sources'
+  from sourceSets.main.allJava
+}
+
+task retroguardJavaDoc(type: Jar) {
+  archiveClassifier = 'javadoc'
+  from javadoc
+}

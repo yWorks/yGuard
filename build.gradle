@@ -98,25 +98,24 @@ publishing {
       artifactId = 'yguard'
 
       pom {
-        name = 'yguard'
-        description = 'The open-source Java obfuscation tool working with Ant and Gradle by yWorks - the diagramming experts'
-        url = 'https://github.com/yWorks/yGuard'
+        description = POM_DESCRIPTION
+        url = POM_URL
         developers {
           developer {
-            id = 'berger'
-            name = 'Lennard Berger'
-            email = 'lennard.berger@yworks.com'
+            id = POM_DEVELOPER_ID
+            name = POM_DEVELOPER_NAME
+            email = POM_DEVELOPER_EMAIL
           }
         }
         scm {
-          connection = 'scm:git:git://github.com/yWorks/yguard.git'
-          developerConnection = 'scm:git:ssh://github.com/yWorks/yguard.git'
-          url = 'https://github.com/yWorks/yguard'
+          connection = POM_SCM_CONNECTION
+          developerConnection = POM_SCM_DEV_CONNECTION
+          url = POM_SCM_URL
         }
         licenses {
           license {
-            name = 'The MIT License'
-            url = 'https://choosealicense.com/licenses/mit/'
+            name = POM_LICENCE_NAME
+            url = POM_LICENCE_URL
           }
         }
       }
@@ -130,50 +129,56 @@ publishing {
       artifactId = 'annotation'
 
       pom {
-        name = 'annotation'
-        description = 'The open-source Java obfuscation tool working with Ant and Gradle by yWorks - the diagramming experts'
-        url = 'https://github.com/yWorks/yGuard'
+        description = POM_DESCRIPTION
+        url = POM_URL
         developers {
           developer {
-            id = 'berger'
-            name = 'Lennard Berger'
-            email = 'lennard.berger@yworks.com'
+            id = POM_DEVELOPER_ID
+            name = POM_DEVELOPER_NAME
+            email = POM_DEVELOPER_EMAIL
           }
         }
         scm {
-          connection = 'scm:git:git://github.com/yWorks/yguard.git'
-          developerConnection = 'scm:git:ssh://github.com/yWorks/yguard.git'
-          url = 'https://github.com/yWorks/yguard'
+          connection = POM_SCM_CONNECTION
+          developerConnection = POM_SCM_DEV_CONNECTION
+          url = POM_SCM_URL
         }
         licenses {
           license {
-            name = 'The MIT License'
-            url = 'https://choosealicense.com/licenses/mit/'
+            name = POM_LICENCE_NAME
+            url = POM_LICENCE_URL
           }
         }
       }
 
       from project(':annotation').components.java
+      artifact project(':annotation').annotationSourceJar
+      artifact project(':annotation').annotationJavaDoc
     }
 
     retroguard(MavenPublication) {
       artifactId = 'retroguard'
 
       pom {
-        name = 'retroguard'
-        description = 'The open-source Java obfuscation tool working with Ant and Gradle by yWorks - the diagramming experts'
-        url = 'https://github.com/yWorks/yGuard'
+        description = POM_DESCRIPTION
+        url = POM_URL
         developers {
           developer {
-            id = 'berger'
-            name = 'Lennard Berger'
-            email = 'lennard.berger@yworks.com'
+            id = POM_DEVELOPER_ID
+            name = POM_DEVELOPER_NAME
+            email = POM_DEVELOPER_EMAIL
           }
         }
         scm {
-          connection = 'scm:git:git://github.com/yWorks/yguard.git'
-          developerConnection = 'scm:git:ssh://github.com/yWorks/yguard.git'
-          url = 'https://github.com/yWorks/yguard'
+          connection = POM_SCM_CONNECTION
+          developerConnection = POM_SCM_DEV_CONNECTION
+          url = POM_SCM_URL
+        }
+        licenses {
+          license {
+            name = POM_LICENCE_NAME
+            url = POM_LICENCE_URL
+          }
         }
         licenses {
           license {
@@ -184,6 +189,8 @@ publishing {
       }
 
       from project('retroguard').components.java
+      artifact project(':retroguard').retroguardSourceJar
+      artifact project(':retroguard').retroguardJavaDoc
     }
   }
 }
