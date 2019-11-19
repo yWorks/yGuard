@@ -414,6 +414,26 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     No, defaults to <code>true</code>
     </td>
 </tr>
+       <tr>
+          <td>
+            <a name="scramble"></a><code>scramble</code>
+          </td>
+          <td>
+            A boolean attribute (valid values: <code>true</code>/<code>false</code>)
+            that determines whether the renaming engine should generate pseudorandom
+            name mappings for each invocation. If set to <code>false</code> (the
+            default, for backward compatibility), each obfuscation will used a
+            fixed map that generates names based on the order of the obfuscated
+            elements. If nothing is changed, each obfuscation will generate the
+            same obfuscated names for all elements. If set to <code>true</code>,
+            yGuard generates pseudorandom mappings (using <code>java.util.Random</code>)
+            that produce different obfuscated names in each build even if the
+            unobfuscated source is unchanged.
+          </td>
+          <td>
+            No, defaults to <code>false</code>
+          </td>
+
 <tr>
     <td><a name="annotationClass"></a><code>annotationClass</code></td>
     <td>

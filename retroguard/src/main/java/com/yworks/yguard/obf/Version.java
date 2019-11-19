@@ -33,7 +33,7 @@ package com.yworks.yguard.obf;
  */
 public class Version {
     // Constants -------------------------------------------------------------
-    private static final String REL_VERSION = "2.9.0.DbVis";
+    private static final String REL_VERSION = "@VERSION@";
     private static final String YGUARD_REL_JAR_COMMENT = null; // "Obfuscation by yGuard v"+REL_VERSION+" - www.yworks.com (authors: Mark Welsh, markw@retrologic.com; yWorks' yGuard Development Team, yguard@yworks.com)";
 
 
