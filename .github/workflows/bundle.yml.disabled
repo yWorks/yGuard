@@ -1,0 +1,52 @@
+name: Release bundle
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Get minor version
+      id: get_minor
+      run: echo ::set-output name=minor::$(echo ${GITHUB_REF:14}) # refs/tags/2.9.
+    - uses: MrRamych/gradle-actions/openjdk-11@3.1
+      id: build_bundle
+      env:
+        ORG_GRADLE_PROJECT_VERSION_MINOR=${{ steps.outputs.get_minor.minor }}
+      with:
+        args: assembleBundleDist
+    - uses: actions/setup-ruby@v1
+      id: build_docs
+      working-directory: ./docs
+      run: |
+        gem install jekyll bundler
+        bundle exec jekyll build
+    - name: Concat bundle and documentation
+      id: concat_bundle
+      working-directory: ./build/distributions
+      run: |
+        mkdir -p ${{ format('yguard-bundle-2.9.{0}', steps.outputs.get_minor.minor ) }}
+        cp -r ../../docs/_site ${{ format('yguard-bundle-2.9.{0}/docs', steps.outputs.get_minor.minor ) }} # copies generated documentation
+        zip -ur ${{ format('yguard-bundle-2.9.{0}.zip', steps.outputs.get_minor.minor ) }} ${{ format('yguard-bundle-2.9.{0}', steps.outputs.get_minor.minor ) }} # add generated documentation to existing bundle
+    - uses: actions/create-release@v1.0.0
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: true
+        prerelease: false
+    - uses: actions/upload-release-asset@v1.0.1
+      id: upload-release_asset 
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ${{ format('./build/distributions/yguard-bundle-2.9.{0}.zip', steps.outputs.get_minor.minor ) }}
+        asset_name: ${{ format('yguard-bundle-2.9.{0}.zip', steps.outputs.get_minor.minor ) }}
+        asset_content_type: application/zip

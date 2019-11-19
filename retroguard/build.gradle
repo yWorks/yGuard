@@ -5,4 +5,31 @@ plugins {
 compileJava {
   sourceCompatibility = 1.7
   targetCompatibility = 1.7
+  source = "$buildDir/generated-src"
+}
+
+task generateSources(type: Copy) {
+  from 'src/main/java'
+  into "$buildDir/generated-src"
+  filter {
+    line -> line.replaceAll('@VERSION@', version)
+  }
+}
+
+// Use generated sources
+compileJava.dependsOn generateSources
+
+javadoc {
+  source = sourceSets.main.allJava
+  classpath = configurations.compileClasspath
+}
+
+task retroguardSourceJar(type: Jar) {
+  archiveClassifier = 'sources'
+  from sourceSets.main.allJava
+}
+
+task retroguardJavaDoc(type: Jar) {
+  archiveClassifier = 'javadoc'
+  from javadoc
 }

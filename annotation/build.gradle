@@ -10,3 +10,19 @@ compileJava {
 jar {
   setArchivesBaseName('ObfuscationAnnotation')
 }
+
+javadoc {
+  source = sourceSets.main.allJava
+  classpath = configurations.compileClasspath
+}
+
+task annotationSourceJar(type: Jar) {
+  archiveClassifier = 'sources'
+  from sourceSets.main.allJava
+}
+
+task annotationJavaDoc(type: Jar) {
+  archiveClassifier = 'javadoc'
+  from javadoc
+}
+
