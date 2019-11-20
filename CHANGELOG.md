@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.9.2]
 ## Added
 - Added scramble to the <rename> element, introducing randomized mapping
+- Add documentation about <property> default values
 
 ## [2.9.1] - 2019-11-18
 ## Changed

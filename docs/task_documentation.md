@@ -493,8 +493,9 @@ The basic idea is, that all elements will be renamed by this task. There are dif
  <table class="listing">
 <thead>
 <tr>
-    <th width="12%"><b>Name</b></th>
-    <th width="88%"><b>Description</b></th>
+    <th width="10%"><b>Name</b></th>
+    <th width="80%"><b>Description</b></th>
+    <th width="10%"><b>Default</b></th>
 </tr>
 </thead>
 
@@ -513,6 +514,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
         </li>
     </ul>
     </td>
+    <td><code>false</code></td>
 </tr>
 
 <tr>
@@ -545,6 +547,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
         </li>
     </ul>
     </td>
+    <td><code>small</code></td>
 </tr>
 
 <tr>
@@ -576,6 +579,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
         </li>
     </ul>
     </td>
+    <td><code>legal</code></td>
 </tr>
 
 <tr>
@@ -587,6 +591,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     Setting this property to <code>false</code> eases the analysis of
     stacktraces but reduces the obfuscation effect.
     </td>
+    <td><code>true</code></td>
 </tr>
 
 <tr>
@@ -596,6 +601,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     are fully obfuscated with a given package prefix, e.g.
     <code>com.mycompany.obf</code>.
     </td>
+    <td>-</td>
 </tr>
 
 <tr>
@@ -607,6 +613,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     list of digest-algorithm identifiers, e.g.
     <code class="prop-value">SHA-1, MD5</code> (which is the default).
     </td>
+    <td><code>SHA-1, MD5</code></td>
 </tr>
 
 <tr>
@@ -627,6 +634,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
     better control of which attributes should be exposed in what classes
     use the <a href="#attribute">Attribute Element</a>.
     </td>
+    <td>-</td>
 </tr>
 </tbody>
 </table>
