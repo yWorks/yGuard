@@ -73,6 +73,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -951,7 +952,7 @@ public class ObfuscatorTask extends YGuardBaseTask
     } catch ( ClassNotFoundException e ) {
       throw new BuildException( NO_SHRINKING_SUPPORT, e );
     }
-    
+
     if ( null == yShrinkModel ) return;
 
     if (this.resourceClassPath != null) {
@@ -1231,13 +1232,16 @@ public class ObfuscatorTask extends YGuardBaseTask
   }
 
   private static final class YGuardNameFactory extends NameMakerFactory.DefaultNameMakerFactory {
-    private static final String legalFirstChars;
-    private static final String legalChars;
-    private static final String crazylegalFirstChars;
-    private static final String crazylegalChars;
-    private static final String asciiFirstChars;
-    private static final String asciiChars;
-    private static final String asciiLowerChars;
+    private static String legalFirstChars;
+    private static String legalChars;
+    private static String crazylegalFirstChars;
+    private static String crazylegalChars;
+    private static String asciiFirstChars;
+    private static String asciiChars;
+    private static String asciiLowerChars;
+
+    private static AtomicBoolean scrambled = new AtomicBoolean(false);
+
     private String packagePrefix;
 
     static{
@@ -1321,6 +1325,35 @@ public class ObfuscatorTask extends YGuardBaseTask
     YGuardNameFactory(int mode){
       super.setInstance(this);
       this.mode = mode;
+    }
+
+    private static void scramble() {
+      if (scrambled.compareAndSet(false, true)) {
+        asciiChars = scrambleChars(asciiChars);
+        asciiFirstChars = scrambleChars(asciiFirstChars);
+        legalChars = scrambleChars(legalChars);
+        legalFirstChars = scrambleChars(legalFirstChars);
+        crazylegalChars = scrambleChars(crazylegalChars);
+        crazylegalFirstChars = scrambleChars(crazylegalFirstChars);
+      }
+    }
+
+    private static String scrambleChars(String string) {
+      char[] chars = string.toCharArray();
+      Random r = new Random();  // Random number generator
+
+      for (int c = 0; c < chars.length; c++) {
+        int randomPosition = r.nextInt(chars.length);
+        char original = chars[c];
+        char random = chars[randomPosition];
+        chars[c] = random;
+        chars[randomPosition] = original;
+      }
+      StringBuilder sb = new StringBuilder();
+      for (char c : chars) {
+        sb.append(c);
+      }
+      return sb.toString();
     }
 
     public boolean isOverloadEnabled() {
@@ -1801,6 +1834,12 @@ public class ObfuscatorTask extends YGuardBaseTask
     this.replaceClassNameStrings = replaceClassNameStrings;
   }
 
+  public void setScramble(boolean scramble) {
+    if (scramble) {
+      YGuardNameFactory.scramble();
+      com.yworks.yguard.obf.KeywordNameMaker.scramble();
+    }
+  }
   public static final class MyLineNumberTableMapper implements com.yworks.yguard.obf.LineNumberTableMapper {
     private long salt;
     private LineNumberScrambler last;
