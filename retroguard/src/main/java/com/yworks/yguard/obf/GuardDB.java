@@ -453,7 +453,9 @@ public class GuardDB implements ClassConstants
         } else {
           outJar = new JarOutputStream(new BufferedOutputStream(os),newManifest[i]);
         }
-        outJar.setComment( Version.getJarComment());
+        if (Version.getJarComment() != null) {
+          outJar.setComment( Version.getJarComment());
+        }
 
         // sort the entries in ascending order
         Collections.sort(jarEntries, new Comparator(){
