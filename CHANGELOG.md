@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - Added scramble to the <rename> element, introducing randomized mapping
 - Add documentation about <property> default values
+- Added @Inherited annotation to `com.yworks.util.annotation.Obfuscation`
 
 ## Fixed
 - Do not use `setComment` when comment is actually `null`. Achieves Android compatibility.

@@ -1318,7 +1318,7 @@ public @interface Obfuscation {
 }
 ```
 
-This class is also the default annotation yGuard is looking for when obfuscating.
+This class is also the default annotation yGuard is looking for when obfuscating. By default the `Obfuscation` annotation is inherited using the `@Inherited` trait. If this behaviour is undesirable, consider creating a custom obfuscation annotation.
 
 The convention for annotation classes that yGuard understands as obfuscation controlling annotations requires two attributes:
 
