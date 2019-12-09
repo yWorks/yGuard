@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## [2.9.2]
+## [2.9.2] - 2019-12-09
 ## Added
 - Added scramble to the <rename> element, introducing randomized mapping
 - Add documentation about <property> default values
@@ -285,6 +285,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented more robust handling of Manifest files. Implementation now makes use of `java.util.jar.Manifest`.
 - The `conserveManifest` attribute of the obfuscate task now conserves the manifest in a better way.
 
-[Unreleased]: https://github.com/yworks/yguard/compare/2.9.0...HEAD
+[Unreleased]: https://github.com/yworks/yguard/compare/2.9.2...HEAD
+[2.9.2]: https://github.com/yworks/yguard/compare/2.9.1...2.9.2
+[2.9.1]: https://github.com/yworks/yguard/compare/2.9.0...2.9.1
 [2.9.0]: https://github.com/yworks/yguard/compare/2.8.0...2.9.0
 [2.8.0]: https://github.com/yWorks/yguard/tree/2.8.0
