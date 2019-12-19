@@ -17,7 +17,7 @@ Previous releases _may_ still be downloaded from the [yWorks download center](ht
 
 ## Usage
 
-An online version of this documentation [is available](https://yworks.github.io/yguard/).
+An online version of this documentation [is available](https://yworks.github.io/yGuard/).
 
 Additionally, `yGuard` is distributed with usage instructions. In your distribution, the `docs` folder contains informtion about `yGuard`.
 In order to properly view the offline documentation, a web server is needed. A quick way to accomplish this is using:
