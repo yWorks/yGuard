@@ -433,7 +433,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
           <td>
             No, defaults to <code>false</code>
           </td>
-
+</tr>
 <tr>
     <td><a name="annotationClass"></a><code>annotationClass</code></td>
     <td>
