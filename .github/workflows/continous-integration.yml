@@ -1,9 +1,14 @@
-name: Continous Integration
+name: Continous Integration for yGuard
 
 on: [push, pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: MrRamych/gradle-actions/openjdk-11@3.1
+    - run: |
+        sudo apt install -y gradle
+        gradle wrapper
+        ./gradlew wrapper --gradle-version 5.6.2
+        ./gradlew check
