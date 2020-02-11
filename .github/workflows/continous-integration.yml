@@ -7,14 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Install OpenJDK 11
-      run: sudo apt install -y default-jdk
-    - name: Download gradle wrapper
-      run: |
-        cd /tmp
-        mkdir -p gradletmp/gradle/wrapper
-        cd gradletmp/gradle/wrapper
-        wget https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.jar
-        wget https://raw.githubusercontent.com/gradle/gradle/v5.6.3/gradle/wrapper/gradle-wrapper.properties
-    - name: Run project tests
-      run: java -cp /tmp/gradletmp/gradle/wrapper/gradle-wrapper.jar org.gradle.wrapper.GradleWrapperMain check
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Build with Gradle
+      run: gradle check
