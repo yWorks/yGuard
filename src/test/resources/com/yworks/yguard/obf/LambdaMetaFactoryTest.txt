@@ -1,0 +1,22 @@
+package com.yworks.yguard.obf;
+
+import java.util.function.Predicate;
+import java.io.PrintStream;
+
+public class LambdaMetaFactoryTest {
+  private LambdaMetaFactoryTest() {
+
+  }
+
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+
+  public static void run( final PrintStream out ) {
+    out.println(valid(3, i -> i % 2 == 1));
+  }
+
+  private static boolean valid(Integer value, Predicate<Integer> condition) {
+    return condition.test(value);
+  }
+}
