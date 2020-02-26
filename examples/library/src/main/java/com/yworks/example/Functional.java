@@ -17,10 +17,15 @@ public class Functional<T extends Number> {
     }
   }
 
+  // This will be obfuscated
+  private double addDouble(double a, double b) {
+    return a+b;
+  }
+
   protected T sum(List<T> list) {
     class SumReducible<T extends Number> implements Reducible<T> {
       public T call(T a, T b) {
-        Double sum = a.doubleValue() + b.doubleValue();
+        Double sum = addDouble(a.doubleValue(), b.doubleValue());
         return (T) sum;
       }
     }
