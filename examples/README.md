@@ -18,6 +18,7 @@ All examples can be built using all major build systems. Build instructions cane
 ### Compiling with `Gradle`
 
 ```
+cd examples/example
 gradle build obfuscate
 cd build/libs/
 java -jar example.jar
@@ -27,6 +28,7 @@ java -jar example_obf.jar # behaves identically
 ### Compiling with `Maven`
 
 ```
+cd examples/example
 mvn compile package
 cd target/
 java -jar HelloWorld-1.0-SNAPSHOT.jar
@@ -38,7 +40,7 @@ java -jar HelloWorld-1.0-SNAPSHOT_obfuscated.jar # behaves identically
 
 ```
 cd examples/example
-# copy the lib folder to the example including ALL of it's dependencies
+# copy the lib folder to the example including ALL of its dependencies
 # adjust the version in the build.xml
 ant -p  # for a list of available commands
 ant run # will directly run the obfuscated version
