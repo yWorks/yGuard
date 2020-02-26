@@ -37,9 +37,9 @@ java -jar HelloWorld-1.0-SNAPSHOT_obfuscated.jar # behaves identically
 
 
 ```
-cd ../../
-gradle assembleBundleDist # this is a prerequisite for running the ant task and will produce a yguard-bundle-2.9.x.zip
-
 cd examples/example
+# copy the lib folder to the example including ALL of it's dependencies
+# adjust the version in the build.xml
+ant -p  # for a list of available commands
 ant run # will directly run the obfuscated version
 ```
