@@ -1,5 +1,6 @@
 package com.yworks.yguard.obf;
 
+import com.yworks.util.Compiler;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -42,7 +43,7 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
     assertNotNull("Could not resolve " + fileName + '.', source);
 
     // compile the java source code
-    final Compiler compiler = newCompiler();
+    final com.yworks.util.Compiler compiler = Compiler.newCompiler();
 
     final ArrayList sources = new ArrayList();
     sources.add(compiler.newUrlSource(testTypeName, source));
@@ -114,7 +115,7 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
 
 
     // compile the java source code
-    final Compiler compiler = newCompiler();
+    final com.yworks.util.Compiler compiler = Compiler.newCompiler();
 
     final ArrayList sources = new ArrayList();
     sources.add(compiler.newUrlSource(testTypeName, source));

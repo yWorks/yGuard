@@ -1,5 +1,6 @@
 package com.yworks.yguard.obf;
 
+import com.yworks.util.Compiler;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -59,7 +60,7 @@ public class MethodParametersTest extends AbstractObfuscationTest {
 
 
     // compile the java source code
-    final Compiler compiler = newCompiler();
+    final com.yworks.util.Compiler compiler = Compiler.newCompiler();
     compiler.addOption("-parameters");
 
     final ArrayList sources = new ArrayList();

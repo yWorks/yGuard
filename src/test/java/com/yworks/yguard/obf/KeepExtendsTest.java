@@ -1,5 +1,6 @@
 package com.yworks.yguard.obf;
 
+import com.yworks.util.Compiler;
 import com.yworks.yguard.YShrinkModel;
 import com.yworks.yguard.common.ShrinkBag;
 import com.yworks.yguard.common.ant.InOutPair;
@@ -48,7 +49,7 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
     assertTrue("Invalid Java version", 11 <= getMajorVersion());
 
 
-    final Compiler compiler = newCompiler();
+    final com.yworks.util.Compiler compiler = Compiler.newCompiler();
 
     // resolve java source code and create corresponding source model items
     final ArrayList sources = new ArrayList();
