@@ -1,9 +1,12 @@
 package com.yworks.yguard.obf;
 
-import java.util.function.Predicate;
 import java.io.PrintStream;
 
 public class LambdaMetaFactoryTest {
+  private interface MyInterface {
+    void doStuff(final PrintStream out);
+  }
+
   private LambdaMetaFactoryTest() {
 
   }
@@ -12,11 +15,8 @@ public class LambdaMetaFactoryTest {
     run(System.out);
   }
 
-  public static void run( final PrintStream out ) {
-    out.println(valid(3, i -> i % 2 == 1));
-  }
-
-  private static boolean valid(Integer value, Predicate<Integer> condition) {
-    return condition.test(value);
+  public static void run( final PrintStream out) {
+    MyInterface myInterface = (stream) -> stream.println("implementation");
+    myInterface.doStuff(out);
   }
 }

@@ -86,7 +86,7 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
       //   check test method output
       assertEquals(
               "Wrong test output",
-              String.format("true%n", System.lineSeparator()),
+              String.format("implementation%n", System.lineSeparator()),
               new String(output.toByteArray(), "UTF-8"));
     } finally {
 
