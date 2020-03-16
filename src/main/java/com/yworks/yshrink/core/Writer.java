@@ -79,7 +79,7 @@ public class Writer {
 
     if ( !out.exists() ) out.createNewFile();
 
-    final Manifest newManifest = new Manifest( inJar.getManifest() );
+    final Manifest newManifest = ( inJar.getManifest() != null) ? new Manifest( inJar.getManifest() ) : new Manifest();
     final JarWriter writer = new JarWriter( out, newManifest );
 
     int numClasses = 0;
