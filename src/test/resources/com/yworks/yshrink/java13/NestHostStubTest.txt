@@ -3,6 +3,12 @@ package com.yworks.yshrink.java13;
 import java.io.PrintStream;
 
 public class NestHostStubTest {
+  static class DoNotKeep {
+    public String neverUsed() {
+      return "Hello from unused class";
+    }
+  }
+
   static class Nested {
     protected String nestedResponse() {
       return "Hello from nested class";

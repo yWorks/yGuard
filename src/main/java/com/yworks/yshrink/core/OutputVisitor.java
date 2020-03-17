@@ -93,6 +93,13 @@ public class OutputVisitor extends ClassVisitor {
     }
   }
 
+  public void visitNestMember(java.lang.String nestMember) {
+    final ClassDescriptor cd = model.getClassDescriptor( nestMember );
+    if ( !model.isObsolete( cd.getNode() )) {
+      cv.visitNestMember(  nestMember );
+    }
+  }
+
   public FieldVisitor visitField( final int access, final String name, final String desc, final String signature,
                                   final Object value ) {
 
