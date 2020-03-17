@@ -1,0 +1,25 @@
+package com.yworks.yshrink.java13;
+
+import java.io.PrintStream;
+
+class NestHostStubTest {
+  static class Nested {
+    protected String nestedResponse() {
+      return "Hello from nested class";
+    }
+  }
+
+  static class NestedCaller {
+    public String forwardResponse() {
+      return new Nested().nestedResponse();
+    }
+  }
+
+  public static void run( final PrintStream out ) {
+    out.println(new NestedCaller().forwardResponse());
+  }
+
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+}
