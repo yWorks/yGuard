@@ -247,6 +247,10 @@ public class OutputVisitor extends ClassVisitor {
       delegate.visitJumpInsn( opcode, label );
     }
 
+    public void visitInvokeDynamicInsn(String name, String descriptor, Handle bootstrapMethodHandle, Object... bootstrapMethodArguments) {
+      delegate.visitInvokeDynamicInsn(name, descriptor, bootstrapMethodHandle, bootstrapMethodArguments);
+    }
+
     public void visitLabel( Label label ) {
       delegate.visitLabel( label );
     }
@@ -392,11 +396,13 @@ public class OutputVisitor extends ClassVisitor {
     public void visitFrame(int i, int i1, Object[] objects, int i2, Object[] objects1) {
     }
 
-
     public void visitInsn( int opcode ) {
     }
 
     public void visitIntInsn( int opcode, int operand ) {
+    }
+
+    public void visitInvokeDynamicInsn(String name, String descriptor, Handle bootstrapMethodHandle, Object... bootstrapMethodArguments) {
     }
 
     public void visitVarInsn( int opcode, int var ) {
