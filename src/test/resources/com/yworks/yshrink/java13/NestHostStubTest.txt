@@ -2,7 +2,7 @@ package com.yworks.yshrink.java13;
 
 import java.io.PrintStream;
 
-class NestHostStubTest {
+public class NestHostStubTest {
   static class Nested {
     protected String nestedResponse() {
       return "Hello from nested class";

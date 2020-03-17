@@ -51,7 +51,7 @@ public class NestHostTest {
       Files.write(inTmp.toPath(), baos.toByteArray());
 
       // Run shrinker
-      YShrink yShrink = new YShrink(true, "SHA-1,MD5");
+      YShrink yShrink = new YShrink(false, "SHA-1,MD5");
       InOutPair inOutPair = new InOutPair();
       inOutPair.setIn(inTmp);
       inOutPair.setOut(outTmp);
