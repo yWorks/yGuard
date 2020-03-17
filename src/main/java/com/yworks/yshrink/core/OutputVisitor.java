@@ -24,7 +24,7 @@ public class OutputVisitor extends ClassVisitor {
   private final DoNothingAnnotationVisitor ignoreAnnotation = new DoNothingAnnotationVisitor();
 
   public OutputVisitor( final ClassVisitor cv, final Model model, boolean createStubs ) {
-    super(Opcodes.ASM5);
+    super(Opcodes.ASM7);
     this.createStubs = createStubs;
     this.cv = cv;
     this.model = model;
@@ -159,7 +159,7 @@ public class OutputVisitor extends ClassVisitor {
     private MethodVisitor delegate;
 
     public OutputMethodVisitor( MethodVisitor delegate ) {
-      super(Opcodes.ASM5);
+      super(Opcodes.ASM7);
       this.delegate = delegate;
     }
 
@@ -301,7 +301,7 @@ public class OutputVisitor extends ClassVisitor {
     private final FieldVisitor delegate;
 
     public OutputFieldVisitor(FieldVisitor delegate) {
-      super(Opcodes.ASM5);
+      super(Opcodes.ASM7);
       this.delegate = delegate;
     }
 
@@ -335,7 +335,7 @@ public class OutputVisitor extends ClassVisitor {
     private final boolean visitStub;
 
     public StubOutputMethodVisitor(MethodVisitor delegate, boolean visitStub) {
-      super(Opcodes.ASM5);
+      super(Opcodes.ASM7);
       this.delegate = delegate;
       this.visitStub = visitStub;
     }
@@ -451,7 +451,7 @@ public class OutputVisitor extends ClassVisitor {
    static class DoNothingAnnotationVisitor extends AnnotationVisitor {
 
     public DoNothingAnnotationVisitor() {
-      super(Opcodes.ASM5);
+      super(Opcodes.ASM7);
     }
 
     public void visit( String name, Object value ) {
@@ -482,7 +482,7 @@ public class OutputVisitor extends ClassVisitor {
     AnnotationVisitor delegate;
 
     public OutputAnnotationVisitor( AnnotationVisitor delegate ) {
-      super(Opcodes.ASM5);
+      super(Opcodes.ASM7);
       this.delegate = delegate;
     }
 
