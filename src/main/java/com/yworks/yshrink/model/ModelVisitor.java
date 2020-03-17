@@ -4,6 +4,7 @@ import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Attribute;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.Handle;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -142,6 +143,10 @@ public class ModelVisitor extends ClassVisitor {
     }
 
     public void visitIntInsn( final int opcode, final int operand ) {
+    }
+
+    public void visitInvokeDynamicInsn( String name, String descriptor, Handle bootstrapMethodHandle, Object... bootstrapMethodArguments) {
+
     }
 
     public void visitVarInsn( final int opcode, final int var ) {

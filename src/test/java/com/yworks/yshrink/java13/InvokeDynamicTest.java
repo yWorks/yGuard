@@ -67,7 +67,7 @@ public class InvokeDynamicTest {
       assertEquals(
               "Wrong test output",
               String.format("Hello from concat factory%n", System.lineSeparator()),
-              new String(output.toByteArray(), StandardCharsets.UTF_8));
+              new String(output.toByteArray()));
 
       // clean up and remove temporary files
       inTmp.delete();
