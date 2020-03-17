@@ -1,0 +1,18 @@
+package com.yworks.yshrink.java13;
+
+import java.io.PrintStream;
+
+public class LambdaMetaFactoryTest {
+  private interface MyInterface {
+    void doStuff(final PrintStream out);
+  }
+
+  public static void run( final PrintStream out ) {
+    MyInterface myInterface = (stream) -> stream.println("Hello from lambda invoke");
+    myInterface.doStuff(out);
+  }
+
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+}
