@@ -1,0 +1,15 @@
+package com.yworks.yshrink.java13;
+
+import java.io.PrintStream;
+
+public class StringConcatFactoryTest {
+  public static void run( final PrintStream out ) {
+    String caller = "concat";
+    String concatString = "hello " + "from " + caller + " factory";
+    out.println(concatString);
+  }
+
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+}
