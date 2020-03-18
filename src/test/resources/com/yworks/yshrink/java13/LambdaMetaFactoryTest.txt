@@ -4,12 +4,12 @@ import java.io.PrintStream;
 
 public class LambdaMetaFactoryTest {
   private interface MyInterface {
-    void doStuff(final PrintStream out);
+    void doStuff(final PrintStream out, boolean ok);
   }
 
   public static void run( final PrintStream out ) {
-    MyInterface myInterface = (stream) -> stream.println("Hello from lambda invoke");
-    myInterface.doStuff(out);
+    MyInterface myInterface = (stream, ok) -> stream.println("Hello from lambda invoke");
+    myInterface.doStuff(out, true);
   }
 
   public static void main( String[] args ) {
