@@ -146,7 +146,16 @@ public class ModelVisitor extends ClassVisitor {
     }
 
     public void visitInvokeDynamicInsn( String name, String descriptor, Handle bootstrapMethodHandle, Object... bootstrapMethodArguments) {
-
+      if (bootstrapMethodHandle.getOwner().equals("java/lang/invoke/LambdaMetafactory")) {
+        String className = descriptor.substring(descriptor.indexOf(")L") + 2, descriptor.length() - 1);
+        // find out the method descriptor of the method
+        // We expect bootstrapMethodArguments[0] to be method descriptor
+        // and bootstrapMethodArguments[1] to be the methods class handle
+        Type methodDescriptor = (Type) bootstrapMethodArguments[0];
+        Handle callerHandle = (Handle) bootstrapMethodArguments[1];
+        currentMethod.addInvocation(Opcodes.INVOKEDYNAMIC, className, name, methodDescriptor.getDescriptor());
+        currentMethod.addInvocation(Opcodes.INVOKEDYNAMIC, callerHandle.getOwner(), callerHandle.getName(), callerHandle.getDesc() );
+      }
     }
 
     public void visitVarInsn( final int opcode, final int var ) {

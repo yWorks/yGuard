@@ -446,6 +446,11 @@ public class Analyzer {
             createSubtreeEdges( model, cd, target, md, targetMethod, targetDesc );
           }
         }
+
+        if ( opcode == Opcodes.INVOKEDYNAMIC ) {
+          final MethodDescriptor initMethod = target.getMethod( targetMethod, targetDesc );
+          model.createDependencyEdge(md, initMethod, EdgeType.INVOKEDYNAMIC);
+        }
       }
     }
   }

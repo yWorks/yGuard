@@ -155,6 +155,8 @@ public class Shrinker {
 
           allowed = allowed || isMethodNeeded( targetClass, targetMethod );
 
+          allowed = allowed || model.getDependencyType( edge ).equals( EdgeType.INVOKEDYNAMIC );
+
           // resolve edge: mark target stub as needed
         } else if ( mode == RESULT_MODE ) {
           model.markStubNeeded( target );
