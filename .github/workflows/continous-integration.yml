@@ -7,8 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: actions/setup-java@v1
+    - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-13
       with:
-        java-version: 11
-    - name: Build with Gradle
-      run: gradle check
+        args: check
