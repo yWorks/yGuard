@@ -1,3 +1,8 @@
+# Demo program
+
+This example demonstrates the common use case of a demo program. The keep sections of both the shrink and rename elements contain code entities that will often have to be excluded from the shrinking and renaming process. These are the main code entrypoints (the main method), classes that are loaded per reflection and fields and methods needed for serialization. Note how the same patternsets can be reused using the id and refid attributes.
+
+```xml
 <yguard>
 
   <inoutpair in="demo.jar" out="demo_obf.jar"/>
@@ -50,3 +55,4 @@
   </rename>
 
 </yguard>
+```
