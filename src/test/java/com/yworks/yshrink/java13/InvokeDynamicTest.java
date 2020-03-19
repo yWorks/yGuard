@@ -66,8 +66,8 @@ public class InvokeDynamicTest {
       //   check test method output
       assertEquals(
               "Wrong test output",
-              String.format("Hello from concat factory%n", System.lineSeparator()),
-              new String(output.toByteArray()));
+              String.format("hello from concat factory%n", System.lineSeparator()),
+              output.toString());
 
       // clean up and remove temporary files
       inTmp.delete();
