@@ -61,6 +61,11 @@ distributions {
     baseName = "yguard-bundle"
     contents {
       from file("$projectDir/LICENSE")
+      if (project.hasProperty("copy-docs")) {
+        into("docs") {
+          from "$projectDir/site"
+        }
+      }
       into("lib") {
         from LIBRARY_JARS
         from configurations.annotation
