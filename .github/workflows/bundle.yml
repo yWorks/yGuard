@@ -13,26 +13,15 @@ jobs:
     - name: Get minor version
       id: get_minor
       run: echo ::set-output name=minor::$(echo ${GITHUB_REF:14}) # refs/tags/2.9.
-    - uses: actions/setup-java@v1
+    - name: Build documentation
+      run: |
+        pip3 install mkdocs
+        mkdocs build
+    - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-11
       with:
-        java-version: 11
-    - run: gradle assembleBundleDist
-      id: build_bundle
-      env:
-        ORG_GRADLE_PROJECT_VERSION_MINOR=${{ steps.outputs.get_minor.minor }}
-    - uses: actions/setup-ruby@v1
-    - id: build_docs
-      working-directory: ./docs
-      run: |
-        gem install jekyll bundler
-        bundle exec jekyll build
-    - name: Concat bundle and documentation
-      id: concat_bundle
-      working-directory: ./build/distributions
-      run: |
-        mkdir -p ${{ format('yguard-bundle-2.9.{0}', steps.outputs.get_minor.minor ) }}
-        cp -r ../../docs/_site ${{ format('yguard-bundle-2.9.{0}/docs', steps.outputs.get_minor.minor ) }} # copies generated documentation
-        zip -ur ${{ format('yguard-bundle-2.9.{0}.zip', steps.outputs.get_minor.minor ) }} ${{ format('yguard-bundle-2.9.{0}', steps.outputs.get_minor.minor ) }} # add generated documentation to existing bundle
+        args: assembleBundleDist -Pcopy-docs
+        env:
+          ORG_GRADLE_PROJECT_VERSION_MINOR=${{ steps.outputs.get_minor.minor }}
     - uses: actions/create-release@v1.0.0
       id: create_release
       env:
