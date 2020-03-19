@@ -1,8 +1,4 @@
----
-layout: default
-title: Installation
-permalink: /install/
----
+## Installation
 
 Depending on your build system, you will use `AntRun` or `Ant` directly to install `yGuard`.
 
