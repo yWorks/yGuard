@@ -120,7 +120,7 @@ public class InvokeDynamicTest {
       assertEquals(
               "Wrong test output",
               String.format("Hello from lambda invoke%n", System.lineSeparator()),
-              new String(output.toByteArray()));
+              output.toString());
 
       // clean up and remove temporary files
       inTmp.delete();
