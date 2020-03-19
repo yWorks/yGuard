@@ -1,0 +1,48 @@
+<project>
+    <property name="projectDir" value="."/>
+    <property name="libraryDir" value="lib"/>
+    <property name="version" value="2.9.x"/>
+
+    <property name="project_name" value="HelloWorld"/>
+    <property name="jar" value="build/jar/${project_name}.jar"/>
+    <property name="obfjar" value="build/jar/${project_name}_obf.jar"/>
+    <property name="renamelog" value="${project_name}_renamelog.xml"/>
+    <property name="shrinklog" value="${project_name}_shrinklog.xml"/>
+    <property name="mainclass" value="com.yworks.example.HelloWorld"/>
+
+    <target name="clean">
+        <delete dir="${projectDir}/build"/>
+        <delete dir="${projectDir}/lib/"/>
+        <delete file="${shrinklog}" />
+        <delete file="${renamelog}" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="build/jar"/>
+        <jar destfile="${jar}" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="${mainclass}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="yguard" depends="jar">
+        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${projectDir}/lib/yguard-${version}.jar"/>
+        <yguard>
+            <inoutpair in="${jar}" out="${obfjar}"/>
+
+            <rename logfile="${renamelog}">
+                <property name="error-checking" value="pedantic"/>
+            </rename>
+        </yguard>
+    </target>
+
+    <target name="run" depends="yguard">
+        <java jar="${obfjar}" fork="true"/>
+    </target>
+</project>

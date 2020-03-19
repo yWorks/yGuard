@@ -1,0 +1,36 @@
+plugins {
+  // Apply the java and library plugin to add support for Java
+  id 'application'
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  compile 'com.yworks:yguard:2.9.+'
+  compile 'com.yworks.annotation:2.9.+'
+}
+
+task obfuscate {
+  dependsOn jar
+  group 'yGuard'
+  description 'Obfuscates and shrinks the java archive.'
+
+  doLast {
+    ant.taskdef(
+            name: 'yguard',
+            classname: 'com.yworks.yguard.YGuardTask',
+            classpath: sourceSets.main.runtimeClasspath.asPath
+    )
+
+    def archivePath = jar.archiveFile.get().asFile.path
+    ant.yguard {
+      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
+      rename(logfile: "${buildDir}/yguard.log.xml") {
+        property(name: "error-checking", value: "pedantic")
+      }
+    }
+  }
+}
