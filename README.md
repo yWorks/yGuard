@@ -27,25 +27,13 @@ cd docs/
 python3 -m http.server 4000
 ```
 
-
 ## Building
 
-To build `yGuard` you will need `Java >= 7` and [Gradle](https://gradle.org/).
+To build `yGuard` you will need `Java >= 7`.
 
-Once installed you can build `yGuard` using `gradle build`.
+Once installed you can build `yGuard` using `./gradlew build`.
 
 ### Using IntellIJ with yGuard
 
 `yGuard` will be loaded without further ado from `IntellIJ` thanks to the Gradle integration.
 Opening the `yGuard` folder will set up Gradle and mark sources, tests and resources accordingly.
-
-### Using this repository with a wrapper
-
-This repository does not contain a copy of the Gradle wrapper. There has been [extensive discussions](https://stackoverflow.com/questions/20348451/why-should-the-gradle-wrapper-be-committed-to-vcs) about this topic, however committing a binary file to a `VCS` is simply considered bad practice.
-
-If you prefer to use the wrapper, you can always generate it yourself with an installation of Gradle at hand:
-```
-gradle wrapper --gradle-version 5.2.1
-```
-
-If you do not have an installation of Gradle, you may use [a workaround](http://blog.vorona.ca/init-gradle-wrapper-without-gradle.html).
