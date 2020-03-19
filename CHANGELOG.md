@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## Fixed
 - Use a empty manifest in `JarWriter` where the shrinker would previously crash when no manifest was present
+- Use Gradle wrapper with Gradle version 5.6.4 for reproducible builds
 
 ## [2.9.2] - 2019-12-09
 ## Added
