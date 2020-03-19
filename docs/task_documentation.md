@@ -1,8 +1,4 @@
----
-layout: default
-title: Task documentation
-permalink: /task/
----
+# Task documentation
 
 ## Preamble
 

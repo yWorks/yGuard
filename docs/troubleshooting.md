@@ -1,8 +1,4 @@
----
-layout: default
-title: Troubleshooting
-permalink: /troubleshooting/
----
+# Troubleshooting
 
 There are a couple of things you should be aware of when obfuscating and shrinking software.
 The weakest part of an application considering name obfuscation and code shrinking is code that uses reflection to dynamically load classes, invoke methods etc. Therefore, you have to be especially careful when using the yguard task on applications that rely on reflection.
