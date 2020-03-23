@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yworks.example</groupId>
+  <artifactId>HelloWorld</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>HelloWorld</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <mainclass>com.yworks.example.HelloWorld</mainclass>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.yworks</groupId>
+      <artifactId>yguard</artifactId>
+      <version>2.9.x</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.8</version>
+          <executions>
+              <execution>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>run</goal>
+                  </goals>
+                  <id>obfuscate</id>
+                  <configuration>
+                      <tasks>
+                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+                        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${runtime_classpath}"/>
+                        <yguard>
+                            <inoutpair in="${project.build.directory}/${project.build.finalName}.jar" out="${project.build.directory}/${project.build.finalName}_obfuscated.jar" />
+
+                            <shrink logfile="${project.build.directory}/yshrink.log.xml">
+                                <keep>
+                                    <!-- main method -->
+                                    <method name="void main(java.lang.String[])" class="${mainclass}" />
+                                    <!-- serializable classes -->
+                                    <class implements="java.io.Serializable" classes="private" methods="private" fields="private" />
+                                    <!-- menu items loaded per reflection -->
+                                    <class extends="com.yworks.example.MyMenuItem" classes="friendly" methods="public" fields="public" />
+                                </keep>
+                            </shrink>
+
+                            <rename mainclass="${mainclass}" logfile="${project.build.directory}/yguard.log.xml">
+                                <keep>
+                                  <method name="void readObject(java.io.ObjectInputStream)" />
+                                  <method name="void writeObject(java.io.ObjectOutputStream)" />
+                                  <field name="serialVersionUID" />
+                                  <class extends="com.yworks.example.MyMenuItem" classes="friendly" methods="public" fields="public" />
+                                </keep>
+                                <property name="error-checking" value="pedantic"/>
+                            </rename>
+                        </yguard>
+                      </tasks>
+                  </configuration>
+              </execution>
+          </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+          <mainClass>com.yworks.example.HelloWorld</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
