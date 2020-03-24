@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Task documentation - yGuard Documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Task documentation";
+    var mkdocs_page_input_path = "task_documentation.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> yGuard Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">yGuard</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../compatibility/">Compatibility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../install/">Install</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Task documentation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#preamble">Preamble</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of contents</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-yguard-element">The yguard Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#the-inoutpair-element">The inoutpair Element</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#attributes_1">Attributes</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#child-elements_1">Child Elements</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-inoutpairs-elements">The inoutpairs Elements</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_2">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_2">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-externalclasses-element">The externalclasses Element</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-attribute-element">The attribute Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_3">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_3">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-shrink-element">The shrink Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_4">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_4">Child Elements</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-entrypointjar-element">The entrypointjar Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_5">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_5">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_1">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-rename-element">The rename Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_6">Child Elements</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-property-element">The property Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_6">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#supported-properties">Supported properties</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_7">Child Elements</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-keep-element">The keep Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_7">Attributes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-class-element">The class Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_8">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_8">Child elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#explanation">Explanation</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-method-element">The method Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_9">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_9">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_1">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-field-element">The field Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_10">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_10">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_2">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-package-element">The package Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_11">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_2">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-sourcefile-element">The sourcefile Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_11">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_12">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_3">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-linenumbertable-element">The linenumbertable Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_12">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_13">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_3">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-adjust-element">The adjust Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_13">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_14">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_4">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-map-element">The map Element</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_15">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_5">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#controlling-obfuscation-exclusion-with-annotations">Controlling obfuscation exclusion with annotations</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#obfuscationjava">Obfuscation.java</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generating-patch-jars">Generating Patch JARs</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attributes_14">Attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-elements_16">Child Elements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples_6">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#deobfuscating-stacktraces">Deobfuscating stacktraces</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../troubleshooting/">Troubleshooting</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">yGuard Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Task documentation</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/yWorks/yGuard/edit/master/docs/task_documentation.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="task-documentation">Task documentation</h1>
+<h2 id="preamble">Preamble</h2>
+<p>Using the <code>yGuard</code> Ant task, name obfuscation and code shrinking can be seamlessly integrated into your deployment process.</p>
+<p>The <code>yguard</code> task contains two nested elements that perform the name obfuscation and code shrinking separately:</p>
+<ul>
+<li>The <a href="#the-shrink-element">shrink</a> element removes all code elements that are not reachable from the entrypoints given in the nested <a href="#the-keep-element">keep</a> element.</li>
+<li>The <a href="#the-rename-element">rename</a> element performs name-obfuscation, renaming all packages, classes, methods and fields according to a selectable name-mapping scheme. Elements can be excluded from the renaming process by annotating them with a certain annotation class in the source code or using a nested <a href="#the-keep-element">keep</a> element.</li>
+</ul>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#the-yguard-element"><code>yguard</code> element</a><ul>
+<li><a href="#the-inoutpair-element"><code>inoutpair</code> element</a></li>
+<li><a href="#the-externalclasses-element"><code>externalclasses</code> element</a></li>
+<li><a href="#the-attribute-element"><code>attribute</code> element</a></li>
+<li><a href="#the-rename-element"><code>rename</code> element</a><ul>
+<li><a href="#the-property-element"><code>property</code> element</a></li>
+<li><a href="#generating-patch-jars"><code>patch</code> element</a></li>
+<li><a href="#the-adjust-element"><code>adjust</code> element</a></li>
+<li><a href="#the-map-element"><code>map</code> element</a><ul>
+<li><a href="#the-package-element"><code>package</code> element</a></li>
+<li><a href="#the-class-element"><code>class</code> element</a></li>
+<li><a href="#the-method-element"><code>method</code> element</a></li>
+<li><a href="#the-field-element"><code>field</code> element</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#the-shrink-element"><code>shrink</code> element</a><ul>
+<li><a href="#the-entrypointjar-element"><code>entrypointjar</code> element</a></li>
+</ul>
+</li>
+<li><a href="#the-keep-element"><code>keep</code> element</a></li>
+</ul>
+</li>
+<li><a href="#controlling-obfuscation-exclusion-with-annotations">Controlling obfuscation exclusion with annotations</a></li>
+<li><a href="#generating-patch-jars">Generating patch JARs</a></li>
+<li><a href="#deobfuscating-stacktraces">Deobfuscating stacktraces</a></li>
+<li><a href="#dtd-used-for-ant-yguard">DTD used for Ant <code>&lt;yguard&gt;</code></a></li>
+</ul>
+<h2 id="the-yguard-element">The yguard Element</h2>
+<p>The yguard task contains elements that define basic properties common to the nested <code>rename</code> and <code>shrink</code> tasks.
+Please see the <a href="troubleshooting">troubleshooting section</a> to learn about common pitfalls when using name obfuscation and shrinking software.</p>
+<h4 id="attributes">Attributes</h4>
+<p>The <code>yguard</code> element has no attributes.</p>
+<h4 id="child-elements">Child Elements</h4>
+<ul>
+<li><a href="#the-inoutpair-element">inoutpair</a></li>
+<li><a href="#the-externalclasses-element">externalclasses</a></li>
+<li><a href="#the-attribute-element">attribute</a></li>
+<li><a href="#the-rename-element">rename</a></li>
+<li><a href="#the-shrink-element">shrink</a></li>
+</ul>
+<h3 id="the-inoutpair-element">The <code>inoutpair</code> Element</h3>
+<p>At least one <code>inoutpair</code> element or one non-empty <code>inoutpairs</code> element has to be specified in order to run the yguard tasks. This element specifies the paths to the input and output jar files.</p>
+<h4 id="attributes_1">Attributes</h4>
+<table>
+<thead>
+    <tr>
+        <th width="12%"><b>Attribute</b></th>
+        <th width="78%"><b>Description</b></th>
+        <th width="10%"><b>Required</b></th>
+    </tr>
+</thead>
+
+<tr>
+    <td><code>in</code></td>
+    <td>
+    Specifies an exisiting jar file, which contains the unshrinked and
+    unobfuscated .class files.
+    </td>
+    <td>Yes</td>
+</tr>
+<tr>
+    <td><code>out</code></td>
+    <td>
+    Specifies a path to a jar file which will be created and used to
+    put the results of the shrinking and obfuscation process.
+    </td>
+    <td>Yes</td>
+</tr>
+<tr>
+    <td><code>resources</code></td>
+    <td>
+    Will only be considered if the
+    <a href="#the-yguard-element"><code>yguard</code></a> element
+    contains a nested
+    <a href="#"><code>shrink</code></a> element.
+    <br>
+    Determines how the shrinking engine handles all non-.class files.
+    <br>
+    Currently the following three resource policies are supported:
+    <ul>
+        <li><code>copy</code><br>
+        the default, simply copies all resource files to the output jar.
+        </li>
+        <li><code>auto</code><br>
+        copies only those resource files that reside in a directory that
+        still contains one or more .class files after shrinking.
+        </li>
+        <li><code>none</code><br>
+        discards all resource files.
+        </li>
+    </ul>
+    </td>
+    <td>
+    No, defaults to <code>copy</code>.
+    </td>
+</tr>
+</table>
+
+<h4 id="child-elements_1">Child Elements</h4>
+<p>The <code>inoutpair</code> element has no child elements.</p>
+<p>If multiple jar files need to be obfuscated at once the <code>inoutpairs</code> element can be used alternatively.</p>
+<h2 id="the-inoutpairs-elements">The <code>inoutpairs</code> Elements</h2>
+<p>Additionally or alternatively to <code>inoutpair</code> elements this element can be specified in order to specify the paths to the input and output jar files.</p>
+<h4 id="attributes_2">Attributes</h4>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead>
+
+<tr>
+    <td><code>resources</code></td>
+    <td>
+    Will only be considered if the
+    <a href="#yguard"><code>yguard</code></a> element
+    contains a nested
+    <a href="#shrink"><code>shrink</code></a> element.
+    <br>
+    Determines how the shrinking engine handles all non-.class files.
+    <br>
+    Currently the following three resource policies are supported:
+    <ul>
+        <li><code>copy</code><br>
+        the default, simply copies all resource files to the output jar.
+        </li>
+        <li><code>auto</code><br>
+        copies only those resource files that reside in a directory that
+        still contains one or more .class files after shrinking.
+        </li>
+        <li><code>none</code><br>
+        discards all resource files.
+        </li>
+    </ul>
+    </td>
+    <td>
+    No, defaults to <code>copy</code>.
+    </td>
+</tr>
+</table>
+
+<h4 id="child-elements_2">Child Elements</h4>
+<ul>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+<li>optionally a <a href="http://ant.apache.org/manual/Types/mapper.html">mapper</a> that determines the name mapping between the unobfuscated and obfuscated versions of the jar files. Note that <code>identitymapper</code> and <code>mergemapper</code> are not supported. All matched jar file names need to be mapped to exactly one jar file name that differs from the original jar file.</li>
+</ul>
+<h4 id="examples">Examples</h4>
+<pre><code class="xml">&lt;!-- use all jars in the input-lib-dir directory and obfuscate them to *_obf.jar --&gt;
+&lt;inoutpairs resources=&quot;auto&quot;&gt;
+  &lt;fileset dir=&quot;${input-lib-dir}&quot;&gt;
+    &lt;include name=&quot;myapp*.jar&quot;/&gt;
+    &lt;exclude name=&quot;*_obf.jar&quot;/&gt;
+  &lt;/fileset&gt;
+  &lt;mapper type=&quot;glob&quot; from=&quot;*.jar&quot; to=&quot;*_obf.jar&quot;/&gt;
+&lt;/inoutpairs&gt;
+
+&lt;!-- the above mapper is the default one so the following snippet does the same --&gt;
+&lt;inoutpairs resources=&quot;auto&quot;&gt;
+  &lt;fileset dir=&quot;${input-lib-dir}&quot;&gt;
+    &lt;include name=&quot;myapp*.jar&quot;/&gt;
+    &lt;exclude name=&quot;*_obf.jar&quot;/&gt;
+  &lt;/fileset&gt;
+&lt;/inoutpairs&gt;
+</code></pre>
+
+<h2 id="the-externalclasses-element">The <code>externalclasses</code> Element</h2>
+<p>If the jar to be processed by <code>yGuard</code> depends on external classes or libraries, this element can be used to specify classpaths to these entities. These libraries will neither be shrinked nor obfuscated. Use the <code>inoutpair</code> element for this purpose! See the <code>external_library</code> example for an example of when to use this element.
+In order to achieve a maximum shrinking effect by the <code>shrink</code> task, all external dependencies should be declared in the <code>externalclasses</code> element. Otherwise, all non-private methods of classes that inherit from unresolvable classes will not be shrinked.</p>
+<p>The elements attributes and child elements can be seen on the <a href="http://ant.apache.org/manual/using.html#path">Ant documentation page about using path elements</a>.</p>
+<h2 id="the-attribute-element">The attribute Element</h2>
+<p>Using the <code>attribute</code> element, you can specify which attributes present in the input classes should be kept in the obfuscated output classes.</p>
+<p>See the <code>linked_example</code> for an example of when to use this element.</p>
+<h4 id="attributes_3">Attributes</h4>
+<p><table class="listing">
+    <thead>
+        <tr>
+            <th width="12%"><b>Attribute</b></th>
+            <th width="78%"><b>Description</b></th>
+            <th width="10%"><b>Required</b></th>
+        </tr>
+    </thead>
+<tr>
+    <td><code>name</code></td>
+    <td>A comma-separated list of attribute names that are to
+    be retained in the shrinked and/or
+    obfuscated class
+    files.
+    </td>
+    <td>Yes</td>
+</tr>
+</table></p>
+<h4 id="child-elements_3">Child Elements</h4>
+<ul>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+</ul>
+<h4 id="example">Example</h4>
+<pre><code class="xml">&lt;attribute name=&quot;SourceFile, LineNumberTable, LocalVariableTable&quot;&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.mylibrary.**&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/attribute&gt;
+</code></pre>
+
+<p>This will retain the attributes named <em>"SourceFile"</em>, <em>"LineNumberTable"</em>, and <em>"LocalVariableTable"</em> effectively enabling debugging information for all classes in the <code>com.mycompany.mylibrary</code> package and subpackages.</p>
+<h2 id="the-shrink-element">The <code>shrink</code> Element</h2>
+<p>The <code>shrink</code> task removes all classes, fields and methods that are not reachable from a number of entrypoints given by a nested <a href="">keep</a> element.
+See the <a href="">examples</a> explenation of some common use cases. If your code uses reflection, please read the <a href="troubleshooting">troubleshooting</a> section for information on this topic.</p>
+<h4 id="attributes_4">Attributes</h4>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead>
+<tr>
+    <td><code>logfile</code></td>
+    <td>Determines the name of the logfile that is generated
+    during the shrinking process. The logfile contains information about
+    the entrypoints the shrinking engine uses, the removed classes,
+    methods and fields as well as any warnings.
+    <br>
+    If the name ends with a ".gz", yGuard will automatically create a
+    gzipped version of the file which potentially saves a lot of disc
+    space.
+    </td>
+    <td>
+    No, defaults to<code>yshrinklog.xml</code>
+    </td>
+</tr>
+<tr>
+    <td>
+    <a name="createstubs"></a><code>createStubs</code>
+    </td>
+    <td>
+    Instead of removing methods completely, this attribute causes the
+    <code>shrink</code> task to insert a method
+    stub that throws a <code>java.lang.InternalError</code> if it is
+    called. This attribute is very useful if the shrinking process
+    causes your application to break and you are uncertain about which
+    additional code entities you have to include in the
+    <a href="#keep"><code>keep</code></a>element. <br/>
+    Note that classes considered as completely obsolete by the shrinking
+    engine are still removed completely - this attribute only
+    affects obsolete methods of non-obsolete classes.
+    </td>
+    <td>
+    No, defaults to <code>false</code>
+    </td>
+</tr>
+</table>
+
+<h4 id="child-elements_4">Child Elements</h4>
+<ul>
+<li><a href="#the-keep-element">keep</a></li>
+<li><a href="#the-entrypointjar-element">entrypointjar</a></li>
+</ul>
+<h2 id="the-entrypointjar-element">The <code>entrypointjar</code> Element</h2>
+<p>The <code>entrypointjar</code> element can be used for convenience if your application uses libraries that are to be shrinked, but the jarfile using these libraries should be left untouched by the shrinking engine. Such a jarfile could be specified as an <code>entrypointjar</code>.</p>
+<h4 id="attributes_5">Attributes</h4>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead>
+
+<tr>
+    <td><code>name</code></td>
+    <td>Path to to the jar file to use as entrypointjar.</td>
+    <td>Yes</td>
+</tr>
+</table>
+
+<h4 id="child-elements_5">Child Elements</h4>
+<p>The <code>entrypointjar</code> element has no child elements.</p>
+<h4 id="example_1">Example</h4>
+<pre><code class="xml">&lt;yguard&gt;
+  &lt;inoutpair in=&quot;lib-in.jar&quot; out=&quot;lib-out.jar&quot; /&gt;
+  &lt;shrink&gt;
+    &lt;entrypointjar name=&quot;myApp.jar&quot;/&gt;
+  &lt;/shrink&gt;
+&lt;/yguard&gt;
+</code></pre>
+
+<h2 id="the-rename-element">The <code>rename</code> Element</h2>
+<p>The basic idea is, that all elements will be renamed by this task. There are different use cases, where you sometimes want to exclude or simply just have to exclude some elements from name obfuscation, i.e. <strong>not</strong> rename them but keep in the API as is. See the <a href="">examples</a> for explanation of some common use cases. If your code uses reflection, please read the <a href="troubleshooting">troubleshooting</a> section for information on this topic. Excluding elements can be achieved by using the <a href="#the-keep-element">keep</a> element, the <code>mainclass</code> attribute of the <code>rename</code> element and by annotating elements in the source code with the annotation that is specified in the <code>annotationClass</code> attribute of the <code>rename</code> element. Using the nested <code>keep</code> element, you have to specify all classes, methods, fields, and attributes that should be excluded from name obfuscation. Another way is to <a href="#annotate">annotate the elements directly in the source code</a> that should be obfuscated or excluded. You can use the yFiles obfuscation annotation <code>com.yworks.util.annotation.Obfuscation</code> for that or specify your own annotation in the <code>annotationClass</code> attribute of this element.</p>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead>
+
+<tr>
+    <td><code>mainclass</code></td>
+    <td>Can be used as a shortcut to specify the mainclass
+    of your application. Both the class name and the main method will be
+    excluded from name obfuscation.
+    Alternatively you may want to consider to exclude the main method
+    only. If your jar contains a <code>Main-Class</code> attribute, the
+    <code>rename</code> task will automatically adjust
+    the value to the obfuscated
+    name.
+    </td>
+    <td>No</td>
+</tr>
+<tr>
+    <td><code>logfile</code></td>
+    <td>Determines the name of the logfile that is generated
+    during the renaming process. The logfile contains information about
+    the mappings the name obfuscator generates as well as any warnings.
+    <br>
+    If the name ends with a ".gz", yGuard will automatically create a
+    gzipped version of the file which potentially saves a lot of disc
+    space.
+    </td>
+    <td>
+    No, defaults to<code>yguardlog.xml</code></td>
+</tr>
+<tr>
+    <td><code>conservemanifest</code></td>
+    <td>
+    A boolean attribute (valid values:
+    <code>true</code>/<code>false</code>) that determines whether the
+    manifest file of the jars should be left untouched by the renaming
+    engine. If set to <code>false</code>, the manifest will be modified
+    to reflect the new message digests.
+    </td>
+    <td>
+    No, defaults to <code>false</code>.
+    </td>
+</tr>
+<tr>
+    <td>
+    <a name="replaceclassnamestrings"></a><code>replaceClassNameStrings</code>
+    </td>
+    <td>
+    A boolean attribute (valid values:
+    <code>true</code>/<code>false</code>) that determines whether the
+    renaming engine should try to replace hardcoded Strings, which
+    are used in conjunction with the <code>MyClass.class</code>
+    construct.
+    If set to <code>false</code>, those Strings will be left untouched
+    and code of the form <code>MyClass.class</code> will break if
+    MyClass gets obfuscated by name. If set to <code>true</code> (the
+    default), yGuard will try to workaround this problem by replacing
+    the hardcoded String with the appropriate obfuscated name. However
+    this will only work if the unobfuscated class file has been
+    generated with the usual compilers ('javac', 'jikes' and 'bjc') or
+    compilers, that produce similar bytecode. This can also have the
+    side-effect of modifying too many Strings, e.g if you have code that
+    looks like<code>System.out.println("com.mycompany.MyClass");</code>,
+    it might get replaced, if <code>MyClass.class</code> resides in the
+    very same class with something like
+    <code>System.out.println("com.A.OoO");</code>. It will most likely
+    fail if the class has been previously obfuscated by another
+    obfuscation tool or a different compiler has been used for
+    compilation. Anyway it is always worth it to give it a try, if you
+    want to have 'full obfuscation'.
+    </td>
+    <td>
+    No, defaults to <code>true</code>
+    </td>
+</tr>
+       <tr>
+          <td>
+            <a name="scramble"></a><code>scramble</code>
+          </td>
+          <td>
+            A boolean attribute (valid values: <code>true</code>/<code>false</code>)
+            that determines whether the renaming engine should generate pseudorandom
+            name mappings for each invocation. If set to <code>false</code> (the
+            default, for backward compatibility), each obfuscation will used a
+            fixed map that generates names based on the order of the obfuscated
+            elements. If nothing is changed, each obfuscation will generate the
+            same obfuscated names for all elements. If set to <code>true</code>,
+            yGuard generates pseudorandom mappings (using <code>java.util.Random</code>)
+            that produce different obfuscated names in each build even if the
+            unobfuscated source is unchanged.
+          </td>
+          <td>
+            No, defaults to <code>false</code>
+          </td>
+</tr>
+<tr>
+    <td><a name="annotationClass"></a><code>annotationClass</code></td>
+    <td>
+    Specifies the name of the annotation class that can be used to
+    exclude elements by annotating them in the source code. The
+    specified annotation can be any annotation that fits the convention.
+    </td>
+    <td>
+    No, defaults to <code>com.yworks.util.annotation.Obfuscation</code>
+    </td>
+</tr>
+</table>
+
+<h4 id="child-elements_6">Child Elements</h4>
+<ul>
+<li><a href="#the-keep-element">keep</a></li>
+<li><a href="#the-property-element">property</a></li>
+<li><a href="#the-patch-property">patch</a></li>
+<li><a href="#the-adjust-property">adjust</a></li>
+<li><a href="#the-map-property">map</a></li>
+</ul>
+<h2 id="the-property-element">The property Element</h2>
+<p><code>property</code> elements can be used to give hints to the name obfuscation engine. Depending on the exact version of yGuard, the task may use these hints to control the process of obfuscation.</p>
+<h4 id="attributes_6">Attributes</h4>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+    <td><code>name</code></td>
+    <td>
+    Specifies a key which may be interpreted by the obfuscation task.
+    </td>
+    <td>Yes</td>
+</tr>
+<tr>
+    <td><code>value</code></td>
+    <td>
+    Specifies the corresponding value of the property.
+    </td>
+    <td>Yes</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="supported-properties">Supported properties</h4>
+<p><table class="listing">
+<thead>
+<tr>
+    <th width="10%"><b>Name</b></th>
+    <th width="80%"><b>Description</b></th>
+    <th width="10%"><b>Default</b></th>
+</tr>
+</thead></p>
+<tbody>
+<tr>
+    <td><code class="property">error-checking</code></td>
+    <td>
+    Can be used to tell yGuard to bail out if it detects any problems.
+    Currently this property can be set to the following value:
+    <ul>
+        <li>
+        <code class="prop-value">pedantic</code><br>
+        Will make the obfuscation run fail, i.e. the target which uses
+        the <code>rename</code>element will fail, if
+        yGuard detects any problems.
+        </li>
+    </ul>
+    </td>
+    <td><code>false</code></td>
+</tr>
+
+<tr>
+    <td><code class="property">naming-scheme</code></td>
+    <td>
+    Can be used to tell the renaming engine to use a different naming
+    scheme during the obfuscation.
+    Currently this property can be set to one of the following values:
+    <ul>
+        <li>
+        <code class="prop-value">small</code><br>
+        Will produce very short names, i.e. the resulting jar
+        file will be as small as possible.
+        </li>
+        <li>
+        <code class="prop-value">best</code><br>
+        Will produce names, that are very likely to be misunderstood by
+        decompilers and disassemblers. Using this naming-scheme it is
+        even impossible on most filesystems to successfully unjar or
+        unzip the resulting jar file (Windows, Standard Unix, Standard
+        Linux, MacOS).
+        However this scheme takes up a lot of space and the resulting
+        jar is likely to become large (typically roughly double the
+        size).
+        </li>
+        <li>
+        <code class="prop-value">mix</code><br>
+        Is a mixture of both the other two values, which leads to
+        reasonable small but still hard to decompile jar files.
+        </li>
+    </ul>
+    </td>
+    <td><code>small</code></td>
+</tr>
+
+<tr>
+    <td><code class="property">language-conformity</code></td>
+    <td>
+    Can be used to advise the renaming engine to produce names, that
+    should be decompilable by most decompilers. On the other hand,
+    yGuard can produce class files that should be executable and
+    verifiable by all of todays virtual machines, but produces
+    absolutely nonsense names when decompiled (Ever tried to compile
+    '<code>int class = false.this super(String$super.init if);</code>'
+    ?!)
+    Currently this property can be set to one of the following values:
+    <ul>
+        <li>
+        <code class="prop-value">compatible</code><br>
+        Will produce names, that are ok for (most) decompilers, java,
+        jar and manifest files and can be unzipped to most filesystems.
+        </li>
+        <li>
+        <code class="prop-value">legal</code><br>
+        Will produce names, that are ok for (some) decompilers, java,
+        jar and manifest files.
+        </li>
+        <li>
+        <code class="prop-value">illegal</code><br>
+        Will produce names, that will crash some tools but usually
+        <b>not</b> the jvm, but JBuilder7 in many occasions for example.
+        </li>
+    </ul>
+    </td>
+    <td><code>legal</code></td>
+</tr>
+
+<tr>
+    <td><code class="property">overload-enabled</code></td>
+    <td>
+    Determines whether the renaming engine tries to use the same names
+    for methods with different signatures or whether it always generates
+    unique method names.
+    Setting this property to <code>false</code> eases the analysis of
+    stacktraces but reduces the obfuscation effect.
+    </td>
+    <td><code>true</code></td>
+</tr>
+
+<tr>
+    <td><code class="property">obfuscation-prefix</code></td>
+    <td>
+    Can be used to instruct the renaming engine to prefix packages, that
+    are fully obfuscated with a given package prefix, e.g.
+    <code>com.mycompany.obf</code>.
+    </td>
+    <td>-</td>
+</tr>
+
+<tr>
+    <td><code class="property">digests</code></td>
+    <td>
+    Can be used to tell yGuard which digest algorithms should be used
+    for the digest generation in the manifest file. Valid values are
+    either <code class="prop-value">none</code>, or a comma-separated
+    list of digest-algorithm identifiers, e.g.
+    <code class="prop-value">SHA-1, MD5</code> (which is the default).
+    </td>
+    <td><code>SHA-1, MD5</code></td>
+</tr>
+
+<tr>
+    <td><code class="property">expose-attributes</code></td>
+    <td>
+    Can be used to give yGuard a list of attributes yGuard should expose
+    in addition to the standard attributes.
+    By default yGuard removes unneeded attributes like "Deprecated" from
+    methods. The value can be a comma separated list of attributes as
+    defined in
+    <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7">Section 4.7 of the VM Specification of the .class File Format</a>.
+    E.g. in order to keep the "Deprecated" attribute one can add the
+    following property:
+    <br>
+    <code>&lt;property name="expose-attributes" value="Deprecated"/></code>
+    <br>
+    Note that this affects all classes which will be obfuscated. For a
+    better control of which attributes should be exposed in what classes
+    use the <a href="#attribute">Attribute Element</a>.
+    </td>
+    <td>-</td>
+</tr>
+</tbody>
+
+</table>
+
+<h4 id="child-elements_7">Child Elements</h4>
+<p>The <code>property</code> element has no child elements.</p>
+<h2 id="the-keep-element">The <code>keep</code> Element</h2>
+<p>This element is a child of the <a href="#the-rename-element">rename</a> or <a href="#the-shrink-element">shrink</a> element. It can be used to specify elements that are excluded from the parent <code>rename</code> or <code>shrink</code> task. The excluded classes, methods and fields are defined using nested <a href="#the-package-element">package</a>, <a href="#the-class-element">class</a>, <a href="#the-method-element">method</a> and <a href="#the-field-element">field</a> elements.</p>
+<h4 id="attributes_7">Attributes</h4>
+<p>The <code>keep</code> element provides a number of boolean attributes that determine whether debug information and annotations present in the input class files are to be retained in the output files. The default behavior of the <code>rename</code> and <code>shrink</code> elements for the respective attributes is explained in the table below.
+Note that a more fine-grained control over which attributes to keep for which class files is possible using the <a href="#the-attribute-element">attribute</a> element. Also, the <code>attribute</code> element allows to define attributes to keep for both the rename and the shrinkelement in a common place.</p>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="58%"><b>Description</b></th>
+    <th width="15%"><b>Default (<code>rename</code>)</b></th>
+    <th width="15%"><b>Default (<code>shrink</code>)</b></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+    <td><code>sourcefile</code></td>
+    <td>
+    Determines whether the name of the original source code file should
+    be included in the output class files.
+    </td>
+    <td><code>remove</code></td>
+    <td><code>remove</code></td>
+</tr>
+<tr>
+    <td><code>linenumbertable</code></td>
+    <td>
+    Determines whether the line number table, that contains a mapping
+    from each opcode in the class file to the line number in the
+    original source code file should be included in the output class
+    files.
+    </td>
+    <td><code>remove</code> </td>
+    <td><code>remove</code> </td>
+</tr>
+<tr>
+    <td><code>localvariabletable</code></td>
+    <td>
+    Determines whether the local variable table, that contains a mapping
+    from each local variable in the class file to the name that has been
+    used in the original source code file should be included in the
+    output class files.
+    </td>
+    <td><code>remove</code> </td>
+    <td><code>remove</code> </td>
+</tr>
+<tr>
+    <td><code>localvariabletypetable</code></td>
+    <td>
+    Determines whether the local variable type table, that contains a
+    mapping from each local variable in the class file to the name and
+    its generic type signature that has been used in the original source
+    code file should be included in the output class files.
+    </td>
+    <td><code>remove</code> </td>
+    <td><code>remove</code> </td>
+</tr>
+<tr>
+    <td><code>runtimevisibleannotations</code></td>
+    <td>
+    Determines whether annotations with the retention policy
+    <code>RetentionPolicy.RUNTIME</code>should be included in the output
+    class files.
+    </td>
+    <td><code>keep</code> </td>
+    <td><code>keep</code> </td>
+</tr>
+<tr>
+    <td><code>runtimevisibleparameterannotations</code></td>
+    <td>
+    Determines whether method paramater annotations with the retention
+    policy <code>RetentionPolicy.RUNTIME</code> should be included in
+    the output class files.
+    </td>
+    <td><code>keep</code> </td>
+    <td><code>keep</code> </td>
+</tr>
+<tr>
+    <td><code>runtimeinvisibleannotations</code></td>
+    <td>
+    Determines whether annotations with the retention policy
+    <code>RetentionPolicy.CLASS</code>should be included in the output
+    class files.
+    </td>
+    <td><code>keep</code> </td>
+    <td><code>remove</code> </td>
+</tr>
+<tr>
+    <td><code>runtimeinvisibleparameterannotations</code>
+    </td>
+    <td>
+    Determines whether method paramater annotations with the retention
+    policy <code>RetentionPolicy.CLASS</code> should be included in the
+    output class files.
+    </td>
+    <td><code>keep</code> </td>
+    <td><code>remove</code> </td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="the-class-element">The <code>class</code> Element</h2>
+<p>The <code>class</code> element can be used for excluding certain classes and/or their fields and methods from the renaming or shrinking process.
+If no <code>name</code>, <code>extends</code> or <code>implements</code> attribute is given and the <code>class</code> element contains no nested <code>patternset</code>, a <code>class</code> element matches all class names.</p>
+<p>The <code>classes</code>, <code>methods</code> and <code>fields</code> attributes tell the shrinking and renaming engines which classes, methods and fields to keep based on their visibility. The following table lists the possible values for all of these attributes and shows which elements will be excluded. A '*' denotes, that elements that have the given visibility will be excluded for the specified attribute value. A '-' denotes that the these elements will not be excluded from the process.</p>
+<table class="matrix">
+<tr>
+    <td><b>Value/Visibility</b></td>
+    <td><code class="keyword">public</code></td>
+    <td><code class="keyword">protected</code></td>
+    <td><code class="keyword">friendly</code></td>
+    <td><code class="keyword">private</code></td>
+</tr>
+<tr>
+    <td><code class="keyword">none</code></td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td><code class="keyword">public</code></td>
+    <td>*</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td><code class="keyword">protected</code></td>
+    <td>*</td>
+    <td>*</td>
+    <td>-</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td><code class="keyword">friendly</code></td>
+    <td>*</td>
+    <td>*</td>
+    <td>*</td>
+    <td>-</td>
+</tr>
+<tr>
+    <td><code class="keyword">private</code></td>
+    <td>*</td>
+    <td>*</td>
+    <td>*</td>
+    <td>*</td>
+</tr>
+</table>
+
+<h4 id="attributes_8">Attributes</h4>
+<p><table class="listing">
+<thead>
+<tr>
+    <th width="12%">Attribute</th>
+    <th width="78%">Description</th>
+    <th width="10%">Required</th>
+</tr>
+</thead></p>
+<tbody>
+<tr>
+    <td><code>name</code></td>
+    <td>The name of the class to be kept.</td>
+    <td>No</td>
+</tr>
+<tr>
+    <td><code>classes</code></td>
+    <td>The visibility of the classes to be kept.</td>
+    <td>
+    No, defaults to <code>none</code></td>
+</tr>
+<tr>
+    <td><code>methods</code></td>
+    <td>The visibility of the methods to be kept.</td>
+    <td>
+    No, defaults to <code>none</code></td>
+</tr>
+<tr>
+    <td><code>fields</code></td>
+    <td>The visibility of the fields to be kept.</td>
+    <td>
+    No, defaults to <code>none</code></td>
+</tr>
+<tr>
+    <td><a name="extends"></a><code>extends</code></td>
+    <td>
+    If no <code>name</code> attribute is given, keeps
+    all classes that equal or extend the class defined by the given
+    fully qualified classname.
+    <br>
+    See <a href="#ex:extends">serializable_example</a> for an example usage of this
+    attribute.
+    </td>
+    <td>No</td>
+</tr>
+<tr>
+    <td><a name="implements"></a><code>implements</code></td>
+    <td>
+    If no <code>name</code> attribute is given, keeps
+    all classes that equal or implement the class defined by the given
+    fully qualified classname.
+    <br>
+    See <a href="#ex:extends">serializable_example</a> for an example usage of this
+    attribute.
+    </td>
+    <td>No</td>
+</tr>
+</tbody>
+
+</table>
+
+<h4 id="child-elements_8">Child elements</h4>
+<ul>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+</ul>
+<h4 id="explanation">Explanation</h4>
+<p>There are three possible ways of specifying which classes will be excluded from the shrinking and obfuscation process:</p>
+<p><em>1)</em> One can specify a single java class using the fully qualified name in java syntax with the name attribute. For example:</p>
+<pre><code class="xml">&lt;class name=&quot;mypackage.MyClass&quot;/&gt;
+</code></pre>
+
+<p><em>2)</em> One can specify multiple java classes using a modified version of a patternset. The patternset's includes and excludes element should use java syntax, but the usual wildcards are allowed. Some examples:</p>
+<pre><code class="xml">&lt;class&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.**.*Bean&quot;/&gt;
+    &lt;exclude name=&quot;com.mycompany.secretpackage.*&quot;/&gt;
+    &lt;exclude name=&quot;com.mycompany.myapp.SecretBean&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/class&gt;
+</code></pre>
+
+<p><em>3)</em> This will expose all classes which reside in the package subtree of <code>com.mycompany</code> and whose name ends with <code>Bean</code> except for those, that reside in the <code>com.mycompany.secretpackage</code> package and the single <code>SecretBean</code> in <code>com.mycompany.myapp</code>.</p>
+<pre><code class="xml">&lt;class&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapp.MainClass&quot;/&gt;
+    &lt;include name=&quot;org.w3c.sax?.&quot;/&gt;
+    &lt;exclude name=&quot;org.w3c.sax?.**.*$$*&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/class&gt;
+</code></pre>
+
+<p>This will expose the <code>MainClass</code> class and all classes, which reside in packages like <code>org.w3c.sax1</code>, <code>org.w3c.sax2</code>, <code>org.w3c.saxb</code> except for inner classes. <code>'$'</code> is used as a separator between outer class names and inner class names. Since Ant uses <code>'$'</code> as an escape character, you have to use two consecutive <code>'$'s</code> (<code>'$$'</code>) if you want to pass one as an argument to the task.</p>
+<p><em>4)</em> Finally one can specify classes depending on their visibility, i.e. depending whether they have been declared <code>public</code>, <code>protected</code>, <code>package-private</code> or <code>private</code> (inner classes). This can be achieved by additionally specifying the classes attribute in the class element.</p>
+<p>```xml
+ <class classes="protected">
+  <patternset>
+    <include name="com.mycompany.myapi."/>
+  </patternset>
+</class></p>
+<pre><code>
+This will keep all class names, that are either `public` or `protected` and which reside in one of the subpackages of `com.mycompany.myapi` (note the abbreviation: the trailing dot behaves like the trailing `'/'` in the usual patternset, i.e. it could be rewritten as `com.mycompany.myapi.**.*`)
+
+```xml
+&lt;class classes=&quot;protected&quot;
+  methods=&quot;protected&quot;
+  fields=&quot;protected&quot;&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;**.*&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/class&gt;
+</code></pre>
+
+<p>This example shows the very common use case of excluding a complete public API from the shrinking and obfuscation process. There is an abbreviation for this use case: you can omit the <code>patternset</code> element, since in the case where the <code>classes</code> attribute is specified and there is no <code>patternset</code> child element used, the task will automatically apply this rule. In this example all classes will be exposed, that are either <code>public</code> or <code>protected</code>. Their methods and fields will be exposed as long as they are declared <code>public</code> or <code>protected</code>. If a class is <code>package-private</code> or <code>private</code> (inner classes), neither itself nor its methods or fields will be exposed.</p>
+<p>The last example shows how to keep the <code>public</code> methods of certain classes only, but neither field names nor the class names themselves.</p>
+<pre><code class="xml">&lt;class classes=&quot;none&quot; methods=&quot;public&quot; fields=&quot;none&quot;&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapi.&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/class&gt;
+</code></pre>
+
+<h2 id="the-method-element">The <code>method</code> Element</h2>
+<p>Using the <code>method</code> element you can specify methods by signature which should be excluded from shrinking or name obfuscation.</p>
+<h4 id="attributes_9">Attributes</h4>
+<p><table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead></p>
+<tr>
+    <td><code>name</code></td>
+    <td>
+    Specifies the method to keep. Use the complete signature using
+    fully qualified class names and the return type!
+    </td>
+    <td>Yes</td>
+</tr>
+
+<tr>
+    <td><code>class</code></td>
+    <td>
+    Specifies the class which contains the method. Use the normal java
+    syntax, i.e. the fully qualified name.
+    This attribute can be omitted, if the patternset element is used as
+    a child element, in which case all classes matching the patternset
+    will be searched and their corresponding methods will be kept.
+    </td>
+    <td>No</td>
+</tr>
+
+</table>
+
+<h4 id="child-elements_9">Child Elements</h4>
+<ul>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+</ul>
+<h4 id="examples_1">Examples</h4>
+<pre><code class="xml">&lt;method class=&quot;com.mycompany.myapp.MyClass&quot;
+  name=&quot;void main(java.lang.String[])&quot;/&gt;
+&lt;method class=&quot;com.mycompany.myapp.MyClass&quot;
+  name=&quot;int foo(double[][], java.lang.Object)&quot;/&gt;
+&lt;method name=&quot;void writeObject(java.io.ObjectOutputStream)&quot;&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapp.data.*&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/method&gt;
+&lt;method name=&quot;void readObject(java.io.ObjectInputStream)&quot;&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapp.data.*&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/method&gt;
+</code></pre>
+
+<p>This will keep the main method of the <code>MyClass</code> class and the <code>foo</code> method. Additionally all <code>readObject</code> and <code>writeObject</code> methods (used for serialization) will be kept in all classes of the <code>com.mycompany.myapp.data</code> package. Note that you have to specify the return argument's type, even if it is void and that you have to use the fully qualified name for all classes, even those, that are in the <code>java.lang package</code>.</p>
+<h2 id="the-field-element">The <code>field</code> Element</h2>
+<p>Using the <code>field</code> element you can specify fields by name which should be excluded from shrinking or name obfuscation.</p>
+<h4 id="attributes_10">Attributes</h4>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead>
+
+<tr>
+    <td><code>name</code></td>
+    <td>
+    Specifies the field to keep.
+    Use the name of the field only, do not include its type!
+    </td>
+    <td>Yes</td>
+</tr>
+<tr>
+    <td><code>class</code></td>
+    <td>
+    Specifies the class which contains the field.
+    Use the normal java syntax, i.e. the fully qualified name.
+    This attribute can be omitted, if the
+    <code>patternset</code> element is used as
+    a child element, in which case the all classes matching the
+    patternset will be searched and their corresponding fields will be
+    kept.
+    </td>
+    <td>No</td>
+</tr>
+</table>
+
+<h4 id="child-elements_10">Child Elements</h4>
+<ul>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+</ul>
+<h4 id="examples_2">Examples</h4>
+<pre><code class="xml">&lt;field class=&quot;com.mycompany.myapp.MyClass&quot; name=&quot;field&quot;/&gt;
+&lt;field name=&quot;serialVersionUID&quot;&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapp.data.*&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/field&gt;
+</code></pre>
+
+<p>This will keep the field named <code>field</code> of the <code>MyClass</code> class. Additionally all the <code>serialVersionUID</code> fields (used for serialization) will be kept in all classes of the <code>com.mycompany.myapp.data</code> package.</p>
+<h2 id="the-package-element">The <code>package</code> Element</h2>
+<p>The <code>package</code> element can be used for excluding certain package's names from the renaming process. It cannot be used for the shrinking process.</p>
+<p>All packages that are matched be the nested patternset element will not be obfuscated. This has no influence on the class, method, or field names but will only result in the package's name not being obfuscated. Normally, it is not necessary to use this element, instead the <a href="#the-class-element">class element</a> is used to keep class names (and thus their package names) from being obfuscated.</p>
+<h4 id="child-elements_11">Child Elements</h4>
+<ul>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+</ul>
+<h4 id="example_2">Example</h4>
+<pre><code class="xml">&lt;package&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapp.*&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/package&gt;
+</code></pre>
+
+<p>This will keep the names of all packages that are direct descendants of <code>com.mycompany.myapp</code>. This will not influence the names of the classes contained in these packages.</p>
+<h2 id="the-sourcefile-element">The <code>sourcefile</code> Element</h2>
+<p>The <code>sourcefile</code> element allows for a special treatment of the sourceFile attribute by the rename element.
+Using nested property elements, the mapping of sourceFile attributes in obfuscated class files can be adjusted.</p>
+<h4 id="attributes_11">Attributes</h4>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Name</b></th>
+    <th width="88%"><b>Description</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td><code class="property">mapping</code></td>
+    <td>
+    The value of this property determines the name all
+    <code>sourceFile</code> attributes matched by the
+    <code>sourcefile</code> element are mapped to.
+    </td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="child-elements_12">Child Elements</h4>
+<ul>
+<li><a href="#the-property-element">property</a></li>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+</ul>
+<h4 id="example_3">Example</h4>
+<pre><code class="xml">&lt;sourcefile&gt;
+  &lt;property name=&quot;mapping&quot; value=&quot;y&quot;/&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapp.**&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/sourcefile&gt;
+</code></pre>
+
+<p>This will map all of the <code>sourceFile</code> attributes in the packages below <code>com.mycompany.myapp</code> to <em>"y"</em>, which is small and generally a nice letter.</p>
+<h2 id="the-linenumbertable-element">The <code>linenumbertable</code> Element</h2>
+<p>The <code>linenumbertable</code> element allows for a special treatment of the linenumbertable attribute by the <a href="#the-rename-element">rename</a> element.</p>
+<p>Using nested <code>property</code> elements, the mapping of <code>linenumbertable</code> attributes in obfuscated class files can be adjusted.</p>
+<h4 id="attributes_12">Attributes</h4>
+<p><table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Name</b></th>
+    <th width="88%"><b>Description</b></th>
+</tr>
+</thead></p>
+<tbody>
+<tr>
+    <td><code class="property">mapping-scheme</code></td>
+    <td>
+    Can be used with the following two values:
+    <ul>
+        <li>
+        <code class="prop-value">scramble</code><br>
+        This will use a non-trivial algorithm to scramble the line
+        numbers in the existing file.
+        The algorithm implemented uses a different scrambling scheme for
+        each class. The optional
+        <code class="property">scrambling-salt</code> property can be
+        used to provide an integer value that will be used to "salt"
+        the algorithm's random seed for the scrambling.
+        The size of the (uncompressed) .class file will not change using
+        this mapping scheme.
+        </li>
+        <li>
+        <code class="prop-value">squeeze</code><br>
+        This will use a simple algorithm that virtually puts all of a
+        method's code into the first line of code of the method. It will
+        appear as if each method had been written in a single line of
+        code.
+        The advantage of this scheme is drastically reduced size
+        requirements and thus smaller .class files, while at the same
+        time it will be possible to unambiguously determine the exact
+        method from a stacktrace.
+        </li>
+    </ul>
+    </td>
+</tr>
+<tr>
+    <td><code class="property">scrambling-salt</code></td>
+    <td>
+    Can be used in conjunction with
+    <code class="property">mapping-scheme</code> to provide an integer
+    value that will be used to "salt" the algorithm's random seed for
+    the scrambling.
+    </td>
+</tr>
+</tbody>
+
+</table>
+
+<h4 id="child-elements_13">Child Elements</h4>
+<ul>
+<li><a href="#the-property-element">property</a></li>
+<li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
+</ul>
+<h4 id="examples_3">Examples</h4>
+<pre><code class="xml">&lt;linenumbertable&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapp.**&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/linenumbertable&gt;
+</code></pre>
+
+<p>This will keep the line numbers of all the classes in the <code>com.mycompany.myapp</code> packages and subpackages. Note that in order to see the line numbers in stacktraces, the sourcefile attribute has to be retained for those files, too, since otherwise the JDK will display <em>"Unknown source"</em> for the stack elements.</p>
+<pre><code class="xml">&lt;linenumbertable&gt;
+  &lt;property name=&quot;mapping-scheme&quot; value=&quot;scramble&quot;/&gt;
+  &lt;property name=&quot;scrambling-salt&quot; value=&quot;1234&quot;/&gt;
+  &lt;patternset id=&quot;CompanyPatternSet&quot;&gt;
+    &lt;include name=&quot;com.mycompany.myapp.**&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/linenumbertable&gt;
+&lt;sourcefile&gt;
+  &lt;property name=&quot;mapping&quot; value=&quot;y&quot;/&gt;
+  &lt;patternset refid=&quot;CompanyPatternSet&quot;/&gt;
+&lt;/sourcefile&gt;
+</code></pre>
+
+<p>This will keep scrambled line numbers for all classes found in and below the <code>com.mycompany.myapp</code> packages. The scrambling algorithm will use the given <em>"salt"</em> value to use a predefined scrambling scheme. In order to see the scrambled line numbers, a <a href="#the-sourcefile-element">sourcefile</a> element is used on the same patternset, which is referenced by its previously declared reference id, to rename the source files to <em>"y"</em>.</p>
+<h2 id="the-adjust-element">The <code>adjust</code> Element</h2>
+<p>Using the <code>adjust</code> element one can specify resource files whose names and/or contents should be adjusted by the rename engine to reflect the obfuscated class names.</p>
+<p><strong>Note</strong>: This will only adjust files that are part of the <em>inoutpair</em> jars! <em>I.e.</em> the fileset's root directory is the combined root of all jars that are passed to yGuard via the <code>inoutpair</code> elements. yGuard will not modify any of the files on disk, except for the out-jar!</p>
+<h4 id="attributes_13">Attributes</h4>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Required</b></th>
+</tr>
+</thead>
+
+<tr>
+    <td><code>replaceName</code></td>
+    <td>
+    Specifies whether or not the names of the specified resources should
+    be adjusted.
+    </td>
+    <td>No, defaults to <code>false</code>
+    </td>
+</tr>
+<tr>
+    <td><code>replaceContent</code></td>
+    <td>
+    Specifies whether or not the contents of resource files should be
+    adjusted.
+    </td>
+    <td>No, defaults to <code>false</code>
+    </td>
+</tr>
+<tr>
+    <td><code>replacePath</code></td>
+    <td>
+    Specifies whether or not the paths to the resource files should be
+    adjusted.
+    </td>
+    <td>No, defaults to <code>true</code></td>
+</tr>
+</table>
+
+<h4 id="child-elements_14">Child Elements</h4>
+<p>The adjust element can be used just like the standard Ant <a href="http://ant.apache.org/manual/Types/zipfileset.html"><code>ZipFileSet</code></a> element.</p>
+<h4 id="examples_4">Examples</h4>
+<pre><code class="xml">&lt;!-- adjust the names of all java property files in the jars --&gt;
+&lt;adjust replaceName=&quot;true&quot;&gt;
+  &lt;include name=&quot;**/*.properties&quot;/&gt;
+&lt;/adjust&gt;
+
+&lt;!-- adjust the classnames specified within a single XML file in the jar --&gt;
+&lt;adjust file=&quot;plugins.xml&quot; replaceContent=&quot;true&quot; /&gt;
+
+&lt;!-- suppress the adjustment of the resource path
+com/mycompany/myapp/resource in the jar. --&gt;
+&lt;!-- the package com.mycompany.myapp still gets obfuscated. --&gt;
+&lt;adjust replacePath=&quot;false&quot;&gt;
+  &lt;include name=&quot;com/mycompany/myapp/resource/*&quot;/&gt;
+&lt;/adjust&gt;
+</code></pre>
+
+<h2 id="the-map-element">The <code>map</code> Element</h2>
+<p>The <code>map</code> element is an immediate optional child of the <a href="#the-rename-element">rename element</a>. It can be used to specify the mapping for the renaming process directly. This is an advanced topic.</p>
+<h4 id="child-elements_15">Child Elements</h4>
+<ul>
+<li><a href="#the-package-element">package</a></li>
+<li><a href="#the-class-element">class</a></li>
+<li><a href="#the-method-element">method</a></li>
+<li><a href="#the-field-element">field</a></li>
+</ul>
+<p>All of these elements use the <code>name</code> attribute to specify the specific element. The <code>method</code> and <code>field</code> elements need the <code>class</code> attribute in order to function properly. Neither wildcards nor nested <code>patternset</code> elements are allowed. Use the <code>map</code> attribute to specify the new name (subpackage, classname, methodname and fieldname respectively).</p>
+<h4 id="examples_5">Examples</h4>
+<pre><code class="xml">&lt;map&gt;
+  &lt;package name=&quot;com&quot; map=&quot;etc&quot;/&gt;
+  &lt;package name=&quot;com.mycompany&quot; map=&quot;nocompany&quot;/&gt;
+  &lt;package name=&quot;com.mycompany.myapp&quot; map=&quot;asdf&quot;/&gt;
+  &lt;class name=&quot;com.mycompany.myapp.MainApp&quot; map=&quot;foo&quot;/&gt;
+  &lt;method class=&quot;com.mycompany.myapp.MainApp&quot;
+    name=&quot;void main(java.lang.String[])&quot; map=&quot;bar&quot;/&gt;
+  &lt;field class=&quot;com.mycompany.myapp.MainApp&quot; name=&quot;field&quot; map=&quot;a&quot;/&gt;
+&lt;/map&gt;
+</code></pre>
+
+<p>In this example the package structure <code>com.mycompany.myapp</code> will be obfuscated to <code>etc.nocompany.asdf</code>. The <code>MainApp</code> class will be called <code>foo</code> and its <code>main</code> method will be remapped to <code>bar</code> (and can therefor not be executed from commandline anymore). The field called <code>field</code> will be renamed to <code>a</code>.</p>
+<h2 id="controlling-obfuscation-exclusion-with-annotations">Controlling obfuscation exclusion with annotations</h2>
+<p>In order to exclude certain elements from obfuscation, it is possible to use annotations in the source code instead of listing those elements in the <a href="#the-keep-element">keep element</a>.</p>
+<p>Any annotation class can be used for this, but it must be specified in the <code>annotationClass</code> attribute of the <a href="#the-rename-element">rename element</a> and follow the convention as explained below to work. yGuard contains such an annotation in the distribution package ready for use. The annotation class is <code>com.yworks.util.annotation.Obfuscation</code> and can be found in the yGuard distribution in <code>ObfuscationAnnotation.jar</code>. Feel free add this attribute definition to your own codebase and possibly adjust the package name to your needs. Here is the source code for it:</p>
+<h3 id="obfuscationjava"><code>Obfuscation.java</code></h3>
+<pre><code class="java">package com.yworks.util.annotation;
+
+public @interface Obfuscation {
+
+  boolean exclude() default true;
+
+  boolean applyToMembers() default true;
+}
+</code></pre>
+
+<p>This class is also the default annotation yGuard is looking for when obfuscating. By default the <code>Obfuscation</code> annotation is inherited using the <code>@Inherited</code> trait. If this behaviour is undesirable, consider creating a custom obfuscation annotation.</p>
+<p>The convention for annotation classes that yGuard understands as obfuscation controlling annotations requires two attributes:</p>
+<table class="listing">
+<thead>
+<tr>
+    <th width="12%"><b>Attribute</b></th>
+    <th width="78%"><b>Description</b></th>
+    <th width="10%"><b>Default value</b></th>
+</tr>
+</thead>
+
+<tr>
+    <td><code>exclude</code></td>
+    <td>
+    Specifies whether the annotated element should be excluded from the
+    obfuscation. Note, that when retaining a class, the hierarchy of
+    that class, i.e. the chain of outer class names and the package
+    name, is also retained.
+    </td>
+    <td><code>true</code></td>
+</tr>
+<tr>
+    <td><code>applyToMembers</code></td>
+    <td>
+    Specifies whether the child elements of the annotated element, if
+    not otherwise specified, should be excluded from the obfuscation.
+    For example, when annotating a class with
+    <code>exclude = true</code> and this attribute set to
+    <code>true</code>, inner classes, fields and methods of this
+    class will be excluded from obfuscation. Annotating a child element
+    of an element that has this attribute set to <code>true</code> will
+    override the parents annotation configuration.
+    </td>
+    <td><code>true</code></td>
+</tr>
+</table>
+
+<h2 id="generating-patch-jars">Generating Patch JARs</h2>
+<p>The true power of the <code>map</code> element lies in its use together with the <code>patch</code> element, which itself is a child element of the <code>rename</code> top level element.</p>
+<h4 id="attributes_14">Attributes</h4>
+<p>The <code>patch</code> element has no attributes.</p>
+<h4 id="child-elements_16">Child Elements</h4>
+<ul>
+<li><a href="#the-class-element">class</a></li>
+</ul>
+<h4 id="examples_6">Examples</h4>
+<p>Using the <code>patch</code> element one can generate jars, that can be used to serve as patches for versions of an application that have already been deployed in obfuscated form. During the main obfuscation run, yGuard produces an xml-logfile, in which the mapping between the unobfuscated and obfuscated names is contained. The patch element is used to declare a set of classes, that need to be patched. During the obfuscation, yGuard will include those files in the obfuscated jars only, that are declared inside this element.</p>
+<pre><code class="xml">&lt;patch&gt;
+  &lt;class name=&quot;com.mycompany.myapp.MainClass&quot;/&gt;
+  &lt;class&gt;
+    &lt;patternset&gt;
+      &lt;include name=&quot;com.mycompany.myapp.bugs.*&quot;/&gt;
+    &lt;/patternset&gt;
+  &lt;/class&gt;
+&lt;/patch&gt;
+&lt;map logfile=&quot;yguardlog.xml&quot;/&gt;
+</code></pre>
+
+<p>This will only include the MainClass class and all classes that belong to the bugs package in a patch jar. In order to work with the previously delivered obfuscated version, it is important to use the map element to specify the mapping of the elements from the previous run. This can most conveniently be achieved by specifying the log file from the corresponding run in the map element's logfile attribute.</p>
+<h2 id="deobfuscating-stacktraces">Deobfuscating stacktraces</h2>
+<p>yGuard provides a simple tool that makes it easy for the obfuscating party to deobfuscate stacktraces which have been obfuscated using yGuard. During the obfuscation yGuard produces an xml logfile which can automatically be gzipped for convenient storage. You should always keep those logfiles in order to be able to deobfuscate fully qualified classnames or methods or fields for debugging purposes e.g.
+In order to run the yGuard deobfuscation tool do the following:</p>
+<pre><code>Console&gt; java -jar yguard.jar mylogfile.xml
+</code></pre>
+
+<p>A tiny GUI will popup that will enable you to easily deobfuscate stacktraces and fully qualified classnames as well as provide a convenient way to browse the mapping generated by yGuard.
+In the main window a tree view displays the package, class, and classmember hierarchy using the unobfuscated names. For each entry that has been obfuscated (classes, packages, methods, and fields that have not been obfuscated at all may not always be shown in the tree) the corresponding mapped/obfuscated name is displayed.
+The two buttons at the top of the window allow to change the sorting of the items in the tree structure, so that they are either sorted according to their names before or after the obfuscation. Items will always be sorted by type first: packages, classes, innerclasses, methods, and fields. Small icons provide a convenient way to quickly find the corresponding items.</p>
+<p>The lower part of the window contains an editable text area that can be used to enter text or paste stacktraces in. Pressing the button at the bottom of the window labelled "Deobfuscate" will trigger the deobfuscation of the contents in the text area. The tool will try to identify fully qualified class names (separated by dots) and use the mapping information to reconstruct the original names. If the tool identifies a stack trace element, it will try to deobfuscate scrambled line numbers, too, if they have been scrambled during the obfuscation process.</p>
+<h1 id="dtd-used-for-ant-ltyguardgt">DTD used for Ant <code>&lt;yguard&gt;</code></h1>
+<p>The obfuscation and shrinking process can be completely configured inside your Ant script. The yguard task and nested elements should be used according to the following DTD. Note that this is for information purposes only, i.e. you do not have to include the following lines anywhere. This DTD should just provide a quick overview of the yGuard syntax. Due to restrictions of the DTD specification, the given DTD does not describe all available yGuard options. Please browse through the documentation above for complete documentation of the yGuard Ant task elements.</p>
+<pre><code class="xml">&lt;!ELEMENT yguard (inoutpair+,externalclasses?,attribute*,(shrink|rename)+)&gt;
+
+&lt;!ELEMENT inoutpair EMPTY&gt;
+&lt;!ATTLIST inoutpair
+in CDATA #REQUIRED
+out CDATA #REQUIRED
+resources CDATA #IMPLIED&gt;
+&lt;!--
+NOTE: the resources attribute only has an effect if a shrink element is present inside the yguard element.
+--&gt;
+
+&lt;!ELEMENT externalclasses ANY&gt;
+&lt;!-- the externalclasses element is used just like Ant's classpath
+element. See the Ant documentation for further details--&gt;
+
+&lt;!ELEMENT attribute (patternset)*&gt;
+name CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT shrink (entrypointjar*,keep?)&gt;
+&lt;!ATTLIST shrink
+logfile CDATA #IMPLIED
+createStubs CDATA #IMPLIED&gt;
+
+&lt;!ELEMENT entrypointjar&gt;
+&lt;!ATTLIST entrypointjar
+name CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT rename (property*,patch?,adjust*,map?,keep?)&gt;
+&lt;!ATTLIST rename
+mainclass CDATA #IMPLIED
+logfile CDATA #IMPLIED
+conservemanifest CDATA #IMPLIED
+replaceClassNameStrings CDATA #IMPLIED&gt;
+
+&lt;!ELEMENT property EMPTY&gt;
+&lt;!ATTLIST property
+name CDATA #REQUIRED
+value CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT patch (class)*&gt;
+
+&lt;!ELEMENT adjust (#PCDATA)&gt;
+&lt;!ATTLIST adjust
+replaceName CDATA #REQUIRED
+replaceContent CDATA #REQUIRED
+replacePath CDATA #REQUIRED&gt;
+
+&lt;!ELEMENT map (class|method|field|package)*&gt;
+
+&lt;!ELEMENT package (patternset)*&gt;
+&lt;!ATTLIST package
+name CDATA #REQUIRED
+map CDATA #REQUIRED&gt;
+&lt;!--
+NOTE: the map attribute is only supported
+if the &lt;package&gt; element is nested inside a &lt;map&gt; element, whereas the patternset is
+only supported inside the &lt;keep&gt;/&lt;expose&gt; sections.
+--&gt;
+
+&lt;!ELEMENT keep (package|class|method|field|sourcefile|linenumbertable)*&gt;
+&lt;!--
+NOTE: the nested &lt;package&gt;,&lt;sourcefile&gt;,&lt;linenumbertable&gt; and &lt;attribute&gt; sections are only
+supported in the &lt;rename&gt; element.
+--&gt;
+&lt;!ATTLIST keep
+linenumbertable CDATA #IMPLIED
+localvariabletable CDATA #IMPLIED
+localvariabletypetable CDATA #IMPLIED
+runtimeinvisibleannotations CDATA #IMPLIED
+runtimeinvisibletypeannotations CDATA #IMPLIED
+runtimevisibleannotations CDATA #IMPLIED
+runtimevisibletypeannotations CDATA #IMPLIED
+sourcefile CDATA #IMPLIED&gt;
+
+&lt;!ELEMENT class (patternset)*&gt;
+&lt;!ATTLIST class
+classes CDATA #IMPLIED
+fields CDATA #IMPLIED
+map CDATA #IMPLIED
+methods CDATA #IMPLIED
+name CDATA #IMPLIED&gt;
+&lt;!--
+NOTE: the map attribute is only supported
+if the &lt;class&gt; element is nested inside an &lt;rename&gt; element.
+--&gt;
+
+&lt;!ELEMENT method (patternset)*&gt;
+&lt;!ATTLIST method
+class CDATA #IMPLIED
+map CDATA #IMPLIED
+name CDATA #IMPLIED&gt;
+&lt;!--
+NOTE: the map attribute is only supported
+if the &lt;method&gt; element is nested inside an &lt;rename&gt; element.
+--&gt;
+
+&lt;!ELEMENT field (patternset)*&gt;
+&lt;!ATTLIST field
+class CDATA #IMPLIED
+map CDATA #IMPLIED
+name CDATA #IMPLIED&gt;
+&lt;!--
+NOTE: the field attribute is only supported
+if the &lt;method&gt; element is nested inside an &lt;rename&gt; element.
+--&gt;
+</code></pre>
+
+<p><strong>Attention</strong> users of IDEs that "support" the creation of Ant files (e.g. IDEA's IntelliJ): Your IDE may indicate some errors inside your ANT file when you use yGuard specific elements. This is because the IDE does not know about the DTD used by yGuard. However this is not a real problem, since the Ant file should nevertheless work as expected.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../troubleshooting/" class="btn btn-neutral float-right" title="Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../license/" class="btn btn-neutral" title="License"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/yWorks/yGuard/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../license/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../troubleshooting/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
