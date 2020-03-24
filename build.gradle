@@ -61,15 +61,19 @@ distributions {
     baseName = "yguard-bundle"
     contents {
       from file("$projectDir/LICENSE")
-      if (project.hasProperty("copy-docs")) {
-        into("docs") {
-          from "$projectDir/site"
-        }
+      from file("$projectDir/README.md")
+      into("examples") {
+        from "$projectDir/examples"
       }
       into("lib") {
         from LIBRARY_JARS
         from configurations.annotation
         from jar
+      }
+      if (project.hasProperty("copy-docs")) {
+        into("docs") {
+          from "$projectDir/site"
+        }
       }
     }
   }
