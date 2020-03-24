@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build pages
 on:
   push:
     branches:    
@@ -10,14 +10,16 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
       - name: Install and Build
         run: |
           pip3 install mkdocs
           mkdocs build
-
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: site
