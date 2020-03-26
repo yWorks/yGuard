@@ -95,7 +95,7 @@ public class OutputVisitor extends ClassVisitor {
 
   public void visitNestMember(java.lang.String nestMember) {
     final ClassDescriptor cd = model.getClassDescriptor( nestMember );
-    if ( !model.isObsolete( cd.getNode() )) {
+    if ( cd.getHasNestMembers() && !model.isObsolete( cd.getNode() )) {
       cv.visitNestMember(  nestMember );
     }
   }
