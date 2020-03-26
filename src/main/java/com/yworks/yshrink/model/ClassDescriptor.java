@@ -16,6 +16,7 @@ public class ClassDescriptor extends AbstractDescriptor {
   private String[] interfaces;
   private String enclosingClass;
   private AbstractMap.SimpleEntry<Object, Object> enclosingMethod;
+  private boolean hasNestMembers = false;
 
   private Map<AbstractMap.SimpleEntry<Object, Object>, MethodDescriptor> methods;
   private Map<String, FieldDescriptor> fields;
@@ -221,6 +222,14 @@ public class ClassDescriptor extends AbstractDescriptor {
 
   public boolean getRetainAttribute( String attr ) {
     return attributesToKeep.contains( attr );
+  }
+
+  public boolean getHasNestMembers() {
+    return hasNestMembers;
+  }
+
+  public void setHasNestMembers(boolean nestMembers) {
+    hasNestMembers = nestMembers;
   }
 
 }

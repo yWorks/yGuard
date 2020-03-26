@@ -49,6 +49,10 @@ public class ModelVisitor extends ClassVisitor {
 
   }
 
+  public void visitNestMember(java.lang.String nestMember) {
+    currentClass.setHasNestMembers(true);
+  }
+
   public void visitOuterClass( final String owner, final String name, final String desc ) {
     if ( name != null ) { // class declared in a method
       currentClass.setEnclosingMethod( name, desc );
