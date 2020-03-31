@@ -19,19 +19,22 @@ Previous releases _may_ still be downloaded from the [yWorks download center](ht
 
 An online version of this documentation [is available](https://yworks.github.io/yGuard/).
 
-Additionally, `yGuard` is distributed with usage instructions. In your distribution, the `docs` folder contains informtion about `yGuard`.
-In order to properly view the offline documentation, a web server is needed. A quick way to accomplish this is using:
-
-```
-cd docs/
-python3 -m http.server 4000
-```
+Additionally, `yGuard` is distributed with usage instructions. In your distribution, the `docs` folder contains informtion about `yGuard`. Browse `docs/index.html` to view the documentation.
 
 ## Building
 
 To build `yGuard` you will need `Java >= 7`.
 
 Once installed you can build `yGuard` using `./gradlew build`.
+
+The bundle version (for Ant users) is built using the `assembleBundleDist` task (e.g `./gradlew assembleBundleDist`), taking a optional parameter to copy documentation (`-Pcopy-docs`).
+
+In order to build the documentation you will need [mkdocs](https://www.mkdocs.org/):
+
+```
+pip3 install mkdocs # or use a virtual environment if you prefer
+mkdocs build
+``` 
 
 ### Using IntellIJ with yGuard
 
