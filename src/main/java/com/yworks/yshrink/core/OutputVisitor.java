@@ -121,7 +121,7 @@ public class OutputVisitor extends ClassVisitor {
       }
 
       if ( createStubs || model.isStubNeeded( md.getNode() ) ) {
-        boolean visitStub =  ( Opcodes.ACC_ABSTRACT & access ) != Opcodes.ACC_ABSTRACT;
+        boolean visitStub = !md.hasFlag(Opcodes.ACC_ABSTRACT);
         return new StubOutputMethodVisitor( cv.visitMethod( access, name, desc, signature, exceptions ), visitStub );
       } else {
         return null;

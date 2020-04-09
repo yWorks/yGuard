@@ -94,6 +94,11 @@ public class MethodDescriptor extends AbstractDescriptor {
     return exceptions;
   }
 
+  public boolean hasFlag(int code) {
+    return (access & code) == code;
+  }
+
+  // TODO: Refactor usages of isStatic and isPrivate with hasFlag
   public boolean isStatic() {
     return ( access & Opcodes.ACC_STATIC ) == Opcodes.ACC_STATIC;
   }
