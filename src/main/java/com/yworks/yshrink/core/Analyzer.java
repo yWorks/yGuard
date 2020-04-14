@@ -551,14 +551,16 @@ public class Analyzer {
    * @param type              the EdgeType to use for the dependency edge.
    * @param createResolveEdge wether to create an additional RESOLVE edge.
    */
-  private void createEdgeToImplementingMethod( ClassDescriptor owner, String targetMethod, String targetDesc,
+  private void createEdgeToImplementingMethod( ClassDescriptor owner, final String targetMethod, final String targetDesc,
                                                Model model, Node node,
                                                EdgeType type, boolean createResolveEdge ) {
 
+    ArrayList<ClassDescriptor> owners = new ArrayList<>(Collections.singletonList(owner));
     while ( ! owner.implementsMethod( targetMethod, targetDesc ) &&
         model.isClassModeled( owner.getSuperName() ) ) {
       model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
       owner = model.getClassDescriptor( owner.getSuperName() );
+      owners.add(owner);
     }
     if ( owner.implementsMethod( targetMethod, targetDesc ) ) {
 
@@ -566,13 +568,43 @@ public class Analyzer {
 
       model.createDependencyEdge( node, targetMethodImp.getNode(), type );
       // RESOLVE dependency needed since INVOKES-dependency edge might not be traversed if owner is not instantiated.
-      if ( createResolveEdge ) {
+      if ( createResolveEdge && !owner.isInterface() ) {
         model.createDependencyEdge( node, targetMethodImp.getNode(), EdgeType.RESOLVE );
       }
 
       // static methods: RESOLVE dependency to implementing class
       if ( targetMethodImp.isStatic() ) {
         model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
+      }
+    } else {
+      // method is not implemented by any super class of owner, thus it must be a default method inherited from a interface
+      //ArrayList<Node> nodes = new ArrayList<>();
+      //for (ClassDescriptor cd: owners) nodes.add(cd.getNode());
+      ArrayList<List<Node>> interfaceNodes = new ArrayList<>();
+      ClassDescriptor implementingInterface = null;
+      for (String interfaceName: owners.get(0).getInterfaces()) {
+        ClassDescriptor interfaceDescriptor = model.getClassDescriptor(interfaceName);
+        if (interfaceDescriptor.implementsMethod(targetMethod, targetDesc)) implementingInterface = interfaceDescriptor;
+      }
+
+      //List<AbstractMap.SimpleEntry<ClassDescriptor, List<ClassDescriptor>>> paths = new ArrayList<>();
+      //for (ClassDescriptor cd: owners) paths.add(findImplementingInterfaces(cd, targetMethod, targetDesc));
+      // sort by specificity
+      // select owner with highest specificity
+
+      if ( implementingInterface != null ) {
+        final MethodDescriptor targetMethodImp = implementingInterface.getMethod( targetMethod, targetDesc );
+
+        model.createDependencyEdge( node, targetMethodImp.getNode(), type );
+        // RESOLVE dependency needed since INVOKES-dependency edge might not be traversed if owner is not instantiated.
+        if ( createResolveEdge ) {
+          model.createDependencyEdge( node, targetMethodImp.getNode(), EdgeType.RESOLVE );
+        }
+
+        // default methods: RESOLVE dependency to implementing interface
+        if ( targetMethodImp.hasFlag(Opcodes.ACC_PUBLIC) && !targetMethodImp.hasFlag(Opcodes.ACC_ABSTRACT) ) {
+          model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
+        }
       }
     }
   }

@@ -9,6 +9,7 @@ import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.NodeType;
 import com.yworks.util.graph.Node;
 import com.yworks.util.graph.Edge;
+import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +140,9 @@ public class Shrinker {
           final ClassDescriptor targetClass = (ClassDescriptor) model.getDescriptor( classNode );
 
           allowed = allowed || targetMethod.isStatic();
+
+          // default method
+          allowed = allowed || targetMethod.hasFlag(Opcodes.ACC_PUBLIC) && !targetMethod.hasFlag(Opcodes.ACC_ABSTRACT);
 
           allowed = allowed || targetClass.isAnnotation();
 
