@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Setup - yGuard Documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Setup";
+    var mkdocs_page_input_path = "setup.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> yGuard Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">yGuard</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../compatibility/">Compatibility</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Setup</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#setup-using-ant">Setup using Ant</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setup-using-maven">Setup using Maven</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setup-using-gradle">Setup using Gradle</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../task_documentation/">Task documentation</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../troubleshooting/">Troubleshooting</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">yGuard Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Setup</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/yWorks/yGuard/edit/master/docs/setup.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="setup">Setup</h2>
+<p>Depending on your build system, you will use <a href="http://maven.apache.org/plugins/maven-antrun-plugin/"><code>AntRun</code></a> or <code>Ant</code> directly to run <code>yGuard</code>.</p>
+<h3 id="setup-using-ant">Setup using <code>Ant</code></h3>
+<p>Download the bundle from the <a href="https://github.com/yWorks/yguard/releases/latest">Github release page</a>. After downloading and extracting the <code>jar</code> files, place them in a path near to your build script. You may use absolute paths, but our examples expect the jar file to lie in the same directory as your build file. Once extracted, you can use the <code>yguard</code> element like so:</p>
+<pre><code class="xml">&lt;property name=&quot;version&quot; value=&quot;2.9.x&quot;/&gt;
+
+&lt;target name=&quot;yguard&quot;&gt;
+    &lt;taskdef name=&quot;yguard&quot; classname=&quot;com.yworks.yguard.YGuardTask&quot; classpath=&quot;${projectDir}/yguard-${version}.jar&quot;/&gt;
+    &lt;yguard&gt;
+        &lt;!-- see the yGuard task documentation for information about the &lt;yguard&gt; element--&gt;
+    &lt;/yguard&gt;
+&lt;/target&gt;
+</code></pre>
+
+<h3 id="setup-using-maven">Setup using <code>Maven</code></h3>
+<p>You can use <code>yGuard</code> directly from <code>Maven</code> central. Add the <code>yGuard</code> dependency to your <code>POM</code>:</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.yworks&lt;/groupId&gt;
+    &lt;artifactId&gt;yguard&lt;/artifactId&gt;
+    &lt;version&gt;2.9.x&lt;/version&gt;
+    &lt;scope&gt;compile&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>Once declared, you can use the <code>antrun</code> plugin to define the <code>yGuard</code> task like so:</p>
+<pre><code class="xml">&lt;plugin&gt;
+    &lt;artifactId&gt;maven-antrun-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.8&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;run&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;id&gt;obfuscate&lt;/id&gt;
+            &lt;configuration&gt;
+                &lt;tasks&gt;
+                    &lt;property name=&quot;runtime_classpath&quot; refid=&quot;maven.runtime.classpath&quot;/&gt;
+                    &lt;taskdef name=&quot;yguard&quot; classname=&quot;com.yworks.yguard.YGuardTask&quot; classpath=&quot;${runtime_classpath}&quot;/&gt;
+                    &lt;yguard&gt;
+                       &lt;!-- see the yGuard task documentation for information about the &lt;yguard&gt; element--&gt;
+                    &lt;/yguard&gt;
+                &lt;/tasks&gt;
+            &lt;/configuration&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;
+</code></pre>
+
+<h3 id="setup-using-gradle">Setup using <code>Gradle</code></h3>
+<p>You can use <code>yGuard</code> directly from <code>Maven</code> central. You can define and use <code>yGuard</code> in your <code>build.gradle</code>:</p>
+<pre><code class="groovy">repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'com.yworks:yguard:2.9.x'
+}
+
+task yguard {
+  group 'yGuard'
+  description 'Obfuscates and shrinks the java archive.'
+
+  doLast {
+    ant.taskdef(
+        name: 'yguard',
+        classname: 'com.yworks.yguard.YGuardTask',
+        classpath: sourceSets.main.runtimeClasspath.asPath
+    )
+
+    ant.yguard {
+        // see the yGuard task documentation for information about the yGuard element
+    }
+  }
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../task_documentation/" class="btn btn-neutral float-right" title="Task documentation">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../license/" class="btn btn-neutral" title="License"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/yWorks/yGuard/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../license/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../task_documentation/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
