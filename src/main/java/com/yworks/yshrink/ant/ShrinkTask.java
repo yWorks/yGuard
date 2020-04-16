@@ -257,6 +257,13 @@ public class ShrinkTask extends YGuardBaseTask {
     return log;
   }
 
+  public AttributesSection createAttribute() {
+    if( attributesSections == null ) attributesSections = new ArrayList<AttributesSection>();
+    AttributesSection as = new AttributesSection();
+    attributesSections.add( as );
+    return as;
+  }
+
   public boolean getCreateStubs() {
     return createStubs;
   }

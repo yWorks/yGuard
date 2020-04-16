@@ -43,13 +43,6 @@ public abstract class YGuardBaseTask extends Task {
     this.mode = mode;
   }
 
-  public AttributesSection createAttribute() {
-    if( attributesSections == null ) attributesSections = new ArrayList<AttributesSection>();
-    AttributesSection as = new AttributesSection();
-    attributesSections.add( as );
-    return as;
-  }
-
   public ShrinkBag createInOutPair() {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
     ShrinkBag pair = new InOutPair();
