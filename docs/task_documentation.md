@@ -14,7 +14,6 @@ The `yguard` task contains two nested elements that perform the name obfuscation
 - [`yguard` element](#the-yguard-element)
     - [`inoutpair` element](#the-inoutpair-element)
     - [`externalclasses` element](#the-externalclasses-element)
-    - [`attribute` element](#the-attribute-element)
     - [`rename` element](#the-rename-element)
         - [`property` element](#the-property-element)
         - [`patch` element](#generating-patch-jars)
@@ -26,6 +25,7 @@ The `yguard` task contains two nested elements that perform the name obfuscation
             - [`field` element](#the-field-element)
     - [`shrink` element](#the-shrink-element)
         - [`entrypointjar` element](#the-entrypointjar-element)
+        - [`attribute` element](#the-attribute-element)
     - [`keep` element](#the-keep-element)
 - [Controlling obfuscation exclusion with annotations](#controlling-obfuscation-exclusion-with-annotations)
 - [Generating patch JARs](#generating-patch-jars)
@@ -192,48 +192,6 @@ In order to achieve a maximum shrinking effect by the `shrink` task, all externa
 
 The elements attributes and child elements can be seen on the [Ant documentation page about using path elements](http://ant.apache.org/manual/using.html#path).
 
-## The attribute Element
-Using the `attribute` element, you can specify which attributes present in the input classes should be kept in the obfuscated output classes.
-
-See the `linked_example` for an example of when to use this element.
-
-#### Attributes
-
- <table class="listing">
-    <thead>
-        <tr>
-            <th width="12%"><b>Attribute</b></th>
-            <th width="78%"><b>Description</b></th>
-            <th width="10%"><b>Required</b></th>
-        </tr>
-    </thead>
-<tr>
-    <td><code>name</code></td>
-    <td>A comma-separated list of attribute names that are to
-    be retained in the shrinked and/or
-    obfuscated class
-    files.
-    </td>
-    <td>Yes</td>
-</tr>
-</table>
-
-#### Child Elements
-
-- [patternset](http://ant.apache.org/manual/Types/patternset.html)
-
-#### Example
-
-```xml
-<attribute name="SourceFile, LineNumberTable, LocalVariableTable">
-  <patternset>
-    <include name="com.mycompany.mylibrary.**"/>
-  </patternset>
-</attribute>
-```
-
-This will retain the attributes named _"SourceFile"_, _"LineNumberTable"_, and _"LocalVariableTable"_ effectively enabling debugging information for all classes in the `com.mycompany.mylibrary` package and subpackages.
-
 ## The `shrink` Element
 The `shrink` task removes all classes, fields and methods that are not reachable from a number of entrypoints given by a nested [keep]() element.
 See the [examples]() explenation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting) section for information on this topic.
@@ -289,6 +247,7 @@ See the [examples]() explenation of some common use cases. If your code uses ref
 
 - [keep](#the-keep-element)
 - [entrypointjar](#the-entrypointjar-element)
+- [attribute](#the-attribute-element)
 
 ## The `entrypointjar` Element
 
@@ -326,6 +285,48 @@ The `entrypointjar` element has no child elements.
   </shrink>
 </yguard>
 ```
+
+## The attribute Element
+Using the `attribute` element, you can specify which attributes present in the input classes should be kept in the obfuscated output classes.
+
+See the `linked_example` for an example of when to use this element.
+
+#### Attributes
+
+ <table class="listing">
+    <thead>
+        <tr>
+            <th width="12%"><b>Attribute</b></th>
+            <th width="78%"><b>Description</b></th>
+            <th width="10%"><b>Required</b></th>
+        </tr>
+    </thead>
+<tr>
+    <td><code>name</code></td>
+    <td>A comma-separated list of attribute names that are to
+    be retained in the shrinked and/or
+    obfuscated class
+    files.
+    </td>
+    <td>Yes</td>
+</tr>
+</table>
+
+#### Child Elements
+
+- [patternset](http://ant.apache.org/manual/Types/patternset.html)
+
+#### Example
+
+```xml
+<attribute name="SourceFile, LineNumberTable, LocalVariableTable">
+  <patternset>
+    <include name="com.mycompany.mylibrary.**"/>
+  </patternset>
+</attribute>
+```
+
+This will retain the attributes named _"SourceFile"_, _"LineNumberTable"_, and _"LocalVariableTable"_ effectively enabling debugging information for all classes in the `com.mycompany.mylibrary` package and subpackages.
 
 ## The `rename` Element
 The basic idea is, that all elements will be renamed by this task. There are different use cases, where you sometimes want to exclude or simply just have to exclude some elements from name obfuscation, i.e. **not** rename them but keep in the API as is. See the [examples]() for explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting) section for information on this topic. Excluding elements can be achieved by using the [keep](#the-keep-element) element, the `mainclass` attribute of the `rename` element and by annotating elements in the source code with the annotation that is specified in the `annotationClass` attribute of the `rename` element. Using the nested `keep` element, you have to specify all classes, methods, fields, and attributes that should be excluded from name obfuscation. Another way is to [annotate the elements directly in the source code](#annotate) that should be obfuscated or excluded. You can use the yFiles obfuscation annotation `com.yworks.util.annotation.Obfuscation` for that or specify your own annotation in the `annotationClass` attribute of this element.
