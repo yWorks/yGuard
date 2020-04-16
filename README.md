@@ -3,7 +3,7 @@ yGuard
 
 ![Continous Integration for yGuard](https://github.com/yWorks/yGuard/workflows/Continous%20Integration%20for%20yGuard/badge.svg)
 
-`yGuard` is an open-source Java obfuscation tool. With `yGuard` it is easy as pie :cake: to configure obfuscation through an extensive `ant` task.
+`yGuard` is an open-source Java obfuscation tool. With `yGuard` it is easy as pie (🍰) to configure obfuscation through an extensive `ant` task.
 
 yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of the family of graph and diagram visualization frameworks [yFiles](https://www.yworks.com/yfiles) and other fine [products](https://www.yworks.com/products).
 
@@ -21,13 +21,20 @@ An online version of this documentation [is available](https://yworks.github.io/
 
 Additionally, `yGuard` is distributed with usage instructions. In your distribution, the `docs` folder contains informtion about `yGuard`. Browse `docs/index.html` to view the documentation.
 
-## Building
+## Examples
+
+`yGuard` comes with a exhaustive set of examples to cover many use cases. Please review the [list of examples in the examples directory](./examples).
+
+## Development
+
+### Building
 
 To build `yGuard` you will need `Java >= 7`.
 
-Once installed you can build `yGuard` using `./gradlew build`.
+Download the repository and build `yGuard` using `./gradlew build`.
 
-The bundle version (for Ant users) is built using the `assembleBundleDist` task (e.g `./gradlew assembleBundleDist`), taking a optional parameter to copy documentation (`-Pcopy-docs`).
+The bundle version (for Ant users) is built using the `assembleBundleDist` task (e.g `./gradlew assembleBundleDist`).
+The `assembleBundleDist` task comes with a optional parameter to copy documentation (`-Pcopy-docs`).
 
 In order to build the documentation you will need [mkdocs](https://www.mkdocs.org/):
 

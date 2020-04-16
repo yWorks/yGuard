@@ -1,9 +1,9 @@
-## Installation
+## Setup
 
-Depending on your build system, you will use `AntRun` or `Ant` directly to install `yGuard`.
+Depending on your build system, you will use [`AntRun`](http://maven.apache.org/plugins/maven-antrun-plugin/) or `Ant` directly to run `yGuard`.
 
-### Installation using `Ant`
-Download the bundle via the [latest release from GitHub](https://github.com/yWorks/yguard/releases/latest). After downloading and extracting the `jar` files, place it in a path near to your build script. You may use absolute paths, but our example following example expect the jar file to lie in the same directory as your build file. Once extracted, you can use the `yguard` element like so:
+### Setup using `Ant`
+Download the bundle from the [Github release page](https://github.com/yWorks/yguard/releases/latest). After downloading and extracting the `jar` files, place them in a path near to your build script. You may use absolute paths, but our examples expect the jar file to lie in the same directory as your build file. Once extracted, you can use the `yguard` element like so:
 
 ```xml
 <property name="version" value="2.9.x"/>
@@ -16,7 +16,7 @@ Download the bundle via the [latest release from GitHub](https://github.com/yWor
 </target>
 ``` 
 
-### Installation using `Maven`
+### Setup using `Maven`
 You can use `yGuard` directly from `Maven` central. Add the `yGuard` dependency to your `POM`:
 
 ```xml
@@ -54,7 +54,7 @@ Once declared, you can use the `antrun` plugin to define the `yGuard` task like 
 </plugin>
 ```
 
-### Installation using `Gradle`
+### Setup using `Gradle`
 
 You can use `yGuard` directly from `Maven` central. You can define and use `yGuard` in your `build.gradle`:
 
