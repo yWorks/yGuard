@@ -535,6 +535,32 @@ public class Analyzer {
   }
 
   /**
+   * Finds all preceding interfaces relative to start.
+   * @param start - the interface to start with
+   * @param path - a initial path, should include the start element
+   * @param paths - a empty list of paths that all paths will be appended to
+   * @param model
+   */
+  private void findPrecedingInterfaces( ClassDescriptor start, List<ClassDescriptor> path, List<List<ClassDescriptor>> paths, Model model) {
+    if (start.getInterfaces().length == 0) {
+      paths.add(path);
+    } else {
+      List<ClassDescriptor> newPath = new ArrayList<>(path);
+      newPath.add(start);
+      for (String interfaceName : start.getInterfaces())
+        findPrecedingInterfaces(model.getClassDescriptor(interfaceName), newPath, paths, model);
+    }
+  }
+
+  // Implements comparator for two paths
+  private class ClassDescriptorPathComparator implements Comparator<List<ClassDescriptor>> {
+    @Override
+    public int compare( final List<ClassDescriptor> path1, final List<ClassDescriptor> path2 ) {
+      return path1.size() - path2.size();
+    }
+  }
+
+  /**
    * create a dependency edge to a concrete implementation of <code>targetMethod</code> in <code>owner</code> or any
    * concrete superclass of <code>owner</code>.
    *
@@ -571,21 +597,35 @@ public class Analyzer {
       if ( targetMethodImp.isStatic() ) {
         model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
       }
+    // method is not implemented by any super class of owner, thus it must be a default method inherited from a interface
     } else {
-      // method is not implemented by any super class of owner, thus it must be a default method inherited from a interface
-      //ArrayList<Node> nodes = new ArrayList<>();
-      //for (ClassDescriptor cd: owners) nodes.add(cd.getNode());
-      ArrayList<List<Node>> interfaceNodes = new ArrayList<>();
-      ClassDescriptor implementingInterface = null;
-      for (String interfaceName: owners.get(0).getInterfaces()) {
-        ClassDescriptor interfaceDescriptor = model.getClassDescriptor(interfaceName);
-        if (interfaceDescriptor.implementsMethod(targetMethod, targetDesc)) implementingInterface = interfaceDescriptor;
+      // gather all direct interfaces of the class and its super classes
+      ArrayList<ClassDescriptor> interfaceDescriptors = new ArrayList<>();
+      for (ClassDescriptor cd: owners)
+        for (String interfaceName: cd.getInterfaces())
+          interfaceDescriptors.add(model.getClassDescriptor(interfaceName));
+
+      // find all paths from all direct interfaces to their super interfaces
+      List<List<ClassDescriptor>> interfacePaths = new ArrayList<>();
+      for (ClassDescriptor cd: interfaceDescriptors) {
+        findPrecedingInterfaces(cd, new ArrayList<ClassDescriptor>(Collections.singletonList(cd)), interfacePaths, model );
       }
 
-      //List<AbstractMap.SimpleEntry<ClassDescriptor, List<ClassDescriptor>>> paths = new ArrayList<>();
-      //for (ClassDescriptor cd: owners) paths.add(findImplementingInterfaces(cd, targetMethod, targetDesc));
-      // sort by specificity
-      // select owner with highest specificity
+      // filter all interfaces that implement the method itself or any of their super interfaces
+      List<List<ClassDescriptor>> implementingInterfacePaths = new ArrayList<>();
+      for (List<ClassDescriptor> path: interfacePaths) {
+        boolean implementsMethod = false;
+        for (ClassDescriptor cd: path) {
+          implementsMethod = cd.implementsMethod( targetMethod, targetDesc );
+          if (implementsMethod) break;
+        }
+        if (implementsMethod) implementingInterfacePaths.add(path);
+      }
+
+      // select the interface with highest specificity
+      ClassDescriptorPathComparator classDescriptorPathComparator = new ClassDescriptorPathComparator();
+      Collections.sort(implementingInterfacePaths, classDescriptorPathComparator);
+      ClassDescriptor implementingInterface = implementingInterfacePaths.get(0).get(0);
 
       if ( implementingInterface != null ) {
         final MethodDescriptor targetMethodImp = implementingInterface.getMethod( targetMethod, targetDesc );
