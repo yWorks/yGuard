@@ -553,7 +553,8 @@ public class Analyzer {
       List<ClassDescriptor> newPath = new ArrayList<>(path);
       newPath.add(start);
       for (String interfaceName : start.getInterfaces())
-        findPrecedingInterfaces(model.getClassDescriptor(interfaceName), newPath, paths, model);
+        if (model.isClassModeled( interfaceName ))
+          findPrecedingInterfaces( model.getClassDescriptor( interfaceName ), newPath, paths, model );
     }
   }
 
@@ -606,9 +607,10 @@ public class Analyzer {
     } else {
       // gather all direct interfaces of the class and its super classes
       ArrayList<ClassDescriptor> interfaceDescriptors = new ArrayList<>();
-      for (ClassDescriptor cd: owners)
-        for (String interfaceName: cd.getInterfaces())
-          interfaceDescriptors.add(model.getClassDescriptor(interfaceName));
+      for ( ClassDescriptor cd: owners )
+        for ( String interfaceName: cd.getInterfaces() )
+          if ( model.isClassModeled( interfaceName ) )
+            interfaceDescriptors.add( model.getClassDescriptor( interfaceName ) );
 
       // find all paths from all direct interfaces to their super interfaces
       List<List<ClassDescriptor>> interfacePaths = new ArrayList<>();
@@ -630,9 +632,9 @@ public class Analyzer {
       // select the interface with highest specificity
       ClassDescriptorPathComparator classDescriptorPathComparator = new ClassDescriptorPathComparator();
       Collections.sort(implementingInterfacePaths, classDescriptorPathComparator);
-      ClassDescriptor implementingInterface = implementingInterfacePaths.get(0).get(0);
 
-      if ( implementingInterface != null ) {
+      if ( implementingInterfacePaths.size() > 0 ) {
+        ClassDescriptor implementingInterface = implementingInterfacePaths.get(0).get(0);
         final MethodDescriptor targetMethodImp = implementingInterface.getMethod( targetMethod, targetDesc );
 
         model.createDependencyEdge( node, targetMethodImp.getNode(), type );
