@@ -27,12 +27,12 @@ public class JarStreamProvider implements StreamProvider {
 
   public JarStreamProvider( final URL jarFile ) throws IOException {
     Path jarPath = Paths.get( jarFile.getPath() );
-    if ( jarFile.getRef().length() > 0 )
+    if ( jarFile.getRef() != null )
       jarPath = Paths.get( jarPath.toString(), "#" + jarFile.getRef() );
 
-    if ( !Files.exists(jarPath) ) {
+    if ( !Files.exists(jarPath) )
       throw new IllegalArgumentException("jar file not found: " + jarPath.toString());
-    }
+
     f = new JarFile( jarPath.toFile() );
     en = f.entries();
   }
