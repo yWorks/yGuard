@@ -5,6 +5,9 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -23,13 +26,14 @@ public class JarStreamProvider implements StreamProvider {
   private String currentFilename;
 
   public JarStreamProvider( final URL jarFile ) throws IOException {
+    Path jarPath = Paths.get( jarFile.getPath() );
+    if ( jarFile.getRef().length() > 0 )
+      jarPath = Paths.get( jarPath.toString(), "#" + jarFile.getRef() );
 
-    // TODO URL..
-
-    if ( ! new File( jarFile.getFile() ).exists() ) {
-      throw new IllegalArgumentException( "jar file not found: " + jarFile.getFile() );
+    if ( !Files.exists(jarPath) ) {
+      throw new IllegalArgumentException("jar file not found: " + jarPath.toString());
     }
-    f = new JarFile( jarFile.getFile() );
+    f = new JarFile( jarPath.toFile() );
     en = f.entries();
   }
 
