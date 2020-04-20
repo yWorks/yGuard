@@ -604,9 +604,13 @@ public class Analyzer {
       // gather all direct interfaces of the class and its super classes
       ArrayList<ClassDescriptor> interfaceDescriptors = new ArrayList<>();
       for ( ClassDescriptor cd: owners )
-        for ( String interfaceName: cd.getInterfaces() )
-          if ( model.isClassModeled( interfaceName ) )
-            interfaceDescriptors.add( model.getClassDescriptor( interfaceName ) );
+        if ( model.isClassModeled( cd.getName() ) && cd.isInterface() ) {
+          interfaceDescriptors.add( cd );
+        } else {
+          for ( String interfaceName: cd.getInterfaces() )
+            if ( model.isClassModeled( interfaceName ) )
+              interfaceDescriptors.add( model.getClassDescriptor( interfaceName ) );
+        }
 
       // find all paths from all direct interfaces to their super interfaces
       List<List<ClassDescriptor>> interfacePaths = new ArrayList<>();
@@ -630,7 +634,16 @@ public class Analyzer {
       Collections.sort(implementingInterfacePaths, classDescriptorPathComparator);
 
       if ( implementingInterfacePaths.size() > 0 ) {
-        ClassDescriptor implementingInterface = implementingInterfacePaths.get(0).get(0);
+        ClassDescriptor implementingInterface = null;
+        for ( ClassDescriptor descriptor: implementingInterfacePaths.get(0) ) {
+          if ( descriptor.implementsMethod( targetMethod, targetDesc )) {
+            implementingInterface = descriptor;
+            break;
+          }
+        }
+        if ( implementingInterface == null ) {
+          throw new InternalError(String.format("Could not find implementation for method %s", targetMethod ));
+        }
         final MethodDescriptor targetMethodImp = implementingInterface.getMethod( targetMethod, targetDesc );
 
         model.createDependencyEdge( node, targetMethodImp.getNode(), type );
