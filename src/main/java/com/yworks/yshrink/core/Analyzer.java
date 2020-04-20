@@ -550,11 +550,12 @@ public class Analyzer {
     if (start.getInterfaces().length == 0) {
       paths.add(path);
     } else {
-      List<ClassDescriptor> newPath = new ArrayList<>(path);
-      newPath.add(start);
       for (String interfaceName : start.getInterfaces())
-        if (model.isClassModeled( interfaceName ))
+        if (model.isClassModeled( interfaceName )) {
+          List<ClassDescriptor> newPath = new ArrayList<>( path );
+          newPath.add( model.getClassDescriptor( interfaceName ) );
           findPrecedingInterfaces( model.getClassDescriptor( interfaceName ), newPath, paths, model );
+        }
     }
   }
 
