@@ -139,16 +139,23 @@ public class Model {
   }
 
   public Edge createDependencyEdge( final Node sourceNode, final Node targetNode, final EdgeType edgeType ) {
-    final Edge existing = ( sourceNode.getEdgeTo( targetNode ) );
-    if ( ( ( existing == null )
-        || ! ( dependencyTypes.get( existing ) ).equals( edgeType ) ) ) {
+    if ( hasEdge( sourceNode, targetNode, edgeType ) ) {
+      return null;
+    } else {
       final Edge e = new Edge(this.network);
       this.network.addEdge( sourceNode, targetNode, e );
       dependencyTypes.put( e, edgeType );
       return e;
-    } else {
-      return null;
     }
+  }
+
+  private boolean hasEdge( final Node src, final Node tgt, final EdgeType type ) {
+    for (Edge edge : network.edgesConnecting(src, tgt)) {
+      if (dependencyTypes.get(edge) == type) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // TODO merge these 
