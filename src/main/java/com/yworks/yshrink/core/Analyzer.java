@@ -539,26 +539,21 @@ public class Analyzer {
    * @param start - the interface to start with
    * @param path - a initial path, should include the start element
    * @param paths - a empty list of paths that all paths will be appended to
-   * @param model
    */
-  private void findPrecedingInterfaces( ClassDescriptor start, List<ClassDescriptor> path, List<List<ClassDescriptor>> paths, Model model) {
+  private void findSuperInterfaces( Model model, ClassDescriptor start, List<ClassDescriptor> path, List<List<ClassDescriptor>> paths ) {
+    path.add(start);
     if (start.getInterfaces().length == 0) {
       paths.add(path);
     } else {
-      for (String interfaceName : start.getInterfaces())
-        if (model.isClassModeled( interfaceName )) {
-          List<ClassDescriptor> newPath = new ArrayList<>( path );
-          newPath.add( model.getClassDescriptor( interfaceName ) );
-          findPrecedingInterfaces( model.getClassDescriptor( interfaceName ), newPath, paths, model );
+      final int oldSize = path.size();
+      for (String interfaceName : start.getInterfaces()) {
+        if (model.isClassModeled(interfaceName)) {
+          if (path.size() > oldSize) {
+            path = new ArrayList<ClassDescriptor>(path.subList(0, oldSize));
+          }
+          findSuperInterfaces(model, model.getClassDescriptor(interfaceName), path, paths);
         }
-    }
-  }
-
-  // Implements comparator for two paths
-  private class ClassDescriptorPathComparator implements Comparator<List<ClassDescriptor>> {
-    @Override
-    public int compare( final List<ClassDescriptor> path1, final List<ClassDescriptor> path2 ) {
-      return path1.size() - path2.size();
+      }
     }
   }
 
@@ -578,12 +573,13 @@ public class Analyzer {
                                                Model model, Node node,
                                                EdgeType type, boolean createResolveEdge ) {
 
-    ArrayList<ClassDescriptor> owners = new ArrayList<>(Collections.singletonList(owner));
+    ArrayList<ClassDescriptor> classHierarchy = new ArrayList<ClassDescriptor>();
+    classHierarchy.add(owner);
     while ( ! owner.implementsMethod( targetMethod, targetDesc ) &&
         model.isClassModeled( owner.getSuperName() ) ) {
       model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
       owner = model.getClassDescriptor( owner.getSuperName() );
-      owners.add(owner);
+      classHierarchy.add(owner);
     }
     if ( owner.implementsMethod( targetMethod, targetDesc ) ) {
 
@@ -602,49 +598,42 @@ public class Analyzer {
     // method is not implemented by any super class of owner, thus it must be a default method inherited from a interface
     } else {
       // gather all direct interfaces of the class and its super classes
-      ArrayList<ClassDescriptor> interfaceDescriptors = new ArrayList<>();
-      for ( ClassDescriptor cd: owners )
-        if ( model.isClassModeled( cd.getName() ) && cd.isInterface() ) {
-          interfaceDescriptors.add( cd );
-        } else {
-          for ( String interfaceName: cd.getInterfaces() )
-            if ( model.isClassModeled( interfaceName ) )
-              interfaceDescriptors.add( model.getClassDescriptor( interfaceName ) );
-        }
-
-      // find all paths from all direct interfaces to their super interfaces
-      List<List<ClassDescriptor>> interfacePaths = new ArrayList<>();
-      for (ClassDescriptor cd: interfaceDescriptors) {
-        findPrecedingInterfaces(cd, new ArrayList<ClassDescriptor>(Collections.singletonList(cd)), interfacePaths, model );
+      final HashSet<String> seen = new HashSet<String>();
+      final ArrayList<ClassDescriptor> interfaceDescriptors = new ArrayList<ClassDescriptor>();
+      if (owner.isInterface()) {
+        seen.add(owner.getName());
+        interfaceDescriptors.add(owner);
       }
-
-      // filter all interfaces that implement the method itself or any of their super interfaces
-      List<List<ClassDescriptor>> implementingInterfacePaths = new ArrayList<>();
-      for (List<ClassDescriptor> path: interfacePaths) {
-        boolean implementsMethod = false;
-        for (ClassDescriptor cd: path) {
-          implementsMethod = cd.implementsMethod( targetMethod, targetDesc );
-          if (implementsMethod) break;
-        }
-        if (implementsMethod) implementingInterfacePaths.add(path);
-      }
-
-      // select the interface with highest specificity
-      ClassDescriptorPathComparator classDescriptorPathComparator = new ClassDescriptorPathComparator();
-      Collections.sort(implementingInterfacePaths, classDescriptorPathComparator);
-
-      if ( implementingInterfacePaths.size() > 0 ) {
-        ClassDescriptor implementingInterface = null;
-        for ( ClassDescriptor descriptor: implementingInterfacePaths.get(0) ) {
-          if ( descriptor.implementsMethod( targetMethod, targetDesc )) {
-            implementingInterface = descriptor;
-            break;
+      for (ClassDescriptor cd: classHierarchy) {
+        for (String interfaceName : cd.getInterfaces()) {
+          if (seen.add(interfaceName) && model.isClassModeled(interfaceName)) {
+            interfaceDescriptors.add(model.getClassDescriptor(interfaceName));
           }
         }
-        if ( implementingInterface == null ) {
-          throw new InternalError(String.format("Could not find implementation for method %s", targetMethod ));
+      }
+
+      // find all paths from all direct interfaces to their super interfaces
+      final List<List<ClassDescriptor>> interfaceHierarchies = new ArrayList<List<ClassDescriptor>>();
+      for (ClassDescriptor cd: interfaceDescriptors) {
+        findSuperInterfaces(model, cd, new ArrayList<ClassDescriptor>(), interfaceHierarchies);
+      }
+
+      // determine the most specific interface implementation
+      int mostSpecificDist = 0;
+      ClassDescriptor mostSpecific = null;
+      for (List<ClassDescriptor> hierarchy : interfaceHierarchies) {
+        final int idx = indexOf(hierarchy, targetMethod, targetDesc);
+        if (idx > -1) {
+          final int dist = lastIndexOf(hierarchy, targetMethod, targetDesc) - idx + 1;
+          if (mostSpecificDist < dist) {
+            mostSpecificDist = dist;
+            mostSpecific = hierarchy.get(idx);
+          }
         }
-        final MethodDescriptor targetMethodImp = implementingInterface.getMethod( targetMethod, targetDesc );
+      }
+
+      if ( mostSpecific != null ) {
+        final MethodDescriptor targetMethodImp = mostSpecific.getMethod( targetMethod, targetDesc );
 
         model.createDependencyEdge( node, targetMethodImp.getNode(), type );
         // RESOLVE dependency needed since INVOKES-dependency edge might not be traversed if owner is not instantiated.
@@ -658,6 +647,49 @@ public class Analyzer {
         }
       }
     }
+  }
+
+  /**
+   * Determines the index of the first class descriptor in the given list that
+   * {@link ClassDescriptor#implementsMethod(String, String) implements} the
+   * method identified by the given method name and method descriptor.
+   * @return the index of the first class descriptor that implements the given
+   * method or {@code -1} if there is no such descriptor in the given list.
+   */
+  private static int indexOf(
+    final List<ClassDescriptor> interfaces,
+    final String methodName, final String methodDescriptor
+  ) {
+    int idx = -1;
+    for (ClassDescriptor cd : interfaces) {
+      ++idx;
+      if (cd.implementsMethod(methodName, methodDescriptor)) {
+        return idx;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Determines the index of the last class descriptor in the given list that
+   * {@link ClassDescriptor#implementsMethod(String, String) implements} the
+   * method identified by the given method name and method descriptor.
+   * @return the index of the last class descriptor that implements the given
+   * method or {@code -1} if there is no such descriptor in the given list.
+   */
+  private static int lastIndexOf(
+    final List<ClassDescriptor> interfaces,
+    final String methodName, final String methodDescriptor
+  ) {
+    int idx = interfaces.size();
+    for (ListIterator<ClassDescriptor> it = interfaces.listIterator(idx); it.hasPrevious();) {
+      --idx;
+      final ClassDescriptor cd = it.previous();
+      if (cd.implementsMethod(methodName, methodDescriptor)) {
+        return idx;
+      }
+    }
+    return -1;
   }
 
   /**
