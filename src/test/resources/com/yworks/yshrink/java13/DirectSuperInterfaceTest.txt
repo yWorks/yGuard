@@ -1,0 +1,22 @@
+package com.yworks.yshrink.java13;
+
+import java.io.PrintStream;
+
+public class DirectSuperInterfaceTest {
+    interface SuperInterface {
+        default void print(PrintStream out) {
+            out.println("Hello from interface");
+        }
+    }
+
+    static class Direct implements SuperInterface { }
+
+    public static void run( final PrintStream out ) {
+        Direct direct = new Direct();
+        direct.print( out );
+    }
+
+    public static void main( String[] args ) {
+        run(System.out);
+    }
+}

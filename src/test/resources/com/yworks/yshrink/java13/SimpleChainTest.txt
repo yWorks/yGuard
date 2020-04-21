@@ -1,0 +1,30 @@
+package com.yworks.yshrink.java13;
+
+import java.io.PrintStream;
+
+public class SimpleChainTest {
+    interface SuperInterface {
+        default void print(PrintStream out) {
+            out.println("Hello from first interface");
+        }
+    }
+
+    interface SuperSuperInterface extends SuperInterface {
+        default void print(PrintStream out) {
+            out.println("Hello from second interface");
+        }
+    }
+
+    interface SuperSuperSuperInterface extends SuperSuperInterface { }
+
+    static class Klass implements SuperSuperInterface { }
+
+    public static void run( final PrintStream out ) {
+        Klass klass = new Klass();
+        klass.print( out );
+    }
+
+    public static void main( String[] args ) {
+        run(System.out);
+    }
+}
