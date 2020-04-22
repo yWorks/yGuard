@@ -25,6 +25,12 @@ Additionally, `yGuard` is distributed with usage instructions. In your distribut
 
 `yGuard` comes with a exhaustive set of examples to cover many use cases. Please review the [list of examples in the examples directory](./examples).
 
+## Projects using yGuard
+
+<img src="docs/img/yFiles.png" width="200" height="60" />
+</br>
+<img src="docs/img/dbvis.png" width="200" height="60" />
+
 ## Development
 
 ### Building
