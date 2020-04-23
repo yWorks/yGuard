@@ -547,18 +547,22 @@ public class Analyzer {
    */
   private void findSuperInterfaces( Model model, ClassDescriptor start, List<ClassDescriptor> path, List<List<ClassDescriptor>> paths ) {
     path.add(start);
-    if (start.getInterfaces().length == 0) {
-      paths.add(path);
-    } else {
-      final int oldSize = path.size();
-      for (String interfaceName : start.getInterfaces()) {
-        if (model.isClassModeled(interfaceName)) {
-          if (path.size() > oldSize) {
-            path = new ArrayList<ClassDescriptor>(path.subList(0, oldSize));
-          }
-          findSuperInterfaces(model, model.getClassDescriptor(interfaceName), path, paths);
+
+    boolean hasModeled = false;
+
+    final int oldSize = path.size();
+    for (String interfaceName : start.getInterfaces()) {
+      if (model.isClassModeled(interfaceName)) {
+        hasModeled = true;
+        if (path.size() > oldSize) {
+          path = new ArrayList<ClassDescriptor>(path.subList(0, oldSize));
         }
+        findSuperInterfaces(model, model.getClassDescriptor(interfaceName), path, paths);
       }
+    }
+
+    if (!hasModeled) {
+      paths.add(path);
     }
   }
 
