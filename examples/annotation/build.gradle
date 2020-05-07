@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
   compile 'com.yworks:yguard:2.9.+'
-  compile 'com.yworks.annotation:2.9.+'
+  compile 'com.yworks:annotation:2.9.+'
 }
 
 task obfuscate {
