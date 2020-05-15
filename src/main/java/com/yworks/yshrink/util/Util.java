@@ -92,7 +92,7 @@ public class Util {
         r = desc.substring( i + 2, desc.length() - 1 );
       }
     } else {
-      if ( desc.startsWith( "L" ) ) {
+      if ( desc.endsWith(";") ) {
         r = desc.substring( 1, desc.length() - 1 );
       }
     }
