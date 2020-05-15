@@ -334,10 +334,14 @@ public class Analyzer {
 
           model.createDependencyEdge( newNode, cd.getMethod( mName, mDesc ).getNode(), EdgeType.ASSUME );
         } else {
-          if ( model.isClassModeled( cd.getSuperName() ) ) {
-            ClassDescriptor superCd = model.getClassDescriptor( cd.getSuperName() );
+          List<ClassDescriptor> modeledClasses = new ArrayList<>();
+          for ( String interfaceName: cd.getInterfaces() ) {
+            if ( model.isClassModeled( interfaceName ) ) modeledClasses.add( model.getClassDescriptor( interfaceName ) );
+          }
+          if ( model.isClassModeled( cd.getSuperName() ) ) modeledClasses.add( model.getClassDescriptor( cd.getSuperName() ) );
 
-            createEdgeToImplementingMethod( superCd, mName, mDesc, model, newNode, EdgeType.ASSUME, false );
+          for ( ClassDescriptor superDescriptor: modeledClasses ) {
+            createEdgeToImplementingMethod( superDescriptor, mName, mDesc, model, newNode, EdgeType.ASSUME, false );
           }
         }
       }
