@@ -68,19 +68,6 @@ public class Model {
     public void close() throws Exception {}
   }
 
-  public List<MethodDescriptor> getAllConstructors( final ClassDescriptor cd ) {
-
-    final List<MethodDescriptor> constructors = new ArrayList<MethodDescriptor>();
-
-    for ( MethodDescriptor md : cd.getMethods() ) {
-      if ( CONSTRUCTOR_NAME.equals( md.getName() ) ) {
-        constructors.add( md );
-      }
-    }
-
-    return constructors;
-  }
-
   public boolean isSimpleModelSet() {
     return simpleModelSet;
   }
@@ -156,28 +143,6 @@ public class Model {
       }
     }
     return false;
-  }
-
-  // TODO merge these 
-  public ClassDescriptor newClassDescriptor( final String name, final int access, final File sourceJar ) {
-
-    final Node newNode = new Node(this.network);
-    this.network.addNode(newNode);
-    final AbstractDescriptor newNodeDescriptor = new NewNodeDescriptor( Opcodes.ACC_PUBLIC, sourceJar );
-    node2Descriptor.put( newNode, newNodeDescriptor );
-    node2Type.put( newNode, NodeType.NEW );
-    newNodeDescriptor.setNode( newNode );
-
-    final ClassDescriptor cd = new ClassDescriptor( name, access, newNode, sourceJar );
-
-    final Node classNode = new Node(this.network);
-    this.network.addNode(classNode);
-    node2Descriptor.put( classNode, cd );
-    node2Type.put( classNode, NodeType.CLASS );
-    cd.setNode( classNode );
-    model.put( name, cd );
-
-    return cd;
   }
 
   public ClassDescriptor newClassDescriptor( final String name, final String superName, final String[] interfaces,
@@ -420,57 +385,6 @@ public class Model {
     return r;
   }
 
-  public boolean getAllInternalAncestorMethods( String className, final List<MethodDescriptor> methods ) {
-
-    boolean r = true;
-
-    if ( null == className ) {
-      return true;
-    }
-
-    if ( isClassModeled( className ) ) {
-
-      ClassDescriptor cd = getClassDescriptor( className );
-
-      for ( MethodDescriptor methodDescriptor : cd.getMethods() ) {
-        methods.add( methodDescriptor );
-      }
-
-      if ( ! ( cd.isInterface() && "java/lang/Object".equals( cd.getSuperName() ) ) ) {
-        r &= getAllInternalAncestorMethods( cd.getSuperName(), methods );
-      }
-      String[] interfaces = cd.getInterfaces();
-      for ( String interfc : interfaces ) {
-        r &= getAllInternalAncestorMethods( interfc, methods );
-      }
-    } else {
-
-      Class clazz = resolve( className );
-
-      if ( null != clazz ) {
-
-        // add all methods
-        Method[] clazzMethods = clazz.getDeclaredMethods();
-
-        // collect superclass methods
-        Class superClass = clazz.getSuperclass();
-        if ( null != superClass ) {
-          r &= getAllInternalAncestorMethods( superClass.getName(), methods );
-        }
-
-        // collect interface methods
-        Class[] interfaces = clazz.getInterfaces();
-
-        for ( Class interfc : interfaces ) {
-          r &= getAllInternalAncestorMethods( interfc.getName(), methods );
-        }
-      } else {
-        return false;
-      }
-    }
-    return r;
-  }
-
   /**
    * collects all subclasses of <code>cd</code>
    *
@@ -485,29 +399,6 @@ public class Model {
         getInternalDescendants( subClass, descendants );
       }
     }
-  }
-
-  /**
-   * determine wether class <code>className</code> has any ancestor classes/interfaces that cannot be resolved.
-   *
-   * @param className the class name
-   * @return true iff any ancestor classes of <code>className</code> are not contained in this model and cannot be
-   *         resolved using the given <code>resolver</code>.
-   */
-  public boolean hasUnresolvableAncestors( final String className ) {
-
-    boolean r = false;
-    if ( isClassModeled( className ) ) {
-      final ClassDescriptor cd = getClassDescriptor( className );
-      r = r || hasUnresolvableAncestors( cd.getSuperName() );
-      for ( String interfc : cd.getInterfaces() ) {
-        r = r || hasUnresolvableAncestors( interfc );
-      }
-    } else {
-      resolve( className );
-    }
-
-    return r;
   }
 
   private boolean isMethodDefinedInExternalInterface( final ClassDescriptor origClass, final MethodDescriptor md ) {
@@ -705,10 +596,6 @@ public class Model {
     }
 
     return new MethodDescriptor( m.getName(), access, desc, exceptions, sourceJar );
-  }
-
-  public int getNodeType( final AbstractDescriptor ad ) {
-    return (Integer) node2Type.get( ad.getNode() );
   }
 
   public int getNodeType( final Node n ) {

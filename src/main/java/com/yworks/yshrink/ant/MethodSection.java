@@ -96,25 +96,4 @@ public final class MethodSection extends PatternMatchedSection {
     addPatternSet( typePatternSet, typePatternSet.getType() );
     return typePatternSet;
   }
-
-//  @Override
-//  public void addConfiguredPatternSet( final PatternSet ps ) {
-//
-//    if ( ps instanceof TypePatternSet ) {
-//
-//      if ( ( (TypePatternSet) ps ).getType().equals( TypePatternSet.Type.NAME ) ) {
-//        if ( name != null ) {
-//          throw new BuildException(
-//              "Only name attribute or patternset of type name allowed in a method section - both given." );
-//        }
-//      } else if ( ( (TypePatternSet) ps ).getType().equals( TypePatternSet.Type.CLASS ) ) {
-//        if ( className != null ) {
-//          throw new BuildException(
-//              "Only class attribute or patternset of type class allowed in a method section - both given." );
-//        }
-//      }
-//    }
-//
-//    super.addConfiguredPatternSet( ps );
-//  }
 }

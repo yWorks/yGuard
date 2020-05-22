@@ -71,10 +71,6 @@ public class ClassDescriptor extends AbstractDescriptor {
     fields.put( field.getName(), field );
   }
 
-  public boolean hasExternalAncestors() {
-    return hasExternalAncestors;
-  }
-
   public void setHasExternalAncestors( final boolean hasExternalAncestors ) {
     this.hasExternalAncestors = hasExternalAncestors;
   }
@@ -180,40 +176,8 @@ public class ClassDescriptor extends AbstractDescriptor {
         '}';
   }
 
-  //  public String toString() {
-////    final StringBuilder s = new StringBuilder();
-////    s.append( "class " + name + " extends " + superName );
-////
-////    if ( interfaces.length != 0 ) {
-////      s.append( " implements " );
-////      for ( int i = 0; i < interfaces.length; i++ ) {
-////        s.append( interfaces[ i ] + " " );
-////      }
-////    }
-////
-////    s.append( "\n\n" );
-////
-////    for ( FieldDescriptor field : fields.values() ) {
-////      s.append( "\t" + field.getType() + " " + field.getName() + "\n" );
-////    }
-////
-////    s.append( "\n" );
-////
-////    for ( MethodDescriptor method : methods.values() ) {
-////      s.append( "\t" + method.getDesc() + " " + method.getName() + "\n" );
-////    }
-////
-////    s.append( "\n\n\n" );
-////
-////    return s.toString();
-//  }
-
   public Node getNewNode() {
     return this.newNode;
-  }
-
-  public Set<String> getAttributesToKeep() {
-    return attributesToKeep;
   }
 
   public void setRetainAttribute( String attr ) {

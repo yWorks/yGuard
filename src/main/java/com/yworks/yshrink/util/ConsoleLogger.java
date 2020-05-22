@@ -33,10 +33,6 @@ public class ConsoleLogger extends Logger {
     ex.printStackTrace();
   }
 
-  public void doShrinkLog( String s, ShrinkType type ) {
-    System.out.println( s );
-  }
-
   public void close() {
     unregister();
   }

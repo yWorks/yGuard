@@ -41,9 +41,6 @@ public class AntLogger extends Logger {
     project.log( task, "ERROR: "+s + "\n" + ex.getMessage(), Project.MSG_ERR );
   }
 
-  public void doShrinkLog( String s, Logger.ShrinkType type ) {
-  }
-
   public void close() {
     unregister();
   }

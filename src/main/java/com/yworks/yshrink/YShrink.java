@@ -80,11 +80,6 @@ public class YShrink {
       IOException {
 
     final Analyzer analyzer = new Analyzer();
-//    NavigationView nv = null;
-//    if ( showGraph ) {
-//      nv = new NavigationView();
-//    }
-    //Model model = ( showGraph ) ? new Model2D( nv.getGraph() ) : new Model();
 
     Model model = new Model();
 
@@ -120,98 +115,7 @@ public class YShrink {
     if ( !model.isAllResolved() ) {
       Logger.warn( "Not all dependencies could be resolved. Please see the logfile for details." );
     }
-
-//    if ( null != nv ) {
-//
-//      ClassDescriptor cd = model.getClassDescriptor( CENTER_CLASS );
-//
-//      AbstractDescriptor centerDesc = null;
-//
-//      if ( ! "".equals( CENTER_METHOD_DESC ) && ! "".equals( CENTER_METHOD_NAME ) ) {
-//        centerDesc = cd.getMethod( CENTER_METHOD_NAME, CENTER_METHOD_DESC );
-//      }
-//      if ( centerDesc == null ) {
-//        centerDesc = cd;
-//      }
-//      if ( centerDesc != null ) {
-//        nv.show( centerDesc.getNode() );
-//      } else {
-//        System.out.println( "VIEW: given class/method not modeled." );
-//        nv.show( model.getGraph().firstNode() );
-//      }
-//    }
   }
-
-//  public void doShrinkPairs( final URL[] inFiles, final URL[] outFiles, final EntryPointFilter epf,
-//                             final ClassResolver resolver, Writer.ResourcePolicy[] resources ) throws ShrinkException {
-//
-//    final Analyzer analyzer = new Analyzer();
-//    NavigationView nv = null;
-//    if ( showGraph ) {
-//       nv = new NavigationView();
-//    }
-//    Model model = ( showGraph ) ? new Model2D( nv.getGraph() ) : new Model();
-//    if( null != resolver ) model.setClassResolver( resolver );
-//
-//    try {
-//
-//      // create nodes
-//      analyzer.initModel( model, inFiles );
-//
-//      // mark entrypoints
-//      List<AbstractDescriptor> entryPoints = markEntryPoints( model, epf );
-//
-//      // create edges
-//      analyzer.createEdges( model );
-//
-//      model.createEntryPointEdges( entryPoints );
-//
-//      final Shrinker shrinker = new Shrinker();
-//      shrinker.shrink( model );
-//
-//      final Writer writer = new Writer( createStubs, digests );
-//
-//      for ( int i = 0; i < inFiles.length; i++ ) {
-//        writer.write( model, inFiles[ i ], outFiles[ i ], resources[ i ] );
-//      }
-//
-//      if ( null != nv ) {
-//
-//        ClassDescriptor cd = model.getClassDescriptor( CENTER_CLASS );
-//
-//        AbstractDescriptor centerDesc = null;
-//
-//        if ( ! "".equals( CENTER_METHOD_DESC ) && ! "".equals( CENTER_METHOD_NAME ) ) {
-//          centerDesc = cd.getMethod( CENTER_METHOD_NAME, CENTER_METHOD_DESC );
-//        }
-//        if ( centerDesc == null ) {
-//          centerDesc = cd;
-//        }
-//        if ( centerDesc != null ) {
-//          nv.show( centerDesc.getNode() );
-//        } else {
-//          System.out.println( "VIEW: given class/method not modeled." );
-//          nv.show( model.getGraph().firstNode() );
-//        }
-//      }
-//    } catch ( IOException e ) {
-//      throw new ShrinkException( "An IOException occured.", e.getCause() );
-//    }
-//  }
-
-//  private void doShrinkPair( final File inFile, final File outFile, final EntryPointFilter epf,
-//                             final URL[] externalClasses,
-//                             final boolean showGraph, Writer.ResourcePolicy resourcePolicy ) throws ShrinkException {
-//
-//    this.showGraph = showGraph;
-//    final URLCpResolver resolver = new URLCpResolver( externalClasses );
-//    try {
-//      doShrinkPairs( new URL[]{ inFile.toURL() }, new URL[]{ outFile.toURL() }, epf, resolver,
-//          new Writer.ResourcePolicy[] { resourcePolicy });
-//    } catch ( MalformedURLException e ) {
-//      e.printStackTrace(); //TODO handle
-//    }
-//  }
 
   /**
    * If a constructor is an entrypoint, the synthetic new-node of its class is also marked as an entrypoint.
@@ -320,17 +224,6 @@ public class YShrink {
       final YShrink yshrink = new YShrink();
 
       final EntryPointFilter epf = new AllMainMethodsFilter();
-
-//      try {
-//        yshrink.doShrinkPair( in, out, epf, externalLibs, showGraph, Writer.ResourcePolicy.COPY );
-//      } catch ( ShrinkException e ) {
-//        e.printStackTrace(); //TODO handle
-//      }
-
-//      URL[] inFiles = new URL[] { ClassLoader.getSystemResource( "yshrink.jar" ), new File("/afs/yworks.home/home/schroede/lib/asm-2.2.2/lib/asm-2.2.2.jar").toURL() };
-//      URL[] outFiles = new URL[] { new File(System.getProperty( "user.dir" ) + "/yshrink-out.jar").toURL(),   new File(System.getProperty( "user.dir" ) + "/asm-out.jar").toURL() };
-//
-//      yshrink.doShrinkPair( inFiles, outFiles, epf, null );
 
     } catch ( Exception e ) {
       Logger.err( "An Exception occured.", e );
