@@ -63,10 +63,6 @@ public abstract class AbstractDescriptor {
     isEntryPoint = entryPoint;
   }
 
-  public boolean isReachable() {
-    return isReachable;
-  }
-
   public void setReachable( final boolean reachable ) {
     isReachable = reachable;
   }

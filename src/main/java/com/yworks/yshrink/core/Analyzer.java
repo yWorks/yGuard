@@ -31,12 +31,6 @@ public class Analyzer {
   private static final String SYNTHETIC_DOT_CLASS_FIELD_START = "class$";
   private static final String CLASS_DESC = "Ljava/lang/Class;";
 
-//  public Model analyze( Model model, final URL[] inFiles ) throws IOException {
-//    initModel( model, inFiles );
-//    createEdges( model );
-//    return model;
-//  }
-
   public void createEdges( Model model ) {
     createInheritanceEdges( model );
     createDependencyEdges( model );
@@ -81,34 +75,6 @@ public class Analyzer {
 
     }
   }
-
-//
-//  public void initModel( final Model model, final URL[] inFiles ) throws IOException {
-//
-//    final ModelVisitor mv = new ModelVisitor( model );
-//
-//    for ( URL url : inFiles ) {
-//      visitAllClasses( mv, url );
-//    }
-//
-//    for ( ClassDescriptor cd : model.getAllClassDescriptors() ) {
-//
-//      cd.setEnclosingClass( model.getEnclosingClass( cd.getName() ) );
-//
-//      // add static initializers if not present
-//      MethodDescriptor clinit = cd.getMethod( "<clinit>", Model.VOID_DESC );
-//
-//      if ( ! cd.isInnerClass() ) {
-//
-//        if ( clinit == null ) {
-//          clinit = model.newMethodDescriptor( cd, Opcodes.ACC_STATIC, "<clinit>", Model.VOID_DESC, null );
-//        }
-//
-//        model.createDependencyEdge( cd, clinit, EdgeType.INVOKES );
-//      }
-//
-//    }
-//  }
 
   /**
    * Let <code>v</code> visit all classes contained in <code>jarFile</code>

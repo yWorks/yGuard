@@ -39,14 +39,6 @@ public class NodeType {
     return ( nodeType & METHOD ) == METHOD;
   }
 
-  public static boolean isFieldNode( final int nodeType ) {
-    return ( nodeType & FIELD ) == FIELD;
-  }
-
-  public static boolean isClassNode( final int nodeType ) {
-    return ( nodeType & CLASS ) == CLASS;
-  }
-
   public static boolean isInterfaceNode( final int nodeType ) {
     return ( nodeType & INTERFACE ) == INTERFACE;
   }

@@ -325,22 +325,4 @@ public class ShrinkTask extends YGuardBaseTask {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
     pairs.add( entrypointjar );
   }
-
-  /**
-   * Used as a super class for ant's handling of the elements which can contain a <code>patternset</code> child
-   * element.
-   */
-//  public static abstract class PatternMatchedClassesSection {
-//    List<PatternSet> patternSets = new ArrayList<PatternSet>( 5 );
-//
-//    protected boolean allowMatchAllPatternSet = false;
-//
-//    public void addConfiguredPatternSet( final PatternSet ps ) {
-//      patternSets.add( ps );
-//    }
-//
-//    public List<PatternSet> getPatternSets() {
-//      return patternSets;
-//    }
-//  }
 }
