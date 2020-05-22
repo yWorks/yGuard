@@ -5,10 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## Changed
-- Use mkdocs instead of Jekyll. Bundle docs in the upcoming releases.
 
-## Fixed
+## [2.10.0] 2020-05-22
+
+### Added
+- Added support for `invokedynamic` instructions to YShrink
+- Added support for `default` methods in interfaces to YShrink
+- Added more documentation to YShrink for future maintenance
+
+### Changed
+- Use mkdocs instead of Jekyll. Bundle docs in the upcoming releases.
+- Support `ASM7` and Java 13 in both YShrink and YGuard
+
+### Fixed
+
 - Use a empty manifest in `JarWriter` where the shrinker would previously crash when no manifest was present
 - Use Gradle wrapper with Gradle version 5.6.4 for reproducible builds
 
