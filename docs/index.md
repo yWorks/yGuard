@@ -10,10 +10,10 @@ yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of t
 ## Table of contents
 
 - [Setup](setup)
-    - [Using `Ant`](setup/#installation-using-ant)
-    - [Using `Maven`](setup/#installation-using-maven)
-    - [Using `Gradle`](setup/#installation-using-gradle)
-- [Task documentation](task)
+    - [Using `Ant`](setup/#setup-using-ant)
+    - [Using `Maven`](setup/#setup-using-maven)
+    - [Using `Gradle`](setup/#setup-using-gradle)
+- [Task documentation](task_documentation)
 - [Examples](https://github.com/yWorks/yguard/tree/master/examples)
 - [Troubleshooting](troubleshooting)
 - [Compatibility](compatibility)
