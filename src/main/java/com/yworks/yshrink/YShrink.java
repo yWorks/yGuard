@@ -24,6 +24,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * How the Shrinker works:
+ * - Initially, no node is marked as instantiated and all nodes are marked as obsolete.
+ * - Using the global entrypoint-node as the startnode, a dfs is run on the dependency graph.
+ * - Edges are traversed under the following conditions:
+ *   - If the target node is a class or field node, the edge may always be traversed.
+ *   - An edge to a method node may be traversed if it is not a RESOLVE edge and:
+ *     - The target method is a invoke dynamic or
+ *     - The target method is static or
+ *     - The edge represents a super call or
+ *     - The target node is the NEW-node of a class or
+ *     - The target method is a constructor or
+ *     - The target method is private or
+ *     - The target method is a regular method and the class the method belongs to is marked as instantiated or
+ *     - The target method is needed, i.e. a child class of the class the method belongs to is instantiated and does not override the method.
+ * - If an edge is allowed to be traversed and the target node is a NEW-node, the corresponding class is marked as instantiated.
+ * - As long as the amount of classes marked as instantiated increases, rerun the dfs.
+ * - If the amount of classes marked as instantiated does not increase between two dfs-rounds, a last dfs is run in order to mark all reachable nodes as non-obsolete. Also, the RESOLVE edges that target methods are allowed to be traversed in this last round in order to mark the target methods as needed for resolving (that is, only a stub of these methods is needed).
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class YShrink {
@@ -46,6 +63,19 @@ public class YShrink {
     this.digests = digests;
   }
 
+  /**
+   * Basic steps
+   * - Init model: create nodes for each class, method and field. Additionally, create a single entrypoint-node and one NEW-node for each class.
+   * - Mark all entrypoints: using a composite EntryPointFilter, mark/log every entrypoint-node in the model.
+   * - Create all dependency edges using the com.yworks.yshrink.core.Analyzer.
+   * - Create additional entrypoint-edges between the entrypoint-node and each entrypoint that doesn't represent an ordinary method (non-abstract,non-static,non-constructor).
+   * - Mark all obsolete classes, methods and fields using the com.yworks.yshrink.core.Shrinker.
+   * - Write out all non-obsolete classes using the com.yworks.yshrink.core.Writer.
+   * @param pairs
+   * @param epf
+   * @param resolver
+   * @throws IOException
+   */
   public void doShrinkPairs( List<ShrinkBag> pairs, EntryPointFilter epf, ClassResolver resolver ) throws
       IOException {
 
