@@ -25,7 +25,7 @@ Additionally, `yGuard` is distributed with usage instructions. In your distribut
 
 `yGuard` comes with a exhaustive set of examples to cover many use cases. Please review the [list of examples in the examples directory](./examples).
 
-## Users
+## Users of `yGuard`
 
 Below you will find a list of users relying on `yGuard` to keep their product secure.
 
