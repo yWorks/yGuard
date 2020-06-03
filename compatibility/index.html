@@ -56,7 +56,7 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#technical-requirements">Technical requirements</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#java-11-compatibility">Java 11 Compatibility</a>
+    <li class="toctree-l2"><a class="reference internal" href="#java-11-java-13-compatibility">Java 11 / Java 13 Compatibility</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#java-9-java-10-compatibility">Java 9 / Java 10 Compatibility</a>
     </li>
@@ -125,9 +125,9 @@
                 <h1 id="compatibility">Compatibility</h1>
 <h2 id="technical-requirements">Technical requirements</h2>
 <p>yGuard requires JDK 1.7.x or greater and Ant 1.5 or greater installed on your system. It may work with earlier versions of these pieces of software as well, however this has not been tested thoroughly. yGuard 1.3.x and upwards works together with Ant 1.6.</p>
-<h2 id="java-11-compatibility">Java 11 Compatibility</h2>
-<p>Beginning with version 2.7, yGuard supports obfuscation of Java class files that contain <code>nesthost</code> or <code>nestmembers</code> attributes which were introduced with the Java 11 <code>.class</code> file format.</p>
-<p>yGuard does <strong>not</strong> support obfuscating <code>dynamic</code> instructions which were introduced with the Java 11 <code>.class</code> file format.</p>
+<h2 id="java-11-java-13-compatibility">Java 11 / Java 13 Compatibility</h2>
+<p>Beginning with version 2.7, yGuard supports obfuscation of Java class files that contain <code>nesthost</code> or <code>nestmembers</code> attributes which were introduced with the Java 11 <code>.class</code> file format. Further yGuard does support obfuscating <code>dynamic</code> instructions which were introduced with the Java 11 <code>.class</code> file format.</p>
+<p>Please read the notes regarding 3rd party JVM support if you intend to use yGuard with something other than Java.</p>
 <h2 id="java-9-java-10-compatibility">Java 9 / Java 10 Compatibility</h2>
 <p>Beginning with version 2.7, yGuard supports obfuscation of Java class files that contain module information which was introduced with the Java 9 <code>.class</code> file format. yGuard does not change module names, though.</p>
 <p>yGuard does <strong>not</strong> support obfuscating multi-release Java archives which were introduced with Java 9.</p>
