@@ -4,11 +4,11 @@
 
 yGuard requires JDK 1.7.x or greater and Ant 1.5 or greater installed on your system. It may work with earlier versions of these pieces of software as well, however this has not been tested thoroughly. yGuard 1.3.x and upwards works together with Ant 1.6.
 
-## Java 11 Compatibility
+## Java 11 - Java 13 Compatibility
 
-Beginning with version 2.7, yGuard supports obfuscation of Java class files that contain `nesthost` or `nestmembers` attributes which were introduced with the Java 11 `.class` file format.
+Beginning with version 2.10, yGuard supports obfuscation of Java class files that contain `nesthost` or `nestmembers` attributes which were introduced with the Java 11 `.class` file format. Further yGuard does support obfuscating `dynamic` instructions which were introduced with the Java 11 `.class` file format.
 
-yGuard does **not** support obfuscating `dynamic` instructions which were introduced with the Java 11 `.class` file format.
+Please read the notes regarding 3rd party JVM support if you intend to use yGuard with something other than Java.
 
 ## Java 9 / Java 10 Compatibility
 
