@@ -732,6 +732,7 @@ public class YGuardLogParser {
   private class MyContentHandler implements ContentHandler {
     private boolean inMapSection;
     private boolean inLogSection;
+    private boolean inExposeSection;
     final Map ownerProperties = new HashMap();
 
     public void characters(char[] ch, int start, int length) throws SAXException {
@@ -741,6 +742,9 @@ public class YGuardLogParser {
     }
 
     public void endElement(String uri, String localName, String qName) throws SAXException {
+      if ("expose".equals(qName)) {
+        inExposeSection = false;
+      }
       if ("map".equals(qName)) {
         inMapSection = false;
       }
@@ -769,6 +773,9 @@ public class YGuardLogParser {
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+      if ("expose".equals(qName)) {
+        inExposeSection = true;
+      }
       if ("map".equals(qName)) {
         inMapSection = true;
       }
@@ -790,6 +797,26 @@ public class YGuardLogParser {
             ownerProperties.put(owner, map);
           }
           map.put(key, value);
+        }
+      }
+      if (inExposeSection) {
+        if ("method".equals(qName)) {
+          String className = attributes.getValue("class");
+          String name = attributes.getValue("name");
+          MethodStruct fs = getMethod(className, name);
+        }
+        if ("field".equals(qName)) {
+          String className = attributes.getValue("class");
+          String name = attributes.getValue("name");
+          FieldStruct fs = getField(className, name);
+        }
+        if ("package".equals(qName)) {
+          String name = attributes.getValue("name");
+          PackageStruct ps = getPackage(name);
+        }
+        if ("class".equals(qName)) {
+          String name = attributes.getValue("name");
+          ClassStruct cs = YGuardLogParser.this.getClass(name);
         }
       }
       if (inMapSection) {
