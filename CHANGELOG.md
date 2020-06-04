@@ -302,7 +302,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented more robust handling of Manifest files. Implementation now makes use of `java.util.jar.Manifest`.
 - The `conserveManifest` attribute of the obfuscate task now conserves the manifest in a better way.
 
-[Unreleased]: https://github.com/yworks/yguard/compare/2.9.2...HEAD
+[Unreleased]: https://github.com/yworks/yguard/compare/2.10.0...HEAD
+[2.10.0]: https://github.com/yworks/yguard/compare/2.9.2...2.10.0
 [2.9.2]: https://github.com/yworks/yguard/compare/2.9.1...2.9.2
 [2.9.1]: https://github.com/yworks/yguard/compare/2.9.0...2.9.1
 [2.9.0]: https://github.com/yworks/yguard/compare/2.8.0...2.9.0
