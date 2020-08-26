@@ -170,6 +170,9 @@ public class AttrInfo implements ClassConstants
             else if (ATTR_NestMembers.equals(attrName)) {
                 ai = new NestMembersAttrInfo(cf, attrNameIndex, attrLength);
             }
+            else if (ATTR_KotlinSourceDebugExtension.equals(attrName)) {
+                ai = new AttrInfo( cf, attrNameIndex, attrLength);
+            }
             else {
               if ( attrLength > 0 ) {
                 Logger.getInstance().warning( "Unrecognized attribute '" + attrName + "' in " + Conversion.toJavaClass( cf.getName() ) );
