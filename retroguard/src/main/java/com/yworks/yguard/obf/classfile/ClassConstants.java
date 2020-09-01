@@ -122,6 +122,8 @@ public interface  ClassConstants
     // new in java 11
     public static final String ATTR_NestHost = "NestHost";
     public static final String ATTR_NestMembers = "NestMembers";
+    // source debug for kotlin
+    public static final String ATTR_SourceDebugExtension = "SourceDebugExtension";
 
     public static final int REF_getField                = 1;
     public static final int REF_getStatic               = 2;
