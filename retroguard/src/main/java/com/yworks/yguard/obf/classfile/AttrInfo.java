@@ -170,7 +170,7 @@ public class AttrInfo implements ClassConstants
             else if (ATTR_NestMembers.equals(attrName)) {
                 ai = new NestMembersAttrInfo(cf, attrNameIndex, attrLength);
             }
-            else if (ATTR_KotlinSourceDebugExtension.equals(attrName)) {
+            else if (ATTR_SourceDebugExtension.equals(attrName)) {
                 ai = new AttrInfo( cf, attrNameIndex, attrLength);
             }
             else {
