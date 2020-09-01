@@ -53,7 +53,6 @@ public class SimpleCompiler {
 
   /**
    * @param sources iterable of source objects created using method
-   * {@link #newSource(String, String)}.
    * @param result a simple output stream. The compiled sources will
    * be written as java archive to this stream.
    */

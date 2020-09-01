@@ -30,18 +30,17 @@ public class NoSuchMappingException extends java.lang.IllegalArgumentException
   
   private String key;
   /**
-   * Creates a new instance of <code>NoSuchMappingException</code> without detail message.
+   * Constructs an instance of <code>NoSuchMappingException</code> with the specified detail message.
+   * @param key the detail message.
    */
   public NoSuchMappingException(String key)
   {
     super("No mapping found for: "+key);
     this.key = key;
   }
-  
-  
+
   /**
-   * Constructs an instance of <code>NoSuchMappingException</code> with the specified detail message.
-   * @param msg the detail message.
+   * Creates a new instance of <code>NoSuchMappingException</code> without detail message.
    */
   public NoSuchMappingException()
   {

@@ -39,7 +39,7 @@ public enum EdgeType {
    */
   ASSUME,
   /**
-   * For constuctor calls, an ordinary INVOKE edge is created to the specific <init> method.
+   * For constuctor calls, an ordinary INVOKE edge is created to the specific *init* method.
    * Additionally, a special CREATES Edge is created to the special NEW node in [Method: com.yworks.yshrink.core.Analyzer.createTypeInstructionEdges()], indicating that the target class is instantiated.
    */
   CREATES,

@@ -14,7 +14,7 @@ public interface LineNumberTableMapper {
    * @param methodSignature the signature of the method
    * @param lineNumberTable the table that may be modified by this method
    * @return whether the line number table should be kept
-   * @see YGuardRule.TYPE_LINE_NUMBER_MAPPER
+   * @see com.yworks.yguard.obf.YGuardRule#TYPE_LINE_NUMBER_MAPPER
    */
   boolean mapLineNumberTable(String className, String methodName, String methodSignature, LineNumberTableAttrInfo lineNumberTable);
 

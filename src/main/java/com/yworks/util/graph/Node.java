@@ -14,7 +14,6 @@ public class Node {
 
     /**
      * Returns all outgoing edges of this node.
-     * @return {Set<Edge>}
      */
     public Set<Edge> outEdges() {
         return this.network.outEdges(this);
@@ -22,7 +21,6 @@ public class Node {
 
     /**
      * Returns all ingoing edges of this node.
-     * @return {Set<Edge>}
      */
     public Set<Edge> inEdges() {
         return this.network.inEdges(this);
@@ -30,7 +28,7 @@ public class Node {
 
     /**
      * Returns the first outgoing edge for this node, if any.
-     * @return {Edge|null}
+     * @return {com.google.common.graph.Network.Edge|null}
      */
     public Edge firstOutEdge() {
         Iterator<Edge> outEdgesIterator = this.network.outEdges(this).iterator();

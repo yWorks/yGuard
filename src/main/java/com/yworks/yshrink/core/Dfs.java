@@ -55,7 +55,6 @@ public class Dfs {
 
   /**
    * Whether or not to interpret the edges of the graph as directed.
-   * <p/>
    * By default directed mode is disabled.
    */
   public void setDirectedMode( final boolean directed ) {
@@ -225,7 +224,6 @@ public class Dfs {
   /**
    * Callback method that will be invoked whenever a formerly unvisited node gets visited the first time. The given int
    * is the dfsnumber of that node.
-   * <p/>
    * By default this method does nothing
    */
   protected void preVisit( final Node node, final int dfsNumber ) {
@@ -240,7 +238,6 @@ public class Dfs {
 
   /**
    * Callback method that will be invoked if the given edge will be looked at in the search the first (and only) time.
-   * <p/>
    * The given node is the node that will be visited next iff <CODE>treeEdge == true</CODE>. By default this method does
    * nothing
    */

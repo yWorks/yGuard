@@ -73,8 +73,7 @@ public class Util {
 
   /**
    * extracts the class name or primitve identifier from any type descriptor.
-   * <p/>
-   * e.g. [[Ltest/ugly/JJ -> test/ugly/JJ
+   * e.g. [[Ltest/ugly/JJ {@literal ->} test/ugly/JJ
    *
    * @param desc
    * @return the extracted class name or primitive identifier.
