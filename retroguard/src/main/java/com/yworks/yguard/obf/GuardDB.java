@@ -414,7 +414,7 @@ public class GuardDB implements ClassConstants
               }
               else
               {
-                outName = classTree.getOutName(inName);
+                outName = inName;
               }
 
               if(resourceHandler == null || !resourceHandler.filterContent(inStream, dataOutputStream, inName))
