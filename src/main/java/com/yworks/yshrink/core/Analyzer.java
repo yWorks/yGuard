@@ -1,6 +1,9 @@
 package com.yworks.yshrink.core;
 
+import com.yworks.util.graph.Node;
 import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.yshrink.model.AbstractDescriptor;
+import com.yworks.yshrink.model.AnnotationUsage;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.EdgeType;
 import com.yworks.yshrink.model.FieldDescriptor;
@@ -8,20 +11,26 @@ import com.yworks.yshrink.model.Invocation;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.ModelVisitor;
-import com.yworks.yshrink.model.AbstractDescriptor;
-import com.yworks.yshrink.model.AnnotationUsage;
 import com.yworks.yshrink.util.JarStreamProvider;
 import com.yworks.yshrink.util.Logger;
 import com.yworks.yshrink.util.StreamProvider;
 import com.yworks.yshrink.util.Util;
-import org.objectweb.asm.*;
-import com.yworks.util.graph.Node;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.*;
+import java.net.URI;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
@@ -49,7 +58,7 @@ public class Analyzer {
     for ( ShrinkBag bag : bags ) {
       ModelVisitor mv = new ModelVisitor( model, bag.getIn() );
       Logger.log( "parsing " + bag.getIn() );
-      visitAllClasses( mv, bag.getIn().toURL() );
+      visitAllClasses( mv, bag.getIn().toURI() );
     }
 
     for ( ClassDescriptor cd : model.getAllClassDescriptors() ) {
@@ -83,7 +92,7 @@ public class Analyzer {
    * @param jarFile
    * @throws IOException
    */
-  private void visitAllClasses( final ClassVisitor v, final URL jarFile ) throws IOException {
+  private void visitAllClasses( final ClassVisitor v, final URI jarFile ) throws IOException {
 
     final StreamProvider jarStreamProvider = new JarStreamProvider( jarFile );
     InputStream stream = jarStreamProvider.getNextClassEntryStream();

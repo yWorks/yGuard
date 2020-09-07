@@ -4,7 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,10 +25,10 @@ public class JarStreamProvider implements StreamProvider {
   private String currentDir;
   private String currentFilename;
 
-  public JarStreamProvider( final URL jarFile ) throws IOException {
-    Path jarPath = Paths.get( jarFile.getPath() );
-    if ( jarFile.getRef() != null )
-      jarPath = Paths.get( jarPath.toString(), "#" + jarFile.getRef() );
+  public JarStreamProvider( final URI jarFile ) throws IOException {
+    Path jarPath = Paths.get( jarFile );
+    if ( jarFile.toURL().getRef() != null )
+      jarPath = Paths.get( jarPath.toString(), "#" + jarFile.toURL().getRef() );
 
     if ( !Files.exists(jarPath) )
       throw new IllegalArgumentException("jar file not found: " + jarPath.toString());
