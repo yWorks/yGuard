@@ -74,7 +74,7 @@ public class Writer {
 
     JarFile inJar = new JarFile( in );
 
-    JarStreamProvider jarStreamProvider = new JarStreamProvider( in.toURI() );
+    JarStreamProvider jarStreamProvider = new JarStreamProvider( in );
     DataInputStream stream = jarStreamProvider.getNextClassEntryStream();
 
     if ( !out.exists() ) out.createNewFile();

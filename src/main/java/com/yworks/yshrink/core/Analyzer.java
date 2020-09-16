@@ -20,10 +20,10 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.net.URI;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,7 +58,7 @@ public class Analyzer {
     for ( ShrinkBag bag : bags ) {
       ModelVisitor mv = new ModelVisitor( model, bag.getIn() );
       Logger.log( "parsing " + bag.getIn() );
-      visitAllClasses( mv, bag.getIn().toURI() );
+      visitAllClasses( mv, bag.getIn() );
     }
 
     for ( ClassDescriptor cd : model.getAllClassDescriptors() ) {
@@ -92,7 +92,7 @@ public class Analyzer {
    * @param jarFile
    * @throws IOException
    */
-  private void visitAllClasses( final ClassVisitor v, final URI jarFile ) throws IOException {
+  private void visitAllClasses( final ClassVisitor v, final File jarFile ) throws IOException {
 
     final StreamProvider jarStreamProvider = new JarStreamProvider( jarFile );
     InputStream stream = jarStreamProvider.getNextClassEntryStream();
