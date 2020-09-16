@@ -25,16 +25,41 @@
  */
 package com.yworks.yguard.obf;
 
-import java.io.*;
-import java.util.*;
-import java.util.zip.*;
-import java.util.jar.*;
-import java.security.*;
+import com.yworks.util.abstractjar.Archive;
+import com.yworks.util.abstractjar.Entry;
+import com.yworks.util.abstractjar.JarFileWrapper;
+import com.yworks.yguard.Conversion;
+import com.yworks.yguard.ObfuscationListener;
+import com.yworks.yguard.ParseException;
+import com.yworks.yguard.obf.classfile.ClassConstants;
+import com.yworks.yguard.obf.classfile.ClassFile;
 
-import com.yworks.yguard.*;
-import com.yworks.yguard.obf.classfile.*;
-
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.security.DigestOutputStream;
+import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.jar.Attributes;
+import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
 /**
@@ -59,7 +84,7 @@ public class GuardDB implements ClassConstants
 
 
   // Fields ----------------------------------------------------------------
-  private JarFile[] inJar;          // JAR file for obfuscation
+  private Archive[] inJar;          // JAR file for obfuscation
   private Manifest[] oldManifest;   // MANIFEST.MF
   private Manifest[] newManifest;   // MANIFEST.MF
   private ClassTree classTree;    // Tree of packages, classes. methods, fields
@@ -85,15 +110,9 @@ public class GuardDB implements ClassConstants
   /** A classfile database for obfuscation. */
   public GuardDB(File[] inFile) throws java.io.IOException
   {
-    inJar = new JarFile[inFile.length];
+    inJar = new JarFileWrapper[inFile.length];
     for(int i = 0; i < inFile.length; i++)
-      inJar[i] = new JarFile(inFile[i]);
-  }
-
-  /** Close input JAR file and log-file at GC-time. */
-  protected void finalize() throws java.io.IOException
-  {
-    close();
+      inJar[i] = new JarFileWrapper(inFile[i]);
   }
 
   public void setResourceHandler(ResourceHandler handler)
@@ -320,13 +339,13 @@ public class GuardDB implements ClassConstants
         // Go through the input Jar, removing attributes and remapping the Constant Pool
         // for each class file. Other files are copied through unchanged, except for manifest
         // and any signature files - these are deleted and the manifest is regenerated.
-        Enumeration entries = inJar[i].entries();
+        Enumeration entries = inJar[i].getEntries();
         fireObfuscatingJar(inJar[i].getName(), out[i].getName());
         ByteArrayOutputStream baos = new ByteArrayOutputStream(2048);
         while (entries.hasMoreElements())
         {
           // Get the next entry from the input Jar
-          JarEntry inEntry = (JarEntry)entries.nextElement();
+          Entry inEntry = (Entry) entries.nextElement();
 
           // Ignore directories
           if (inEntry.isDirectory())
@@ -668,12 +687,12 @@ public class GuardDB implements ClassConstants
     Map parsedClasses = new HashMap();
     for(int i = 0; i < inJar.length; i++)
     {
-      Enumeration entries = inJar[i].entries();
+      Enumeration entries = inJar[i].getEntries();
       fireParsingJar(inJar[i].getName());
       while (entries.hasMoreElements())
       {
         // Get the next entry from the input Jar
-        ZipEntry inEntry = (ZipEntry)entries.nextElement();
+        Entry inEntry = (Entry)entries.nextElement();
         String name = inEntry.getName();
         if (name.endsWith(CLASS_EXT))
         {
@@ -746,7 +765,7 @@ public class GuardDB implements ClassConstants
     });
   }
 
-  private static String createJarName(JarFile jar, String name){
+  private static String createJarName(Archive jar, String name){
     return "jar:"+jar.getName() + "|" + name;
   }
 
