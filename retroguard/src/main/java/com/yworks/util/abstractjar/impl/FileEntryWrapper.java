@@ -4,7 +4,7 @@ import com.yworks.util.abstractjar.Entry;
 
 import java.io.File;
 
-class FileEntryWrapper implements Entry {
+public class FileEntryWrapper implements Entry {
   private File file;
 
   FileEntryWrapper( File file ) {

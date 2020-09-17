@@ -28,6 +28,7 @@ package com.yworks.yguard.obf;
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.Entry;
 import com.yworks.util.abstractjar.impl.DirectoryWrapper;
+import com.yworks.util.abstractjar.impl.JarEntryWrapper;
 import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.yguard.Conversion;
 import com.yworks.yguard.ObfuscationListener;
@@ -45,17 +46,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
@@ -334,13 +334,13 @@ public class GuardDB implements ClassConstants
       outJar = null;
       //store the whole jar in memory, I known this might be alot, but anyway
       //this is the best option, if you want to create correct jar files...
-      List jarEntries = new ArrayList();
+      Map<Entry, byte[]> jarEntries = new HashMap<>();
       try
       {
         // Go through the input Jar, removing attributes and remapping the Constant Pool
         // for each class file. Other files are copied through unchanged, except for manifest
         // and any signature files - these are deleted and the manifest is regenerated.
-        Enumeration entries = inJar[i].getEntries();
+        Enumeration<Entry> entries = inJar[i].getEntries();
         fireObfuscatingJar(inJar[i].getName(), out[i].getName());
         ByteArrayOutputStream baos = new ByteArrayOutputStream(2048);
         while (entries.hasMoreElements())
@@ -387,7 +387,7 @@ public class GuardDB implements ClassConstants
               // Dump the classfile, while creating the digests
               cf.write(classOutputStream);
               classOutputStream.flush();
-              jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
+              jarEntries.put(new JarEntryWrapper(outEntry), baos.toByteArray());
               baos.reset();
               // Now update the manifest entry for the class with new name and new digests
               updateManifest(i, inName, cf.getName() + CLASS_EXT, digests);
@@ -457,7 +457,7 @@ public class GuardDB implements ClassConstants
               JarEntry outEntry = new JarEntry(outName);
 
 
-              jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
+              jarEntries.put(new JarEntryWrapper(outEntry), baos.toByteArray());
               baos.reset();
               // Now update the manifest entry for the entry with new name and new digests
               MessageDigest[] digests =
@@ -467,50 +467,72 @@ public class GuardDB implements ClassConstants
           }
         }
 
-        os = new FileOutputStream(out[i]);
-        if (conserveManifest){
-          outJar = new JarOutputStream(new BufferedOutputStream(os),oldManifest[i]);
-        } else {
-          outJar = new JarOutputStream(new BufferedOutputStream(os),newManifest[i]);
-        }
-        if (Version.getJarComment() != null) {
-          outJar.setComment( Version.getJarComment());
-        }
-
         // sort the entries in ascending order
-        Collections.sort(jarEntries, new Comparator(){
-          public int compare(Object a, Object b){
-                Object[] array1 = (Object[]) a;
-                JarEntry entry1 = (JarEntry) array1[0];
-                Object[] array2 = (Object[]) b;
-                JarEntry entry2 = (JarEntry) array2[0];
-                return entry1.getName().compareTo(entry2.getName());
+        Arrays.sort(jarEntries.keySet().toArray(), new Comparator() {
+          public int compare( Object a, Object b ) {
+            Object[] array1 = (Object[]) a;
+            JarEntry entry1 = (JarEntry) array1[0];
+            Object[] array2 = (Object[]) b;
+            JarEntry entry2 = (JarEntry) array2[0];
+            return entry1.getName().compareTo(entry2.getName());
           }
         });
-        // Finally, write the big bunch of data
-        Set directoriesWritten = new HashSet();
-        for (int j = 0; j < jarEntries.size(); j++){
-          Object[] array = (Object[]) jarEntries.get(j);
-          JarEntry entry = (JarEntry) array[0];
-          String name = entry.getName();
-          // make sure the directory entries are written to the jar file
-          if (!entry.isDirectory()){
-                int index = 0;
-                while ((index = name.indexOf("/", index + 1))>= 0){
-                  String directory = name.substring(0, index+1);
-                  if (!directoriesWritten.contains(directory)){
-                        directoriesWritten.add(directory);
-                        JarEntry directoryEntry = new JarEntry(directory);
-                        outJar.putNextEntry(directoryEntry);
-                        outJar.closeEntry();
-                  }
+
+        if (out[i].isDirectory()) {
+
+          Set<String> directoriesWritten = new HashSet<>();
+          for (Entry jarEntry : jarEntries.keySet()) {
+            String name = jarEntry.getName();
+            // make sure the directory entries are written to the jar file
+            if (!jarEntry.isDirectory()) {
+              int index = 0;
+              while ((index = name.indexOf("/", index + 1)) >= 0) {
+                String directory = name.substring(0, index + 1);
+                if (!directoriesWritten.contains(directory)) {
+                  directoriesWritten.add(directory);
+                  Files.createDirectory(out[i].toPath().resolve(directory));
                 }
+              }
+            }
+            // write the entry itself
+            byte[] bytes = (byte[]) jarEntries.get(jarEntry);
+            Files.write(out[i].toPath().resolve(jarEntry.getName()), bytes);
           }
-          // write the entry itself
-          byte[] bytes = (byte[]) array[1];
-          outJar.putNextEntry(entry);
-          outJar.write(bytes);
-          outJar.closeEntry();
+        } else {
+          os = new FileOutputStream(out[i]);
+          if (conserveManifest){
+            outJar = new JarOutputStream(new BufferedOutputStream(os),oldManifest[i]);
+          } else {
+            outJar = new JarOutputStream(new BufferedOutputStream(os),newManifest[i]);
+          }
+          if (Version.getJarComment() != null) {
+            outJar.setComment( Version.getJarComment());
+          }
+
+          // Finally, write the big bunch of data
+          Set<String> directoriesWritten = new HashSet<>();
+          for (Entry jarEntry: jarEntries.keySet()) {
+            String name = jarEntry.getName();
+            // make sure the directory entries are written to the jar file
+            if (!jarEntry.isDirectory()) {
+              int index = 0;
+              while ((index = name.indexOf("/", index + 1)) >= 0) {
+                String directory = name.substring(0, index + 1);
+                if (!directoriesWritten.contains(directory)) {
+                  directoriesWritten.add(directory);
+                  JarEntry directoryEntry = new JarEntry(directory);
+                  outJar.putNextEntry(directoryEntry);
+                  outJar.closeEntry();
+                }
+              }
+            }
+            // write the entry itself
+            byte[] bytes = jarEntries.get(jarEntry);
+            JarEntryWrapper entryWrapper = (JarEntryWrapper) jarEntry;
+            outJar.putNextEntry(entryWrapper.getJarEntry());
+            outJar.write(bytes);
+            outJar.closeEntry();
+          }
         }
 
       }

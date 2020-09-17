@@ -7,9 +7,20 @@ package com.yworks.yguard;
 
 import com.yworks.util.CollectionFilter;
 import com.yworks.util.ant.ZipScannerTool;
-import com.yworks.yguard.common.ant.*;
-import com.yworks.yguard.common.ant.AttributesSection;
+import com.yworks.yguard.ant.ClassSection;
+import com.yworks.yguard.ant.ExposeSection;
+import com.yworks.yguard.ant.FieldSection;
+import com.yworks.yguard.ant.MapParser;
+import com.yworks.yguard.ant.Mappable;
+import com.yworks.yguard.ant.MethodSection;
+import com.yworks.yguard.ant.PackageSection;
 import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.yguard.common.ant.AttributesSection;
+import com.yworks.yguard.common.ant.EntryPointsSection;
+import com.yworks.yguard.common.ant.Exclude;
+import com.yworks.yguard.common.ant.InOutPair;
+import com.yworks.yguard.common.ant.TypePatternSet;
+import com.yworks.yguard.common.ant.YGuardBaseTask;
 import com.yworks.yguard.obf.Cl;
 import com.yworks.yguard.obf.Cl.ClassResolver;
 import com.yworks.yguard.obf.ClassTree;
@@ -25,22 +36,18 @@ import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.LineNumberInfo;
 import com.yworks.yguard.obf.classfile.LineNumberTableAttrInfo;
 import com.yworks.yguard.obf.classfile.Logger;
-import com.yworks.yguard.ant.*;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 import org.apache.tools.ant.types.Path;
-import org.apache.tools.ant.types.ZipFileSet;
 import org.apache.tools.ant.types.PatternSet;
+import org.apache.tools.ant.types.ZipFileSet;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,6 +83,9 @@ import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 /**
  * The main obfuscation Ant Task
@@ -703,7 +713,7 @@ public class ObfuscatorTask extends YGuardBaseTask
     for (int i = 0; i < pairs.size();i++)
     {
       InOutPair pair = (InOutPair) pairs.get(i);
-      if (pair.getIn() == null || !pair.getIn().isFile() || !pair.getIn().canRead()){
+      if (pair.getIn() == null || !pair.getIn().canRead()){
         throw new BuildException("Cannot open inoutpair.in "+pair.getIn());
       }
       inFiles[i] = pair.getIn();

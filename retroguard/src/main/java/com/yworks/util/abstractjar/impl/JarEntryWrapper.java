@@ -7,7 +7,7 @@ import java.util.jar.JarEntry;
 public class JarEntryWrapper implements Entry {
   JarEntry jarEntry;
 
-  JarEntryWrapper( JarEntry jarEntry ) {
+  public JarEntryWrapper( JarEntry jarEntry ) {
     this.jarEntry = jarEntry;
   }
 
@@ -24,5 +24,9 @@ public class JarEntryWrapper implements Entry {
   @Override
   public long getSize() {
     return jarEntry.getSize();
+  }
+
+  public JarEntry getJarEntry() {
+    return jarEntry;
   }
 }
