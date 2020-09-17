@@ -1,4 +1,7 @@
-package com.yworks.util.abstractjar;
+package com.yworks.util.abstractjar.impl;
+
+import com.yworks.util.abstractjar.Archive;
+import com.yworks.util.abstractjar.Entry;
 
 import java.io.File;
 import java.io.IOException;

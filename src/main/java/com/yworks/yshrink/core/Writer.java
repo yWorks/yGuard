@@ -1,10 +1,13 @@
 package com.yworks.yshrink.core;
 
+import com.yworks.util.abstractjar.Archive;
+import com.yworks.util.abstractjar.StreamProvider;
+import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.yguard.common.ResourcePolicy;
 import com.yworks.yguard.common.ShrinkBag;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.yshrink.util.JarStreamProvider;
+import com.yworks.util.abstractjar.impl.JarStreamProvider;
 import com.yworks.yshrink.util.Logger;
 import com.yworks.yshrink.util.Util;
 import com.yworks.yshrink.util.Version;
@@ -23,7 +26,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
@@ -72,9 +74,9 @@ public class Writer {
 
     long inLength = in.length();
 
-    JarFile inJar = new JarFile( in );
+    Archive inJar = new JarFileWrapper(in);
 
-    JarStreamProvider jarStreamProvider = new JarStreamProvider( in );
+    StreamProvider jarStreamProvider = new JarStreamProvider(in );
     DataInputStream stream = jarStreamProvider.getNextClassEntryStream();
 
     if ( !out.exists() ) out.createNewFile();
@@ -186,14 +188,14 @@ public class Writer {
     Logger.shrinkLog( "</inOutPair>" );
   }
 
-  private void copyResource( String entryName, JarStreamProvider jarStreamProvider, DataInputStream stream,
+  private void copyResource( String entryName, StreamProvider jarStreamProvider, DataInputStream stream,
                              JarWriter writer ) throws IOException {
 
     // don't copy manifest/signature files.
     if ( ! entryName.equals( MANIFEST_FILENAME )
         && ! ( entryName.endsWith( SIGNATURE_FILE_SUFFIX ) && entryName.startsWith( SIGNATURE_FILE_PREFIX ) ) ) {
 
-      int entrySize = (int) jarStreamProvider.currentEntry().getSize();
+      int entrySize = (int) jarStreamProvider.getCurrentEntry().getSize();
       if ( -1 != entrySize ) {
         byte[] data = new byte[ entrySize ];
         stream.readFully( data );

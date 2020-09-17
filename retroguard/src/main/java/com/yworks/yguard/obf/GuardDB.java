@@ -27,7 +27,7 @@ package com.yworks.yguard.obf;
 
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.Entry;
-import com.yworks.util.abstractjar.JarFileWrapper;
+import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.yguard.Conversion;
 import com.yworks.yguard.ObfuscationListener;
 import com.yworks.yguard.ParseException;

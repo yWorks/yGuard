@@ -1,4 +1,6 @@
-package com.yworks.util.abstractjar;
+package com.yworks.util.abstractjar.impl;
+
+import com.yworks.util.abstractjar.Entry;
 
 import java.util.jar.JarEntry;
 
