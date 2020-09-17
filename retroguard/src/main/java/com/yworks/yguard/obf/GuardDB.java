@@ -27,6 +27,7 @@ package com.yworks.yguard.obf;
 
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.Entry;
+import com.yworks.util.abstractjar.impl.DirectoryWrapper;
 import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.yguard.Conversion;
 import com.yworks.yguard.ObfuscationListener;
@@ -110,9 +111,9 @@ public class GuardDB implements ClassConstants
   /** A classfile database for obfuscation. */
   public GuardDB(File[] inFile) throws java.io.IOException
   {
-    inJar = new JarFileWrapper[inFile.length];
+    inJar = new Archive[inFile.length];
     for(int i = 0; i < inFile.length; i++)
-      inJar[i] = new JarFileWrapper(inFile[i]);
+      inJar[i] = (inFile[i].isDirectory()) ? new DirectoryWrapper(inFile[i]) : new JarFileWrapper(inFile[i]);
   }
 
   public void setResourceHandler(ResourceHandler handler)

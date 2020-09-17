@@ -1,5 +1,6 @@
 package com.yworks.yshrink.core;
 
+import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
 import com.yworks.util.graph.Node;
 import com.yworks.yguard.common.ShrinkBag;
 import com.yworks.yshrink.model.AbstractDescriptor;
@@ -94,7 +95,7 @@ public class Analyzer {
    */
   private void visitAllClasses( final ClassVisitor v, final File jarFile ) throws IOException {
 
-    final StreamProvider jarStreamProvider = new JarStreamProvider( jarFile );
+    final StreamProvider jarStreamProvider = (jarFile.isDirectory()) ? new DirectoryStreamProvider(jarFile) : new JarStreamProvider(jarFile);
     InputStream stream = jarStreamProvider.getNextClassEntryStream();
     ClassReader cr;
     while ( stream != null ) {

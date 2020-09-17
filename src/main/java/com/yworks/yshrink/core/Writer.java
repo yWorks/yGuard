@@ -2,6 +2,8 @@ package com.yworks.yshrink.core;
 
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.StreamProvider;
+import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
+import com.yworks.util.abstractjar.impl.DirectoryWrapper;
 import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.yguard.common.ResourcePolicy;
 import com.yworks.yguard.common.ShrinkBag;
@@ -74,9 +76,9 @@ public class Writer {
 
     long inLength = in.length();
 
-    Archive inJar = new JarFileWrapper(in);
+    Archive inJar = (in.isDirectory()) ? new DirectoryWrapper(in) : new JarFileWrapper(in);
 
-    StreamProvider jarStreamProvider = new JarStreamProvider(in );
+    StreamProvider jarStreamProvider = (in.isDirectory()) ? new DirectoryStreamProvider(in) : new JarStreamProvider(in);
     DataInputStream stream = jarStreamProvider.getNextClassEntryStream();
 
     if ( !out.exists() ) out.createNewFile();

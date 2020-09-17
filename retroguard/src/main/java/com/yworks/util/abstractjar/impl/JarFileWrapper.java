@@ -51,4 +51,5 @@ public class JarFileWrapper implements Archive {
   public void close() throws IOException {
     jarFile.close();
   }
+
 }
