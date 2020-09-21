@@ -8,9 +8,8 @@
  * Open. You can then make changes to the template in the Source Editor.
  */
 
-package com.yworks.yguard.test.annotations;
+package com.yworks.yguard.annotations;
 
-import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

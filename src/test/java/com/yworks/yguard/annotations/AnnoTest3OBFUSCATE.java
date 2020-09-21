@@ -1,4 +1,4 @@
-package com.yworks.yguard.test.annotations;
+package com.yworks.yguard.annotations;
 
 import com.yworks.util.annotation.Obfuscation;
 

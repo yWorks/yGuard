@@ -1,28 +1,27 @@
-package com.yworks.yguard.test.annotations;
+package com.yworks.yguard.annotations;
 
 import com.yworks.util.annotation.Obfuscation;
 
 /**
- * Test for inner classes with apply to members = false
+ * Test for inner classes
  */
-@Obfuscation(applyToMembers = false, exclude = true)
-public class AnnoTest6KEEP {
+@Obfuscation(applyToMembers = true, exclude = true)
+public class AnnoTest5KEEP {
 
-  @Obfuscation( exclude = true)
   public boolean publicBoolField1KEEP;
 
+  @Obfuscation( exclude = false)
   public boolean publicBoolField1OBFUSCATE;
 
-  @Obfuscation(applyToMembers = false, exclude = true)
-  public static class Test6InnerKEEP {
+  @Obfuscation(applyToMembers = true, exclude = true)
+  public static class Test5InnerKEEP {
 
-    @Obfuscation( exclude = true)
     public boolean innerBoolField1KEEP;
 
+    @Obfuscation( exclude = false)
     public boolean innerBoolField1OBFUSCATE;
 
-    @Obfuscation(applyToMembers = false, exclude = true)
-    public static class Test6InnerInnerKEEP {
+    public static class Test5InnerInnerKEEP {
 
       public boolean innerinnerBoolField1OBFUSCATE;
 
@@ -31,28 +30,28 @@ public class AnnoTest6KEEP {
     }
   }
 
-  public static class Test6InnerOBFUSCATE {
+  @Obfuscation( exclude = false)
+  public static class Test5InnerOBFUSCATE {
 
     @Obfuscation( exclude = true)
     public boolean innerBoolField1KEEP;
 
     public boolean innerBoolField1OBFUSCATE;
 
-    public static class Test6InnerInnerOBFUSCATE {
+    public static class Test5InnerInnerOBFUSCATE {
 
       public boolean innerinnerBoolField1OBFUSCATE;
     }
   }
 
-  @Obfuscation(applyToMembers = false, exclude = false)
-  public static class Test6Inner2OBFUSCATE {
+  public static class Test5Inner2KEEP {
 
     @Obfuscation( exclude = true)
     public boolean innerBoolField1KEEP;
 
     public boolean innerBoolField1OBFUSCATE;
 
-    public static class Test6InnerInner2OBFUSCATE {
+    public static class Test5InnerInnerOBFUSCATE {
 
       public boolean innerinnerBoolField1OBFUSCATE;
 

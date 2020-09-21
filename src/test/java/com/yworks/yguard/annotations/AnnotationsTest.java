@@ -8,10 +8,14 @@
  * Open. You can then make changes to the template in the Source Editor.
  */
 
-package com.yworks.yguard.test.annotations;
+package com.yworks.yguard.annotations;
+
+import org.junit.Test;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +23,8 @@ import java.lang.reflect.Constructor;
  */
 public class AnnotationsTest
 {
-  
+  private static final Logger log = Logger.getLogger(AnnotationsTest.class.getName() );
+
   /** Creates a new instance of AnnotationsTest */
   @TestAnnotation(id=23, test1="blah", test3=2, classType=AnnotationsTest.class, enumTest = TestEnum.V3, recursive = @YATAnnotation(blah = "gaga"), classArray= {AnnotationsTest.class, String.class}, intArray = {2,3,4})
   public AnnotationsTest()
@@ -28,17 +33,17 @@ public class AnnotationsTest
       Constructor c = getClass().getConstructor();
       Annotation[] a = c.getAnnotations();
       for (int i = 0; i < a.length; i++){
-        System.out.println("annotation " + a[i]);
+       log.log(Level.FINE, "annotation " + a[i]);
         if (a[i] instanceof TestAnnotation){
           TestAnnotation ta = (TestAnnotation) a[i];
-          System.out.println("id = 23 ? " + ta.id());
-          System.out.println("test1 = blah ? " + ta.test1());
-          System.out.println("test2 = test ? " + ta.test2());
-          System.out.println("test3 = 2 ? " + ta.test3());
-          System.out.println("classType " + ta.classType());
-          System.out.println("recursive " + ta.recursive());
-          System.out.println("enumTest " + ta.enumTest());
-          System.out.println("classArray " + ta.classArray()[0]);
+         log.log(Level.FINE, "id = 23 ? " + ta.id());
+         log.log(Level.FINE, "test1 = blah ? " + ta.test1());
+         log.log(Level.FINE, "test2 = test ? " + ta.test2());
+         log.log(Level.FINE, "test3 = 2 ? " + ta.test3());
+         log.log(Level.FINE, "classType " + ta.classType());
+         log.log(Level.FINE, "recursive " + ta.recursive());
+         log.log(Level.FINE, "enumTest " + ta.enumTest());
+         log.log(Level.FINE, "classArray " + ta.classArray()[0]);
         }
       }
     } catch (Exception ex){
@@ -46,10 +51,9 @@ public class AnnotationsTest
     }    
   }
   
-  
-  
-  public static void main(String[] args){
+
+  @Test
+  public void run() {
     Object o = new AnnotationsTest();
   }
-  
 }
