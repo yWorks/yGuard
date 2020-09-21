@@ -12,7 +12,7 @@ import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.util.Logger;
 import com.yworks.yshrink.util.Util;
-import com.yworks.yshrink.util.Version;
+import com.yworks.util.Version;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 

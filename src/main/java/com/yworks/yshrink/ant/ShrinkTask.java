@@ -3,7 +3,7 @@ package com.yworks.yshrink.ant;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.*;
 import com.yworks.common.ant.AttributesSection;
-import com.yworks.yguard.obf.Version;
+import com.yworks.util.Version;
 import com.yworks.yguard.obf.classfile.ClassConstants;
 import com.yworks.yshrink.YShrink;
 import com.yworks.yshrink.ant.filters.*;

@@ -6,7 +6,7 @@
  *
 
  */
-package com.yworks.yguard.obf;
+package com.yworks.util;
 
 
 /**

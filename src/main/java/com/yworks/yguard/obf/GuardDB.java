@@ -7,6 +7,7 @@
  */
 package com.yworks.yguard.obf;
 
+import com.yworks.util.Version;
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.Entry;
 import com.yworks.util.abstractjar.impl.DirectoryWrapper;

@@ -1,5 +1,7 @@
 package com.yworks.yshrink.util;
 
+import com.yworks.util.Version;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
