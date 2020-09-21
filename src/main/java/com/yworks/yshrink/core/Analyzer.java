@@ -1,8 +1,8 @@
 package com.yworks.yshrink.core;
 
 import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
-import com.yworks.util.graph.Node;
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.graph.Node;
+import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.model.AbstractDescriptor;
 import com.yworks.yshrink.model.AnnotationUsage;
 import com.yworks.yshrink.model.ClassDescriptor;
@@ -13,7 +13,7 @@ import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.ModelVisitor;
 import com.yworks.util.abstractjar.impl.JarStreamProvider;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import com.yworks.util.abstractjar.StreamProvider;
 import com.yworks.yshrink.util.Util;
 import org.objectweb.asm.ClassReader;

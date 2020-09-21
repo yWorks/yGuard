@@ -4,7 +4,7 @@ import com.yworks.yguard.YGuardLogParser.ClassStruct;
 import com.yworks.yguard.YGuardLogParser.Mapped;
 import com.yworks.yguard.YGuardLogParser.MethodStruct;
 import com.yworks.yguard.YGuardLogParser.PackageStruct;
-import com.yworks.yguard.obf.Version;
+import com.yworks.util.Version;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

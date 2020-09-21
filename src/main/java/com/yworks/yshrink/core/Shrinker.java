@@ -7,8 +7,8 @@ import com.yworks.yshrink.model.EdgeType;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.NodeType;
-import com.yworks.util.graph.Node;
-import com.yworks.util.graph.Edge;
+import com.yworks.graph.Node;
+import com.yworks.graph.Edge;
 import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;

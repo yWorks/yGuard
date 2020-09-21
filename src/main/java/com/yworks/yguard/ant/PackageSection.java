@@ -1,6 +1,6 @@
 package com.yworks.yguard.ant;
 
-import com.yworks.util.ant.ZipScannerTool;
+import com.yworks.common.ant.ZipScannerTool;
 import com.yworks.yguard.ObfuscatorTask;
 import com.yworks.yguard.obf.YGuardRule;
 import org.apache.tools.ant.DirectoryScanner;

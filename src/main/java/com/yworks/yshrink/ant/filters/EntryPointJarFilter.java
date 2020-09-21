@@ -1,6 +1,6 @@
 package com.yworks.yshrink.ant.filters;
 
-import com.yworks.yguard.common.ant.EntryPointJar;
+import com.yworks.common.ant.EntryPointJar;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.FieldDescriptor;
 import com.yworks.yshrink.model.MethodDescriptor;

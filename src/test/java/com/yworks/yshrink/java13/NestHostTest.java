@@ -1,6 +1,6 @@
 package com.yworks.yshrink.java13;
 
-import com.yworks.yguard.common.ant.InOutPair;
+import com.yworks.common.ant.InOutPair;
 import com.yworks.yshrink.YShrink;
 import com.yworks.yshrink.ant.filters.AllMainMethodsFilter;
 import org.junit.Rule;
@@ -15,7 +15,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
