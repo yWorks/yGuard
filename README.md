@@ -11,8 +11,6 @@ yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of t
 
 Recent `yGuard` releases can be downloaded from GitHub, or used from `Maven` central directly.
 
-Legacy code ported from `retroguard` under `LGPL` is compiled into a seperate archive called `retroguard-${VERSION}.jar`.
-
 Previous releases _may_ still be downloaded from the [yWorks download center](https://www.yworks.com/downloads#yGuard).
 
 ## Usage
