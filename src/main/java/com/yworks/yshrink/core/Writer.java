@@ -12,23 +12,17 @@ import com.yworks.yshrink.model.Model;
 import com.yworks.util.abstractjar.impl.JarStreamProvider;
 import com.yworks.yshrink.util.Logger;
 import com.yworks.yshrink.util.Util;
-import com.yworks.yshrink.util.Version;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
-import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.jar.Attributes;
-import java.util.jar.JarEntry;
-import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
 /**
@@ -36,7 +30,7 @@ import java.util.jar.Manifest;
  */
 public class Writer {
 
-  private static final String MANIFEST_FILENAME = "META-INF/MANIFEST.MF";
+  public static final String MANIFEST_FILENAME = "META-INF/MANIFEST.MF";
   private static final String SIGNATURE_FILE_PREFIX = "META-INF/";
   private static final String SIGNATURE_FILE_SUFFIX = ".SF";
 
@@ -65,6 +59,10 @@ public class Writer {
     }
   }
 
+  public MessageDigest[] getDigests() {
+    return digests;
+  }
+
   public void write( Model model, ShrinkBag bag ) throws IOException {
 
     File in = bag.getIn();
@@ -84,7 +82,7 @@ public class Writer {
     if ( !out.exists() ) out.createNewFile();
 
     final Manifest newManifest = ( inJar.getManifest() != null) ? new Manifest( inJar.getManifest() ) : new Manifest();
-    final JarWriter writer = new JarWriter( out, newManifest );
+    final JarWriter writer = new JarWriter( out, newManifest, this );
 
     int numClasses = 0;
     int numObsoleteClasses = 0;
@@ -206,119 +204,4 @@ public class Writer {
     }
   }
 
-  private class JarWriter {
-
-    private Set<String> directoriesWritten = new HashSet<String>();
-    private final FileOutputStream fos;
-    private final JarOutputStream jos;
-
-    private Manifest manifest;
-
-    public JarWriter( File outFile, Manifest manifest ) throws IOException {
-
-      this.manifest = ( null != manifest ) ? manifest : new Manifest();
-
-      fos = new FileOutputStream( outFile );
-
-      jos = new JarOutputStream(
-          new BufferedOutputStream(
-              fos ) );
-    }
-
-    private void addDigests( String entryName ) {
-
-      Attributes oldEntryAttributes = this.manifest.getAttributes( entryName );
-      Attributes newEntryAttributes = new Attributes( digests.length + 1 );
-
-      if ( null != oldEntryAttributes ) {
-        Set<Object> keys = oldEntryAttributes.keySet();
-        for ( Object key : keys ) {
-          if ( ( (Attributes.Name) key ).toString().indexOf( "Digest" ) == -1 ) {
-            newEntryAttributes.put( key, oldEntryAttributes.get( key ) );
-          }
-        }
-      }
-
-      StringBuffer digestsList = new StringBuffer();
-      for (int i = 0; i < digests.length; i++) {
-        MessageDigest digest = digests[i];
-
-        if (null != digest) {
-
-          String digestKey = digest.getAlgorithm() + "-Digest";
-          digestsList.append(digest.getAlgorithm());
-          if (i < digests.length - 1){
-            digestsList.append(", ");
-          }
-
-          String digestVal = Util.toBase64(digest.digest());
-
-          newEntryAttributes.putValue(digestKey, digestVal);
-        }
-      }
-
-      newEntryAttributes.putValue("Digest-Algorithms", digestsList.toString());
-
-      this.manifest.getEntries().put( entryName, newEntryAttributes );
-    }
-
-    private void addEntry( final String fileName, final byte[] data ) throws IOException {
-
-      JarEntry outEntry = new JarEntry( fileName );
-      addDirectory( fileName );
-      jos.putNextEntry( outEntry );
-      jos.write( data );
-      jos.closeEntry();
-
-      calcDigests( data );
-
-      addDigests( fileName );
-    }
-
-    private void calcDigests( final byte[] data ) {
-
-      for ( int i = digests.length - 1; i >= 0; i-- ) {
-        if ( null != digests[ i ] ) {
-          digests[ i ].reset();
-          digests[ i ].update( data );
-        }
-      }
-    }
-
-    private void addDirectory( final String fileName ) throws IOException {
-      int index = 0;
-      while ( ( index = fileName.indexOf( "/", index + 1 ) ) >= 0 ) {
-        String directory = fileName.substring( 0, index + 1 );
-        if ( !directoriesWritten.contains( directory ) ) {
-          directoriesWritten.add( directory );
-          JarEntry directoryEntry = new JarEntry( directory );
-          jos.putNextEntry( directoryEntry );
-          jos.closeEntry();
-        }
-      }
-    }
-
-    private void close() throws IOException {
-
-      finishManifest();
-
-      if ( jos != null ) {
-        jos.finish();
-        jos.close();
-      }
-      if ( fos != null ) {
-        fos.close();
-      }
-    }
-
-    private void finishManifest() throws IOException {
-      manifest.getMainAttributes().putValue( "Created-by",
-          "yGuard Bytecode Obfuscator: Shrinker " + Version.getVersion() );
-
-      addDirectory( MANIFEST_FILENAME );
-      jos.putNextEntry( new JarEntry( MANIFEST_FILENAME ) );
-      this.manifest.write( jos );
-      jos.closeEntry();
-    }
-  }
 }
