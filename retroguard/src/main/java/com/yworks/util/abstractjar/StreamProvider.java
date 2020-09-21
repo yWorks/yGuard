@@ -1,4 +1,4 @@
-package com.yworks.yshrink.util;
+package com.yworks.util.abstractjar;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -8,10 +8,17 @@ import java.io.IOException;
  */
 public interface StreamProvider {
 
-  public DataInputStream getNextStream() throws IOException;
-
   DataInputStream getNextClassEntryStream() throws IOException;
 
   DataInputStream getNextResourceEntryStream() throws IOException;
 
+  Entry getCurrentEntry();
+
+  String getCurrentEntryName();
+
+  String getCurrentDir();
+
+  String getCurrentFilename();
+
+  void reset();
 }

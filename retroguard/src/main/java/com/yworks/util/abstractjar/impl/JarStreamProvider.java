@@ -1,4 +1,7 @@
-package com.yworks.yshrink.util;
+package com.yworks.util.abstractjar.impl;
+
+import com.yworks.util.abstractjar.Entry;
+import com.yworks.util.abstractjar.StreamProvider;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -29,31 +32,12 @@ public class JarStreamProvider implements StreamProvider {
     en = f.entries();
   }
 
+  @Override
   public void reset() {
     en = f.entries();
   }
 
-  public DataInputStream getNextStream() throws IOException {
-
-    JarEntry entry = null;
-
-    while ( en.hasMoreElements() ) {
-
-      entry = en.nextElement();
-      if ( !entry.isDirectory() ) {
-        break;
-      }
-    }
-
-    if ( entry != null ) { // && entry.getName().endsWith( ".class" )
-      setCurrentEntry( entry );
-      return new DataInputStream( new BufferedInputStream( f.getInputStream( entry ) ) );
-    } else {
-      setCurrentEntry( null );
-      return null;
-    }
-  }
-
+  @Override
   public DataInputStream getNextClassEntryStream() throws IOException {
 
     JarEntry entry = null;
@@ -75,6 +59,7 @@ public class JarStreamProvider implements StreamProvider {
     }
   }
 
+  @Override
   public DataInputStream getNextResourceEntryStream() throws IOException {
     JarEntry entry = null;
 
@@ -95,16 +80,18 @@ public class JarStreamProvider implements StreamProvider {
     }
   }
 
-  public JarEntry currentEntry() {
-    return currentEntry;
+  @Override
+  public Entry getCurrentEntry() {
+    return new JarEntryWrapper(currentEntry);
+  }
+
+  @Override
+  public String getCurrentEntryName() {
+    return currentEntryName;
   }
 
   public String getCurrentDir() {
     return currentDir;
-  }
-
-  public String getCurrentEntryName() {
-    return currentEntryName;
   }
 
   public String getCurrentFilename() {
