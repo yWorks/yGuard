@@ -24,7 +24,7 @@ public final class Compiler {
 
   public static Compiler newCompiler() {
     try {
-      final Class cmplrType = Class.forName("com.yworks.compiler.SimpleCompiler");
+      final Class cmplrType = Class.forName("com.yworks.util.compiler.SimpleCompiler");
       final Object cmplrInst = cmplrType.newInstance();
       return new Compiler(cmplrType, cmplrInst);
     } catch (Exception ex) {

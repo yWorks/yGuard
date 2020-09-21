@@ -1,4 +1,4 @@
-package com.yworks.compiler;
+package com.yworks.util.compiler;
 
 import java.io.BufferedReader;
 import java.io.IOException;

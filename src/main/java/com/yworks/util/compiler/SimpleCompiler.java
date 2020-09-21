@@ -1,4 +1,4 @@
-package com.yworks.compiler;
+package com.yworks.util.compiler;
 
 import java.io.IOException;
 import java.io.OutputStream;
