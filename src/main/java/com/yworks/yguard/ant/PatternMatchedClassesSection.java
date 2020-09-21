@@ -13,9 +13,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.io.IOException;
 
-import com.yworks.yguard.ant.Property;
 import com.yworks.yguard.ObfuscatorTask;
-import com.yworks.util.ant.ZipScannerTool;
+import com.yworks.common.ant.ant.ZipScannerTool;
 
 /** Used as a super class for ant's handling of the
  * elements which can contain a <code>patternset</code> child element.

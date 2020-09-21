@@ -4,7 +4,7 @@
  * Created on October 15, 2002, 9:55 AM
  */
 
-package com.yworks.util.ant;
+package com.yworks.common.ant.ant;
 
 import org.apache.tools.ant.types.ZipScanner;
 import org.apache.tools.zip.ZipEntry;
