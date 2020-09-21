@@ -53,6 +53,8 @@ The `yguard` element has no attributes.
 
 At least one `inoutpair` element or one non-empty `inoutpairs` element has to be specified in order to run the yguard tasks. This element specifies the paths to the input and output jar files.
 
+`inoutpair` also supports the usage of directories. This is detected by [File.isDirectory](https://docs.oracle.com/javase/7/docs/api/java/io/File.html#isDirectory()). However, in general you do not want to use directories for `inoutpairs` (advanced use cases).
+
 #### Attributes
 
 <table>
