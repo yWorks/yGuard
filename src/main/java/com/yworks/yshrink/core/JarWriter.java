@@ -34,7 +34,7 @@ import java.util.jar.Manifest;
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
-public class Writer {
+public class JarWriter implements ArchiveWriter {
 
   private Set<String> directoriesWritten = new HashSet<String>();
   private FileOutputStream fos;
@@ -48,7 +48,7 @@ public class Writer {
   private final boolean createStubs;
   private final MessageDigest[] digests;
 
-  public Writer( boolean createStubs, String digestNamesStr ) {
+  public JarWriter( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
 
     String[] digestNames = ( digestNamesStr.trim().equalsIgnoreCase(
@@ -149,8 +149,8 @@ public class Writer {
     manifest.getMainAttributes().putValue("Created-by",
                                           "yGuard Bytecode Obfuscator: Shrinker " + Version.getVersion());
 
-    addDirectory(Writer.MANIFEST_FILENAME);
-    jos.putNextEntry(new JarEntry(Writer.MANIFEST_FILENAME));
+    addDirectory(JarWriter.MANIFEST_FILENAME);
+    jos.putNextEntry(new JarEntry(JarWriter.MANIFEST_FILENAME));
     this.manifest.write(jos);
     jos.closeEntry();
   }

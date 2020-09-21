@@ -6,7 +6,7 @@ import com.yworks.yshrink.ant.filters.EntryPointFilter;
 import com.yworks.yshrink.core.Analyzer;
 import com.yworks.yshrink.core.ClassResolver;
 import com.yworks.yshrink.core.Shrinker;
-import com.yworks.yshrink.core.Writer;
+import com.yworks.yshrink.core.JarWriter;
 import com.yworks.yshrink.model.AbstractDescriptor;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.FieldDescriptor;
@@ -104,7 +104,7 @@ public class YShrink {
     final Shrinker shrinker = new Shrinker();
     shrinker.shrink( model );
 
-    final Writer writer = new Writer( createStubs, digests );
+    final JarWriter writer = new JarWriter(createStubs, digests );
 
     for ( ShrinkBag bag : pairs ) {
       if ( ! bag.isEntryPointJar() ) {
