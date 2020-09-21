@@ -216,7 +216,10 @@ publishing {
   }
 }
 
+ext.isReleaseVersion = !version.endsWith("x")
+
 signing {
+  required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
   sign publishing.publications.yguard
   sign publishing.publications.annotation
   sign publishing.publications.retroguard
