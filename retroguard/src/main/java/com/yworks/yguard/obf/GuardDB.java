@@ -49,13 +49,15 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
@@ -468,20 +470,18 @@ public class GuardDB implements ClassConstants
         }
 
         // sort the entries in ascending order
-        Arrays.sort(jarEntries.keySet().toArray(), new Comparator() {
-          public int compare( Object a, Object b ) {
-            Object[] array1 = (Object[]) a;
-            JarEntry entry1 = (JarEntry) array1[0];
-            Object[] array2 = (Object[]) b;
-            JarEntry entry2 = (JarEntry) array2[0];
-            return entry1.getName().compareTo(entry2.getName());
+        List<Entry> keys = new ArrayList<>(jarEntries.keySet());
+        Collections.sort(keys, new Comparator<Entry>() {
+          @Override
+          public int compare( final Entry o1, final Entry o2 ) {
+            return o1.getName().compareTo(o2.getName());
           }
         });
 
         if (out[i].isDirectory()) {
 
           Set<String> directoriesWritten = new HashSet<>();
-          for (Entry jarEntry : jarEntries.keySet()) {
+          for (Entry jarEntry : keys) {
             String name = jarEntry.getName();
             // make sure the directory entries are written to the jar file
             if (!jarEntry.isDirectory()) {
@@ -511,7 +511,7 @@ public class GuardDB implements ClassConstants
 
           // Finally, write the big bunch of data
           Set<String> directoriesWritten = new HashSet<>();
-          for (Entry jarEntry: jarEntries.keySet()) {
+          for (Entry jarEntry: keys) {
             String name = jarEntry.getName();
             // make sure the directory entries are written to the jar file
             if (!jarEntry.isDirectory()) {
