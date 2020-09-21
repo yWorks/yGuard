@@ -1,4 +1,4 @@
-package com.yworks.util.graph;
+package com.yworks.graph;
 
 import com.google.common.graph.Network;
 
