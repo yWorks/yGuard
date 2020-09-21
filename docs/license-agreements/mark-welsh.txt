@@ -1,0 +1,3 @@
+Mark Welsh, the original author of Retroguard (21-09-2020)
+
+As the copyright holder of the original RetroGuard source, I grant permission for yWorks to relicense the RetroGuard-based parts in yGuard that are still under LGPL under the more permissive MIT license
