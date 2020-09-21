@@ -6,7 +6,7 @@
 package com.yworks.yguard;
 
 import com.yworks.util.CollectionFilter;
-import com.yworks.util.ant.ZipScannerTool;
+import com.yworks.common.ant.ZipScannerTool;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.ExposeSection;
 import com.yworks.yguard.ant.FieldSection;
@@ -14,13 +14,13 @@ import com.yworks.yguard.ant.MapParser;
 import com.yworks.yguard.ant.Mappable;
 import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ant.PackageSection;
-import com.yworks.yguard.common.ShrinkBag;
-import com.yworks.yguard.common.ant.AttributesSection;
-import com.yworks.yguard.common.ant.EntryPointsSection;
-import com.yworks.yguard.common.ant.Exclude;
-import com.yworks.yguard.common.ant.InOutPair;
-import com.yworks.yguard.common.ant.TypePatternSet;
-import com.yworks.yguard.common.ant.YGuardBaseTask;
+import com.yworks.common.ShrinkBag;
+import com.yworks.common.ant.AttributesSection;
+import com.yworks.common.ant.EntryPointsSection;
+import com.yworks.common.ant.Exclude;
+import com.yworks.common.ant.InOutPair;
+import com.yworks.common.ant.TypePatternSet;
+import com.yworks.common.ant.YGuardBaseTask;
 import com.yworks.yguard.obf.Cl;
 import com.yworks.yguard.obf.Cl.ClassResolver;
 import com.yworks.yguard.obf.ClassTree;
@@ -31,7 +31,7 @@ import com.yworks.yguard.obf.NameMaker;
 import com.yworks.yguard.obf.NameMakerFactory;
 import com.yworks.yguard.obf.NoSuchMappingException;
 import com.yworks.yguard.obf.ResourceHandler;
-import com.yworks.yguard.obf.Version;
+import com.yworks.util.Version;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.LineNumberInfo;
 import com.yworks.yguard.obf.classfile.LineNumberTableAttrInfo;
@@ -881,7 +881,7 @@ public class ObfuscatorTask extends YGuardBaseTask
     YShrinkInvoker yShrinkInvoker = null;
 
     try {
-       yShrinkInvoker = (YShrinkInvoker) Class.forName( "com.yworks.yguard.yshrink.YShrinkInvokerImpl" ).newInstance();
+       yShrinkInvoker = (YShrinkInvoker) Class.forName("com.yworks.yshrink.YShrinkInvokerImpl").newInstance();
     } catch ( InstantiationException e ) {
       throw new BuildException( NO_SHRINKING_SUPPORT, e );
     } catch ( IllegalAccessException e ) {
@@ -954,7 +954,7 @@ public class ObfuscatorTask extends YGuardBaseTask
     yShrinkModel = null;
 
     try {
-      yShrinkModel = (YShrinkModel) Class.forName( "com.yworks.yguard.yshrink.YShrinkModelImpl" ).newInstance();
+      yShrinkModel = (YShrinkModel) Class.forName("com.yworks.yshrink.YShrinkModelImpl").newInstance();
     } catch ( InstantiationException e ) {
       throw new BuildException( NO_SHRINKING_SUPPORT, e );
     } catch ( IllegalAccessException e ) {

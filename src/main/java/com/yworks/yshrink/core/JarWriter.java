@@ -6,13 +6,13 @@ import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
 import com.yworks.util.abstractjar.impl.DirectoryWrapper;
 import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.util.abstractjar.impl.JarStreamProvider;
-import com.yworks.yguard.common.ResourcePolicy;
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.common.ResourcePolicy;
+import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
-import com.yworks.yshrink.util.Version;
+import com.yworks.util.Version;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 

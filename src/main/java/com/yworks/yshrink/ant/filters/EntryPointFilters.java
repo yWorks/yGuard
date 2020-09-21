@@ -1,11 +1,10 @@
 package com.yworks.yshrink.ant.filters;
 
-import com.yworks.yguard.common.ant.Exclude;
+import com.yworks.common.ant.Exclude;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.FieldDescriptor;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.yshrink.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

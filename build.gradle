@@ -28,7 +28,6 @@ configurations {
 dependencies {
     annotation project(':annotation')
     implementation project(':annotation')
-    implementation project(':retroguard')
     implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
@@ -38,9 +37,21 @@ dependencies {
 compileJava {
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
+    source = "$buildDir/generated-src"
 }
 
-def LIBRARIES = [String.format("retroguard-%s.jar", version), "guava-28.1-android.jar", "asm-7.2.jar", "ant-1.10.7.jar"]
+task generateSources(type: Copy) {
+  from 'src/main/java'
+  into "$buildDir/generated-src"
+  filter {
+    line -> line.replaceAll('@VERSION@', version)
+  }
+}
+
+// Use generated sources
+compileJava.dependsOn generateSources
+
+def LIBRARIES = ["guava-28.1-android.jar", "asm-7.2.jar", "ant-1.10.7.jar"]
 def LIBRARY_JARS = configurations.dependents.filter {
   file -> file.name in LIBRARIES
 }
@@ -175,44 +186,6 @@ publishing {
       artifact project(':annotation').annotationSourceJar
       artifact project(':annotation').annotationJavaDoc
     }
-
-    retroguard(MavenPublication) {
-      artifactId = 'retroguard'
-
-      pom {
-        name = 'retroguard'
-        description = POM_DESCRIPTION
-        url = POM_URL
-        developers {
-          developer {
-            id = POM_DEVELOPER_ID
-            name = POM_DEVELOPER_NAME
-            email = POM_DEVELOPER_EMAIL
-          }
-        }
-        scm {
-          connection = POM_SCM_CONNECTION
-          developerConnection = POM_SCM_DEV_CONNECTION
-          url = POM_SCM_URL
-        }
-        licenses {
-          license {
-            name = POM_LICENCE_NAME
-            url = POM_LICENCE_URL
-          }
-        }
-        licenses {
-          license {
-            name = 'GNU LESSER GENERAL PUBLIC LICENSE'
-            url = 'https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html'
-          }
-        }
-      }
-
-      from project('retroguard').components.java
-      artifact project(':retroguard').retroguardSourceJar
-      artifact project(':retroguard').retroguardJavaDoc
-    }
   }
 }
 
@@ -222,5 +195,4 @@ signing {
   required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
   sign publishing.publications.yguard
   sign publishing.publications.annotation
-  sign publishing.publications.retroguard
 }

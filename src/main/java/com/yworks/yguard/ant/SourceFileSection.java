@@ -1,11 +1,8 @@
 package com.yworks.yguard.ant;
 
-import com.yworks.yguard.ant.PatternMatchedClassesSection;
-import com.yworks.yguard.ant.Mappable;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.ClassConstants;
-import com.yworks.yguard.ObfuscatorTask;
-import com.yworks.yguard.common.ant.YGuardBaseTask;
+import com.yworks.common.ant.YGuardBaseTask;
 
 import java.util.Collection;
 

@@ -2,7 +2,7 @@ package com.yworks.yshrink.ant;
 
 import org.junit.Test;
 import org.objectweb.asm.Opcodes;
-import com.yworks.yguard.common.ant.PatternMatchedSection;
+import com.yworks.common.ant.PatternMatchedSection;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;

@@ -1,6 +1,6 @@
 package com.yworks.yshrink.core;
 
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.model.Model;
 
 import java.io.IOException;

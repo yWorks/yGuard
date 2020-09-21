@@ -1,7 +1,7 @@
 package com.yworks.yguard;
 
-import com.yworks.yguard.common.ant.EntryPointsSection;
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.common.ant.EntryPointsSection;
+import com.yworks.common.ShrinkBag;
 import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.FieldSection;

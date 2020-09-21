@@ -1,7 +1,7 @@
 package com.yworks.yshrink.ant.filters;
 
-import com.yworks.yguard.common.ant.TypePatternSet;
-import com.yworks.yguard.common.ant.PatternMatchedSection;
+import com.yworks.common.ant.TypePatternSet;
+import com.yworks.common.ant.PatternMatchedSection;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.PatternSet;
 import org.apache.tools.ant.types.selectors.SelectorUtils;

@@ -1,6 +1,6 @@
 package com.yworks.yguard;
 
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.common.ShrinkBag;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 

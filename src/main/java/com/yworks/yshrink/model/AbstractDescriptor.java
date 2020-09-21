@@ -1,7 +1,7 @@
 package com.yworks.yshrink.model;
 
 import org.objectweb.asm.Opcodes;
-import com.yworks.util.graph.Node;
+import com.yworks.graph.Node;
 
 import java.io.File;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
