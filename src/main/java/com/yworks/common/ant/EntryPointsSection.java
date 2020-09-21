@@ -1,4 +1,4 @@
-package com.yworks.yguard.common.ant;
+package com.yworks.common.ant;
 
 import com.yworks.yshrink.ant.ClassSection;
 import com.yworks.yshrink.ant.FieldSection;

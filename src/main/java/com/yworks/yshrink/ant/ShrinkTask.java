@@ -1,8 +1,8 @@
 package com.yworks.yshrink.ant;
 
-import com.yworks.yguard.common.ShrinkBag;
-import com.yworks.yguard.common.ant.*;
-import com.yworks.yguard.common.ant.AttributesSection;
+import com.yworks.common.ShrinkBag;
+import com.yworks.common.ant.*;
+import com.yworks.common.ant.AttributesSection;
 import com.yworks.yguard.obf.Version;
 import com.yworks.yguard.obf.classfile.ClassConstants;
 import com.yworks.yshrink.YShrink;
@@ -55,7 +55,7 @@ public class ShrinkTask extends YGuardBaseTask {
 
     final EntryPointFilters epfs = new EntryPointFilters();
 
-    List<com.yworks.yguard.common.ant.AttributesSection> attributesSections = entryPointsSection != null ? entryPointsSection.getAttributesSections() : this.attributesSections;
+    List<com.yworks.common.ant.AttributesSection> attributesSections = entryPointsSection != null ? entryPointsSection.getAttributesSections() : this.attributesSections;
 
     if ( entryPointsSection != null ) {
 
@@ -150,7 +150,7 @@ public class ShrinkTask extends YGuardBaseTask {
 
     if ( null != attributesSections && attributesSections.size() > 0 ) {
       AttributeFilter af = new AttributeFilter( getProject() );
-      for ( com.yworks.yguard.common.ant.AttributesSection as : attributesSections ) {
+      for ( com.yworks.common.ant.AttributesSection as : attributesSections ) {
         af.addAttributesSection( as );
       }
       epfs.addEntryPointFilter( af );
@@ -307,9 +307,9 @@ public class ShrinkTask extends YGuardBaseTask {
     return createExpose();
   }
 
-  public void addAttributesSections( List<com.yworks.yguard.common.ant.AttributesSection> attributesSections ) {
+  public void addAttributesSections( List<com.yworks.common.ant.AttributesSection> attributesSections ) {
     if ( null != entryPointsSection ) {
-      for ( com.yworks.yguard.common.ant.AttributesSection attributesSection : attributesSections ) {
+      for ( com.yworks.common.ant.AttributesSection attributesSection : attributesSections ) {
         entryPointsSection.addConfiguredAttribute( attributesSection );
       }
     } else {

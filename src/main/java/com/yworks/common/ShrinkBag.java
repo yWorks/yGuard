@@ -1,4 +1,4 @@
-package com.yworks.yguard.common;
+package com.yworks.common;
 
 import java.io.File;
 

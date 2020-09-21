@@ -1,9 +1,9 @@
 package com.yworks.yguard;
 
 import com.yworks.yguard.obf.Cl;
-import com.yworks.yguard.common.ShrinkBag;
-import com.yworks.yguard.common.ant.*;
-import com.yworks.yguard.common.ant.AttributesSection;
+import com.yworks.common.ShrinkBag;
+import com.yworks.common.ant.*;
+import com.yworks.common.ant.AttributesSection;
 import com.yworks.yshrink.ant.ShrinkTask;
 import com.yworks.yshrink.util.Logger;
 import org.apache.tools.ant.BuildException;

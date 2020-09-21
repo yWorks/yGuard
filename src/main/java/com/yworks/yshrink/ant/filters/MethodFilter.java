@@ -1,12 +1,11 @@
 package com.yworks.yshrink.ant.filters;
 
-import com.yworks.yguard.common.ant.TypePatternSet;
+import com.yworks.common.ant.TypePatternSet;
 import com.yworks.yshrink.ant.MethodSection;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.util.Util;
-import com.yworks.yshrink.util.Logger;
 import org.apache.tools.ant.Project;
 import org.objectweb.asm.Type;
 

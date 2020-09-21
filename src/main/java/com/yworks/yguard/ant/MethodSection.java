@@ -2,7 +2,6 @@ package com.yworks.yguard.ant;
 
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.ObfuscatorTask;
-import com.yworks.yguard.common.ant.YGuardBaseTask;
 
 import java.util.Collection;
 

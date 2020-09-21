@@ -1,7 +1,7 @@
-package com.yworks.yguard.common.ant;
+package com.yworks.common.ant;
 
-import com.yworks.yguard.common.ResourcePolicy;
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.common.ResourcePolicy;
+import com.yworks.common.ShrinkBag;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

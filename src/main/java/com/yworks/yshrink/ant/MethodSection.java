@@ -1,7 +1,7 @@
 package com.yworks.yshrink.ant;
 
-import com.yworks.yguard.common.ant.TypePatternSet;
-import com.yworks.yguard.common.ant.PatternMatchedSection;
+import com.yworks.common.ant.TypePatternSet;
+import com.yworks.common.ant.PatternMatchedSection;
 import com.yworks.yshrink.util.Util;
 import org.objectweb.asm.Type;
 

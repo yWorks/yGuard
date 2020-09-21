@@ -1,9 +1,9 @@
 package com.yworks.yshrink.ant.filters;
 
-import com.yworks.yguard.common.ant.AttributesSection;
+import com.yworks.common.ant.AttributesSection;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.util.Util;
-import com.yworks.yguard.common.ant.TypePatternSet;
+import com.yworks.common.ant.TypePatternSet;
 
 import java.util.List;
 import java.util.ArrayList;

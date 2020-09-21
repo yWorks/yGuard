@@ -1,4 +1,4 @@
-package com.yworks.yguard.common;
+package com.yworks.common;
 
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com

@@ -1,4 +1,4 @@
-package com.yworks.yguard.common.ant;
+package com.yworks.common.ant;
 
 /** @author Michael Schroeder, yWorks GmbH http://www.yworks.com */
 public abstract class Exclude {

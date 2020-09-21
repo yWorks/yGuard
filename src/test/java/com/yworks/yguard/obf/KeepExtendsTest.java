@@ -2,8 +2,8 @@ package com.yworks.yguard.obf;
 
 import com.yworks.util.Compiler;
 import com.yworks.yguard.YShrinkModel;
-import com.yworks.yguard.common.ShrinkBag;
-import com.yworks.yguard.common.ant.InOutPair;
+import com.yworks.common.ShrinkBag;
+import com.yworks.common.ant.InOutPair;
 import com.yworks.yguard.yshrink.YShrinkModelImpl;
 import com.yworks.yshrink.core.URLCpResolver;
 import com.yworks.yshrink.model.Model;

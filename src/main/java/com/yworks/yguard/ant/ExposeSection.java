@@ -1,7 +1,7 @@
 package com.yworks.yguard.ant;
 
 import com.yworks.yguard.ObfuscatorTask;
-import com.yworks.yguard.common.ant.Exclude;
+import com.yworks.common.ant.Exclude;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.ClassConstants;
 import org.apache.tools.ant.types.PatternSet;

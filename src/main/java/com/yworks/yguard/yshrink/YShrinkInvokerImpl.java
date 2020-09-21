@@ -2,14 +2,14 @@ package com.yworks.yguard.yshrink;
 
 import com.yworks.yguard.YShrinkInvoker;
 import com.yworks.yguard.ant.PatternMatchedClassesSection;
-import com.yworks.yguard.common.ShrinkBag;
-import com.yworks.yguard.common.ant.EntryPointsSection;
-import com.yworks.yguard.common.ant.TypePatternSet;
+import com.yworks.common.ShrinkBag;
+import com.yworks.common.ant.EntryPointsSection;
+import com.yworks.common.ant.TypePatternSet;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yshrink.ant.ClassSection;
 import com.yworks.yshrink.ant.FieldSection;
 import com.yworks.yshrink.ant.MethodSection;
-import com.yworks.yguard.common.ant.PatternMatchedSection;
+import com.yworks.common.ant.PatternMatchedSection;
 import com.yworks.yshrink.ant.ShrinkTask;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
@@ -102,7 +102,7 @@ public class YShrinkInvokerImpl implements YShrinkInvoker {
   }
 
   private void addPatternSets( PatternMatchedClassesSection yGuardSection,
-                               com.yworks.yguard.common.ant.PatternMatchedSection yShrinkSection, String type ) {
+                               com.yworks.common.ant.PatternMatchedSection yShrinkSection, String type ) {
     if ( null != yGuardSection.getPatternSets() ) {
       for ( PatternSet ps : (Iterable<? extends PatternSet>) yGuardSection.getPatternSets() ) {
         TypePatternSet tps = new TypePatternSet();

@@ -1,4 +1,4 @@
-package com.yworks.yguard.common.ant;
+package com.yworks.common.ant;
 
 import org.apache.tools.ant.types.PatternSet;
 

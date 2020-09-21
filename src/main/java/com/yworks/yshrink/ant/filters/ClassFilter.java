@@ -1,7 +1,7 @@
 package com.yworks.yshrink.ant.filters;
 
-import com.yworks.yguard.common.ant.PatternMatchedSection;
-import com.yworks.yguard.common.ant.TypePatternSet;
+import com.yworks.common.ant.PatternMatchedSection;
+import com.yworks.common.ant.TypePatternSet;
 import com.yworks.yshrink.ant.ClassSection;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.FieldDescriptor;

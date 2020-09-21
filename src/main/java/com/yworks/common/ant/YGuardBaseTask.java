@@ -1,10 +1,9 @@
-package com.yworks.yguard.common.ant;
+package com.yworks.common.ant;
 
-import com.yworks.yguard.common.ShrinkBag;
-import com.yworks.yguard.common.ResourcePolicy;
+import com.yworks.common.ShrinkBag;
+import com.yworks.common.ResourcePolicy;
 import com.yworks.yguard.ant.Property;
 import org.apache.tools.ant.Task;
-import org.apache.tools.ant.FileScanner;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -15,10 +14,8 @@ import org.apache.tools.ant.types.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
-import java.io.File;
 
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com

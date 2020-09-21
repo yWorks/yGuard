@@ -1,6 +1,6 @@
 package com.yworks.yshrink.java13;
 
-import com.yworks.yguard.common.ant.InOutPair;
+import com.yworks.common.ant.InOutPair;
 import com.yworks.yshrink.YShrink;
 import com.yworks.yshrink.ant.filters.AllMainMethodsFilter;
 import org.junit.Rule;

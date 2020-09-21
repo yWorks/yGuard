@@ -1,6 +1,6 @@
 package com.yworks.yshrink;
 
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.ant.filters.AllMainMethodsFilter;
 import com.yworks.yshrink.ant.filters.EntryPointFilter;
 import com.yworks.yshrink.core.Analyzer;

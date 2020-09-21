@@ -1,7 +1,7 @@
 package com.yworks.yguard.yshrink;
 
 import com.yworks.yguard.YShrinkModel;
-import com.yworks.yguard.common.ShrinkBag;
+import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.ant.ResourceCpResolver;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.core.Analyzer;
