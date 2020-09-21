@@ -42,7 +42,7 @@ compileJava {
 
 task generateSources(type: Copy) {
   from 'src/main/java'
-  into "$buildDir/src/main/java"
+  into "$buildDir/generated-src"
   filter {
     line -> line.replaceAll('@VERSION@', version)
   }
