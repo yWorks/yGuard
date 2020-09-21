@@ -41,7 +41,7 @@ public class JarWriter implements ArchiveWriter {
   private JarOutputStream jos;
   private Manifest manifest;
 
-  public static final String MANIFEST_FILENAME = "META-INF/MANIFEST.MF";
+  private static final String MANIFEST_FILENAME = "META-INF/MANIFEST.MF";
   private static final String SIGNATURE_FILE_PREFIX = "META-INF/";
   private static final String SIGNATURE_FILE_SUFFIX = ".SF";
 
@@ -166,6 +166,7 @@ public class JarWriter implements ArchiveWriter {
     }
   }
 
+  @Override
   public void write( Model model, ShrinkBag bag ) throws IOException {
 
     File in = bag.getIn();
