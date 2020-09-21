@@ -15,19 +15,19 @@ jobs:
         run: ./gradlew publishToMavenLocal
       - name: Test annotation example
         working-directory: example/annotation
-        run: ./gradlew obfuscate
+        run: gradle obfuscate
       - name: Test application example
         working-directory: example/application
-        run: ./gradlew obfuscate
+        run: gradle obfuscate
       - name: Test external_library example
         working-directory: example/external_library
-        run: ./gradlew obfuscate
+        run: gradle obfuscate
       - name: Test library example
         working-directory: example/library
-        run: ./gradlew obfuscate
+        run: gradle obfuscate
       - name: Test resources example
         working-directory: example/resources
-        run: ./gradlew obfuscate
+        run: gradle obfuscate
       - name: Test serializable_exclusion example
         working-directory: example/serializable_exclusion
-        run: ./gradlew obfuscate
+        run: gradle obfuscate
