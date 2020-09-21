@@ -4,20 +4,23 @@
  * Created on October 15, 2002, 9:55 AM
  */
 
-package com.yworks.common.ant.ant;
+package com.yworks.common.ant;
 
-import org.apache.tools.ant.types.ZipScanner;
-import org.apache.tools.zip.ZipEntry;
-import org.apache.tools.ant.types.ZipFileSet;
-
-import java.util.*;
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.zip.*;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.ZipFileSet;
+import org.apache.tools.ant.types.ZipScanner;
+import org.apache.tools.zip.ZipEntry;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.zip.ZipInputStream;
 
 /**
  *

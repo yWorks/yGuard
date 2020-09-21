@@ -6,7 +6,7 @@
 package com.yworks.yguard;
 
 import com.yworks.util.CollectionFilter;
-import com.yworks.common.ant.ant.ZipScannerTool;
+import com.yworks.common.ant.ZipScannerTool;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.ExposeSection;
 import com.yworks.yguard.ant.FieldSection;
