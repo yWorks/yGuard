@@ -4,7 +4,7 @@
  * Created on 22. April 2005, 09:30
  */
 
-package com.yworks.yguard.test.generics;
+package com.yworks.yguard.generics;
 
 import java.util.ArrayList;
 import java.util.List;

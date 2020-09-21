@@ -4,54 +4,58 @@
  * Created on 22. April 2005, 09:35
  */
 
-package com.yworks.yguard.test.generics;
+package com.yworks.yguard.generics;
+
+import org.junit.Test;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericSignatureFormatError;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author muellese
  */
 public class TestGenerics {
-  
+  private static final Logger log = Logger.getLogger(TestGenerics.class.getName() );
+
   @Deprecated
   private ParameterizedType<MyStringType> localVar;
   
   /** Creates a new instance of TestGenerics */
   public TestGenerics() {
   }
-  
+
+  @Test
   public void run(){
     new GenericSignatureFormatError();
     ParameterizedType<MyStringType> pt = new ParameterizedType<MyStringType>();
     pt.add(new MyStringType());
     pt.add(new MyStringType(){});
     for (MyType myType : pt.getList()){
-      System.out.println();
-      System.out.println("myType " + myType);
-      System.out.println("Enclosed by " + myType.getClass().getEnclosingMethod());
-      System.out.println("Enclosed by " + myType.getClass().getEnclosingClass().getName());
+      log.log(Level.FINE, "myType " + myType);
+      log.log(Level.FINE, "myType " + myType);
+      log.log(Level.FINE, "Enclosed by " + myType.getClass().getEnclosingMethod());
+      log.log(Level.FINE, "Enclosed by " + myType.getClass().getEnclosingClass().getName());
     }
     
 //    Field[] fields = this.getClass().getDeclaredFields();
     for (Field field : this.getClass().getDeclaredFields()){
-      System.out.println();
       for (Annotation a : field.getAnnotations()){
-        System.out.println(a);
+        log.log(Level.FINE, a.toString());
       }
-      System.out.println(field);
-      System.out.println("generic type " + field.getGenericType());
+      log.log(Level.FINE, field.toString());
+      log.log(Level.FINE, "generic type " + field.getGenericType());
     }
     
     for (TypeVariable tv : pt.getClass().getTypeParameters()){
-      System.out.println();
-      System.out.println(tv);
+      log.log(Level.FINE, tv.toString());
       for (Type t : tv.getBounds()){
-        System.out.println("bounds " + t);
+        log.log(Level.FINE, "bounds " + t);
       }
     }
   }
