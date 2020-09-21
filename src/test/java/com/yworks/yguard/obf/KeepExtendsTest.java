@@ -4,7 +4,7 @@ import com.yworks.util.Compiler;
 import com.yworks.yguard.YShrinkModel;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.InOutPair;
-import com.yworks.yguard.yshrink.YShrinkModelImpl;
+import com.yworks.yshrink.YShrinkModelImpl;
 import com.yworks.yshrink.core.URLCpResolver;
 import com.yworks.yshrink.model.Model;
 import org.junit.Rule;

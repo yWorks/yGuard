@@ -1,4 +1,4 @@
-package com.yworks.yguard.yshrink;
+package com.yworks.yshrink;
 
 import com.yworks.yguard.YShrinkInvoker;
 import com.yworks.yguard.ant.PatternMatchedClassesSection;
