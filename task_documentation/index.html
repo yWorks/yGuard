@@ -338,6 +338,7 @@ Please see the <a href="troubleshooting">troubleshooting section</a> to learn ab
 </ul>
 <h3 id="the-inoutpair-element">The <code>inoutpair</code> Element</h3>
 <p>At least one <code>inoutpair</code> element or one non-empty <code>inoutpairs</code> element has to be specified in order to run the yguard tasks. This element specifies the paths to the input and output jar files.</p>
+<p><code>inoutpair</code> also supports the usage of directories. This is detected by <a href="https://docs.oracle.com/javase/7/docs/api/java/io/File.html#isDirectory()">File.isDirectory</a>. However, in general you do not want to use directories for <code>inoutpairs</code> (advanced use cases).</p>
 <h4 id="attributes_1">Attributes</h4>
 <table>
 <thead>
