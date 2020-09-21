@@ -1,4 +1,4 @@
-package com.yworks.yshrink.util;
+package com.yworks.logging;
 
 import java.util.List;
 import java.util.ArrayList;

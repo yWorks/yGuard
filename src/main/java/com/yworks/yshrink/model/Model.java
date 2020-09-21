@@ -3,7 +3,7 @@ package com.yworks.yshrink.model;
 import com.google.common.graph.Network;
 import com.google.common.graph.NetworkBuilder;
 import com.yworks.yshrink.core.ClassResolver;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
 import com.yworks.util.graph.Node;
 import com.yworks.util.graph.Edge;

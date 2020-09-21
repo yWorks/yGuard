@@ -1,6 +1,6 @@
 package com.yworks.yshrink.ant;
 
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 

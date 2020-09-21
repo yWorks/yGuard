@@ -14,10 +14,10 @@ import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.FieldDescriptor;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.yshrink.util.ConsoleLogger;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.ConsoleLogger;
+import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
-import com.yworks.yshrink.util.XmlLogger;
+import com.yworks.logging.XmlLogger;
 
 import java.io.File;
 import java.io.IOException;

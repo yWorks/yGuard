@@ -10,7 +10,7 @@ import com.yworks.common.ResourcePolicy;
 import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;

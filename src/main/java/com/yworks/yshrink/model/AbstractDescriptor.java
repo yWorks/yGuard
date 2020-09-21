@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 
 /**
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com

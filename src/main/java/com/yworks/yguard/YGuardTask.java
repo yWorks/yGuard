@@ -5,7 +5,7 @@ import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.*;
 import com.yworks.common.ant.AttributesSection;
 import com.yworks.yshrink.ant.ShrinkTask;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 

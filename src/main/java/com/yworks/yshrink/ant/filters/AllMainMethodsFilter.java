@@ -3,7 +3,7 @@ package com.yworks.yshrink.ant.filters;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 
 /**
  * marks all main methods as entry points

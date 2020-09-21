@@ -1,9 +1,9 @@
 package com.yworks.yshrink.core;
 
 import com.yworks.yshrink.model.*;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
-import com.yworks.yshrink.util.XmlLogger;
+import com.yworks.logging.XmlLogger;
 import com.yworks.yguard.obf.classfile.ClassConstants;
 import org.objectweb.asm.*;
 

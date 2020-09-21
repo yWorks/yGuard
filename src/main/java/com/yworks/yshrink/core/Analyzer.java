@@ -13,7 +13,7 @@ import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.ModelVisitor;
 import com.yworks.util.abstractjar.impl.JarStreamProvider;
-import com.yworks.yshrink.util.Logger;
+import com.yworks.logging.Logger;
 import com.yworks.util.abstractjar.StreamProvider;
 import com.yworks.yshrink.util.Util;
 import org.objectweb.asm.ClassReader;
