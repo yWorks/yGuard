@@ -25,7 +25,7 @@ public interface  ClassConstants
     public static final int MAGIC = 0xCAFEBABE;
 
     public static final int MINOR_VERSION_MAX = 3;
-    public static final int MAJOR_VERSION     = 0x39;
+    public static final int MAJOR_VERSION     = 0x3A;
 
     public static final int ACC_PUBLIC      = 0x0001;
     public static final int ACC_PRIVATE     = 0x0002;
