@@ -14,20 +14,20 @@ jobs:
       - name: Local publication for consumption by examples
         run: ./gradlew publishToMavenLocal
       - name: Test annotation example
-        working-directory: ./example/annotation
+        working-directory: ./examples/annotation
         run: gradle obfuscate
       - name: Test application example
-        working-directory: ./example/application
+        working-directory: ./examples/application
         run: gradle obfuscate
       - name: Test external_library example
-        working-directory: ./example/external_library
+        working-directory: ./examples/external_library
         run: gradle obfuscate
       - name: Test library example
-        working-directory: ./example/library
+        working-directory: ./examples/library
         run: gradle obfuscate
       - name: Test resources example
-        working-directory: ./example/resources
+        working-directory: ./examples/resources
         run: gradle obfuscate
       - name: Test serializable_exclusion example
-        working-directory: ./example/serializable_exclusion
+        working-directory: ./examples/serializable_exclusion
         run: gradle obfuscate
