@@ -20,25 +20,11 @@ mvn compile package
 # extract BOOT_INF (classes)
 jar -xvf target/HelloWorld-0.0.1-SNAPSHOT.jar BOOT-INF/classes 
 
-# create a temporary JAR containing only the classes of the application
-cd BOOT-INF/classes/
-jar cvf ../target/HelloWorld-1.0-SNAPSHOT.jar application.properties com
-cd ../
-
-# package and obfuscate the actual application
-mvn package
-
-# extract the classes from the obfuscated JAR
-cd classes/
-jar -xvf ../target/HelloWorld-1.0-SNAPSHOT_obfuscated.jar com
-
-# clean up the `BOOT-INF` folder
-cd ../
-mvn clean
+# switch to BOOT-INF to obfuscate the classes
+cd BOOT-INF/
+mvn package clean
 
 # update the JAR with obfuscated classes
 cd ../
 jar uvf target/HelloWorld-0.0.1-SNAPSHOT.jar BOOT-INF
 ```
-
-Please note that we are considering to add support to obfuscate and shrink `.class` files from arbitrary directories, which would make creating a _"temporary"_ JAR obsolete. We will update this example as it happens.

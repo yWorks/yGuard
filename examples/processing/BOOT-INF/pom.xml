@@ -22,7 +22,7 @@
     <dependency>
       <groupId>com.yworks</groupId>
       <artifactId>yguard</artifactId>
-      <version>2.9.2</version>
+      <version>3.0.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
 
@@ -47,9 +47,10 @@
                       <tasks>
                         <property name="runtime_classpath" refid="maven.runtime.classpath"/>
                         <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${runtime_classpath}"/>
+                        <mkdir dir="${project.basedir}/obfuscated"/>
                         <yguard>
 
-                          <inoutpair in="${project.build.directory}/${project.build.finalName}.jar" out="${project.build.directory}/${project.build.finalName}_obfuscated.jar" />
+                          <inoutpair in="${project.basedir}/classes" out="${project.basedir}/obfuscated" />
 
                           <externalclasses>
                             <pathelement path="${runtime_classpath}"/>
@@ -66,6 +67,10 @@
                             <property name="error-checking" value="pedantic"/>
                           </rename>
                         </yguard>
+                        <copy todir="${project.basedir}/classes/" overwrite="true">
+                          <fileset dir="${project.basedir}/obfuscated/" includes="**"/>
+                        </copy>
+                        <delete dir="${project.basedir}/obfuscated"/>
                       </tasks>
                   </configuration>
               </execution>
