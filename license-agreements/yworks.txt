@@ -1,0 +1,3 @@
+yWorks the creator of yGuard (21-09-2020)
+
+yWorks hereby grants permission to relicense any parts written by yWorks employees and contributed under the entity yWorks to retroguard to be relicensed under MIT.

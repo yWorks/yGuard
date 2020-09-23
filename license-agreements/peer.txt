@@ -1,0 +1,28 @@
+Peer Törngren who contributed randomized mappings for the rename task:
+
+yes
+
+Best Regards
+
+Peer
+
+------ Original Message ------
+Sent: 2020-09-21 09:10:30
+Subject: Relicensing contributions under MIT
+
+>Dear Peer,
+>
+>as you might know our repository (yGuard) is a bit complicated due to the dual-license in retroguard.
+>
+>We recently got ahold of the original author and with the approval of all contributors could relicense everything under MIT (which means smaller bundle size, less complicated setup etc).
+>
+>Would it be ok to relicense your contributions to retroguard under MIT? (simple yes / no is sufficient)
+>
+>
+>All the best, hope you had nice holidays despite COVID-19!
+>
+>Kind regards,
+>
+>Lennard
+>
+>
