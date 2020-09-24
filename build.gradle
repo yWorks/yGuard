@@ -28,7 +28,6 @@ configurations {
 dependencies {
     annotation project(':annotation')
     implementation project(':annotation')
-    implementation 'com.google.guava:guava:28.1-android'
     implementation 'org.ow2.asm:asm:7.2'
     implementation 'org.apache.ant:ant:1.10.7'
     testImplementation 'junit:junit:4.13-beta-3'
@@ -51,7 +50,7 @@ task generateSources(type: Copy) {
 // Use generated sources
 compileJava.dependsOn generateSources
 
-def LIBRARIES = ["guava-28.1-android.jar", "asm-7.2.jar", "ant-1.10.7.jar"]
+def LIBRARIES = ["asm-7.2.jar", "ant-1.10.7.jar"]
 def LIBRARY_JARS = configurations.dependents.filter {
   file -> file.name in LIBRARIES
 }
