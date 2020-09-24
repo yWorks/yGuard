@@ -1,8 +1,6 @@
 package com.yworks.graph;
 
-import com.google.common.graph.EndpointPair;
-import com.google.common.graph.Network;
-
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,22 +18,20 @@ public class Edge {
         this.network = network;
     }
 
-  /**
-   * Returns the target node of the edge.
-   *
-   * @return {Node}
-   */
-  public Node target() {
-        return this.network.incidentNodes(this).target();
+    /**
+     * Returns the target node of the edge.
+     * @return {Node}
+     */
+    public Node target() {
+        return this.network.incidentNodes(this).getValue();
     }
 
-  /**
-   * Returns the source node of the edge
-   *
-   * @return {Node}
-   */
-  public Node source() {
-        return this.network.incidentNodes(this).source();
+    /**
+     * Returns the source node of the edge
+     * @return {Node}
+     */
+    public Node source() {
+        return this.network.incidentNodes(this).getKey();
     }
 
   /**
@@ -56,13 +52,12 @@ public class Edge {
         return null;
     }
 
-  /**
-   * Returns the next edge (in insertion order) that is outgoing of target node, if any.
-   *
-   * @return {Edge|null}
-   */
-  public Edge nextOutEdge() {
-        Set<Edge> outEdges = this.network.outEdges(this.network.incidentNodes(this).source());
+    /**
+     * Returns the next edge (in insertion order) that is outgoing of target node, if any.
+     * @return {Edge|null}
+     */
+    public Edge nextOutEdge() {
+        Set<Edge> outEdges = this.network.outEdges(this.network.incidentNodes(this).getKey());
         boolean found = false;
         for (final Edge edge: outEdges) {
             if (found) {
@@ -74,18 +69,17 @@ public class Edge {
         return null;
     }
 
-  /**
-   * Returns the edge going in opposite direction of this edge in insertion order, respectively to the given node, if any.
-   *
-   * @param node the node
-   * @return {Node}
-   */
-  public Node opposite(Node node) {
-        EndpointPair<Node> endpointPair = this.network.incidentNodes(this);
-        if (endpointPair.source().equals(node)) {
-            return endpointPair.target();
+    /**
+     * Returns the edge going in opposite direction of this edge in insertion order, respectively to the given node, if any.
+     * @param node
+     * @return {Node}
+     */
+    public Node opposite(Node node) {
+        Map.Entry<Node, Node> endpointPair = this.network.incidentNodes(this);
+        if (endpointPair.getKey().equals(node)) {
+            return endpointPair.getValue();
         } else {
-            return endpointPair.source();
+            return endpointPair.getKey();
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.yworks.yshrink.core;
 
-import com.google.common.graph.Network;
 import com.yworks.yshrink.model.AbstractDescriptor;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.EdgeType;
@@ -9,6 +8,7 @@ import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.NodeType;
 import com.yworks.graph.Node;
 import com.yworks.graph.Edge;
+import com.yworks.graph.Network;
 import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;

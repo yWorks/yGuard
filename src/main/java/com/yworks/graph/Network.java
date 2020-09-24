@@ -44,7 +44,7 @@ public class Network<N, E> {
     return connectingEdges;
   }
 
-  private void addNode(N... nodes) {
+  public void addNode(N... nodes) {
     for (N node: nodes) {
       if (!out.containsKey(node)) out.put(node, new HashSet<N>());
       if (!in.containsKey(node)) in.put(node, new HashSet<N>());
