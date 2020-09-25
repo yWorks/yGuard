@@ -33,6 +33,10 @@ abstract public class CpInfo implements ClassConstants
     /**
      * Create a new CpInfo from the data passed.
      *
+     * @param din DataInput stream instance
+     *
+     * @return CpInfo instance based on tag byte
+     *
      * @throws IOException if class file is corrupt or incomplete
      */
     public static CpInfo create(DataInput din) throws java.io.IOException
@@ -73,7 +77,12 @@ abstract public class CpInfo implements ClassConstants
         u1tag = tag;
     }
 
-    /** Read the 'info' data following the u1tag byte; over-ride this in sub-classes. */
+    /** Read the 'info' data following the u1tag byte; over-ride this in sub-classes.
+    *
+    * @param din DataInput stream
+    *
+    * @throws throws java.io.IOException
+    */
     abstract protected void readInfo(DataInput din) throws java.io.IOException;
 
     /** Check for Utf8 references to constant pool and mark them; over-ride this in sub-classes. */

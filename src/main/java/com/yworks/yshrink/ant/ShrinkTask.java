@@ -293,7 +293,7 @@ public class ShrinkTask extends YGuardBaseTask {
   /**
    * not for ant, used if the ShrinkTask is created 'artificially'.
    *
-   * @param eps
+   * @param eps an EntryPointsSection instance
    */
   public void setEntryPointsExternally( EntryPointsSection eps ) {
     this.entryPointsSection = eps;
