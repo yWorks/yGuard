@@ -91,7 +91,10 @@ abstract public class CpInfo implements ClassConstants
      */
     protected void markUtf8Refs(ConstantPool pool)  {}
 
-    /** Check for NameAndType references to constant pool and mark them; over-ride this in sub-classes. */
+    /** Check for NameAndType references to constant pool and mark them; over-ride this in sub-classes.
+    *
+    * @param pool ConstantPool instance
+     */
     protected void markNTRefs(ConstantPool pool)  {}
 
     /** Export the representation to a DataOutput stream. */
