@@ -85,7 +85,10 @@ abstract public class CpInfo implements ClassConstants
     */
     abstract protected void readInfo(DataInput din) throws java.io.IOException;
 
-    /** Check for Utf8 references to constant pool and mark them; over-ride this in sub-classes. */
+    /** Check for Utf8 references to constant pool and mark them; over-ride this in sub-classes.
+    *
+    * @param pool ConstantPool instance
+     */
     protected void markUtf8Refs(ConstantPool pool)  {}
 
     /** Check for NameAndType references to constant pool and mark them; over-ride this in sub-classes. */
