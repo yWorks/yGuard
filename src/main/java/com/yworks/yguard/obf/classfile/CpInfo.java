@@ -97,7 +97,12 @@ abstract public class CpInfo implements ClassConstants
      */
     protected void markNTRefs(ConstantPool pool)  {}
 
-    /** Export the representation to a DataOutput stream. */
+    /** Export the representation to a DataOutput stream. 
+    *
+    * @param dout DataOutput stream
+    *
+    * @throws java.io.IOException
+    */
     public void write(DataOutput dout) throws java.io.IOException
     {
         if (dout == null) throw new IOException("No output stream was provided.");
