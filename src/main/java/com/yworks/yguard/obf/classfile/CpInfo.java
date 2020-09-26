@@ -34,9 +34,7 @@ abstract public class CpInfo implements ClassConstants
      * Create a new CpInfo from the data passed.
      *
      * @param din DataInput stream instance
-     *
      * @return CpInfo instance based on tag byte
-     *
      * @throws IOException if class file is corrupt or incomplete
      */
     public static CpInfo create(DataInput din) throws java.io.IOException
@@ -80,8 +78,7 @@ abstract public class CpInfo implements ClassConstants
     /** Read the 'info' data following the u1tag byte; over-ride this in sub-classes.
     *
     * @param din DataInput stream
-    *
-    * @throws throws java.io.IOException
+    * @throws IOException
     */
     abstract protected void readInfo(DataInput din) throws java.io.IOException;
 
@@ -100,8 +97,7 @@ abstract public class CpInfo implements ClassConstants
     /** Export the representation to a DataOutput stream. 
     *
     * @param dout DataOutput stream
-    *
-    * @throws java.io.IOException
+    * @throws IOException
     */
     public void write(DataOutput dout) throws java.io.IOException
     {
@@ -110,10 +106,16 @@ abstract public class CpInfo implements ClassConstants
         writeInfo(dout);
     }
 
-    /** Write the 'info' data following the u1tag byte; over-ride this in sub-classes. */
+    /** Write the 'info' data following the u1tag byte; over-ride this in sub-classes.
+    *
+    * @param dout DataOutput stream
+    * @throws IOException;
+    */
     abstract protected void writeInfo(DataOutput dout) throws java.io.IOException;
 
-    /** Return the reference count. */
+    /** Return the reference count.
+    * @return refCount the reference count
+    */
     public int getRefCount() {return refCount;}
 
     /** Increment the reference count. */
@@ -131,7 +133,11 @@ abstract public class CpInfo implements ClassConstants
     /** Reset the reference count to zero. */
     public void resetRefCount() {refCount = 0;}
 
-    /** Dump the content of the class file to the specified file (used for debugging). */
+    /** Dump the content of the class file to the specified file (used for debugging).
+    * @param pw PrintWriter instance
+    * @param cf ClassFile instance
+    * @param index the index
+    */
     public void dump(PrintWriter pw, ClassFile cf, int index)  {
       pw.println(this.getClass().getName());
     }

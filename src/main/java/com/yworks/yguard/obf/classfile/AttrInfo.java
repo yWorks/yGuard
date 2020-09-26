@@ -35,7 +35,9 @@ public class AttrInfo implements ClassConstants
     // Class Methods ---------------------------------------------------------
     /**
      * Create a new AttrInfo from the data passed.
-     *
+     * @param din DataInput stream
+     * @param cf ClassFile instance
+     * @return ai attribute information
      * @throws IOException if class file is corrupt or incomplete
      */
     public static AttrInfo create(DataInput din, ClassFile cf) throws java.io.IOException
@@ -175,6 +177,11 @@ public class AttrInfo implements ClassConstants
 
 
     // Instance Methods ------------------------------------------------------
+    /**
+     * @param cf ClassFile instance
+     * @param attrNameIndex Attribute name index
+     * @param attrLength Attribute length
+     */
     protected AttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         owner = cf;
@@ -182,17 +189,24 @@ public class AttrInfo implements ClassConstants
         u4attrLength = attrLength;
     }
 
+    /**
+     * @return u2attrNameIndex Attribute name index
+     */
     protected int getAttrNameIndex(){
       return u2attrNameIndex;
     }
 
-    /** Return the length in bytes of the attribute; over-ride this in sub-classes. */
+    /** Return the length in bytes of the attribute; over-ride this in sub-classes. 
+    * @return u4attrLength Attribute length
+    */
     protected int getAttrInfoLength()
     {
         return u4attrLength;
     }
 
-    /** Return the String name of the attribute; over-ride this in sub-classes. */
+    /** Return the String name of the attribute; over-ride this in sub-classes. 
+    * @return ATTR_Unknown Unknown attribute
+    */
     protected String getAttrName()
     {
         return ATTR_Unknown;
@@ -200,10 +214,13 @@ public class AttrInfo implements ClassConstants
 
     /**
      * Trim attributes from the classfile except those in the String[].
+     * @param keepAttrs String[]
      */
     protected void trimAttrsExcept(String[] keepAttrs)  {}
 
-    /** Check for Utf8 references to constant pool and mark them. */
+    /** Check for Utf8 references to constant pool and mark them. 
+    * @param pool ConstantPool instance
+    */
     protected void markUtf8Refs(ConstantPool pool)
     {
         pool.incRefCount(u2attrNameIndex);
@@ -213,17 +230,24 @@ public class AttrInfo implements ClassConstants
     /**
      * Check for Utf8 references in the 'info' data to the constant pool and
      * mark them; over-ride this in sub-classes.
+     * @param pool ConstantPool instance
      */
     protected void markUtf8RefsInInfo(ConstantPool pool)  {}
 
-    /** Read the data following the header; over-ride this in sub-classes. */
+    /** Read the data following the header; over-ride this in sub-classes. 
+    * @param din DataInput stream
+    * @throws IOException
+    */
     protected void readInfo(DataInput din) throws java.io.IOException
     {
         info = new byte[u4attrLength];
         din.readFully(info);
     }
 
-    /** Export the representation to a DataOutput stream. */
+    /** Export the representation to a DataOutput stream. 
+    * @param dout DataOutput stream
+    * @throws IOException
+     */
     public final void write(DataOutput dout) throws java.io.IOException
     {
         if (dout == null) throw new IOException("No output stream was provided.");
@@ -232,12 +256,18 @@ public class AttrInfo implements ClassConstants
         writeInfo(dout);
     }
 
-    /** Export data following the header to a DataOutput stream; over-ride this in sub-classes. */
+    /** Export data following the header to a DataOutput stream; over-ride this in sub-classes. 
+    * @param dout DataOutput stream
+    * @throws IOException
+    */
     public void writeInfo(DataOutput dout) throws java.io.IOException
     {
         dout.write(info);
     }
 
+    /**
+    * @return String Attribute name and attribute info length
+    */
     public String toString(){
       return getAttrName() + "[" + getAttrInfoLength() + "]";
     }

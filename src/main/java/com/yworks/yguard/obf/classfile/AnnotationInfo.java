@@ -21,6 +21,11 @@ public class AnnotationInfo
   
   
   // Class Methods ---------------------------------------------------------
+  /**
+   * @param din DataInput stream
+   * @return AnnotationInfo
+   * @throws IOException
+   */
   public static AnnotationInfo create(DataInput din) throws java.io.IOException
   {
     if (din == null) throw new NullPointerException("DataInput cannot be null!");
@@ -29,6 +34,9 @@ public class AnnotationInfo
     return an;
   }
   
+  /**
+   * @return ElementValuePairInfo[]
+   */
   public ElementValuePairInfo[] getElementValuePairs(){
     return elementValuePairs;
   }
@@ -37,6 +45,9 @@ public class AnnotationInfo
   private AnnotationInfo()
   {}
 
+  /**
+   * @param pool ConstantPool instance
+   */
   protected void markUtf8RefsInInfo(ConstantPool pool) {
     pool.getCpEntry(u2typeIndex).incRefCount();
     for (int i = 0; i < u2elementCount; i++){
@@ -44,6 +55,10 @@ public class AnnotationInfo
     }
   }
   
+  /**
+   * @param din DataInput stream
+   * @throws IOException
+   */
   private void read(DataInput din) throws java.io.IOException
   {
     u2typeIndex = din.readUnsignedShort();
@@ -55,7 +70,10 @@ public class AnnotationInfo
     }
   }
   
-  /** Export the representation to a DataOutput stream. */
+  /** Export the representation to a DataOutput stream. 
+  * @param dout DataOutput stream
+  * @throws IOException
+  */
   public void write(DataOutput dout) throws java.io.IOException
   {
     dout.writeShort(u2typeIndex);

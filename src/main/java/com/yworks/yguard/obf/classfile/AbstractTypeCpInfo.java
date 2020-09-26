@@ -20,31 +20,46 @@ public abstract class AbstractTypeCpInfo extends CpInfo {
 
 
   // Instance Methods ------------------------------------------------------
+  /**
+  * @param tag CpInfo tag
+  */
   protected AbstractTypeCpInfo(int tag) {
     super(tag);
   }
 
-  /** Return the name index. */
+  /** Return the name index.
+  * @return u2nameIndex the name index 
+  */
   protected int getNameIndex() {
     return u2nameIndex;
   }
 
-  /** Set the name index. */
+  /** Set the name index. 
+  *@param index the name index
+  */
   protected void setNameIndex(int index) {
     u2nameIndex = index;
   }
 
-  /** Check for Utf8 references to constant pool and mark them. */
+  /** Check for Utf8 references to constant pool and mark them.
+  * @ param pool ConstantPool instance
+  */
   protected void markUtf8Refs(ConstantPool pool) {
     pool.incRefCount(u2nameIndex);
   }
 
-  /** Read the 'info' data following the u1tag byte. */
+  /** Read the 'info' data following the u1tag byte. 
+  * @param din DataInput instance
+  * @throws IOException
+  */
   protected void readInfo(DataInput din) throws IOException {
     u2nameIndex = din.readUnsignedShort();
   }
 
-  /** Write the 'info' data following the u1tag byte. */
+  /** Write the 'info' data following the u1tag byte.
+  * @param dout DataOutput stream
+  * @throws IOException
+  */
   protected void writeInfo(DataOutput dout) throws IOException {
     dout.writeShort(u2nameIndex);
   }

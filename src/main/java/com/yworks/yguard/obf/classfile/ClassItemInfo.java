@@ -105,34 +105,50 @@ abstract public class ClassItemInfo implements ClassConstants
     return true;
   }
 
-  /** Is the field or method 'Synthetic'? */
+  /** Is the field or method 'Synthetic'?
+   * @return boolean Is the field or method 'Synthetic'?
+   */
     public boolean isSynthetic() {return isSynthetic;}
 
-    /** Return method/field name index into Constant Pool. */
+    /** Return method/field name index into Constant Pool.
+     * @return int Method/field name index into Constant Pool.
+     */
     protected int getNameIndex() {return u2nameIndex;}
 
-    /** Set the method/field name index. */
+    /** Set the method/field name index.
+     * @param index Method/field name index to set.
+     */
     protected void setNameIndex(int index) {u2nameIndex = index;}
 
-    /** Return method/field descriptor index into Constant Pool. */
+    /** Return method/field descriptor index into Constant Pool.
+     * @return int Method/field descriptor index into Constant Pool.
+     */
     protected int getDescriptorIndex() {return u2descriptorIndex;}
 
-    /** Set the method/field descriptor index. */
+    /** Set the method/field descriptor index.
+     * @param index Method/field descriptor index to set.
+     */
     protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
 
-    /** Return method/field string name. */
+    /** Return method/field string name.
+     * @return String Method/field string name.
+     */
     public String getName()
     {
         return ((Utf8CpInfo)cf.getCpEntry(u2nameIndex)).getString();
     }
 
-    /** Return descriptor string. */
+    /** Return descriptor string.
+     * @return String Descriptor string.
+     */
     public String getDescriptor()
     {
         return ((Utf8CpInfo)cf.getCpEntry(u2descriptorIndex)).getString();
     }
 
-    /** Return access flags. */
+    /** Return access flags.
+     * @return int Access flags.
+     */
     public int getAccessFlags()
     {
         return u2accessFlags;
@@ -141,6 +157,7 @@ abstract public class ClassItemInfo implements ClassConstants
     /**
      * Trim attributes from the classfile ('Code', 'Exceptions', 'ConstantValue'
      * are preserved, all others except the list in the String[] are killed).
+     * @param keepAttrs Attributes that you want to keep.
      */
     protected void trimAttrsExcept(String[] keepAttrs) 
     {
@@ -172,7 +189,9 @@ abstract public class ClassItemInfo implements ClassConstants
         u2attributesCount = j;
     }
 
-    /** Check for Utf8 references to constant pool and mark them. */
+    /** Check for Utf8 references to constant pool and mark them.
+     * @param pool Check for Utf8 references to constant pool and mark them.
+     */
     protected void markUtf8Refs(ConstantPool pool) 
     {
         pool.incRefCount(u2nameIndex);
@@ -183,7 +202,10 @@ abstract public class ClassItemInfo implements ClassConstants
         }
     }
 
-    /** Import the field or method data to internal representation. */
+    /** Import the field or method data to internal representation.
+     * @param din DataInput stream to import the field or method data to internal representation.
+     * @throws IOException
+     */
     protected void read(DataInput din) throws java.io.IOException
     {
         u2accessFlags = din.readUnsignedShort();
@@ -201,7 +223,10 @@ abstract public class ClassItemInfo implements ClassConstants
         }
     }
 
-    /** Export the representation to a DataOutput stream. */
+    /** Export the representation to a DataOutput stream.
+     * @param dout DataOutput stream to export the representation to a DataOutput stream.
+     * @throws IOException
+     */
     public void write(DataOutput dout) throws java.io.IOException
     {
         if (dout == null) throw new NullPointerException("No output stream was provided.");
@@ -215,6 +240,9 @@ abstract public class ClassItemInfo implements ClassConstants
         }
     }
 
+  /**
+   * @return ObfuscationConfig
+   */
   public ObfuscationConfig getObfuscationConfig() {
     if (obfuscationConfig == DUMMY){
       obfuscationConfig = getObfuscationConfig(attributes);

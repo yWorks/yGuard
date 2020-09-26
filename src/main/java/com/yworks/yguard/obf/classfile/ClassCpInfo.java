@@ -33,7 +33,10 @@ public class ClassCpInfo extends AbstractTypeCpInfo
         super(CONSTANT_Class);
     }
 
-    /** Dump the content of the class file to the specified file (used for debugging). */
+    /** Dump the content of the class file to the specified file (used for debugging).
+     * @param pw PrintWriter instance
+     * @param cf ClassFile instance
+     */
     public void dump(PrintWriter pw, ClassFile cf) 
     {
         pw.println("  Class: " + ((Utf8CpInfo)cf.getCpEntry(u2nameIndex)).getString());

@@ -37,7 +37,10 @@ public class ElementValuePairInfo
     elementValue.markUtf8RefsInInfo(pool);
   }
   
-  /** Export the representation to a DataOutput stream. */
+  /** Export the representation to a DataOutput stream.
+   * @param dout Export the representation to a DataOutput stream
+   * @throws IOException
+   */
   public void write(DataOutput dout) throws java.io.IOException
   {
     dout.writeShort(u2ElementNameIndex);

@@ -94,6 +94,7 @@ public class ClassFile implements ClassConstants
     // Class Methods ---------------------------------------------------------
     /**
      * Define a constant String to include in every output class file.
+     * @param id String
      */
     public static void defineIdString(String id)  
     {
@@ -109,7 +110,8 @@ public class ClassFile implements ClassConstants
     /**
      * Create a new ClassFile from the class file format data in the DataInput
      * stream.
-     *
+     * @param din DataInput stream
+     * @return ClassFile
      * @throws IOException if class file is corrupt or incomplete
      */
     public static ClassFile create(DataInput din) throws java.io.IOException
@@ -121,14 +123,21 @@ public class ClassFile implements ClassConstants
     }
 
     /** Parse a method or field descriptor into a list of parameter names (for methods)
-     *  and a return type, in same format as the Class.forName() method returns . */
+     *  and a return type, in same format as the Class.forName() method returns .
+     * @param descriptor String instance
+     * @return String[]
+     */
     public static String[] parseDescriptor(String descriptor) 
     {
         return parseDescriptor(descriptor, false);
     }
 
     /** Parse a method or field descriptor into a list of parameter names (for methods)
-     *  and a return type, in same format as the Class.forName() method returns . */
+     *  and a return type, in same format as the Class.forName() method returns . 
+     * @param descriptor String instance
+     * @param isDisplay Boolean
+     * @return String[] Translated names
+     */
     public static String[] parseDescriptor(String descriptor, boolean isDisplay) 
     {
         // Check for field descriptor
@@ -200,7 +209,11 @@ public class ClassFile implements ClassConstants
         return translatedNames;
     }
 
-    /** Translate a type specifier from the internal JVM convention to the Class.forName() one. */
+    /** Translate a type specifier from the internal JVM convention to the Class.forName() one. 
+     * @param inName String name in
+     * @param isDisplay Boolean
+     * @return String Name out
+     */
     public static String translateType(String inName, boolean isDisplay) 
     {
         String outName = null;
@@ -269,7 +282,10 @@ public class ClassFile implements ClassConstants
         return outName;
     }
 
-    /** Translate a class name from the internal '/' convention to the regular '.' one. */
+    /** Translate a class name from the internal '/' convention to the regular '.' one. 
+     * @param name String to translate
+     * @return String Translated Class name
+     */
     public static String translate(String name) 
     {
         return name.replace('/', '.');
@@ -280,7 +296,10 @@ public class ClassFile implements ClassConstants
     // Private constructor.
     private ClassFile() {}
 
-    // Import the class data to internal representation.
+    /** Import the class data to internal representation.
+     * @param din DataInput stream
+     * @throws IOException
+     */
     private void read(DataInput din) throws java.io.IOException
     {
         // Read the class file
@@ -347,10 +366,16 @@ public class ClassFile implements ClassConstants
         }
     }
     
+    /**
+     * @return int Class file access flags
+     */
     public int getClassFileAccess(){
       return u2accessFlags;
     }
    
+    /**
+     * @return int Modifiers
+     */
     public int getModifiers(){
       int mods = 0;
       if ((u2accessFlags & 0x0001) == 0x0001) mods |= Modifier.PUBLIC;
@@ -360,20 +385,26 @@ public class ClassFile implements ClassConstants
       return mods;
     }
     
-    /** Return the name of this classfile. */
+    /** Return the name of this classfile. 
+     * @return String Name of class file
+     */
     public String getName() 
     {
         return toName(u2thisClass);
     }
 
-    /** Return the name of this class's superclass. */
+    /** Return the name of this class's superclass. 
+     * @return String Name of this class's superclass
+     */
     public String getSuper() 
     {
         // This may be java/lang/Object, in which case there is no super
         return (u2superClass == 0) ? null : toName(u2superClass);
     }
 
-    /** Return the names of this class's interfaces. */
+    /** Return the names of this class's interfaces. 
+     * @return String[] Return the names of this class's interfaces
+     */
     public String[] getInterfaces() 
     {
         String[] interfaces = new String[u2interfacesCount];
@@ -385,6 +416,10 @@ public class ClassFile implements ClassConstants
     }
 
     // Convert a CP index to a class name.
+    /**
+     * @param int CpInfo index to a class name
+     * @return String CpInfo class name
+     */
     private String toName(int u2index) 
     {
         CpInfo classEntry = getCpEntry(u2index);
@@ -406,7 +441,9 @@ public class ClassFile implements ClassConstants
         }
     }
 
-    /** Return an enumeration of method name/descriptor pairs. */
+    /** Return an enumeration of method name/descriptor pairs.
+     * @return Enumeration An enumeration of method name/descriptor pairs
+     */
     public Enumeration getMethodEnum() 
     {
         Vector vec = new Vector();
@@ -417,7 +454,9 @@ public class ClassFile implements ClassConstants
         return vec.elements();
     }
 
-    /** Return an enumeration of field name/descriptor pairs. */
+    /** Return an enumeration of field name/descriptor pairs.
+     * @return Enumeration An enumeration of field name/descriptor pairs
+     */
     public Enumeration getFieldEnum() 
     {
         Vector vec = new Vector();
@@ -428,21 +467,33 @@ public class ClassFile implements ClassConstants
         return vec.elements();
     }
 
-    /** Lookup the entry in the constant pool and return as an Object. */
+    /** Lookup the entry in the constant pool and return as an Object.
+     * @return CpInfo Lookup the entry in the constant pool and return as an Object
+     */
     public CpInfo getCpEntry(int cpIndex)
     {
         return constantPool.getCpEntry(cpIndex);
     }
 
+    /**
+     * @param cpIndex Index of the CpInfo
+     * @return String A string represention of the CpEntry
+     */
     private String getUtf8(int cpIndex) {
         return ((Utf8CpInfo) getCpEntry(cpIndex)).getString();
     }
 
+    /**
+     * @return ConstantPool Returns the ConstantPool instance
+     */
     public ConstantPool getConstantPool() {
         return constantPool;
     }
 
-    /** Check for methods which can break the obfuscated code, and log them to a String[]. */
+    /** Check for methods which can break the obfuscated code, and log them to a String[]. 
+     * @param replaceClassNameStrings Boolean
+     * @return String[] Warnings
+     */
     public String[] logDangerousMethods(boolean replaceClassNameStrings) 
     {
         Vector warningVec = new Vector();
@@ -498,6 +549,10 @@ public class ClassFile implements ClassConstants
     private static boolean hasHeader = false;
     
     public static void resetDangerHeader() {hasHeader = false;}
+    /**
+     * @param log A PrintWriter instance 
+     * @param replaceClassNameStrings Boolean
+     */
     public void logDangerousMethods(PrintWriter log, boolean replaceClassNameStrings) 
     {
         // Get any warnings and print them to the logfile
@@ -531,7 +586,10 @@ public class ClassFile implements ClassConstants
         }
     }
 
-    /** Check for direct references to Utf8 constant pool entries. */
+    /** Check for direct references to Utf8 constant pool entries.
+     * @param pool ConstantPool instance
+     * @throws ParseException
+     */
     public void markUtf8Refs(ConstantPool pool) 
     {
         try
@@ -569,7 +627,10 @@ public class ClassFile implements ClassConstants
         }
     }
 
-    /** Check for direct references to NameAndType constant pool entries. */
+    /** Check for direct references to NameAndType constant pool entries.
+     * @param pool ConstantPool instance
+     * @throws ParseException
+     */
     public void markNTRefs(ConstantPool pool) 
     {
         try
@@ -594,6 +655,7 @@ public class ClassFile implements ClassConstants
     /**
      * Trim attributes from the classfile ('Code', 'Exceptions', 'ConstantValue'
      * are preserved, all others except the list in the String[] are killed).
+     * @param extraAttrs Attributes to be trimed
      */
     public void trimAttrsExcept(String[] extraAttrs) 
     {
@@ -649,6 +711,9 @@ public class ClassFile implements ClassConstants
         constantPool.updateRefCount();
     }
     
+    /**
+     * @return Map HashMap 
+     */
     public Map getInnerClassModifiers()  {
       Map map = new HashMap();
         for (int i = 0; i < u2attributesCount; i++)
@@ -683,6 +748,9 @@ public class ClassFile implements ClassConstants
      */
     public void trimAttrs()  {trimAttrsExcept(null);}
     
+    /**
+     * @return Boolean Return true if a Class name
+     */
     private boolean containsDotClassMethodReference(){
       // Need only check CONSTANT_Methodref entries of constant pool since
         // dangerous methods belong to classes 'Class' and 'ClassLoader', not to interfaces.
@@ -709,6 +777,11 @@ public class ClassFile implements ClassConstants
         return false;
     }
     
+    /**
+     * @param cName Class name
+     * @param des Descriptor
+     * @return Boolean
+     */
     private boolean containsClassMethodReference(String cName, String des){
       // Need only check CONSTANT_Methodref entries of constant pool since
         // dangerous methods belong to classes 'Class' and 'ClassLoader', not to interfaces.
@@ -734,7 +807,11 @@ public class ClassFile implements ClassConstants
         return false;
     }
 
-    /** Remap the entities in the specified ClassFile. */
+    /** Remap the entities in the specified ClassFile.
+     * @param nm NameMapper
+     * @param replaceClassNameStrings
+     * @param log PrintWriter
+     */
     public void remap(NameMapper nm, boolean replaceClassNameStrings, PrintWriter log) 
     {
         // Remap all the package/interface/class/method/field names
@@ -1400,7 +1477,10 @@ public class ClassFile implements ClassConstants
       }
     }
 
-    /** Export the representation to a DataOutput stream. */
+    /** Export the representation to a DataOutput stream.
+     * @param dout DataOutput stream
+     * @throws IOException
+     */
     public void write(DataOutput dout) throws java.io.IOException
     {
         if (dout == null) throw new NullPointerException("No output stream was provided.");
@@ -1444,7 +1524,9 @@ public class ClassFile implements ClassConstants
         }
     }
 
-    /** Dump the content of the class file to the specified file (used for debugging). */
+    /** Dump the content of the class file to the specified file (used for debugging).
+     * @param pw PrintWriter instance
+     */
     public void dump(PrintWriter pw) 
     {
         pw.println("_____________________________________________________________________");
@@ -1529,16 +1611,24 @@ public class ClassFile implements ClassConstants
         }
     }
 
+  /**
+   * @return AttrInfo[] Attributes
+   */
   public AttrInfo[] getAttributes() {
     return attributes;
   }
 
+  /**
+   * @return int Attribute count
+   */
   public int getU2attributesCount() {
     return u2attributesCount;
   }
 
   /**
    * Returns the module name if this class file represents a "module-info"
+   * class and the empty string otherwise.
+   * @return String Module name if this class file represents a "module-info"
    * class and the empty string otherwise.
    */
   public String findModuleName() {

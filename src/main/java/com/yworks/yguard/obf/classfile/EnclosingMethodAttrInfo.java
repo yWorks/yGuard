@@ -35,27 +35,38 @@ public class EnclosingMethodAttrInfo extends AttrInfo
         super(cf, attrNameIndex, attrLength);
     }
 
-    /** Return the String name of the attribute; over-ride this in sub-classes. */
+    /** Return the String name of the attribute; over-ride this in sub-classes.
+     * @return String String name of the attribute.
+     */
     protected String getAttrName() 
     {
         return ATTR_EnclosingMethod;
     }
 
-    /** Return the class index. */
+    /** Return the class index.
+     * @return int Return the class index.
+     */
     protected int getClassIndex() {return u2classIndex;}
 
-    /** Return the class index. */
+    /** Return the class index.
+     * @param index The class index to set.
+     */
     protected void setClassIndex(int index) { this.u2classIndex = index; }
 
-    /** Return the name-and-type index. */
+    /** Return the name-and-type index.
+     * @return int Return the name-and-type index.
+     */
     protected int getNameAndTypeIndex() {return u2nameAndTypeIndex;}
 
-    /** Set the name-and-type index. */
+    /** Set the name-and-type index.
+     * @param index The index to set the name and type.
+     */
     protected void setNameAndTypeIndex(int index) {u2nameAndTypeIndex = index;}
 
     /**
      * Check for Utf8 references in the 'info' data to the constant pool and
      * mark them; over-ride this in sub-classes.
+     * @param pool The pool to check for Utf8 references
      */
     protected void markUtf8RefsInInfo(ConstantPool pool) {
       //nothing to be done ClassCpInfo and NameAndTypeCpInfo are handled and marked 
@@ -82,14 +93,20 @@ public class EnclosingMethodAttrInfo extends AttrInfo
         u2nameAndTypeIndex = din.readUnsignedShort();
     }
 
-    /** Write the 'info' data following the u1tag byte. */
+    /** Write the 'info' data following the u1tag byte.
+     * @throws IOException
+     */
     public void writeInfo(DataOutput dout) throws java.io.IOException
     {
         dout.writeShort(u2classIndex);
         dout.writeShort(u2nameAndTypeIndex);
     }
 
-    /** Dump the content of the class file to the specified file (used for debugging). */
+    /** Dump the content of the class file to the specified file (used for debugging).
+     * @param pw Dump the content of the class file.
+     * @param cf The class file to use.
+     * @param index The index of the class.
+     */
     public void dump(PrintWriter pw, ClassFile cf, int index) 
     {
         pw.println("  EnclosingMethod " );

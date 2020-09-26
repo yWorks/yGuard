@@ -111,7 +111,10 @@ public class ElementValueInfo
     }
   }
   
-  /** Export the representation to a DataOutput stream. */
+  /** Export the representation to a DataOutput stream.
+   * @param dout DataOutpu stream
+   * @throws IOException
+   */
   public void write(DataOutput dout) throws java.io.IOException
   {
     dout.writeByte(u1Tag);

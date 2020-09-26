@@ -31,7 +31,10 @@ public class ConstantPool
 
 
     // Instance Methods ------------------------------------------------------
-    /** Ctor, which initializes Constant Pool using an array of CpInfo. */
+    /** Ctor, which initializes Constant Pool using an array of CpInfo.
+     * @param classFile ClassFile instance
+     * @param cpInfo CpInfo[] array 
+     */
     public ConstantPool(ClassFile classFile, CpInfo[] cpInfo) 
     {
         myClassFile = classFile;
@@ -44,19 +47,27 @@ public class ConstantPool
         }
     }
 
-    /** Return an Enumeration of all Constant Pool entries. */
+    /** Return an Enumeration of all Constant Pool entries.
+     * @return Enumeration An Enumeration of all Constant Pool entries.
+     */
     public Enumeration elements()
     {
         return pool.elements();
     }
 
-    /** Return the Constant Pool length. */
+    /** Return the Constant Pool length.
+     * @return int The Constant Pool length.
+     */
     public int length()
     {
         return pool.size();
     }
 
-    /** Return the specified Constant Pool entry. */
+    /** Return the specified Constant Pool entry.
+     * @param i Constant Pool element index.
+     * @return CpInfo The specified Constant Pool entry.
+     * @throws IndexOutOfBoundsException
+     */
     public CpInfo getCpEntry(int i) 
     {
         if (i < pool.size())
@@ -86,7 +97,9 @@ public class ConstantPool
         });
     }
 
-    /** Increment the reference count for the specified element. */
+    /** Increment the reference count for the specified element.
+     * @param i The specified element.
+     */
     public void incRefCount(int i) 
     {
         CpInfo cpInfo = (CpInfo)pool.elementAt(i);
@@ -101,14 +114,20 @@ public class ConstantPool
         }
     }
 
-    /** Remap a specified Utf8 entry to the given value and return its new index. */
+    /** Remap a specified Utf8 entry to the given value and return its new index.
+     * @param newString Utf8 entry.
+     * @param oldIndex The old reference count.
+     * @return int New index to a remapped Utf8 entry.
+     */
     public int remapUtf8To(String newString, int oldIndex) 
     {
         decRefCount(oldIndex);
         return addUtf8Entry(newString);
     }
 
-    /** Decrement the reference count for the specified element, blanking if Utf and refs are zero. */
+    /** Decrement the reference count for the specified element, blanking if Utf and refs are zero.
+     * @param i The element index to be decremented.
+     */
     public void decRefCount(int i) 
     {
         CpInfo cpInfo = (CpInfo)pool.elementAt(i);
@@ -123,7 +142,10 @@ public class ConstantPool
         }
     }
 
-    /** Add an entry to the constant pool and return its index. */
+    /** Add an entry to the constant pool and return its index.
+     * @param entry The CpInfo entry to be added.
+     * @return int The index to the new entry.
+     */
     public int addEntry(CpInfo entry) 
     {
         int oldLength = pool.size();
