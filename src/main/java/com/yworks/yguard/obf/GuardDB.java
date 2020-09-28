@@ -419,7 +419,16 @@ public class GuardDB implements ClassConstants
               }
               else
               {
+                // This is a "workaround" because classTree is not supposed
+                // to work with resource files and "chops off" everything after $ into a new segment.
+                // For resource files however this behaviour is wrong.
+                // NOTE: It may be better to investigate getOutName but this works like a charm
+                String appendName = "";
+                if (inName.contains("$")) appendName = inName.substring(inName.lastIndexOf("/"));
                 outName = classTree.getOutName(inName);
+                if (appendName.length() > 0) {
+                  outName = outName.replace(outName.substring(outName.lastIndexOf("/")), appendName);
+                }
               }
 
               if(resourceHandler == null || !resourceHandler.filterContent(inStream, dataOutputStream, inName))
