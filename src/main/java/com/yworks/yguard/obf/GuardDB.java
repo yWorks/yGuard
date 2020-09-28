@@ -424,9 +424,11 @@ public class GuardDB implements ClassConstants
                 // For resource files however this behaviour is wrong.
                 // NOTE: It may be better to investigate getOutName but this works like a charm
                 String appendName = "";
-                if (inName.contains("$")) appendName = inName.substring(inName.indexOf("$"));
+                if (inName.contains("$")) appendName = inName.substring(inName.lastIndexOf("/"));
                 outName = classTree.getOutName(inName);
-                if (appendName.length() > 0) outName += appendName;
+                if (appendName.length() > 0) {
+                  outName = outName.replace(outName.substring(outName.lastIndexOf("/")), appendName);
+                }
               }
 
               if(resourceHandler == null || !resourceHandler.filterContent(inStream, dataOutputStream, inName))
