@@ -1236,6 +1236,14 @@ Using the `adjust` element one can specify resource files whose names and/or con
     </td>
 </tr>
 <tr>
+    <td><code>replaceContentSeparator</code></td>
+    <td>
+    Specifies which separator is used to replace strings in content.
+    </td>
+    <td>No, defaults to <code>/</code>
+    </td>
+</tr>
+<tr>
     <td><code>replacePath</code></td>
     <td>
     Specifies whether or not the paths to the resource files should be

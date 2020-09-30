@@ -10,11 +10,8 @@ import com.yworks.yguard.obf.GuardDB;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -67,7 +64,7 @@ public class StringReplacer
      matcher.appendTail(result);
   }
   
-  public void replace( Reader in, Writer out, GuardDB db ) throws IOException
+  public void replace( Reader in, Writer out, GuardDB db, String separator ) throws IOException
   {
     BufferedReader bin = new BufferedReader(in);
     String line;
@@ -84,14 +81,13 @@ public class StringReplacer
        while (found)
        {
          match = line.substring(matcher.start(), matcher.end());
-         String seperator = (match.contains("/")) ? "/" : ".";
-         String[] parts = match.split(seperator);
+         String[] parts = match.split(Pattern.quote(separator));
          List<String> mapped = db.translateItem(parts);
          while (mapped.size() < parts.length) {
            mapped.add(parts[mapped.size()]);
          }
          for(int i = 0; i < mapped.size(); i++) {
-           if (i > 0) replacement += seperator;
+           if (i > 0) replacement += separator;
            replacement += mapped.get(i);
          }
          if (replacement.indexOf('\\') >= 0){
