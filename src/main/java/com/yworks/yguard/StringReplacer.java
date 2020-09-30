@@ -6,6 +6,8 @@
 
 package com.yworks.yguard;
 
+import com.yworks.yguard.obf.GuardDB;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,6 +15,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,7 +67,7 @@ public class StringReplacer
      matcher.appendTail(result);
   }
   
-  public void replace(Reader in, Writer out, Map map) throws IOException
+  public void replace( Reader in, Writer out, GuardDB db ) throws IOException
   {
     BufferedReader bin = new BufferedReader(in);
     String line;
@@ -74,15 +77,23 @@ public class StringReplacer
     {
        result.setLength(0);
        Matcher matcher = pattern.matcher(line);
-       String match = null;
-       String replacement = null;
+       String match;
+       String replacement = "";
        
        boolean found = matcher.find();
        while (found)
        {
          match = line.substring(matcher.start(), matcher.end());
-         //System.out.println("\n match: " + match); 
-         replacement = (String)map.get(match);
+         String seperator = (match.contains("/")) ? "/" : ".";
+         String[] parts = match.split(seperator);
+         List<String> mapped = db.translateItem(parts);
+         while (mapped.size() < parts.length) {
+           mapped.add(parts[mapped.size()]);
+         }
+         for(int i = 0; i < mapped.size(); i++) {
+           if (i > 0) replacement += seperator;
+           replacement += mapped.get(i);
+         }
          if(replacement == null) replacement = match;
          if (replacement.indexOf('\\') >= 0){
            replacement = replacement.replaceAll("\\\\","\\\\\\\\");

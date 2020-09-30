@@ -1111,7 +1111,7 @@ public class ObfuscatorTask extends YGuardBaseTask
          if(as.contains(resourceName) && as.getReplaceContent())
          {
            Writer writer = new OutputStreamWriter(out);
-           getContentReplacer().replace(new InputStreamReader(in), writer, map);
+           getContentReplacer().replace(new InputStreamReader(in), writer, db);
            writer.flush();
            return true;
          }
@@ -1129,7 +1129,7 @@ public class ObfuscatorTask extends YGuardBaseTask
      {
        if(contentReplacer == null)
        {
-         contentReplacer = new StringReplacer("(?:\\w|[$])+(\\.(?:\\w|[$])+)+");
+         contentReplacer = new StringReplacer("(?:\\w|[$])+((?:\\.|\\/)(?:\\w|[$])+)+");
        }
        return contentReplacer;
      }
