@@ -94,7 +94,6 @@ public class StringReplacer
            if (i > 0) replacement += seperator;
            replacement += mapped.get(i);
          }
-         if(replacement == null) replacement = match;
          if (replacement.indexOf('\\') >= 0){
            replacement = replacement.replaceAll("\\\\","\\\\\\\\");
          }
