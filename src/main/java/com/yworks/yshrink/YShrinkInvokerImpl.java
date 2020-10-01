@@ -1,6 +1,5 @@
 package com.yworks.yshrink;
 
-import com.yworks.yguard.YShrinkInvoker;
 import com.yworks.yguard.ant.PatternMatchedClassesSection;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.EntryPointsSection;

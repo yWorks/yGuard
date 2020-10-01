@@ -1,4 +1,4 @@
-package com.yworks.yguard;
+package com.yworks.yshrink;
 
 import com.yworks.common.ant.EntryPointsSection;
 import com.yworks.common.ShrinkBag;

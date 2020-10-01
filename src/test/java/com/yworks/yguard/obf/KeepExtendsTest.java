@@ -1,7 +1,7 @@
 package com.yworks.yguard.obf;
 
 import com.yworks.util.Compiler;
-import com.yworks.yguard.YShrinkModel;
+import com.yworks.yshrink.YShrinkModel;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.InOutPair;
 import com.yworks.yshrink.YShrinkModelImpl;

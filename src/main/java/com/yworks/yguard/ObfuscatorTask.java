@@ -36,6 +36,8 @@ import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.LineNumberInfo;
 import com.yworks.yguard.obf.classfile.LineNumberTableAttrInfo;
 import com.yworks.yguard.obf.classfile.Logger;
+import com.yworks.yshrink.YShrinkInvoker;
+import com.yworks.yshrink.YShrinkModel;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
