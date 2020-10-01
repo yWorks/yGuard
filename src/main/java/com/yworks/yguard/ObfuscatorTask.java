@@ -426,6 +426,7 @@ public class ObfuscatorTask extends YGuardBaseTask
   public class AdjustSection extends ZipFileSet {
       private boolean replaceName = false;
       private boolean replaceContent = false;
+      private String  replaceContentSeparator = "/";
       private boolean replacePath = true;
 
       private Set entries;
@@ -447,6 +448,14 @@ public class ObfuscatorTask extends YGuardBaseTask
       public boolean getReplaceContent()
       {
         return replaceContent;
+      }
+
+      public void setReplaceContentSeparator(String separator) {
+        this.replaceContentSeparator = separator;
+      }
+
+      public String getReplaceContentSeparator() {
+        return replaceContentSeparator;
       }
 
       public void setReplacePath(boolean rp){
@@ -1111,7 +1120,7 @@ public class ObfuscatorTask extends YGuardBaseTask
          if(as.contains(resourceName) && as.getReplaceContent())
          {
            Writer writer = new OutputStreamWriter(out);
-           getContentReplacer().replace(new InputStreamReader(in), writer, map);
+           getContentReplacer().replace(new InputStreamReader(in), writer, db, as.replaceContentSeparator);
            writer.flush();
            return true;
          }
@@ -1129,7 +1138,7 @@ public class ObfuscatorTask extends YGuardBaseTask
      {
        if(contentReplacer == null)
        {
-         contentReplacer = new StringReplacer("(?:\\w|[$])+(\\.(?:\\w|[$])+)+");
+         contentReplacer = new StringReplacer("(?:\\w|[$])+((?:\\.|\\/)(?:\\w|[$])+)+");
        }
        return contentReplacer;
      }

@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -929,6 +930,41 @@ public class GuardDB implements ClassConstants
     {
       return javaClass;
     }
+  }
+
+  /**
+   * Tries to translate as many parts of items as possible.
+   * E.g if com.yworks.example.test.Invalid cannot be resolved it will resolve in order
+   * - com.yworks.example.test.Invalid
+   * - com.yworks.example.test
+   * - com.yworks.example
+   * - com.yworks
+   * - com
+   * Depending on the number of items you can infer which parts have been remapped and which have not.
+   * @param items list of unmapped items
+   * @return list of mapped items
+   */
+  public List<String> translateItem(String[] items) {
+    List<String> mapped = new ArrayList<>();
+    List<String> partialItems = Arrays.asList(items);
+    TreeItem item = classTree.findTreeItem(items);
+    while ((partialItems.size() > 0) && item == null) {
+      partialItems = partialItems.subList(0, partialItems.size() - 1);
+      String[] partialItemsArray = new String[partialItems.size()];
+      partialItems.toArray(partialItemsArray);
+      item = classTree.findTreeItem(partialItemsArray);
+    }
+    while (item != null) {
+      mapped.add(item.getOutName());
+      item = item.parent;
+    }
+    if (mapped.size() > 0) {
+      // Ignore root node which is always empty
+      mapped = mapped.subList(0, mapped.size() - 1);
+      // Reverse insertion order
+      Collections.reverse(mapped);
+    }
+    return mapped;
   }
 
   public void setDigests(String[] digestStrings) {
