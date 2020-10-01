@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-11
       with:
-        args: check
+        args: clean build test
   examples:
     runs-on: ubuntu-latest
     steps:
