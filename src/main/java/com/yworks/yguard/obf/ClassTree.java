@@ -1369,26 +1369,26 @@ public class ClassTree implements NameMapper
         walkTree(new TreeAction() {
             public void classAction(Cl cl) {
                 final String name = cl.getFullInName();
-                if (!cl.isFromScript() && !"module-info".equals(name)) {
+                if ((cl.isFromScriptMap() || !cl.isFromScript()) && !"module-info".equals(name)) {
                     String cla = toUtf8XmlString(Conversion.toJavaClass(name));
                     log.println("  <class name=\"" + toUtf8XmlString(cla) + "\" map=\"" + toUtf8XmlString(cl.getOutName()) + "\"/>");
                 }
             }
             public void methodAction(Md md) {
-                if (!md.isFromScript()) {
+                if (md.isFromScriptMap() || !md.isFromScript()) {
                     String cla = toUtf8XmlString(Conversion.toJavaClass(md.getParent().getFullInName()));
                     String method = toUtf8XmlString(Conversion.toJavaMethod(md.getInName(), md.getDescriptor()));
                     log.println("  <method class=\""+cla+"\" name=\"" + method + "\" map=\"" + toUtf8XmlString(md.getOutName()) + "\"/>");
                 }
             }
             public void fieldAction(Fd fd) {
-                if (!fd.isFromScript()) {
+                if (fd.isFromScriptMap() || !fd.isFromScript()) {
                     String cla = toUtf8XmlString(Conversion.toJavaClass(fd.getParent().getFullInName()));
                     log.println("  <field class=\""+cla+"\" name=\"" + toUtf8XmlString(fd.getInName()) + "\" map=\"" + toUtf8XmlString(fd.getOutName()) + "\"/>");
                 }
             }
             public void packageAction(Pk pk) {
-                if (!pk.isFromScript() && pk.getFullInName().length() > 0) {
+                if ((pk.isFromScriptMap() || !pk.isFromScript()) && pk.getFullInName().length() > 0) {
                     String pa = toUtf8XmlString(Conversion.toJavaClass(pk.getFullInName()));
                     log.println("  <package name=\""+pa +"\" map=\"" + toUtf8XmlString(pk.getOutName()) + "\"/>");
                 }
