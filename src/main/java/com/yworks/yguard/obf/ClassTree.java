@@ -288,7 +288,7 @@ public class ClassTree implements NameMapper
                 else
                 {
                   Object[] classInfo = {
-                      name, cf.getSuper(), cf.getInterfaces(), cf.getModifiers(), ClassItemInfo.getObfuscationConfig(cf.getAttributes())
+                      name, cf.getSuper(), cf.getInterfaces(), cf.getModifiers(), ClassItemInfo.getObfuscationConfig(cf.getName(), cf.getAttributes())
                   };
                   Cl cl =((PkCl)ti).addClass(classInfo);
                   cl.setInnerClassModifiers(cf.getInnerClassModifiers());

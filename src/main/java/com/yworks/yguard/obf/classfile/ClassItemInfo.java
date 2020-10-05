@@ -45,7 +45,7 @@ abstract public class ClassItemInfo implements ClassConstants
     // Instance Methods ------------------------------------------------------
     protected ClassItemInfo(ClassFile cf) {this.cf = cf;}
 
-  public static ObfuscationConfig getObfuscationConfig(AttrInfo[] attributes) {
+  public static ObfuscationConfig getObfuscationConfig(String name, AttrInfo[] attributes) {
     if (attributes == null) return null;
     for (int i = 0; i < attributes.length; i++) {
       AttrInfo attribute = attributes[i];
@@ -63,6 +63,7 @@ abstract public class ClassItemInfo implements ClassConstants
             AnnotationInfo clAnnotation = clAnnotations[j];
             boolean exclude = getExclude(clAnnotation, owner);
             boolean applyToMembers = getApplyToMembers(clAnnotation, owner);
+            Logger.getInstance().log(String.format("Applied annotation %s to %s", ObfuscationConfig.annotationClassName, name));
             return new ObfuscationConfig(exclude, applyToMembers);
           }
         }
@@ -217,7 +218,7 @@ abstract public class ClassItemInfo implements ClassConstants
 
   public ObfuscationConfig getObfuscationConfig() {
     if (obfuscationConfig == DUMMY){
-      obfuscationConfig = getObfuscationConfig(attributes);
+      obfuscationConfig = getObfuscationConfig(String.format("%s#%s", this.cf.getName(), this.getName()), attributes);
     }
     return obfuscationConfig;
   }
