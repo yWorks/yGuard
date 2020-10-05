@@ -50,7 +50,7 @@ task generateSources(type: Copy) {
 // Use generated sources
 compileJava.dependsOn generateSources
 
-def LIBRARIES = ["asm-7.2.jar", "ant-1.10.7.jar"]
+def LIBRARIES = ["asm-7.2.jar"]
 def LIBRARY_JARS = configurations.dependents.filter {
   file -> file.name in LIBRARIES
 }
