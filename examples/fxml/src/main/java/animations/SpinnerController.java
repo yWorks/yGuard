@@ -17,6 +17,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
+import com.yworks.util.annotation.Obfuscation;
 
 /**
  *
@@ -45,6 +46,7 @@ public class SpinnerController implements Initializable {
         
         spinSpinner.setOnFinished(new EventHandler<ActionEvent>() {
 
+            @Obfuscation(exclude=true)
             @Override
             public void handle(ActionEvent event) {
                 label.setText("you are on quartile: " + newLoc);
