@@ -1,8 +1,8 @@
-package com.yworks.graph;
+package com.yworks.util.graph;
 
+import com.yworks.util.graph.EndpointPair;
 import org.junit.Test;
 
-import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -52,8 +52,8 @@ public class NetworkTest {
     Integer n2 = 2;
     Integer e1 = 3;
     network.addEdge(n1, n2, e1);
-    Map.Entry<Integer, Integer> pair = network.incidentNodes(e1);
-    assertEquals(pair.getKey(), n1);
-    assertEquals(pair.getValue(), n2);
+    EndpointPair<Integer> pair = network.incidentNodes(e1);
+    assertEquals(pair.source(), n1);
+    assertEquals(pair.target(), n2);
   }
 }

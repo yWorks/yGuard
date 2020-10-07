@@ -1,7 +1,7 @@
 package com.yworks.yshrink.model;
 
 import org.objectweb.asm.Opcodes;
-import com.yworks.graph.Node;
+import com.yworks.util.graph.Node;
 
 import java.io.File;
 import java.util.*;

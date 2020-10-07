@@ -1,6 +1,5 @@
-package com.yworks.graph;
+package com.yworks.util.graph;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -23,7 +22,7 @@ public class Edge {
      * @return {Node}
      */
     public Node target() {
-        return this.network.incidentNodes(this).getValue();
+        return this.network.incidentNodes(this).target();
     }
 
     /**
@@ -31,7 +30,7 @@ public class Edge {
      * @return {Node}
      */
     public Node source() {
-        return this.network.incidentNodes(this).getKey();
+        return this.network.incidentNodes(this).source();
     }
 
   /**
@@ -57,7 +56,7 @@ public class Edge {
      * @return {Edge|null}
      */
     public Edge nextOutEdge() {
-        Set<Edge> outEdges = this.network.outEdges(this.network.incidentNodes(this).getKey());
+        Set<Edge> outEdges = this.network.outEdges(this.network.incidentNodes(this).source());
         boolean found = false;
         for (final Edge edge: outEdges) {
             if (found) {
@@ -75,11 +74,11 @@ public class Edge {
      * @return {Node}
      */
     public Node opposite(Node node) {
-        Map.Entry<Node, Node> endpointPair = this.network.incidentNodes(this);
-        if (endpointPair.getKey().equals(node)) {
-            return endpointPair.getValue();
+        EndpointPair<Node> endpointPair = this.network.incidentNodes(this);
+        if (endpointPair.source().equals(node)) {
+            return endpointPair.target();
         } else {
-            return endpointPair.getKey();
+            return endpointPair.source();
         }
     }
 }

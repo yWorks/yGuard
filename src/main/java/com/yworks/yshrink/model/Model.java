@@ -3,9 +3,9 @@ package com.yworks.yshrink.model;
 import com.yworks.logging.Logger;
 import com.yworks.yshrink.core.ClassResolver;
 import com.yworks.yshrink.util.Util;
-import com.yworks.graph.Node;
-import com.yworks.graph.Edge;
-import com.yworks.graph.Network;
+import com.yworks.util.graph.Node;
+import com.yworks.util.graph.Edge;
+import com.yworks.util.graph.Network;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 

@@ -1,8 +1,8 @@
 package com.yworks.yshrink.core;
 
-import com.yworks.graph.Edge;
-import com.yworks.graph.Node;
-import com.yworks.graph.Network;
+import com.yworks.util.graph.Edge;
+import com.yworks.util.graph.Node;
+import com.yworks.util.graph.Network;
 
 import java.util.HashMap;
 import java.util.Map;
