@@ -11,6 +11,7 @@ import com.yworks.yguard.obf.Tools;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 
 
 /**
@@ -265,7 +266,7 @@ abstract public class ClassItemInfo implements ClassConstants {
    * @param dout the dout
    * @throws IOException the io exception
    */
-  public void write( DataOutput dout ) throws java.io.IOException {
+  public void write( DataOutput dout ) throws IOException {
     if (dout == null) {
       throw new NullPointerException("No output stream was provided.");
     }

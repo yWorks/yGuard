@@ -8,6 +8,7 @@ package com.yworks.yguard.obf.classfile;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 
 /**
  * Representation of an Local Variable table entry.
@@ -34,7 +35,7 @@ public class LocalVariableInfo {
    * @throws IOException the io exception
    */
 // Class Methods ---------------------------------------------------------
-  public static LocalVariableInfo create( DataInput din ) throws java.io.IOException {
+  public static LocalVariableInfo create( DataInput din ) throws IOException {
     if (din == null) {
       throw new NullPointerException("DataInput cannot be null!");
     }
@@ -94,7 +95,7 @@ public class LocalVariableInfo {
     pool.incRefCount(u2descriptorIndex);
   }
 
-  private void read( DataInput din ) throws java.io.IOException {
+  private void read( DataInput din ) throws IOException {
     u2startpc = din.readUnsignedShort();
     u2length = din.readUnsignedShort();
     u2nameIndex = din.readUnsignedShort();
@@ -108,7 +109,7 @@ public class LocalVariableInfo {
    * @param dout the dout
    * @throws IOException the io exception
    */
-  public void write( DataOutput dout ) throws java.io.IOException {
+  public void write( DataOutput dout ) throws IOException {
     dout.writeShort(u2startpc);
     dout.writeShort(u2length);
     dout.writeShort(u2nameIndex);
