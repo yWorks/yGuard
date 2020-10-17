@@ -140,10 +140,8 @@ public class YGuardRule {
   /**
    * Instantiates a new Y guard rule.
    *
-   *
-   *@param type the type
-   *
-   *@param name the name
+   * @param type the type
+   * @param name the name
    */
 // Instance Methods-------------------------------------------------------
   public YGuardRule( int type, String name ) {
@@ -157,12 +155,9 @@ public class YGuardRule {
   /**
    * Instantiates a new Y guard rule.
    *
-   *
-   *@param type       the type
-   *
-   *@param name       the name
-   *
-   *@param descriptor the descriptor
+   * @param type       the type
+   * @param name       the name
+   * @param descriptor the descriptor
    */
   public YGuardRule( int type, String name, String descriptor ) {
     this.obfName = null;
@@ -175,10 +170,8 @@ public class YGuardRule {
   /**
    * Instantiates a new Y guard rule.
    *
-   *
-   *@param className             the class name
-   *
-   *@param lineNumberTableMapper the line number table mapper
+   * @param className             the class name
+   * @param lineNumberTableMapper the line number table mapper
    */
   public YGuardRule( String className, LineNumberTableMapper lineNumberTableMapper ) {
     this.descriptor = null;
@@ -191,8 +184,7 @@ public class YGuardRule {
   /**
    * Log properties.
    *
-   *
-   *@param pw the pw
+   * @param pw the pw
    */
   public void logProperties( PrintWriter pw ) {
     if (type == TYPE_LINE_NUMBER_MAPPER) {
@@ -210,8 +202,7 @@ public class YGuardRule {
   /**
    * Type to string string.
    *
-   *
-   *@param type the type
+   * @param type the type
    * @return the string
    */
   public static String typeToString( int type ) {
@@ -248,8 +239,7 @@ public class YGuardRule {
   /**
    * Method to string string.
    *
-   *
-   *@param modifier the modifier
+   * @param modifier the modifier
    * @return the string
    */
   public static String methodToString( int modifier ) {

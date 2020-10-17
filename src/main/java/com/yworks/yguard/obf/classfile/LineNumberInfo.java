@@ -26,10 +26,8 @@ public class LineNumberInfo {
   /**
    * Instantiates a new Line number info.
    *
-   *
-   *@param startPC    the start pc
-   *
-   *@param lineNumber the line number
+   * @param startPC    the start pc
+   * @param lineNumber the line number
    */
   public LineNumberInfo( int startPC, int lineNumber ) {
     setLineNumber(lineNumber);
@@ -40,8 +38,7 @@ public class LineNumberInfo {
   /**
    * Create line number info.
    *
-   *
-   *@param din the din
+   * @param din the din
    * @return the line number info
    * @throws IOException the io exception
    */
@@ -55,8 +52,7 @@ public class LineNumberInfo {
   /**
    * Set line number.
    *
-   *
-   *@param number the number
+   * @param number the number
    */
   public void setLineNumber( int number ) {
     this.u2lineNumber = number;
@@ -83,8 +79,7 @@ public class LineNumberInfo {
   /**
    * Set start pc.
    *
-   *
-   *@param startPc the start pc
+   * @param startPc the start pc
    */
   public void setStartPC( int startPc ) {
     this.u2startpc = startPc;
@@ -105,8 +100,8 @@ public class LineNumberInfo {
 
   /**
    * Export the representation to a DataOutput stream.
-   *@param dout the dout
    *
+   * @param dout the dout
    * @throws IOException the io exception
    */
   public void write( DataOutput dout ) throws java.io.IOException {

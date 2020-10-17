@@ -31,18 +31,13 @@ abstract public class MdFd extends TreeItem {
 
   /**
    * Ctor.
-   *@param parent the parent
    *
-   *
-   *@param isSynthetic       the is synthetic
-   *
-   *@param name              the name
-   *
-   *@param descriptor        the descriptor
-   *
-   *@param access            the access
-   *
-   *@param obfuscationConfig the obfuscation config
+   * @param parent            the parent
+   * @param isSynthetic       the is synthetic
+   * @param name              the name
+   * @param descriptor        the descriptor
+   * @param access            the access
+   * @param obfuscationConfig the obfuscation config
    */
   public MdFd( TreeItem parent, boolean isSynthetic, String name, String descriptor, int access, ObfuscationConfig obfuscationConfig ) {
     super(parent, name);
@@ -71,13 +66,17 @@ abstract public class MdFd extends TreeItem {
   }
 
   /**
-   * Return the method or field descriptor String.  @return the descriptor
+   * Return the method or field descriptor String.
+   *
+   * @return the descriptor
    */
   public String getDescriptor() {
     return descriptor;
   }
 
-  /** Return the display name for field. */
+  /**
+   * Return the display name for field.
+   */
   public String toString() {
     StringBuffer sb = new StringBuffer();
     int modifiers = getModifiers();
@@ -118,7 +117,9 @@ abstract public class MdFd extends TreeItem {
   }
 
   /**
-   * Return the display name of the return type.  @return the return type name
+   * Return the display name of the return type.
+   *
+   * @return the return type name
    */
   protected String getReturnTypeName() {
     String[] types = parseTypes();
@@ -126,11 +127,15 @@ abstract public class MdFd extends TreeItem {
   }
 
   /**
-   * Return the display name of the descriptor types.  @return the descriptor name
+   * Return the display name of the descriptor types.
+   *
+   * @return the descriptor name
    */
   abstract protected String getDescriptorName();
 
-  /** Return the parsed descriptor types array. */
+  /**
+   * Return the parsed descriptor types array.
+   */
   private String[] parsedTypes = null;
 
   /**

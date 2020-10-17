@@ -582,6 +582,8 @@ public class GuardDB implements ClassConstants {
 
   /**
    * Close input JAR file.  @throws IOException the io exception
+   *
+   * @throws IOException the io exception
    */
   public void close() throws java.io.IOException {
     for (int i = 0; i < inJar.length; i++) {

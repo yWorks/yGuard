@@ -47,19 +47,18 @@ public class CodeAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Code attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected CodeAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the length in bytes of the attribute. */
+  /**
+   * Return the length in bytes of the attribute.
+   */
   protected int getAttrInfoLength() {
     int length = CONSTANT_FIELD_SIZE + u4codeLength +
                  u2exceptionTableLength * ExceptionInfo.CONSTANT_FIELD_SIZE;
@@ -69,7 +68,9 @@ public class CodeAttrInfo extends AttrInfo {
     return length;
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_Code;
   }
@@ -101,14 +102,18 @@ public class CodeAttrInfo extends AttrInfo {
     u2attributesCount = j;
   }
 
-  /** Check for references in the 'info' data to the constant pool and mark them. */
+  /**
+   * Check for references in the 'info' data to the constant pool and mark them.
+   */
   protected void markUtf8RefsInInfo( ConstantPool pool ) {
     for (int i = 0; i < attributes.length; i++) {
       attributes[i].markUtf8Refs(pool);
     }
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2maxStack = din.readUnsignedShort();
     u2maxLocals = din.readUnsignedShort();
@@ -127,7 +132,9 @@ public class CodeAttrInfo extends AttrInfo {
     }
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2maxStack);
     dout.writeShort(u2maxLocals);

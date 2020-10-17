@@ -15,12 +15,10 @@ package com.yworks.yguard.obf;
 public interface NameListDown {
   /**
    * Is the method reserved because of its reservation down the class hierarchy?
-   *@param caller the caller
    *
-   *
-   *@param name       the name
-   *
-   *@param descriptor the descriptor
+   * @param caller     the caller
+   * @param name       the name
+   * @param descriptor the descriptor
    * @return the method obf name down
    * @throws ClassNotFoundException the class not found exception
    */
@@ -28,10 +26,9 @@ public interface NameListDown {
 
   /**
    * Is the field reserved because of its reservation down the class hierarchy?
-   *@param caller the caller
    *
-   *
-   *@param name the name
+   * @param caller the caller
+   * @param name   the name
    * @return the field obf name down
    * @throws ClassNotFoundException the class not found exception
    */

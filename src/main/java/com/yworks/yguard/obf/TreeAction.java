@@ -15,8 +15,7 @@ public class TreeAction {
   /**
    * Package action.
    *
-   *
-   *@param pk the pk
+   * @param pk the pk
    */
   public void packageAction( Pk pk ) {
     defaultAction(pk);
@@ -25,8 +24,7 @@ public class TreeAction {
   /**
    * Class action.
    *
-   *
-   *@param cl the cl
+   * @param cl the cl
    */
   public void classAction( Cl cl ) {
     defaultAction(cl);
@@ -35,8 +33,7 @@ public class TreeAction {
   /**
    * Method action.
    *
-   *
-   *@param md the md
+   * @param md the md
    */
   public void methodAction( Md md ) {
     defaultAction(md);
@@ -45,8 +42,7 @@ public class TreeAction {
   /**
    * Field action.
    *
-   *
-   *@param fd the fd
+   * @param fd the fd
    */
   public void fieldAction( Fd fd ) {
     defaultAction(fd);
@@ -55,8 +51,7 @@ public class TreeAction {
   /**
    * Default action.
    *
-   *
-   *@param ti the ti
+   * @param ti the ti
    */
   public void defaultAction( TreeItem ti ) {
   }

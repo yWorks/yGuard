@@ -170,14 +170,18 @@ public class AttrInfo implements ClassConstants {
   }
 
   /**
-   * Return the length in bytes of the attribute; over-ride this in sub-classes.  @return the attr info length
+   * Return the length in bytes of the attribute; over-ride this in sub-classes.
+   *
+   * @return the attr info length
    */
   protected int getAttrInfoLength() {
     return u4attrLength;
   }
 
   /**
-   * Return the String name of the attribute; over-ride this in sub-classes.  @return the attr name
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   *
+   * @return the attr name
    */
   protected String getAttrName() {
     return ATTR_Unknown;

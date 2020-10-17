@@ -29,38 +29,43 @@ public class InnerClassesAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Inner classes attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected InnerClassesAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_InnerClasses;
   }
 
   /**
-   * Return the array of inner classes data.  @return the inner classes info [ ]
+   * Return the array of inner classes data.
+   *
+   * @return the inner classes info [ ]
    */
   protected InnerClassesInfo[] getInfo() {
     return classes;
   }
 
-  /** Check for Utf8 references in the 'info' data to the constant pool and mark them. */
+  /**
+   * Check for Utf8 references in the 'info' data to the constant pool and mark them.
+   */
   protected void markUtf8RefsInInfo( ConstantPool pool ) {
     for (int i = 0; i < classes.length; i++) {
       classes[i].markUtf8Refs(pool);
     }
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2numberOfClasses = din.readUnsignedShort();
     classes = new InnerClassesInfo[u2numberOfClasses];
@@ -69,7 +74,9 @@ public class InnerClassesAttrInfo extends AttrInfo {
     }
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2numberOfClasses);
     for (int i = 0; i < u2numberOfClasses; i++) {

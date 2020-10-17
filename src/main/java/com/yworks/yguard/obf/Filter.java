@@ -14,8 +14,7 @@ public interface Filter {
   /**
    * Accepts boolean.
    *
-   *
-   *@param o the o
+   * @param o the o
    * @return the boolean
    */
   boolean accepts( Object o );

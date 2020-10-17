@@ -404,14 +404,18 @@ public class ClassFile implements ClassConstants {
   }
 
   /**
-   * Return the name of this classfile.  @return the name
+   * Return the name of this classfile.
+   *
+   * @return the name
    */
   public String getName() {
     return toName(u2thisClass);
   }
 
   /**
-   * Return the name of this class's superclass.  @return the super
+   * Return the name of this class's superclass.
+   *
+   * @return the super
    */
   public String getSuper() {
     // This may be java/lang/Object, in which case there is no super
@@ -419,7 +423,9 @@ public class ClassFile implements ClassConstants {
   }
 
   /**
-   * Return the names of this class's interfaces.  @return the string [ ]
+   * Return the names of this class's interfaces.
+   *
+   * @return the string [ ]
    */
   public String[] getInterfaces() {
     String[] interfaces = new String[u2interfacesCount];
@@ -445,7 +451,9 @@ public class ClassFile implements ClassConstants {
   }
 
   /**
-   * Return an enumeration of method name/descriptor pairs.  @return the method enum
+   * Return an enumeration of method name/descriptor pairs.
+   *
+   * @return the method enum
    */
   public Enumeration getMethodEnum() {
     Vector vec = new Vector();
@@ -456,7 +464,9 @@ public class ClassFile implements ClassConstants {
   }
 
   /**
-   * Return an enumeration of field name/descriptor pairs.  @return the field enum
+   * Return an enumeration of field name/descriptor pairs.
+   *
+   * @return the field enum
    */
   public Enumeration getFieldEnum() {
     Vector vec = new Vector();

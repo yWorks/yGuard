@@ -33,8 +33,7 @@ public class ExceptionInfo {
   /**
    * Create exception info.
    *
-   *
-   *@param din the din
+   * @param din the din
    * @return the exception info
    * @throws IOException the io exception
    */
@@ -59,8 +58,8 @@ public class ExceptionInfo {
 
   /**
    * Export the representation to a DataOutput stream.
-   *@param dout the dout
    *
+   * @param dout the dout
    * @throws IOException the io exception
    */
   public void write( DataOutput dout ) throws java.io.IOException {

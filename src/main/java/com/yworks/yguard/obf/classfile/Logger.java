@@ -43,10 +43,8 @@ public class Logger {
   /**
    * Instantiates a new Logger.
    *
-   *
-   *@param out the out
-   *
-   *@param err the err
+   * @param out the out
+   * @param err the err
    */
   protected Logger( PrintStream out, PrintStream err ) {
     instance = this;
@@ -57,8 +55,7 @@ public class Logger {
   /**
    * Error.
    *
-   *
-   *@param message the message
+   * @param message the message
    */
   public void error( String message ) {
     err.println(message);
@@ -67,8 +64,7 @@ public class Logger {
   /**
    * Log.
    *
-   *
-   *@param message the message
+   * @param message the message
    */
   public void log( String message ) {
     out.println(message);
@@ -77,8 +73,7 @@ public class Logger {
   /**
    * Warning.
    *
-   *
-   *@param message the message
+   * @param message the message
    */
   public void warning( String message ) {
     err.println(message);
@@ -87,8 +82,7 @@ public class Logger {
   /**
    * Warning to logfile.
    *
-   *
-   *@param message the message
+   * @param message the message
    */
   public void warningToLogfile( String message ) {
   }

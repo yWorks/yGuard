@@ -28,29 +28,32 @@ public class SourceFileAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Source file attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected SourceFileAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_SourceFile;
   }
 
-  /** Check for Utf8 references in the 'info' data to the constant pool and mark them. */
+  /**
+   * Check for Utf8 references in the 'info' data to the constant pool and mark them.
+   */
   protected void markUtf8RefsInInfo( ConstantPool pool ) {
     pool.incRefCount(u2sourceFileIndex);
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2sourceFileIndex = din.readUnsignedShort();
   }
@@ -58,8 +61,7 @@ public class SourceFileAttrInfo extends AttrInfo {
   /**
    * Set source file index.
    *
-   *
-   *@param index the index
+   * @param index the index
    */
   protected void setSourceFileIndex( int index ) {
     this.u2sourceFileIndex = index;
@@ -74,7 +76,9 @@ public class SourceFileAttrInfo extends AttrInfo {
     return this.u2sourceFileIndex;
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2sourceFileIndex);
   }

@@ -34,13 +34,17 @@ public class LongCpInfo extends CpInfo {
     super(CONSTANT_Long);
   }
 
-  /** Read the 'info' data following the u1tag byte. */
+  /**
+   * Read the 'info' data following the u1tag byte.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u4highBytes = din.readInt();
     u4lowBytes = din.readInt();
   }
 
-  /** Write the 'info' data following the u1tag byte. */
+  /**
+   * Write the 'info' data following the u1tag byte.
+   */
   protected void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeInt(u4highBytes);
     dout.writeInt(u4lowBytes);

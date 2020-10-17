@@ -166,7 +166,9 @@ abstract public class CpInfo implements ClassConstants {
   abstract protected void writeInfo( DataOutput dout ) throws java.io.IOException;
 
   /**
-   * Return the reference count.  @return the ref count
+   * Return the reference count.
+   *
+   * @return the ref count
    */
   public int getRefCount() {
     return refCount;

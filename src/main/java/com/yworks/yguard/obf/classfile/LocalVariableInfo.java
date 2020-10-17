@@ -29,8 +29,7 @@ public class LocalVariableInfo {
   /**
    * Create local variable info.
    *
-   *
-   *@param din the din
+   * @param din the din
    * @return the local variable info
    * @throws IOException the io exception
    */
@@ -50,7 +49,9 @@ public class LocalVariableInfo {
   }
 
   /**
-   * Return name index into Constant Pool.  @return the name index
+   * Return name index into Constant Pool.
+   *
+   * @return the name index
    */
   protected int getNameIndex() {
     return u2nameIndex;
@@ -58,14 +59,17 @@ public class LocalVariableInfo {
 
   /**
    * Set the name index.
-   *@param index the index
+   *
+   * @param index the index
    */
   protected void setNameIndex( int index ) {
     u2nameIndex = index;
   }
 
   /**
-   * Return descriptor index into Constant Pool.  @return the descriptor index
+   * Return descriptor index into Constant Pool.
+   *
+   * @return the descriptor index
    */
   protected int getDescriptorIndex() {
     return u2descriptorIndex;
@@ -73,7 +77,8 @@ public class LocalVariableInfo {
 
   /**
    * Set the descriptor index.
-   *@param index the index
+   *
+   * @param index the index
    */
   protected void setDescriptorIndex( int index ) {
     u2descriptorIndex = index;
@@ -81,7 +86,8 @@ public class LocalVariableInfo {
 
   /**
    * Check for Utf8 references to constant pool and mark them.
-   *@param pool the pool
+   *
+   * @param pool the pool
    */
   protected void markUtf8Refs( ConstantPool pool ) {
     pool.incRefCount(u2nameIndex);
@@ -98,8 +104,8 @@ public class LocalVariableInfo {
 
   /**
    * Export the representation to a DataOutput stream.
-   *@param dout the dout
    *
+   * @param dout the dout
    * @throws IOException the io exception
    */
   public void write( DataOutput dout ) throws java.io.IOException {

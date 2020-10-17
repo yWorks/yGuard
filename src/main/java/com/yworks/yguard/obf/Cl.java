@@ -48,8 +48,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     /**
      * Resolve class.
      *
-     *
-     *@param className the class name
+     * @param className the class name
      * @return the class
      * @throws ClassNotFoundException the class not found exception
      */
@@ -87,8 +86,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Set pedantic.
    *
-   *
-   *@param val the val
+   * @param val the val
    */
   public static void setPedantic( boolean val ) {
     pedantic = val;
@@ -97,8 +95,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Set class resolver.
    *
-   *
-   *@param res the res
+   * @param res the res
    */
   public static void setClassResolver( ClassResolver res ) {
     if (res != null) {
@@ -139,20 +136,14 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
 
   /**
    * Ctor.
-   *@param parent the parent
    *
-   *
-   *@param isInnerClass      the is inner class
-   *
-   *@param name              the name
-   *
-   *@param superClass        the super class
-   *
-   *@param superInterfaces   the super interfaces
-   *
-   *@param modifiers         the modifiers
-   *
-   *@param obfuscationConfig the obfuscation config
+   * @param parent            the parent
+   * @param isInnerClass      the is inner class
+   * @param name              the name
+   * @param superClass        the super class
+   * @param superInterfaces   the super interfaces
+   * @param modifiers         the modifiers
+   * @param obfuscationConfig the obfuscation config
    */
   public Cl( TreeItem parent, boolean isInnerClass, String name, String superClass, String[] superInterfaces,
              int modifiers, ObfuscationConfig obfuscationConfig ) {
@@ -178,8 +169,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Set class file access.
    *
-   *
-   *@param classFileAccess the class file access
+   * @param classFileAccess the class file access
    */
   void setClassFileAccess( int classFileAccess ) {
     this.classFileAccess = classFileAccess;
@@ -197,8 +187,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Sets line number table mapper.
    *
-   *
-   *@param lineNumberTableMapper the line number table mapper
+   * @param lineNumberTableMapper the line number table mapper
    */
   public void setLineNumberTableMapper( LineNumberTableMapper lineNumberTableMapper ) {
     this.lineNumberTableMapper = lineNumberTableMapper;
@@ -216,8 +205,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Sets source file mapping.
    *
-   *
-   *@param sourceFileMapping the source file mapping
+   * @param sourceFileMapping the source file mapping
    */
   public void setSourceFileMapping( String sourceFileMapping ) {
     this.sourceFileMappingSet = true;
@@ -254,8 +242,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Set inner class modifiers.
    *
-   *
-   *@param map the map
+   * @param map the map
    */
   public void setInnerClassModifiers( Map map ) {
     this.innerClassModifiers.putAll(map);
@@ -264,8 +251,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Get inner class modifier int.
    *
-   *
-   *@param fqn the fqn
+   * @param fqn the fqn
    * @return the int
    */
   public int getInnerClassModifier( String fqn ) {
@@ -278,7 +264,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   }
 
   /**
-   * Is this an inner class?  @return the boolean
+   * Is this an inner class?
+   *
+   * @return the boolean
    */
   public boolean isInnerClass() {
     return isInnerClass;
@@ -286,10 +274,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
 
   /**
    * Get a method by name.
-   *@param name the name
    *
-   *
-   *@param descriptor the descriptor
+   * @param name       the name
+   * @param descriptor the descriptor
    * @return the method
    */
   public Md getMethod( String name, String descriptor ) {
@@ -298,8 +285,8 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
 
   /**
    * Get a field by name.
-   *@param name the name
    *
+   * @param name the name
    * @return the field
    */
   public Fd getField( String name ) {
@@ -307,14 +294,18 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   }
 
   /**
-   * Get an Enumeration of methods.  @return the method enum
+   * Get an Enumeration of methods.
+   *
+   * @return the method enum
    */
   public Enumeration getMethodEnum() {
     return mds.elements();
   }
 
   /**
-   * Get an Enumeration of fields.  @return the field enum
+   * Get an Enumeration of fields.
+   *
+   * @return the field enum
    */
   public Enumeration getFieldEnum() {
     return fds.elements();
@@ -322,8 +313,8 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
 
   /**
    * Is this class's name a match to the wildcard pattern?
-   *@param pattern the pattern
    *
+   * @param pattern the pattern
    * @return the boolean
    */
   public boolean isWildcardMatch( String pattern ) {
@@ -332,8 +323,8 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
 
   /**
    * Is this class's name a non-recursive match to the wildcard pattern?
-   *@param pattern the pattern
    *
+   * @param pattern the pattern
    * @return the boolean
    */
   public boolean isNRWildcardMatch( String pattern ) {
@@ -342,8 +333,8 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
 
   /**
    * Does this class have the specified class in its super chain?
-   *@param queryName the query name
    *
+   * @param queryName the query name
    * @return the boolean
    * @throws ClassNotFoundException the class not found exception
    */
@@ -380,15 +371,17 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     }
   }
 
-  /** Add an inner class. */
+  /**
+   * Add an inner class.
+   */
   public Cl addClass( Object[] classInfo ) {
     return addClass(true, classInfo);
   }
 
   /**
    * Add an inner class, used when copying inner classes from a placeholder.
-   *@param cl the cl
    *
+   * @param cl the cl
    * @return the cl
    */
   public Cl addClass( Cl cl ) {
@@ -396,7 +389,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     return cl;
   }
 
-  /** Add a placeholder class. */
+  /**
+   * Add a placeholder class.
+   */
   public Cl addPlaceholderClass( String name ) {
     return addPlaceholderClass(true, name);
   }
@@ -404,8 +399,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
   /**
    * Add a method.
    *
-   *
-   *@param methodInfo the method info
+   * @param methodInfo the method info
    * @return the md
    */
   public Md addMethod( MethodInfo methodInfo ) {
@@ -438,8 +432,8 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
 
   /**
    * Add a field.
-   *@param fieldInfo the field info
    *
+   * @param fieldInfo the field info
    * @return the fd
    */
   public Fd addField( FieldInfo fieldInfo ) {
@@ -794,7 +788,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     }
   }
 
-  /** Get output method name from list, or null if no mapping exists. */
+  /**
+   * Get output method name from list, or null if no mapping exists.
+   */
   public String getMethodOutNameUp( String name, String descriptor ) throws ClassNotFoundException {
     // Check supers
     for (Enumeration enumeration = nameListUps.elements(); enumeration.hasMoreElements(); ) {
@@ -813,7 +809,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     }
   }
 
-  /** Get obfuscated method name from list, or null if no mapping exists. */
+  /**
+   * Get obfuscated method name from list, or null if no mapping exists.
+   */
   public String getMethodObfNameUp( String name, String descriptor ) throws ClassNotFoundException {
     // Check supers
     for (Enumeration enumeration = nameListUps.elements(); enumeration.hasMoreElements(); ) {
@@ -832,7 +830,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     }
   }
 
-  /** Get output field name from list, or null if no mapping exists. */
+  /**
+   * Get output field name from list, or null if no mapping exists.
+   */
   public String getFieldOutNameUp( String name ) throws ClassNotFoundException {
     // Check supers
     for (Enumeration enumeration = nameListUps.elements(); enumeration.hasMoreElements(); ) {
@@ -851,7 +851,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     }
   }
 
-  /** Get obfuscated field name from list, or null if no mapping exists. */
+  /**
+   * Get obfuscated field name from list, or null if no mapping exists.
+   */
   public String getFieldObfNameUp( String name ) throws ClassNotFoundException {
     // Check supers
     for (Enumeration enumeration = nameListUps.elements(); enumeration.hasMoreElements(); ) {
@@ -870,7 +872,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     }
   }
 
-  /** Is the method reserved because of its reservation down the class hierarchy? */
+  /**
+   * Is the method reserved because of its reservation down the class hierarchy?
+   */
   public String getMethodObfNameDown( Cl caller, String name, String descriptor ) throws ClassNotFoundException {
     // Check ourself for an explicit 'do not obfuscate'
     Md md = getMethod(name, descriptor);
@@ -913,7 +917,9 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     return null;
   }
 
-  /** Is the field reserved because of its reservation down the class hierarchy? */
+  /**
+   * Is the field reserved because of its reservation down the class hierarchy?
+   */
   public String getFieldObfNameDown( Cl caller, String name ) throws ClassNotFoundException {
     // Check ourself for an explicit 'do not obfuscate'
     Fd fd = getField(name);
@@ -980,8 +986,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     /**
      * Instantiates a new Ext name list up.
      *
-     *
-     *@param name the name
+     * @param name the name
      * @throws ClassNotFoundException the class not found exception
      */
 // Ctor.
@@ -1001,8 +1006,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown {
     /**
      * Instantiates a new Ext name list up.
      *
-     *
-     *@param extClass the ext class
+     * @param extClass the ext class
      */
 // Ctor.
     public ExtNameListUp( Class extClass ) {

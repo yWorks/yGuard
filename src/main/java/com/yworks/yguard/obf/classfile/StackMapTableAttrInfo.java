@@ -38,7 +38,9 @@ public class StackMapTableAttrInfo extends AttrInfo {
   }
 
   /**
-   * Return the array of local variable table entries.  @return the stack map frame info [ ]
+   * Return the array of local variable table entries.
+   *
+   * @return the stack map frame info [ ]
    */
   protected StackMapFrameInfo[] getEntries() {
     return entries;

@@ -16,10 +16,9 @@ package com.yworks.yguard.obf;
 public interface NameListUp {
   /**
    * Get output method name from list, or null if no mapping exists.
-   *@param name the name
    *
-   *
-   *@param descriptor the descriptor
+   * @param name       the name
+   * @param descriptor the descriptor
    * @return the method out name up
    * @throws ClassNotFoundException the class not found exception
    */
@@ -27,10 +26,9 @@ public interface NameListUp {
 
   /**
    * Get obfuscated method name from list, or null if no mapping exists.
-   *@param name the name
    *
-   *
-   *@param descriptor the descriptor
+   * @param name       the name
+   * @param descriptor the descriptor
    * @return the method obf name up
    * @throws ClassNotFoundException the class not found exception
    */
@@ -38,8 +36,8 @@ public interface NameListUp {
 
   /**
    * Get output field name from list, or null if no mapping exists.
-   *@param name the name
    *
+   * @param name the name
    * @return the field out name up
    * @throws ClassNotFoundException the class not found exception
    */
@@ -47,8 +45,8 @@ public interface NameListUp {
 
   /**
    * Get obfuscated field name from list, or null if no mapping exists.
-   *@param name the name
    *
+   * @param name the name
    * @return the field obf name up
    * @throws ClassNotFoundException the class not found exception
    */

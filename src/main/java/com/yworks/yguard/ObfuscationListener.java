@@ -13,34 +13,29 @@ public interface ObfuscationListener extends java.util.EventListener {
   /**
    * Obfuscating jar.
    *
-   *
-   *@param inJar  the in jar
-   *
-   *@param outJar the out jar
+   * @param inJar  the in jar
+   * @param outJar the out jar
    */
   void obfuscatingJar( String inJar, String outJar );
 
   /**
    * Obfuscating class.
    *
-   *
-   *@param className the class name
+   * @param className the class name
    */
   void obfuscatingClass( String className );
 
   /**
    * Parsing class.
    *
-   *
-   *@param className the class name
+   * @param className the class name
    */
   void parsingClass( String className );
 
   /**
    * Parsing jar.
    *
-   *
-   *@param jar the jar
+   * @param jar the jar
    */
   void parsingJar( String jar );
 

@@ -42,12 +42,16 @@ public class IntegerCpInfo extends CpInfo {
     return u4bytes != 0;
   }
 
-  /** Read the 'info' data following the u1tag byte. */
+  /**
+   * Read the 'info' data following the u1tag byte.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u4bytes = din.readInt();
   }
 
-  /** Write the 'info' data following the u1tag byte. */
+  /**
+   * Write the 'info' data following the u1tag byte.
+   */
   protected void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeInt(u4bytes);
   }

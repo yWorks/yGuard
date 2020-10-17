@@ -34,7 +34,9 @@ public abstract class AbstractTypeCpInfo extends CpInfo {
   }
 
   /**
-   * Return the name index.  @return the name index
+   * Return the name index.
+   *
+   * @return the name index
    */
   protected int getNameIndex() {
     return u2nameIndex;

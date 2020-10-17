@@ -28,19 +28,18 @@ public class SignatureAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Signature attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected SignatureAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_Signature;
   }
@@ -57,24 +56,29 @@ public class SignatureAttrInfo extends AttrInfo {
   /**
    * Set signature index.
    *
-   *
-   *@param index the index
+   * @param index the index
    */
   protected void setSignatureIndex( int index ) {
     this.u2signatureIndex = index;
   }
 
-  /** Check for Utf8 references in the 'info' data to the constant pool and mark them. */
+  /**
+   * Check for Utf8 references in the 'info' data to the constant pool and mark them.
+   */
   protected void markUtf8RefsInInfo( ConstantPool pool ) {
     pool.incRefCount(u2signatureIndex);
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2signatureIndex = din.readUnsignedShort();
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2signatureIndex);
   }

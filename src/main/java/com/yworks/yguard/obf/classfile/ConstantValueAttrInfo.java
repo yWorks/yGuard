@@ -28,29 +28,32 @@ public class ConstantValueAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Constant value attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected ConstantValueAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_ConstantValue;
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2constantValueIndex = din.readUnsignedShort();
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2constantValueIndex);
   }

@@ -56,14 +56,18 @@ abstract public class PkCl extends TreeItem {
   }
 
   /**
-   * Get an Enumeration of classes directly beneath this PkCl.  @return the class enum
+   * Get an Enumeration of classes directly beneath this PkCl.
+   *
+   * @return the class enum
    */
   public Enumeration getClassEnum() {
     return cls.elements();
   }
 
   /**
-   * Get an Enumeration of all classes (outer and inner) in the tree beneath this PkCl.  @return the all class enum
+   * Get an Enumeration of all classes (outer and inner) in the tree beneath this PkCl.
+   *
+   * @return the all class enum
    */
   public Enumeration getAllClassEnum() {
     Vector allClasses = new Vector();
@@ -85,7 +89,9 @@ abstract public class PkCl extends TreeItem {
   }
 
   /**
-   * Return number of classes.  @return the class count
+   * Return number of classes.
+   *
+   * @return the class count
    */
   public int getClassCount() {
     return cls.size();

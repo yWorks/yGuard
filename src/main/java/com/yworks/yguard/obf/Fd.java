@@ -25,33 +25,30 @@ public class Fd extends MdFd {
 
   /**
    * Ctor.
-   *@param parent the parent
    *
-   *
-   *@param isSynthetic       the is synthetic
-   *
-   *@param name              the name
-   *
-   *@param descriptor        the descriptor
-   *
-   *@param access            the access
-   *
-   *@param obfuscationConfig the obfuscation config
+   * @param parent            the parent
+   * @param isSynthetic       the is synthetic
+   * @param name              the name
+   * @param descriptor        the descriptor
+   * @param access            the access
+   * @param obfuscationConfig the obfuscation config
    */
   public Fd( TreeItem parent, boolean isSynthetic, String name, String descriptor,
              int access, ObfuscationConfig obfuscationConfig ) {
     super(parent, isSynthetic, name, descriptor, access, obfuscationConfig);
   }
 
-  /** Return the display name of the descriptor types. */
+  /**
+   * Return the display name of the descriptor types.
+   */
   protected String getDescriptorName() {
     return ";";
   }
 
   /**
    * Is this field's name a match to the wildcard pattern?
-   *@param namePattern the name pattern
    *
+   * @param namePattern the name pattern
    * @return the boolean
    */
   public boolean isWildcardMatch( String namePattern ) {
@@ -60,8 +57,8 @@ public class Fd extends MdFd {
 
   /**
    * Is this field's name a non-recursive match to the wildcard pattern?
-   *@param namePattern the name pattern
    *
+   * @param namePattern the name pattern
    * @return the boolean
    */
   public boolean isNRWildcardMatch( String namePattern ) {

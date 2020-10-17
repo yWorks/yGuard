@@ -30,8 +30,7 @@ public class InnerClassesInfo {
   /**
    * Create inner classes info.
    *
-   *
-   *@param din the din
+   * @param din the din
    * @return the inner classes info
    * @throws IOException the io exception
    */
@@ -79,14 +78,18 @@ public class InnerClassesInfo {
   }
 
   /**
-   * Return the inner class index.  @return the inner class index
+   * Return the inner class index.
+   *
+   * @return the inner class index
    */
   protected int getInnerClassIndex() {
     return u2innerClassInfoIndex;
   }
 
   /**
-   * Return the name index.  @return the inner name index
+   * Return the name index.
+   *
+   * @return the inner name index
    */
   protected int getInnerNameIndex() {
     return u2innerNameIndex;
@@ -94,7 +97,8 @@ public class InnerClassesInfo {
 
   /**
    * Set the name index.
-   *@param index the index
+   *
+   * @param index the index
    */
   protected void setInnerNameIndex( int index ) {
     u2innerNameIndex = index;
@@ -102,7 +106,8 @@ public class InnerClassesInfo {
 
   /**
    * Check for Utf8 references to constant pool and mark them.
-   *@param pool the pool
+   *
+   * @param pool the pool
    */
   protected void markUtf8Refs( ConstantPool pool ) {
     // BUGFIX: a Swing1.1beta3 class has name index of zero - this is valid
@@ -120,8 +125,8 @@ public class InnerClassesInfo {
 
   /**
    * Export the representation to a DataOutput stream.
-   *@param dout the dout
    *
+   * @param dout the dout
    * @throws IOException the io exception
    */
   public void write( DataOutput dout ) throws java.io.IOException {

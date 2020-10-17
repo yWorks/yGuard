@@ -29,19 +29,18 @@ public class LineNumberTableAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Line number table attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected LineNumberTableAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_LineNumberTable;
   }
@@ -58,8 +57,7 @@ public class LineNumberTableAttrInfo extends AttrInfo {
   /**
    * Set line number table.
    *
-   *
-   *@param table the table
+   * @param table the table
    */
   public void setLineNumberTable( LineNumberInfo[] table ) {
     this.lineNumberTable = table;
@@ -67,7 +65,9 @@ public class LineNumberTableAttrInfo extends AttrInfo {
     this.u4attrLength = 2 + 4 * u2lineNumberTableLength;
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2lineNumberTableLength = din.readUnsignedShort();
     lineNumberTable = new LineNumberInfo[u2lineNumberTableLength];
@@ -76,7 +76,9 @@ public class LineNumberTableAttrInfo extends AttrInfo {
     }
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2lineNumberTableLength);
     for (int i = 0; i < u2lineNumberTableLength; i++) {

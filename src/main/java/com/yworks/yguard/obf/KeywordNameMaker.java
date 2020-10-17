@@ -122,7 +122,8 @@ public class KeywordNameMaker implements NameMaker {
 
   /**
    * Ctor - block names not to be obfuscated from the mapping target space.
-   *@param noObfNames the no obf names
+   *
+   * @param noObfNames the no obf names
    */
   public KeywordNameMaker( String[] noObfNames ) {
     this(noObfNames, true);
@@ -130,10 +131,9 @@ public class KeywordNameMaker implements NameMaker {
 
   /**
    * Ctor - block names not to be obfuscated from the mapping target space.
-   *@param noObfNames the no obf names
    *
-   *
-   *@param useKeywords the use keywords
+   * @param noObfNames  the no obf names
+   * @param useKeywords the use keywords
    */
   public KeywordNameMaker( String[] noObfNames, boolean useKeywords ) {
     this(noObfNames, true, false);
@@ -141,12 +141,10 @@ public class KeywordNameMaker implements NameMaker {
 
   /**
    * Ctor - block names not to be obfuscated from the mapping target space.
-   *@param noObfNames the no obf names
    *
-   *
-   *@param useKeywords   the use keywords
-   *
-   *@param lowerCaseOnly the lower case only
+   * @param noObfNames    the no obf names
+   * @param useKeywords   the use keywords
+   * @param lowerCaseOnly the lower case only
    */
   public KeywordNameMaker( String[] noObfNames, boolean useKeywords, boolean lowerCaseOnly ) {
     this.noObfNames = noObfNames == null ? new String[0] : noObfNames;
@@ -166,7 +164,9 @@ public class KeywordNameMaker implements NameMaker {
     }
   }
 
-  /** Return the next unique name for this namespace. */
+  /**
+   * Return the next unique name for this namespace.
+   */
   public String nextName( String descriptor ) {
     // Check for arg-list in hashtable
     String argList = DUMMY_ARG_LIST;

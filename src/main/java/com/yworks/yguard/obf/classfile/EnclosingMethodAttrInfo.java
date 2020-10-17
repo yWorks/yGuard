@@ -30,25 +30,26 @@ public class EnclosingMethodAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Enclosing method attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected EnclosingMethodAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_EnclosingMethod;
   }
 
   /**
-   * Return the class index.  @return the class index
+   * Return the class index.
+   *
+   * @return the class index
    */
   protected int getClassIndex() {
     return u2classIndex;
@@ -56,14 +57,17 @@ public class EnclosingMethodAttrInfo extends AttrInfo {
 
   /**
    * Return the class index.
-   *@param index the index
+   *
+   * @param index the index
    */
   protected void setClassIndex( int index ) {
     this.u2classIndex = index;
   }
 
   /**
-   * Return the name-and-type index.  @return the name and type index
+   * Return the name-and-type index.
+   *
+   * @return the name and type index
    */
   protected int getNameAndTypeIndex() {
     return u2nameAndTypeIndex;
@@ -71,7 +75,8 @@ public class EnclosingMethodAttrInfo extends AttrInfo {
 
   /**
    * Set the name-and-type index.
-   *@param index the index
+   *
+   * @param index the index
    */
   protected void setNameAndTypeIndex( int index ) {
     u2nameAndTypeIndex = index;
@@ -97,13 +102,17 @@ public class EnclosingMethodAttrInfo extends AttrInfo {
   }
 
 
-  /** Read the 'info' data following the u1tag byte. */
+  /**
+   * Read the 'info' data following the u1tag byte.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2classIndex = din.readUnsignedShort();
     u2nameAndTypeIndex = din.readUnsignedShort();
   }
 
-  /** Write the 'info' data following the u1tag byte. */
+  /**
+   * Write the 'info' data following the u1tag byte.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2classIndex);
     dout.writeShort(u2nameAndTypeIndex);
@@ -111,12 +120,10 @@ public class EnclosingMethodAttrInfo extends AttrInfo {
 
   /**
    * Dump the content of the class file to the specified file (used for debugging).
-   *@param pw the pw
    *
-   *
-   *@param cf    the cf
-   *
-   *@param index the index
+   * @param pw    the pw
+   * @param cf    the cf
+   * @param index the index
    */
   public void dump( PrintWriter pw, ClassFile cf, int index ) {
     pw.println("  EnclosingMethod ");

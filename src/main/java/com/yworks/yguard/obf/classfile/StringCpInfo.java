@@ -33,17 +33,23 @@ public class StringCpInfo extends CpInfo {
     super(CONSTANT_String);
   }
 
-  /** Check for Utf8 references to constant pool and mark them. */
+  /**
+   * Check for Utf8 references to constant pool and mark them.
+   */
   protected void markUtf8Refs( ConstantPool pool ) {
     pool.incRefCount(u2stringIndex);
   }
 
-  /** Read the 'info' data following the u1tag byte. */
+  /**
+   * Read the 'info' data following the u1tag byte.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2stringIndex = din.readUnsignedShort();
   }
 
-  /** Write the 'info' data following the u1tag byte. */
+  /**
+   * Write the 'info' data following the u1tag byte.
+   */
   protected void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2stringIndex);
   }

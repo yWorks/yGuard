@@ -25,25 +25,22 @@ public class Md extends MdFd {
 
   /**
    * Ctor.
-   *@param parent the parent
    *
-   *
-   *@param isSynthetic       the is synthetic
-   *
-   *@param name              the name
-   *
-   *@param descriptor        the descriptor
-   *
-   *@param access            the access
-   *
-   *@param obfuscationConfig the obfuscation config
+   * @param parent            the parent
+   * @param isSynthetic       the is synthetic
+   * @param name              the name
+   * @param descriptor        the descriptor
+   * @param access            the access
+   * @param obfuscationConfig the obfuscation config
    */
   public Md( TreeItem parent, boolean isSynthetic, String name, String descriptor,
              int access, ObfuscationConfig obfuscationConfig ) {
     super(parent, isSynthetic, name, descriptor, access, obfuscationConfig);
   }
 
-  /** Return the display name of the descriptor types. */
+  /**
+   * Return the display name of the descriptor types.
+   */
   protected String getDescriptorName() {
     String[] types = parseTypes();
     StringBuffer sb = new StringBuffer();
@@ -62,10 +59,9 @@ public class Md extends MdFd {
 
   /**
    * Are this method's name/descriptor a match to the wildcard patterns?
-   *@param namePattern the name pattern
    *
-   *
-   *@param descPattern the desc pattern
+   * @param namePattern the name pattern
+   * @param descPattern the desc pattern
    * @return the boolean
    */
   public boolean isWildcardMatch( String namePattern, String descPattern ) {
@@ -77,10 +73,9 @@ public class Md extends MdFd {
   /**
    * Are this method's name/descriptor a non-recursive match
    * to the wildcard patterns?
-   *@param namePattern the name pattern
    *
-   *
-   *@param descPattern the desc pattern
+   * @param namePattern the name pattern
+   * @param descPattern the desc pattern
    * @return the boolean
    */
   public boolean isNRWildcardMatch( String namePattern, String descPattern ) {

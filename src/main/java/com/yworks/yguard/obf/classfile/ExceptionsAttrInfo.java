@@ -29,24 +29,25 @@ public class ExceptionsAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Exceptions attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected ExceptionsAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_Exceptions;
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2numberOfExceptions = din.readUnsignedShort();
     u2exceptionIndexTable = new int[u2numberOfExceptions];
@@ -55,7 +56,9 @@ public class ExceptionsAttrInfo extends AttrInfo {
     }
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2numberOfExceptions);
     for (int i = 0; i < u2numberOfExceptions; i++) {

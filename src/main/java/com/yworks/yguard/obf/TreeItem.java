@@ -187,14 +187,18 @@ public class TreeItem {
   }
 
   /**
-   * Return the modifiers.  @return the modifiers
+   * Return the modifiers.
+   *
+   * @return the modifiers
    */
   public int getModifiers() {
     return access;
   }
 
   /**
-   * Return the original name of the entry.  @return the in name
+   * Return the original name of the entry.
+   *
+   * @return the in name
    */
   public String getInName() {
     return inName;
@@ -216,14 +220,18 @@ public class TreeItem {
   }
 
   /**
-   * Return the output name of the entry, obfuscated or original.  @return the out name
+   * Return the output name of the entry, obfuscated or original.
+   *
+   * @return the out name
    */
   public String getOutName() {
     return outName != null ? outName : inName;
   }
 
   /**
-   * Return the obfuscated name of the entry.  @return the obf name
+   * Return the obfuscated name of the entry.
+   *
+   * @return the obf name
    */
   public String getObfName() {
     return outName;
@@ -244,28 +252,36 @@ public class TreeItem {
   }
 
   /**
-   * Has the entry been fixed already?  @return the boolean
+   * Has the entry been fixed already?
+   *
+   * @return the boolean
    */
   public boolean isFixed() {
     return isFixed;
   }
 
   /**
-   * Is this constrained by a user script line?  @return the boolean
+   * Is this constrained by a user script line?
+   *
+   * @return the boolean
    */
   public boolean isFromScript() {
     return isFromScript;
   }
 
   /**
-   * Is this constrained by a map script line?  @return the boolean
+   * Is this constrained by a map script line?
+   *
+   * @return the boolean
    */
   public boolean isFromScriptMap() {
     return isFromScriptMap;
   }
 
   /**
-   * Is a method or field Synthetic?  @return the boolean
+   * Is a method or field Synthetic?
+   *
+   * @return the boolean
    */
   public boolean isSynthetic() {
     return isSynthetic;
@@ -281,14 +297,18 @@ public class TreeItem {
   }
 
   /**
-   * Get the parent in the tree.  @return the parent
+   * Get the parent in the tree.
+   *
+   * @return the parent
    */
   public TreeItem getParent() {
     return parent;
   }
 
   /**
-   * Construct and return the full original name of the entry.  @return the full in name
+   * Construct and return the full original name of the entry.
+   *
+   * @return the full in name
    */
   public String getFullInName() {
     if (parent == null) {
@@ -301,7 +321,9 @@ public class TreeItem {
   }
 
   /**
-   * Construct and return the full obfuscated name of the entry.  @return the full out name
+   * Construct and return the full obfuscated name of the entry.
+   *
+   * @return the full out name
    */
   public String getFullOutName() {
     if (parent == null) {

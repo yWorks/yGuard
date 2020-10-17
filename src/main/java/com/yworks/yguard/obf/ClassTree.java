@@ -121,7 +121,9 @@ public class ClassTree implements NameMapper {
   }
 
   /**
-   * Return the root node.  @return the root
+   * Return the root node.
+   *
+   * @return the root
    */
   public Pk getRoot() {
     return root;
@@ -534,6 +536,8 @@ public class ClassTree implements NameMapper {
 
   /**
    * Resolve the polymorphic dependencies of each class.  @throws ClassNotFoundException the class not found exception
+   *
+   * @throws ClassNotFoundException the class not found exception
    */
   public void resolveClasses() throws ClassNotFoundException {
     walkTree(new TreeAction() {
@@ -569,7 +573,9 @@ public class ClassTree implements NameMapper {
   }
 
   /**
-   * Return a list of attributes marked to keep.  @return the string [ ]
+   * Return a list of attributes marked to keep.
+   *
+   * @return the string [ ]
    */
   public String[] getAttrsToKeep() {
     String[] attrs = new String[retainAttrs.size()];

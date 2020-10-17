@@ -29,25 +29,26 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo {
   /**
    * Instantiates a new Local variable type table attr info.
    *
-   *
-   *@param cf            the cf
-   *
-   *@param attrNameIndex the attr name index
-   *
-   *@param attrLength    the attr length
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
    */
 // Instance Methods ------------------------------------------------------
   protected LocalVariableTypeTableAttrInfo( ClassFile cf, int attrNameIndex, int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-  /** Return the String name of the attribute; over-ride this in sub-classes. */
+  /**
+   * Return the String name of the attribute; over-ride this in sub-classes.
+   */
   protected String getAttrName() {
     return ATTR_LocalVariableTypeTable;
   }
 
   /**
-   * Return the array of local variable table entries.  @return the local variable type info [ ]
+   * Return the array of local variable table entries.
+   *
+   * @return the local variable type info [ ]
    */
   protected LocalVariableTypeInfo[] getLocalVariableTypeTable() {
     return localVariableTypeTable;
@@ -56,8 +57,7 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo {
   /**
    * Sets local variable type table.
    *
-   *
-   *@param lvts the lvts
+   * @param lvts the lvts
    */
   public void setLocalVariableTypeTable( LocalVariableTypeInfo[] lvts ) {
     this.localVariableTypeTable = lvts;
@@ -65,14 +65,18 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo {
     this.u4attrLength = 2 + 10 * u2localVariableTypeTableLength;
   }
 
-  /** Check for Utf8 references in the 'info' data to the constant pool and mark them. */
+  /**
+   * Check for Utf8 references in the 'info' data to the constant pool and mark them.
+   */
   protected void markUtf8RefsInInfo( ConstantPool pool ) {
     for (int i = 0; i < localVariableTypeTable.length; i++) {
       localVariableTypeTable[i].markUtf8Refs(pool);
     }
   }
 
-  /** Read the data following the header. */
+  /**
+   * Read the data following the header.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2localVariableTypeTableLength = din.readUnsignedShort();
     localVariableTypeTable = new LocalVariableTypeInfo[u2localVariableTypeTableLength];
@@ -81,7 +85,9 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo {
     }
   }
 
-  /** Export data following the header to a DataOutput stream. */
+  /**
+   * Export data following the header to a DataOutput stream.
+   */
   public void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2localVariableTypeTableLength);
     for (int i = 0; i < u2localVariableTypeTableLength; i++) {

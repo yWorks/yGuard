@@ -8,7 +8,6 @@ package com.yworks.yguard.obf.classfile;
 
 import java.io.DataInput;
 import java.io.DataOutput;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -39,7 +38,8 @@ public class Utf8CpInfo extends CpInfo {
 
   /**
    * Ctor used when appending fresh Utf8 entries to the constant pool.
-   *@param s the s
+   *
+   * @param s the s
    */
   public Utf8CpInfo( String s ) {
     super(CONSTANT_Utf8);
@@ -47,7 +47,9 @@ public class Utf8CpInfo extends CpInfo {
     refCount = 1;
   }
 
-  /** Decrement the reference count, blanking the entry if no more references. */
+  /**
+   * Decrement the reference count, blanking the entry if no more references.
+   */
   public void decRefCount() {
     super.decRefCount();
     if (refCount == 0) {
@@ -56,7 +58,9 @@ public class Utf8CpInfo extends CpInfo {
   }
 
   /**
-   * Return UTF8 data as a String.  @return the string
+   * Return UTF8 data as a String.
+   *
+   * @return the string
    */
   public String getString() {
     if (utf8string == null) {
@@ -67,7 +71,8 @@ public class Utf8CpInfo extends CpInfo {
 
   /**
    * Set UTF8 data as String.
-   *@param str the str
+   *
+   * @param str the str
    */
   public void setString( String str ) {
     utf8string = str;
@@ -85,7 +90,9 @@ public class Utf8CpInfo extends CpInfo {
     getString();
   }
 
-  /** Read the 'info' data following the u1tag byte. */
+  /**
+   * Read the 'info' data following the u1tag byte.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2length = din.readUnsignedShort();
     bytes = new byte[u2length];
@@ -93,7 +100,9 @@ public class Utf8CpInfo extends CpInfo {
     getString();
   }
 
-  /** Write the 'info' data following the u1tag byte. */
+  /**
+   * Write the 'info' data following the u1tag byte.
+   */
   protected void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2length);
     if (bytes.length > 0) {

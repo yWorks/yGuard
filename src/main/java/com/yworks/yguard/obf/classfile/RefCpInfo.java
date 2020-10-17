@@ -30,8 +30,7 @@ abstract public class RefCpInfo extends CpInfo {
   /**
    * Instantiates a new Ref cp info.
    *
-   *
-   *@param tag the tag
+   * @param tag the tag
    */
 // Instance Methods ------------------------------------------------------
   protected RefCpInfo( int tag ) {
@@ -39,14 +38,18 @@ abstract public class RefCpInfo extends CpInfo {
   }
 
   /**
-   * Return the class index.  @return the class index
+   * Return the class index.
+   *
+   * @return the class index
    */
   protected int getClassIndex() {
     return u2classIndex;
   }
 
   /**
-   * Return the name-and-type index.  @return the name and type index
+   * Return the name-and-type index.
+   *
+   * @return the name and type index
    */
   protected int getNameAndTypeIndex() {
     return u2nameAndTypeIndex;
@@ -54,30 +57,39 @@ abstract public class RefCpInfo extends CpInfo {
 
   /**
    * Set the name-and-type index.
-   *@param index the index
+   *
+   * @param index the index
    */
   protected void setNameAndTypeIndex( int index ) {
     u2nameAndTypeIndex = index;
   }
 
-  /** Check for N+T references to constant pool and mark them. */
+  /**
+   * Check for N+T references to constant pool and mark them.
+   */
   protected void markNTRefs( ConstantPool pool ) {
     pool.incRefCount(u2nameAndTypeIndex);
   }
 
-  /** Read the 'info' data following the u1tag byte. */
+  /**
+   * Read the 'info' data following the u1tag byte.
+   */
   protected void readInfo( DataInput din ) throws java.io.IOException {
     u2classIndex = din.readUnsignedShort();
     u2nameAndTypeIndex = din.readUnsignedShort();
   }
 
-  /** Write the 'info' data following the u1tag byte. */
+  /**
+   * Write the 'info' data following the u1tag byte.
+   */
   protected void writeInfo( DataOutput dout ) throws java.io.IOException {
     dout.writeShort(u2classIndex);
     dout.writeShort(u2nameAndTypeIndex);
   }
 
-  /** Dump the content of the class file to the specified file (used for debugging). */
+  /**
+   * Dump the content of the class file to the specified file (used for debugging).
+   */
   public void dump( PrintWriter pw, ClassFile cf, int index ) {
     pw.println("  Ref " + index + ": " + ((Utf8CpInfo) cf.getCpEntry(((ClassCpInfo) cf.getCpEntry(u2classIndex)).getNameIndex())).getString() +
                " " + ((Utf8CpInfo) cf.getCpEntry(((NameAndTypeCpInfo) cf.getCpEntry(u2nameAndTypeIndex)).getNameIndex())).getString() +
