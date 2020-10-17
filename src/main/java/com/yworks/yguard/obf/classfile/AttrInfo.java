@@ -8,34 +8,50 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import com.yworks.yguard.ParseException;
 import com.yworks.yguard.Conversion;
+import com.yworks.yguard.ParseException;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
 /**
  * Representation of an attribute. Specific attributes have their representations
  * sub-classed from this.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class AttrInfo implements ClassConstants
 {
-    // Constants -------------------------------------------------------------
+    /**
+     * The constant CONSTANT_FIELD_SIZE.
+     */
+// Constants -------------------------------------------------------------
     public static final int CONSTANT_FIELD_SIZE = 6;
 
 
     // Fields ----------------------------------------------------------------
     private int u2attrNameIndex;
+    /**
+     * The U 4 attr length.
+     */
     protected int u4attrLength;
     private byte info[];
 
+    /**
+     * The Owner.
+     */
     protected ClassFile owner;
 
 
     // Class Methods ---------------------------------------------------------
+
     /**
      * Create a new AttrInfo from the data passed.
      *
+     * @param din the din
+     * @param cf  the cf
+     * @return the attr info
      * @throws IOException if class file is corrupt or incomplete
      */
     public static AttrInfo create(DataInput din, ClassFile cf) throws java.io.IOException
@@ -174,7 +190,14 @@ public class AttrInfo implements ClassConstants
     }
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
+// Instance Methods ------------------------------------------------------
     protected AttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         owner = cf;
@@ -182,17 +205,26 @@ public class AttrInfo implements ClassConstants
         u4attrLength = attrLength;
     }
 
+    /**
+     * Get attr name index int.
+     *
+     * @return the int
+     */
     protected int getAttrNameIndex(){
       return u2attrNameIndex;
     }
 
-    /** Return the length in bytes of the attribute; over-ride this in sub-classes. */
+    /**
+     * Return the length in bytes of the attribute; over-ride this in sub-classes.  @return the attr info length
+     */
     protected int getAttrInfoLength()
     {
         return u4attrLength;
     }
 
-    /** Return the String name of the attribute; over-ride this in sub-classes. */
+    /**
+     * Return the String name of the attribute; over-ride this in sub-classes.  @return the attr name
+     */
     protected String getAttrName()
     {
         return ATTR_Unknown;
@@ -200,10 +232,14 @@ public class AttrInfo implements ClassConstants
 
     /**
      * Trim attributes from the classfile except those in the String[].
+     *
+     * @param keepAttrs the keep attrs
      */
     protected void trimAttrsExcept(String[] keepAttrs)  {}
 
-    /** Check for Utf8 references to constant pool and mark them. */
+    /**
+     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     */
     protected void markUtf8Refs(ConstantPool pool)
     {
         pool.incRefCount(u2attrNameIndex);
@@ -213,17 +249,27 @@ public class AttrInfo implements ClassConstants
     /**
      * Check for Utf8 references in the 'info' data to the constant pool and
      * mark them; over-ride this in sub-classes.
+     *
+     * @param pool the pool
      */
     protected void markUtf8RefsInInfo(ConstantPool pool)  {}
 
-    /** Read the data following the header; over-ride this in sub-classes. */
+    /**
+     * Read the data following the header; over-ride this in sub-classes.  @param din the din
+     *
+     * @throws IOException the io exception
+     */
     protected void readInfo(DataInput din) throws java.io.IOException
     {
         info = new byte[u4attrLength];
         din.readFully(info);
     }
 
-    /** Export the representation to a DataOutput stream. */
+    /**
+     * Export the representation to a DataOutput stream.  @param dout the dout
+     *
+     * @throws IOException the io exception
+     */
     public final void write(DataOutput dout) throws java.io.IOException
     {
         if (dout == null) throw new IOException("No output stream was provided.");
@@ -232,7 +278,11 @@ public class AttrInfo implements ClassConstants
         writeInfo(dout);
     }
 
-    /** Export data following the header to a DataOutput stream; over-ride this in sub-classes. */
+    /**
+     * Export data following the header to a DataOutput stream; over-ride this in sub-classes.  @param dout the dout
+     *
+     * @throws IOException the io exception
+     */
     public void writeInfo(DataOutput dout) throws java.io.IOException
     {
         dout.write(info);

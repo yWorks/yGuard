@@ -1,11 +1,12 @@
 package com.yworks.yguard;
 
-import com.yworks.yguard.obf.Cl;
 import com.yworks.common.ShrinkBag;
-import com.yworks.common.ant.*;
 import com.yworks.common.ant.AttributesSection;
-import com.yworks.yshrink.ant.ShrinkTask;
+import com.yworks.common.ant.Exclude;
+import com.yworks.common.ant.YGuardBaseTask;
 import com.yworks.logging.Logger;
+import com.yworks.yguard.obf.Cl;
+import com.yworks.yshrink.ant.ShrinkTask;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
@@ -17,6 +18,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * The type Y guard task.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class YGuardTask extends YGuardBaseTask {
@@ -146,14 +149,24 @@ public class YGuardTask extends YGuardBaseTask {
     }
   }
 
-  public ShrinkTask createShrink() {
+    /**
+     * Create shrink shrink task.
+     *
+     * @return the shrink task
+     */
+    public ShrinkTask createShrink() {
     ShrinkTask shrinkTask = new ShrinkTask( YGuardBaseTask.MODE_NESTED );
     configureSubTask(shrinkTask);
     subTasks.add( shrinkTask );
     return shrinkTask;
   }
 
-  public ObfuscatorTask createRename() {
+    /**
+     * Create rename obfuscator task.
+     *
+     * @return the obfuscator task
+     */
+    public ObfuscatorTask createRename() {
     ObfuscatorTask obfuscatorTask = new ObfuscatorTask( YGuardBaseTask.MODE_NESTED );
     configureSubTask(obfuscatorTask);
     subTasks.add( obfuscatorTask );
@@ -169,7 +182,12 @@ public class YGuardTask extends YGuardBaseTask {
     task.init();
   }
 
-  public ObfuscatorTask createObfuscate() {
+    /**
+     * Create obfuscate obfuscator task.
+     *
+     * @return the obfuscator task
+     */
+    public ObfuscatorTask createObfuscate() {
     return createRename();
   }
 

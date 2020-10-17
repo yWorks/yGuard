@@ -18,7 +18,7 @@ import java.io.DataOutput;
 /**
  * Representation of a field or method from a class-file.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 abstract public class ClassItemInfo implements ClassConstants
 {
@@ -29,7 +29,13 @@ abstract public class ClassItemInfo implements ClassConstants
     private int u2accessFlags;
     private int u2nameIndex;
     private int u2descriptorIndex;
+    /**
+     * The U 2 attributes count.
+     */
     protected int u2attributesCount;
+    /**
+     * The Attributes.
+     */
     protected AttrInfo attributes[];
 
     private ClassFile cf;
@@ -42,10 +48,22 @@ abstract public class ClassItemInfo implements ClassConstants
   // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Class item info.
+     *
+     * @param cf the cf
+     */
+// Instance Methods ------------------------------------------------------
     protected ClassItemInfo(ClassFile cf) {this.cf = cf;}
 
-  public static ObfuscationConfig getObfuscationConfig(String name, AttrInfo[] attributes) {
+    /**
+     * Gets obfuscation config.
+     *
+     * @param name       the name
+     * @param attributes the attributes
+     * @return the obfuscation config
+     */
+    public static ObfuscationConfig getObfuscationConfig(String name, AttrInfo[] attributes) {
     if (attributes == null) return null;
     for (int i = 0; i < attributes.length; i++) {
       AttrInfo attribute = attributes[i];
@@ -106,34 +124,50 @@ abstract public class ClassItemInfo implements ClassConstants
     return true;
   }
 
-  /** Is the field or method 'Synthetic'? */
+    /**
+     * Is the field or method 'Synthetic'?  @return the boolean
+     */
     public boolean isSynthetic() {return isSynthetic;}
 
-    /** Return method/field name index into Constant Pool. */
+    /**
+     * Return method/field name index into Constant Pool.  @return the name index
+     */
     protected int getNameIndex() {return u2nameIndex;}
 
-    /** Set the method/field name index. */
+    /**
+     * Set the method/field name index.  @param index the index
+     */
     protected void setNameIndex(int index) {u2nameIndex = index;}
 
-    /** Return method/field descriptor index into Constant Pool. */
+    /**
+     * Return method/field descriptor index into Constant Pool.  @return the descriptor index
+     */
     protected int getDescriptorIndex() {return u2descriptorIndex;}
 
-    /** Set the method/field descriptor index. */
+    /**
+     * Set the method/field descriptor index.  @param index the index
+     */
     protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
 
-    /** Return method/field string name. */
+    /**
+     * Return method/field string name.  @return the name
+     */
     public String getName()
     {
         return ((Utf8CpInfo)cf.getCpEntry(u2nameIndex)).getString();
     }
 
-    /** Return descriptor string. */
+    /**
+     * Return descriptor string.  @return the descriptor
+     */
     public String getDescriptor()
     {
         return ((Utf8CpInfo)cf.getCpEntry(u2descriptorIndex)).getString();
     }
 
-    /** Return access flags. */
+    /**
+     * Return access flags.  @return the access flags
+     */
     public int getAccessFlags()
     {
         return u2accessFlags;
@@ -142,6 +176,8 @@ abstract public class ClassItemInfo implements ClassConstants
     /**
      * Trim attributes from the classfile ('Code', 'Exceptions', 'ConstantValue'
      * are preserved, all others except the list in the String[] are killed).
+     *
+     * @param keepAttrs the keep attrs
      */
     protected void trimAttrsExcept(String[] keepAttrs) 
     {
@@ -173,7 +209,9 @@ abstract public class ClassItemInfo implements ClassConstants
         u2attributesCount = j;
     }
 
-    /** Check for Utf8 references to constant pool and mark them. */
+    /**
+     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     */
     protected void markUtf8Refs(ConstantPool pool) 
     {
         pool.incRefCount(u2nameIndex);
@@ -184,7 +222,11 @@ abstract public class ClassItemInfo implements ClassConstants
         }
     }
 
-    /** Import the field or method data to internal representation. */
+    /**
+     * Import the field or method data to internal representation.  @param din the din
+     *
+     * @throws IOException the io exception
+     */
     protected void read(DataInput din) throws java.io.IOException
     {
         u2accessFlags = din.readUnsignedShort();
@@ -202,7 +244,11 @@ abstract public class ClassItemInfo implements ClassConstants
         }
     }
 
-    /** Export the representation to a DataOutput stream. */
+    /**
+     * Export the representation to a DataOutput stream.  @param dout the dout
+     *
+     * @throws IOException the io exception
+     */
     public void write(DataOutput dout) throws java.io.IOException
     {
         if (dout == null) throw new NullPointerException("No output stream was provided.");
@@ -216,7 +262,12 @@ abstract public class ClassItemInfo implements ClassConstants
         }
     }
 
-  public ObfuscationConfig getObfuscationConfig() {
+    /**
+     * Gets obfuscation config.
+     *
+     * @return the obfuscation config
+     */
+    public ObfuscationConfig getObfuscationConfig() {
     if (obfuscationConfig == DUMMY){
       obfuscationConfig = getObfuscationConfig(String.format("%s#%s", this.cf.getName(), this.getName()), attributes);
     }

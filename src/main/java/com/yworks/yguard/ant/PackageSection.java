@@ -8,31 +8,56 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.PatternSet;
 import org.apache.tools.ant.types.ZipFileSet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
-import java.io.IOException;
 
-/** Used by ant to handle the <code>package</code> element. */
+/**
+ * Used by ant to handle the <code>package</code> element.
+ */
 public final class PackageSection implements Mappable {
   private String name;
   private String mapTo;
-  protected List patternSets = new ArrayList(5);
+    /**
+     * The Pattern sets.
+     */
+    protected List patternSets = new ArrayList(5);
 
-  protected boolean allowMatchAllPatternSet = false;
+    /**
+     * The Allow match all pattern set.
+     */
+    protected boolean allowMatchAllPatternSet = false;
 
-  public void addConfiguredPatternSet(PatternSet ps) {
+    /**
+     * Add configured pattern set.
+     *
+     * @param ps the ps
+     */
+    public void addConfiguredPatternSet(PatternSet ps) {
     patternSets.add(ps);
   }
 
-  public void setName(String name) {
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public void setName(String name) {
     this.name = name;
   }
 
-  public void addEntries(Collection entries, ZipFileSet zf) throws IOException {
+    /**
+     * Add entries.
+     *
+     * @param entries the entries
+     * @param zf      the zf
+     * @throws IOException the io exception
+     */
+    public void addEntries(Collection entries, ZipFileSet zf) throws IOException {
     Project project = zf.getProject();
     Set packages = new HashSet();
     if (name != null) {
@@ -75,7 +100,12 @@ public final class PackageSection implements Mappable {
     }
   }
 
-  public void setMap(String mapTo) {
+    /**
+     * Sets map.
+     *
+     * @param mapTo the map to
+     */
+    public void setMap(String mapTo) {
     this.mapTo = mapTo;
   }
 

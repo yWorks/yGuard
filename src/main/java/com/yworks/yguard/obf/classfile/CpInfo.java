@@ -8,14 +8,16 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Representation of an entry in the ConstantPool. Specific types of entry
  * have their representations sub-classed from this.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 abstract public class CpInfo implements ClassConstants
 {
@@ -26,13 +28,19 @@ abstract public class CpInfo implements ClassConstants
     private int u1tag;
     private byte info[];
 
+    /**
+     * The Ref count.
+     */
     protected int refCount = 0;  // Used for reference counting in Constant Pool
 
 
     // Class Methods ---------------------------------------------------------
+
     /**
      * Create a new CpInfo from the data passed.
      *
+     * @param din the din
+     * @return the cp info
      * @throws IOException if class file is corrupt or incomplete
      */
     public static CpInfo create(DataInput din) throws java.io.IOException
@@ -67,22 +75,39 @@ abstract public class CpInfo implements ClassConstants
     }
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Cp info.
+     *
+     * @param tag the tag
+     */
+// Instance Methods ------------------------------------------------------
     protected CpInfo(int tag)
     {
         u1tag = tag;
     }
 
-    /** Read the 'info' data following the u1tag byte; over-ride this in sub-classes. */
+    /**
+     * Read the 'info' data following the u1tag byte; over-ride this in sub-classes.  @param din the din
+     *
+     * @throws IOException the io exception
+     */
     abstract protected void readInfo(DataInput din) throws java.io.IOException;
 
-    /** Check for Utf8 references to constant pool and mark them; over-ride this in sub-classes. */
+    /**
+     * Check for Utf8 references to constant pool and mark them; over-ride this in sub-classes.  @param pool the pool
+     */
     protected void markUtf8Refs(ConstantPool pool)  {}
 
-    /** Check for NameAndType references to constant pool and mark them; over-ride this in sub-classes. */
+    /**
+     * Check for NameAndType references to constant pool and mark them; over-ride this in sub-classes.  @param pool the pool
+     */
     protected void markNTRefs(ConstantPool pool)  {}
 
-    /** Export the representation to a DataOutput stream. */
+    /**
+     * Export the representation to a DataOutput stream.  @param dout the dout
+     *
+     * @throws IOException the io exception
+     */
     public void write(DataOutput dout) throws java.io.IOException
     {
         if (dout == null) throw new IOException("No output stream was provided.");
@@ -90,16 +115,26 @@ abstract public class CpInfo implements ClassConstants
         writeInfo(dout);
     }
 
-    /** Write the 'info' data following the u1tag byte; over-ride this in sub-classes. */
+    /**
+     * Write the 'info' data following the u1tag byte; over-ride this in sub-classes.  @param dout the dout
+     *
+     * @throws IOException the io exception
+     */
     abstract protected void writeInfo(DataOutput dout) throws java.io.IOException;
 
-    /** Return the reference count. */
+    /**
+     * Return the reference count.  @return the ref count
+     */
     public int getRefCount() {return refCount;}
 
-    /** Increment the reference count. */
+    /**
+     * Increment the reference count.
+     */
     public void incRefCount() {refCount++;}
 
-    /** Decrement the reference count. */
+    /**
+     * Decrement the reference count.
+     */
     public void decRefCount() 
     {
         if (refCount == 0) {
@@ -108,10 +143,17 @@ abstract public class CpInfo implements ClassConstants
         refCount--;
     }
 
-    /** Reset the reference count to zero. */
+    /**
+     * Reset the reference count to zero.
+     */
     public void resetRefCount() {refCount = 0;}
 
-    /** Dump the content of the class file to the specified file (used for debugging). */
+    /**
+     * Dump the content of the class file to the specified file (used for debugging).  @param pw the pw
+     *
+     * @param cf    the cf
+     * @param index the index
+     */
     public void dump(PrintWriter pw, ClassFile cf, int index)  {
       pw.println(this.getClass().getName());
     }

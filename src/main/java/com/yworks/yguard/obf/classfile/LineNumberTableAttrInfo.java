@@ -13,7 +13,7 @@ import java.io.DataOutput;
 /**
  * Representation of an attribute.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class LineNumberTableAttrInfo extends AttrInfo
 {
@@ -28,7 +28,14 @@ public class LineNumberTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Line number table attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
+// Instance Methods ------------------------------------------------------
     protected LineNumberTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
@@ -39,11 +46,21 @@ public class LineNumberTableAttrInfo extends AttrInfo
     {
         return ATTR_LineNumberTable;
     }
-    
+
+    /**
+     * Get line number table line number info [ ].
+     *
+     * @return the line number info [ ]
+     */
     public LineNumberInfo[] getLineNumberTable(){
       return lineNumberTable;
     }
-    
+
+    /**
+     * Set line number table.
+     *
+     * @param table the table
+     */
     public void setLineNumberTable(LineNumberInfo[] table){
       this.lineNumberTable = table;
       this.u2lineNumberTableLength = this.lineNumberTable.length;

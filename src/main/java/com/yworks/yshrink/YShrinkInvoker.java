@@ -1,35 +1,80 @@
 package com.yworks.yshrink;
 
-import com.yworks.common.ant.EntryPointsSection;
 import com.yworks.common.ShrinkBag;
-import com.yworks.yguard.ant.MethodSection;
+import com.yworks.common.ant.EntryPointsSection;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.FieldSection;
+import com.yworks.yguard.ant.MethodSection;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
 
 /**
+ * The interface Y shrink invoker.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public interface YShrinkInvoker {
 
-  public void execute();
+    /**
+     * Execute.
+     */
+    public void execute();
 
-  public void addPair( ShrinkBag pair );
+    /**
+     * Add pair.
+     *
+     * @param pair the pair
+     */
+    public void addPair( ShrinkBag pair );
 
-  public void setResourceClassPath( Path path );
+    /**
+     * Sets resource class path.
+     *
+     * @param path the path
+     */
+    public void setResourceClassPath( Path path );
 
-  public void addClassSection( ClassSection cs );
+    /**
+     * Add class section.
+     *
+     * @param cs the cs
+     */
+    public void addClassSection( ClassSection cs );
 
-  void addMethodSection( MethodSection ms );
+    /**
+     * Add method section.
+     *
+     * @param ms the ms
+     */
+    void addMethodSection( MethodSection ms );
 
-  void addFieldSection( FieldSection fs );
+    /**
+     * Add field section.
+     *
+     * @param fs the fs
+     */
+    void addFieldSection( FieldSection fs );
 
-  void setEntyPoints( EntryPointsSection eps );
+    /**
+     * Sets enty points.
+     *
+     * @param eps the eps
+     */
+    void setEntyPoints( EntryPointsSection eps );
 
-  void setLogFile( File shrinkLog );
+    /**
+     * Sets log file.
+     *
+     * @param shrinkLog the shrink log
+     */
+    void setLogFile( File shrinkLog );
 
-  void setContext(Task task);
+    /**
+     * Sets context.
+     *
+     * @param task the task
+     */
+    void setContext(Task task);
 }

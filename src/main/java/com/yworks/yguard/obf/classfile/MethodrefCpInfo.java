@@ -14,13 +14,10 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import java.util.*;
-
 /**
  * Representation of a 'methodref' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class MethodrefCpInfo extends RefCpInfo
 {
@@ -33,7 +30,10 @@ public class MethodrefCpInfo extends RefCpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Methodref cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected MethodrefCpInfo()
     {
         super(CONSTANT_Methodref);

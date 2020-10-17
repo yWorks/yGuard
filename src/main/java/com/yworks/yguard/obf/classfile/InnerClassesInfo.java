@@ -8,14 +8,15 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.lang.reflect.Modifier;
 
 /**
  * Representation of an Inner Classes table entry.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class InnerClassesInfo
 {
@@ -29,14 +30,26 @@ public class InnerClassesInfo
     private int u2innerClassAccessFlags;
 
 
-    // Class Methods ---------------------------------------------------------
+    /**
+     * Create inner classes info.
+     *
+     * @param din the din
+     * @return the inner classes info
+     * @throws IOException the io exception
+     */
+// Class Methods ---------------------------------------------------------
     public static InnerClassesInfo create(DataInput din) throws java.io.IOException
     {
         InnerClassesInfo ici = new InnerClassesInfo();
         ici.read(din);
         return ici;
     }
-    
+
+    /**
+     * Get modifiers int.
+     *
+     * @return the int
+     */
     public int getModifiers(){
       int mods = 0;
       if ((u2innerClassAccessFlags & 0x0001) == 0x0001) mods |= Modifier.PUBLIC;
@@ -53,16 +66,24 @@ public class InnerClassesInfo
     // Instance Methods ------------------------------------------------------
     private InnerClassesInfo() {}
 
-    /** Return the inner class index. */
+    /**
+     * Return the inner class index.  @return the inner class index
+     */
     protected int getInnerClassIndex() {return u2innerClassInfoIndex;}
 
-    /** Return the name index. */
+    /**
+     * Return the name index.  @return the inner name index
+     */
     protected int getInnerNameIndex() {return u2innerNameIndex;}
 
-    /** Set the name index. */
+    /**
+     * Set the name index.  @param index the index
+     */
     protected void setInnerNameIndex(int index) {u2innerNameIndex = index;}
 
-    /** Check for Utf8 references to constant pool and mark them. */
+    /**
+     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     */
     protected void markUtf8Refs(ConstantPool pool) 
     {
         // BUGFIX: a Swing1.1beta3 class has name index of zero - this is valid
@@ -80,7 +101,11 @@ public class InnerClassesInfo
         u2innerClassAccessFlags = din.readUnsignedShort();
     }
 
-    /** Export the representation to a DataOutput stream. */
+    /**
+     * Export the representation to a DataOutput stream.  @param dout the dout
+     *
+     * @throws IOException the io exception
+     */
     public void write(DataOutput dout) throws java.io.IOException
     {
         dout.writeShort(u2innerClassInfoIndex);

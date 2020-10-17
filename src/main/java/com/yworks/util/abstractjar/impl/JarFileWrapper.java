@@ -14,11 +14,26 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+/**
+ * The type Jar file wrapper.
+ */
 public class JarFileWrapper implements Archive {
-  JarFile jarFile;
-  Map<Entry, JarEntry> entries = new HashMap<>();
+    /**
+     * The Jar file.
+     */
+    JarFile jarFile;
+    /**
+     * The Entries.
+     */
+    Map<Entry, JarEntry> entries = new HashMap<>();
 
-  public JarFileWrapper( File file ) throws IOException {
+    /**
+     * Instantiates a new Jar file wrapper.
+     *
+     * @param file the file
+     * @throws IOException the io exception
+     */
+    public JarFileWrapper( File file ) throws IOException {
     jarFile = new JarFile(file);
     Enumeration<JarEntry> jarEntryEnumeration = jarFile.entries();
     while (jarEntryEnumeration.hasMoreElements()) {

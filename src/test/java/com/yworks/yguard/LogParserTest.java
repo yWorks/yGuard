@@ -1,7 +1,5 @@
 package com.yworks.yguard;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
 import org.junit.Test;
 import org.xml.sax.InputSource;
 
@@ -13,10 +11,16 @@ import static junit.framework.TestCase.assertEquals;
  * Tests {@link YGuardLogParser#translate(String)} and
  * {@link YGuardLogParser#translate(YGuardLogParser.MyStackTraceElement)}
  * behavior.
+ *
  * @author Thomas Behr
  */
 public class LogParserTest {
-  @Test
+    /**
+     * Test common mappings.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testCommonMappings() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -36,7 +40,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test invalid mappings.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testInvalidMappings() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -72,7 +81,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test leading dollar qualified name.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testLeadingDollarQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -88,7 +102,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test leading dollar stacktrace entry.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testLeadingDollarStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -104,7 +123,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test module qualified name.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testModuleQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -122,7 +146,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test module stacktrace entry.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testModuleStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -148,7 +177,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test overload qualified name.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testOverloadQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -162,7 +196,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test overload stacktrace entry.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testOverloadStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, ""),
@@ -174,7 +213,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test prefixed qualified name.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testPrefixedQualifiedName() throws Exception {
     deobfuscate(
       insert(MAPPINGS, "yguard/"),
@@ -190,7 +234,12 @@ public class LogParserTest {
       });
   }
 
-  @Test
+    /**
+     * Test prefixed stacktrace entry.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testPrefixedStacktraceEntry() throws Exception {
     deobfuscate(
       insert(MAPPINGS, "yguard/"),

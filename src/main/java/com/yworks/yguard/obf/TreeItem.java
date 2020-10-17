@@ -14,25 +14,42 @@
  */
 package com.yworks.yguard.obf;
 
-import java.util.*;
-import com.yworks.yguard.obf.classfile.*;
+import com.yworks.yguard.obf.classfile.ClassFile;
+
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * Item that forms a tree structure and can represent a package level, a class,
  * or a method or field.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class TreeItem
 {
     // Constants -------------------------------------------------------------
 
 
-    // Fields ----------------------------------------------------------------
+    /**
+     * The Is synthetic.
+     */
+// Fields ----------------------------------------------------------------
     protected boolean isSynthetic;  // Is a method or field Synthetic?
+    /**
+     * The Access.
+     */
     protected int access;  // Access level (interpret using java.lang.reflect.Modifier)
+    /**
+     * The Class tree.
+     */
     protected ClassTree classTree = null;   // Our owner
+    /**
+     * The Parent.
+     */
     protected TreeItem parent = null;       // Our immediate parent
+    /**
+     * The Sep.
+     */
     protected String sep = ClassFile.SEP_REGULAR; // Separator preceeding this level's name
     private String inName = null;         // Original name of this item
     private String outName = null;        // Output name of this item
@@ -43,7 +60,12 @@ public class TreeItem
 
     // Class Methods ---------------------------------------------------------
 
-    /** Do a non-package-recursive wildcard String match. */
+    /**
+     * Do a non-package-recursive wildcard String match.  @param pattern the pattern
+     *
+     * @param string the string
+     * @return the boolean
+     */
     public static boolean isNRMatch(String pattern, String string) {
         Enumeration enum1, enum2;
         try {
@@ -69,7 +91,12 @@ public class TreeItem
         return true;
     }
 
-    /** Do a wildcard String match. */
+    /**
+     * Do a wildcard String match.  @param pattern the pattern
+     *
+     * @param string the string
+     * @return the boolean
+     */
     public static boolean isMatch(String pattern, String string) {
         // Sanity check
         if (pattern == null || string == null) {
@@ -143,7 +170,12 @@ public class TreeItem
 
 
     // Instance Methods ------------------------------------------------------
-    /** Ctor. */
+
+    /**
+     * Ctor.  @param parent the parent
+     *
+     * @param name the name
+     */
     public TreeItem(TreeItem parent, String name)
     {
         this.parent = parent;
@@ -154,13 +186,19 @@ public class TreeItem
         }
     }
 
-    /** Return the modifiers. */
+    /**
+     * Return the modifiers.  @return the modifiers
+     */
     public int getModifiers() {return access;}
 
-    /** Return the original name of the entry. */
+    /**
+     * Return the original name of the entry.  @return the in name
+     */
     public String getInName() {return inName;}
 
-    /** Set the output name of the entry. */
+    /**
+     * Set the output name of the entry.  @param outName the out name
+     */
     public void setOutName(String outName) 
     {
         // DEBUG
@@ -172,37 +210,59 @@ public class TreeItem
         isFixed = true;
     }
 
-    /** Return the output name of the entry, obfuscated or original. */
+    /**
+     * Return the output name of the entry, obfuscated or original.  @return the out name
+     */
     public String getOutName() {return outName != null ? outName : inName;}
 
-    /** Return the obfuscated name of the entry. */
+    /**
+     * Return the obfuscated name of the entry.  @return the obf name
+     */
     public String getObfName() {return outName;}
 
-    /** Signal that this constraint came from a user script line. */
+    /**
+     * Signal that this constraint came from a user script line.
+     */
     public void setFromScript() {isFromScript = true;}
 
-    /** Signal that this constraint came from a map script line. */
+    /**
+     * Signal that this constraint came from a map script line.
+     */
     public void setFromScriptMap() {isFromScriptMap = true;}
 
-    /** Has the entry been fixed already? */
+    /**
+     * Has the entry been fixed already?  @return the boolean
+     */
     public boolean isFixed() {return isFixed;}
 
-    /** Is this constrained by a user script line? */
+    /**
+     * Is this constrained by a user script line?  @return the boolean
+     */
     public boolean isFromScript() {return isFromScript;}
 
-    /** Is this constrained by a map script line? */
+    /**
+     * Is this constrained by a map script line?  @return the boolean
+     */
     public boolean isFromScriptMap() {return isFromScriptMap;}
 
-    /** Is a method or field Synthetic? */
+    /**
+     * Is a method or field Synthetic?  @return the boolean
+     */
     public boolean isSynthetic() {return isSynthetic;}
 
-    /** Set the parent in the tree -- used when stitching in a Cl to replace a PlaceholderCl. */
+    /**
+     * Set the parent in the tree -- used when stitching in a Cl to replace a PlaceholderCl.  @param parent the parent
+     */
     public void setParent(TreeItem parent) {this.parent = parent;}
 
-    /** Get the parent in the tree. */
+    /**
+     * Get the parent in the tree.  @return the parent
+     */
     public TreeItem getParent() {return parent;}
 
-    /** Construct and return the full original name of the entry. */
+    /**
+     * Construct and return the full original name of the entry.  @return the full in name
+     */
     public String getFullInName()
     {
         if (parent == null)
@@ -219,7 +279,9 @@ public class TreeItem
         }
     }
 
-    /** Construct and return the full obfuscated name of the entry. */
+    /**
+     * Construct and return the full obfuscated name of the entry.  @return the full out name
+     */
     public String getFullOutName()
     {
         if (parent == null)

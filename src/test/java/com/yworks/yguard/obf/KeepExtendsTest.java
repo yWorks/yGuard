@@ -1,9 +1,9 @@
 package com.yworks.yguard.obf;
 
-import com.yworks.util.Compiler;
-import com.yworks.yshrink.YShrinkModel;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.InOutPair;
+import com.yworks.util.Compiler;
+import com.yworks.yshrink.YShrinkModel;
 import com.yworks.yshrink.YShrinkModelImpl;
 import com.yworks.yshrink.core.URLCpResolver;
 import com.yworks.yshrink.model.Model;
@@ -24,15 +24,24 @@ import static junit.framework.TestCase.assertTrue;
  * Tests if {@code extends} attributes of yGuard's &lt;keep&gt; elements can
  * be processed.
  * <p>
- * Using the {@code extends} attribute results in analyzing classes with ASM. 
+ * Using the {@code extends} attribute results in analyzing classes with ASM.
  * </p>
+ *
  * @author Thomas Behr
  */
 public class KeepExtendsTest extends AbstractObfuscationTest {
-  @Rule
+    /**
+     * The Name.
+     */
+    @Rule
   public TestName name = new TestName();
 
-  @Test
+    /**
+     * Test extends.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testExtends() throws Exception {
     impl(new TypeStruct("asm/AbstractBaseClass.txt", "com.yworks.ext.test.AbstractBaseClass"),
          new TypeStruct("asm/Impl.txt", "com.yworks.impl.test.Impl"),
@@ -40,7 +49,12 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
          new TypeStruct("asm/Sample.txt", "com.yworks.impl.test.Sample"));
   }
 
-  @Test
+    /**
+     * Test nests.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testNests() throws Exception {
     impl(new TypeStruct("asm/OuterClass.txt", "com.yworks.yguard.obf.asm.OuterClass"));
   }
@@ -106,10 +120,22 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
 
 
   private static final class TypeStruct {
-    final String fileName;
-    final String typeName;
+      /**
+       * The File name.
+       */
+      final String fileName;
+      /**
+       * The Type name.
+       */
+      final String typeName;
 
-    TypeStruct( final String fileName, final String typeName ) {
+      /**
+       * Instantiates a new Type struct.
+       *
+       * @param fileName the file name
+       * @param typeName the type name
+       */
+      TypeStruct( final String fileName, final String typeName ) {
       this.fileName = fileName;
       this.typeName = typeName;
     }

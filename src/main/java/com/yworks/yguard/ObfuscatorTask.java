@@ -5,15 +5,6 @@
  */
 package com.yworks.yguard;
 
-import com.yworks.util.CollectionFilter;
-import com.yworks.common.ant.ZipScannerTool;
-import com.yworks.yguard.ant.ClassSection;
-import com.yworks.yguard.ant.ExposeSection;
-import com.yworks.yguard.ant.FieldSection;
-import com.yworks.yguard.ant.MapParser;
-import com.yworks.yguard.ant.Mappable;
-import com.yworks.yguard.ant.MethodSection;
-import com.yworks.yguard.ant.PackageSection;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.AttributesSection;
 import com.yworks.common.ant.EntryPointsSection;
@@ -21,6 +12,16 @@ import com.yworks.common.ant.Exclude;
 import com.yworks.common.ant.InOutPair;
 import com.yworks.common.ant.TypePatternSet;
 import com.yworks.common.ant.YGuardBaseTask;
+import com.yworks.common.ant.ZipScannerTool;
+import com.yworks.util.CollectionFilter;
+import com.yworks.util.Version;
+import com.yworks.yguard.ant.ClassSection;
+import com.yworks.yguard.ant.ExposeSection;
+import com.yworks.yguard.ant.FieldSection;
+import com.yworks.yguard.ant.MapParser;
+import com.yworks.yguard.ant.Mappable;
+import com.yworks.yguard.ant.MethodSection;
+import com.yworks.yguard.ant.PackageSection;
 import com.yworks.yguard.obf.Cl;
 import com.yworks.yguard.obf.Cl.ClassResolver;
 import com.yworks.yguard.obf.ClassTree;
@@ -31,7 +32,6 @@ import com.yworks.yguard.obf.NameMaker;
 import com.yworks.yguard.obf.NameMakerFactory;
 import com.yworks.yguard.obf.NoSuchMappingException;
 import com.yworks.yguard.obf.ResourceHandler;
-import com.yworks.util.Version;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.LineNumberInfo;
 import com.yworks.yguard.obf.classfile.LineNumberTableAttrInfo;
@@ -91,6 +91,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 /**
  * The main obfuscation Ant Task
+ *
  * @author Sebastian Mueller, yWorks GmbH  (sebastian.mueller@yworks.com)
  */
 public class ObfuscatorTask extends YGuardBaseTask
@@ -128,11 +129,19 @@ public class ObfuscatorTask extends YGuardBaseTask
   private boolean needYShrinkModel;
   private YShrinkModel yShrinkModel;
 
-  public ObfuscatorTask() {
+    /**
+     * Instantiates a new Obfuscator task.
+     */
+    public ObfuscatorTask() {
     super();
   }
 
-  public ObfuscatorTask( boolean mode ) {
+    /**
+     * Instantiates a new Obfuscator task.
+     *
+     * @param mode the mode
+     */
+    public ObfuscatorTask( boolean mode ) {
     super( mode );
   }
 
@@ -152,7 +161,13 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  public static String[] toNativePattern(String[] patterns){
+    /**
+     * To native pattern string [ ].
+     *
+     * @param patterns the patterns
+     * @return the string [ ]
+     */
+    public static String[] toNativePattern(String[] patterns){
     if (patterns == null){
       return new String[0];
     } else {
@@ -164,11 +179,23 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  public static final String toNativeClass(String className){
+    /**
+     * To native class string.
+     *
+     * @param className the class name
+     * @return the string
+     */
+    public static final String toNativeClass(String className){
       return className.replace('.','/');
   }
 
-  public static final String[] toNativeMethod(String javaMethod){
+    /**
+     * To native method string [ ].
+     *
+     * @param javaMethod the java method
+     * @return the string [ ]
+     */
+    public static final String[] toNativeMethod(String javaMethod){
       StringTokenizer tokenizer = new StringTokenizer(javaMethod, "(,[]) ", true);
       String tmp = tokenizer.nextToken();;
       while (tmp.trim().length() == 0){
@@ -265,19 +292,38 @@ public class ObfuscatorTask extends YGuardBaseTask
       return nat.toString();
   }
 
-  public void setNeedYShrinkModel( boolean b ) {
+    /**
+     * Sets need y shrink model.
+     *
+     * @param b the b
+     */
+    public void setNeedYShrinkModel( boolean b ) {
     this.needYShrinkModel = b;
   }
 
-  /** Used by ant to handle the <code>patch</code> element.
-   */
-  public final class PatchSection {
+    /**
+     * Used by ant to handle the <code>patch</code> element.
+     */
+    public final class PatchSection {
     private List patches = new ArrayList();
-    public void addConfiguredClass(ClassSection cs){
+
+        /**
+         * Add configured class.
+         *
+         * @param cs the cs
+         */
+        public void addConfiguredClass(ClassSection cs){
       patches.add(cs);
     }
 
-    Collection createEntries(Collection srcJars) throws IOException{
+        /**
+         * Create entries collection.
+         *
+         * @param srcJars the src jars
+         * @return the collection
+         * @throws IOException the io exception
+         */
+        Collection createEntries(Collection srcJars) throws IOException{
         Collection entries = new ArrayList(20);
         for (Iterator it = srcJars.iterator(); it.hasNext();)
         {
@@ -315,10 +361,11 @@ public class ObfuscatorTask extends YGuardBaseTask
 //    }
 //  }
 
-  /** Used by ant to handle the <code>classes</code>,
-   * <CODE>methods</CODE> and <CODE>fields</CODE> attributes.
-   */
-  public static final class Modifiers extends EnumeratedAttribute {
+    /**
+     * Used by ant to handle the <code>classes</code>,
+     * <CODE>methods</CODE> and <CODE>fields</CODE> attributes.
+     */
+    public static final class Modifiers extends EnumeratedAttribute {
     public String[] getValues() {
         return new String[] {"public", "protected", "friendly", "private","none"};
     }
@@ -333,7 +380,12 @@ public class ObfuscatorTask extends YGuardBaseTask
       return -1;
     }
 
-    public int getModifierValue(){
+        /**
+         * Get modifier value int.
+         *
+         * @return the int
+         */
+        public int getModifierValue(){
       switch (myGetIndex()){
         default:
         return YGuardRule.LEVEL_NONE;
@@ -352,14 +404,27 @@ public class ObfuscatorTask extends YGuardBaseTask
   }
 
 
-  /** Used by ant to handle the <code>map</code> element.
-   */
-  public final class MapSection{
+    /**
+     * Used by ant to handle the <code>map</code> element.
+     */
+    public final class MapSection{
     private File logFile;
     private List mappables = new ArrayList();
-    public void addConfiguredPackage( PackageSection ps){
+
+        /**
+         * Add configured package.
+         *
+         * @param ps the ps
+         */
+        public void addConfiguredPackage( PackageSection ps){
       mappables.add(ps);
     }
+
+        /**
+         * Add configured class.
+         *
+         * @param ps the ps
+         */
 //    public ClassSection createClass() {
 //      ClassSection cs = new ClassSection(  );
 //      mappables.add( cs );
@@ -368,18 +433,43 @@ public class ObfuscatorTask extends YGuardBaseTask
     public void addConfiguredClass(ClassSection ps){
       mappables.add(ps);
     }
-    public void addConfiguredField( FieldSection ps){
-      mappables.add(ps);
-    }
-    public void addConfiguredMethod(MethodSection ps){
+
+        /**
+         * Add configured field.
+         *
+         * @param ps the ps
+         */
+        public void addConfiguredField( FieldSection ps){
       mappables.add(ps);
     }
 
-    public void setLogFile(File logFile){
+        /**
+         * Add configured method.
+         *
+         * @param ps the ps
+         */
+        public void addConfiguredMethod(MethodSection ps){
+      mappables.add(ps);
+    }
+
+        /**
+         * Set log file.
+         *
+         * @param logFile the log file
+         */
+        public void setLogFile(File logFile){
       this.logFile = logFile;
     }
 
-    Collection createEntries(Project antproject, PrintWriter log) throws BuildException{
+        /**
+         * Create entries collection.
+         *
+         * @param antproject the antproject
+         * @param log        the log
+         * @return the collection
+         * @throws BuildException the build exception
+         */
+        Collection createEntries(Project antproject, PrintWriter log) throws BuildException{
       Collection res;
       if (logFile != null){
         try{
@@ -422,10 +512,10 @@ public class ObfuscatorTask extends YGuardBaseTask
   }
 
 
-  /**
-   * Used by ant to handle the <code>adjust</code> element.
-   */
-  public class AdjustSection extends ZipFileSet {
+    /**
+     * Used by ant to handle the <code>adjust</code> element.
+     */
+    public class AdjustSection extends ZipFileSet {
       private boolean replaceName = false;
       private boolean replaceContent = false;
       private String  replaceContentSeparator = "/";
@@ -433,52 +523,107 @@ public class ObfuscatorTask extends YGuardBaseTask
 
       private Set entries;
 
-      public AdjustSection()
+        /**
+         * Instantiates a new Adjust section.
+         */
+        public AdjustSection()
       {
         setProject(ObfuscatorTask.this.getProject());
       }
 
-      public boolean contains(String name)
+        /**
+         * Contains boolean.
+         *
+         * @param name the name
+         * @return the boolean
+         */
+        public boolean contains(String name)
       {
         return entries.contains(name);
       }
 
-      public void setReplaceContent(boolean rc){
+        /**
+         * Set replace content.
+         *
+         * @param rc the rc
+         */
+        public void setReplaceContent(boolean rc){
         this.replaceContent = rc;
       }
 
-      public boolean getReplaceContent()
+        /**
+         * Gets replace content.
+         *
+         * @return the replace content
+         */
+        public boolean getReplaceContent()
       {
         return replaceContent;
       }
 
-      public void setReplaceContentSeparator(String separator) {
+        /**
+         * Sets replace content separator.
+         *
+         * @param separator the separator
+         */
+        public void setReplaceContentSeparator(String separator) {
         this.replaceContentSeparator = separator;
       }
 
-      public String getReplaceContentSeparator() {
+        /**
+         * Gets replace content separator.
+         *
+         * @return the replace content separator
+         */
+        public String getReplaceContentSeparator() {
         return replaceContentSeparator;
       }
 
-      public void setReplacePath(boolean rp){
+        /**
+         * Set replace path.
+         *
+         * @param rp the rp
+         */
+        public void setReplacePath(boolean rp){
         this.replacePath = rp;
       }
 
-      public boolean getReplacePath()
+        /**
+         * Gets replace path.
+         *
+         * @return the replace path
+         */
+        public boolean getReplacePath()
       {
         return replacePath;
       }
 
-      public boolean getReplaceName()
+        /**
+         * Gets replace name.
+         *
+         * @return the replace name
+         */
+        public boolean getReplaceName()
       {
         return replaceName;
       }
 
-      public void setReplaceName(boolean rn){
+        /**
+         * Set replace name.
+         *
+         * @param rn the rn
+         */
+        public void setReplaceName(boolean rn){
         this.replaceName = rn;
       }
 
-      public void createEntries(Collection srcJars) throws IOException
+        /**
+         * Create entries.
+         *
+         * @param srcJars the src jars
+         * @throws IOException the io exception
+         */
+        public void createEntries(Collection srcJars) throws IOException
       {
         entries = new HashSet();
         for(Iterator iter = srcJars.iterator(); iter.hasNext();)
@@ -505,10 +650,12 @@ public class ObfuscatorTask extends YGuardBaseTask
 //    return this.resourceClassPath;
 //  }
 
-  /** Used by ant to handle the nested <code>expose</code> element.
-   * @return an ExposeSection instance
-   */
-  public ExposeSection createExpose(){
+    /**
+     * Used by ant to handle the nested <code>expose</code> element.
+     *
+     * @return an ExposeSection instance
+     */
+    public ExposeSection createExpose(){
     if (this.expose != null){
           throw new IllegalArgumentException("Only one expose element allowed!");
       }
@@ -516,7 +663,12 @@ public class ObfuscatorTask extends YGuardBaseTask
     return expose;
   }
 
-  public void addExcludes( EntryPointsSection entryPoints ) {
+    /**
+     * Add excludes.
+     *
+     * @param entryPoints the entry points
+     */
+    public void addExcludes( EntryPointsSection entryPoints ) {
     if ( null == this.expose ) {
       createExpose();
     }
@@ -541,43 +693,57 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  /** Used by ant to handle the nested <code>adjust</code> element.
-   * @return an AdjustSection instance
-   */
-  public AdjustSection createAdjust(){
+    /**
+     * Used by ant to handle the nested <code>adjust</code> element.
+     *
+     * @return an AdjustSection instance
+     */
+    public AdjustSection createAdjust(){
     AdjustSection adjust = new AdjustSection();
     adjust.setProject(this.getProject());
     adjustSections.add(adjust);
     return adjust;
   }
 
-  /** Used by ant to handle the nested <code>expose</code> element.
-   */
-  public void addConfiguredExpose(ExposeSection ex){
+    /**
+     * Used by ant to handle the nested <code>expose</code> element.
+     *
+     * @param ex the ex
+     */
+    public void addConfiguredExpose(ExposeSection ex){
       if (this.expose != null){
           throw new IllegalArgumentException("Only one expose element allowed!");
       }
       this.expose = ex;
   }
 
-  public EntryPointsSection createEntryPoints() {
+    /**
+     * Create entry points entry points section.
+     *
+     * @return the entry points section
+     */
+    public EntryPointsSection createEntryPoints() {
     return new EntryPointsSection( this );
   }
 
-  /**
-   * Used by ant to handle the nested <code>entrypoints</code> element.
-   */
-  public void addConfiguredEntryPoints( EntryPointsSection eps ) {
+    /**
+     * Used by ant to handle the nested <code>entrypoints</code> element.
+     *
+     * @param eps the eps
+     */
+    public void addConfiguredEntryPoints( EntryPointsSection eps ) {
     if ( this.entryPoints != null ) {
       throw new IllegalArgumentException( "Only one entrypoints element allowed!" );
     }
     this.entryPoints = eps;
   }
 
-  /** Used by ant to handle the nested <code>map</code> element.
-   * @return an instance of MapSection
-   */
-  public MapSection createMap(){
+    /**
+     * Used by ant to handle the nested <code>map</code> element.
+     *
+     * @return an instance of MapSection
+     */
+    public MapSection createMap(){
       if (this.map != null){
           throw new IllegalArgumentException("Only one map element allowed!");
       }
@@ -585,19 +751,24 @@ public class ObfuscatorTask extends YGuardBaseTask
     return map;
   }
 
-  /** Used by ant to handle the nested <code>map</code> element.
-   */
-  public void addConfiguredMap(MapSection map){
+    /**
+     * Used by ant to handle the nested <code>map</code> element.
+     *
+     * @param map the map
+     */
+    public void addConfiguredMap(MapSection map){
       if (this.map != null){
           throw new IllegalArgumentException("Only one map element allowed!");
       }
       this.map = map;
   }
 
-  /** Used by ant to handle the nested <code>patch</code> element.
-   * @return an instance of PatchSection
-   */
-  public PatchSection createPatch(){
+    /**
+     * Used by ant to handle the nested <code>patch</code> element.
+     *
+     * @return an instance of PatchSection
+     */
+    public PatchSection createPatch(){
       if (this.patch != null){
           throw new IllegalArgumentException("Only one patch element allowed!");
       }
@@ -605,9 +776,12 @@ public class ObfuscatorTask extends YGuardBaseTask
     return patch;
   }
 
-  /** Used by ant to handle the nested <code>patch</code> element.
-   */
-  public void addConfiguredPatch(PatchSection patch){
+    /**
+     * Used by ant to handle the nested <code>patch</code> element.
+     *
+     * @param patch the patch
+     */
+    public void addConfiguredPatch(PatchSection patch){
       if (this.patch != null){
           throw new IllegalArgumentException("Only one patch element allowed!");
       }
@@ -622,22 +796,30 @@ public class ObfuscatorTask extends YGuardBaseTask
 //    System.out.println("addConfiguredAdjust");
 //  }
 
-  /** Used by ant to handle the <code>logfile</code> attribute.
-   * @param file
-   */
-  public void setLogFile(File file){
+    /**
+     * Used by ant to handle the <code>logfile</code> attribute.
+     *
+     * @param file the file
+     */
+    public void setLogFile(File file){
     this.logFile = file;
   }
 
-  /** Used by ant to handle the <code>conservemanifest</code> attribute.
-   */
-  public void setConserveManifest(boolean c){
+    /**
+     * Used by ant to handle the <code>conservemanifest</code> attribute.
+     *
+     * @param c the c
+     */
+    public void setConserveManifest(boolean c){
     this.conserveManifest = c;
   }
 
-  /** Used by ant to handle the <code>mainclass</code> attribute.
-   */
-  public void setMainClass(String mainClass){
+    /**
+     * Used by ant to handle the <code>mainclass</code> attribute.
+     *
+     * @param mainClass the main class
+     */
+    public void setMainClass(String mainClass){
     this.mainClass = mainClass;
   }
 
@@ -958,7 +1140,13 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  public void addInheritanceEntries( Collection entries ) throws IOException {
+    /**
+     * Add inheritance entries.
+     *
+     * @param entries the entries
+     * @throws IOException the io exception
+     */
+    public void addInheritanceEntries( Collection entries ) throws IOException {
 
     if ( ! needYShrinkModel || expose == null ) return;
 
@@ -1018,7 +1206,12 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  public void setShrink( boolean doShrink ) {
+    /**
+     * Sets shrink.
+     *
+     * @param doShrink the do shrink
+     */
+    public void setShrink( boolean doShrink ) {
 
     if ( mode == MODE_STANDALONE ) {
       this.doShrink = doShrink;
@@ -1029,21 +1222,48 @@ public class ObfuscatorTask extends YGuardBaseTask
 
   }
 
-   public void setShrinkLog( File shrinkLog ) {
+    /**
+     * Sets shrink log.
+     *
+     * @param shrinkLog the shrink log
+     */
+    public void setShrinkLog( File shrinkLog ) {
     this.shrinkLog = shrinkLog;
   }
 
-  public void setUseExposeAsEntryPoints( boolean useExposeAsEntryPoints ) {
+    /**
+     * Sets use expose as entry points.
+     *
+     * @param useExposeAsEntryPoints the use expose as entry points
+     */
+    public void setUseExposeAsEntryPoints( boolean useExposeAsEntryPoints ) {
     this.useExposeAsEntryPoints = useExposeAsEntryPoints;
   }
 
-  class ResourceAdjuster implements ResourceHandler
+    /**
+     * The type Resource adjuster.
+     */
+    class ResourceAdjuster implements ResourceHandler
   {
-     GuardDB db;
-     Map map;
-     StringReplacer contentReplacer = null;
+      /**
+       * The Db.
+       */
+      GuardDB db;
+      /**
+       * The Map.
+       */
+      Map map;
+      /**
+       * The Content replacer.
+       */
+      StringReplacer contentReplacer = null;
 
-     ResourceAdjuster(final GuardDB db)
+      /**
+       * Instantiates a new Resource adjuster.
+       *
+       * @param db the db
+       */
+      ResourceAdjuster(final GuardDB db)
      {
        this.db = db;
        map = new HashMap() {
@@ -1136,7 +1356,12 @@ public class ObfuscatorTask extends YGuardBaseTask
       return result.toString();
     }
 
-    StringReplacer getContentReplacer()
+      /**
+       * Gets content replacer.
+       *
+       * @return the content replacer
+       */
+      StringReplacer getContentReplacer()
      {
        if(contentReplacer == null)
        {
@@ -1151,6 +1376,12 @@ public class ObfuscatorTask extends YGuardBaseTask
   //accepts classes and their inner classes
   private static final class ClassFileFilter implements Filter{
       private com.yworks.util.Filter parent;
+
+      /**
+       * Instantiates a new Class file filter.
+       *
+       * @param parent the parent
+       */
       ClassFileFilter(com.yworks.util.Filter parent){
       this.parent = parent;
     }
@@ -1169,11 +1400,19 @@ public class ObfuscatorTask extends YGuardBaseTask
 
     private PrintWriter writer;
 
-    TaskLogger(){
+      /**
+       * Instantiates a new Task logger.
+       */
+      TaskLogger(){
       super();
     }
 
-    void setWriter( PrintWriter writer ) {
+      /**
+       * Sets writer.
+       *
+       * @param writer the writer
+       */
+      void setWriter( PrintWriter writer ) {
       this.writer = writer;
     }
 
@@ -1222,7 +1461,12 @@ public class ObfuscatorTask extends YGuardBaseTask
 
     private Project p;
 
-    LogListener(Project p){
+      /**
+       * Instantiates a new Log listener.
+       *
+       * @param p the p
+       */
+      LogListener(Project p){
       this.p = p;
     }
 
@@ -1329,21 +1573,53 @@ public class ObfuscatorTask extends YGuardBaseTask
       asciiChars = asciiC.toString();
     }
 
-    int mode;
-    static final int LEGAL = 0;
-    static final int COMPATIBLE = 1;
-    static final int ILLEGAL = 2;
-    static final int SMALL = 4;
-    static final int MIX = 12;
-    static final int BEST = 8;
+      /**
+       * The Mode.
+       */
+      int mode;
+      /**
+       * The Legal.
+       */
+      static final int LEGAL = 0;
+      /**
+       * The Compatible.
+       */
+      static final int COMPATIBLE = 1;
+      /**
+       * The Illegal.
+       */
+      static final int ILLEGAL = 2;
+      /**
+       * The Small.
+       */
+      static final int SMALL = 4;
+      /**
+       * The Mix.
+       */
+      static final int MIX = 12;
+      /**
+       * The Best.
+       */
+      static final int BEST = 8;
 
-    boolean overloadEnabled = true;
+      /**
+       * The Overload enabled.
+       */
+      boolean overloadEnabled = true;
 
-    YGuardNameFactory(){
+      /**
+       * Instantiates a new Y guard name factory.
+       */
+      YGuardNameFactory(){
       this(LEGAL|SMALL);
     }
 
-    YGuardNameFactory(int mode){
+      /**
+       * Instantiates a new Y guard name factory.
+       *
+       * @param mode the mode
+       */
+      YGuardNameFactory(int mode){
       super.setInstance(this);
       this.mode = mode;
     }
@@ -1377,15 +1653,30 @@ public class ObfuscatorTask extends YGuardBaseTask
       return sb.toString();
     }
 
-    public boolean isOverloadEnabled() {
+      /**
+       * Is overload enabled boolean.
+       *
+       * @return the boolean
+       */
+      public boolean isOverloadEnabled() {
       return overloadEnabled;
     }
 
-    public void setOverloadEnabled(boolean overloadEnabled) {
+      /**
+       * Sets overload enabled.
+       *
+       * @param overloadEnabled the overload enabled
+       */
+      public void setOverloadEnabled(boolean overloadEnabled) {
       this.overloadEnabled = overloadEnabled;
     }
 
-    void setPackagePrefix(String prefix){
+      /**
+       * Set package prefix.
+       *
+       * @param prefix the prefix
+       */
+      void setPackagePrefix(String prefix){
       this.packagePrefix = prefix;
       if (packagePrefix != null){
         packagePrefix = packagePrefix.replace('.', '/')+'/';
@@ -1559,9 +1850,19 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  static class CompoundNameMaker implements NameMaker{
+    /**
+     * The type Compound name maker.
+     */
+    static class CompoundNameMaker implements NameMaker{
     private NameMaker nm1,nm2;
-    CompoundNameMaker(NameMaker nm1, NameMaker nm2){
+
+        /**
+         * Instantiates a new Compound name maker.
+         *
+         * @param nm1 the nm 1
+         * @param nm2 the nm 2
+         */
+        CompoundNameMaker(NameMaker nm1, NameMaker nm2){
       this.nm1 = nm1;
       this.nm2 = nm2;
     }
@@ -1571,18 +1872,41 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  static class MixNameMaker extends AbstractNameMaker {
+    /**
+     * The type Mix name maker.
+     */
+    static class MixNameMaker extends AbstractNameMaker {
 
-    List nameMakers = new ArrayList();
-    final String prefix;
+        /**
+         * The Name makers.
+         */
+        List nameMakers = new ArrayList();
+        /**
+         * The Prefix.
+         */
+        final String prefix;
 
-    MixNameMaker(String prefix, String[] reservedNames, AbstractNameMaker delegate, int count){
+        /**
+         * Instantiates a new Mix name maker.
+         *
+         * @param prefix        the prefix
+         * @param reservedNames the reserved names
+         * @param delegate      the delegate
+         * @param count         the count
+         */
+        MixNameMaker(String prefix, String[] reservedNames, AbstractNameMaker delegate, int count){
       super(reservedNames, "O0", 1);
       add(delegate, count);
       this.prefix = prefix;
     }
 
-    void add(AbstractNameMaker delegate, int count){
+        /**
+         * Add.
+         *
+         * @param delegate the delegate
+         * @param count    the count
+         */
+        void add(AbstractNameMaker delegate, int count){
       count = count < 1 ? 1 : count;
       for (int i = 0; i < count; i++){
         nameMakers.add(delegate);
@@ -1600,20 +1924,49 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  static final class LongNameMaker extends AbstractNameMaker{
-    String chars;
-    String firstChars;
+    /**
+     * The type Long name maker.
+     */
+    static final class LongNameMaker extends AbstractNameMaker{
+        /**
+         * The Chars.
+         */
+        String chars;
+        /**
+         * The First chars.
+         */
+        String firstChars;
 
-    LongNameMaker(String[] reservedNames){
+        /**
+         * Instantiates a new Long name maker.
+         *
+         * @param reservedNames the reserved names
+         */
+        LongNameMaker(String[] reservedNames){
       this(reservedNames, false, 256);
     }
 
-    LongNameMaker(String[] reservedNames, boolean ascii, int length){
+        /**
+         * Instantiates a new Long name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param ascii         the ascii
+         * @param length        the length
+         */
+        LongNameMaker(String[] reservedNames, boolean ascii, int length){
       this(reservedNames, ascii?"Oo":"Oo\u00D2\u00D3\u00D4\u00D5\u00D6\u00D8\u00F4\u00F5\u00F6\u00F8",
       ascii?"Oo0":"0Oo\u00D2\u00D3\u00D4\u00D5\u00D6\u00D8\u00F4\u00F5\u00F6\u00F8",length);
     }
 
-    LongNameMaker(String[] reservedNames, String firstChars, String chars, int minLength){
+        /**
+         * Instantiates a new Long name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param firstChars    the first chars
+         * @param chars         the chars
+         * @param minLength     the min length
+         */
+        LongNameMaker(String[] reservedNames, String firstChars, String chars, int minLength){
       super(reservedNames, null, minLength);
       this.chars = chars;
       if ( chars == null || chars.length() < 1 ) {
@@ -1652,25 +2005,58 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  static final class KeywordNameMaker extends AbstractNameMaker{
-    static final String[] KEYWORDS = new String[]{
+    /**
+     * The type Keyword name maker.
+     */
+    static final class KeywordNameMaker extends AbstractNameMaker{
+        /**
+         * The Keywords.
+         */
+        static final String[] KEYWORDS = new String[]{
       "this","super","new","Object","String","class","return","void","null","int",
       "if","float","for","do","while","public","private","interface",};
-    static final String[] SPACER = new String[]{
+        /**
+         * The Spacer.
+         */
+        static final String[] SPACER = new String[]{
       ".","$"," ","_",
     };
 
-    static final String[] NOSPACER = new String[]{""};
+        /**
+         * The Nospacer.
+         */
+        static final String[] NOSPACER = new String[]{""};
 
-    String chars;
-    String[] keyWords;
-    String spacer[];
+        /**
+         * The Chars.
+         */
+        String chars;
+        /**
+         * The Key words.
+         */
+        String[] keyWords;
+        /**
+         * The Spacer.
+         */
+        String spacer[];
 
-    KeywordNameMaker(String[] reservedNames){
+        /**
+         * Instantiates a new Keyword name maker.
+         *
+         * @param reservedNames the reserved names
+         */
+        KeywordNameMaker(String[] reservedNames){
       this(reservedNames, KEYWORDS, NOSPACER);
     }
 
-    KeywordNameMaker(String[] reservedNames, String[] keyWords, String[] spacer){
+        /**
+         * Instantiates a new Keyword name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param keyWords      the key words
+         * @param spacer        the spacer
+         */
+        KeywordNameMaker(String[] reservedNames, String[] keyWords, String[] spacer){
       super(reservedNames, "Oo0",0);
       this.keyWords = keyWords;
       this.spacer = spacer;
@@ -1693,11 +2079,21 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  static final class PrefixNameMaker extends AbstractNameMaker {
+    /**
+     * The type Prefix name maker.
+     */
+    static final class PrefixNameMaker extends AbstractNameMaker {
     private String prefix;
     private AbstractNameMaker delegate;
 
-    PrefixNameMaker(String prefix, String[] reservedNames, AbstractNameMaker delegate){
+        /**
+         * Instantiates a new Prefix name maker.
+         *
+         * @param prefix        the prefix
+         * @param reservedNames the reserved names
+         * @param delegate      the delegate
+         */
+        PrefixNameMaker(String prefix, String[] reservedNames, AbstractNameMaker delegate){
       super(reservedNames, "O0", 1);
       this.prefix = prefix;
       this.delegate = delegate;
@@ -1710,30 +2106,70 @@ public class ObfuscatorTask extends YGuardBaseTask
 
   }
 
-  static abstract class AbstractNameMaker implements NameMaker{
-    Set reservedNames;
-    Map countMap = new HashMap();
-    String fillChars;
-    int minLength;
+    /**
+     * The type Abstract name maker.
+     */
+    static abstract class AbstractNameMaker implements NameMaker{
+        /**
+         * The Reserved names.
+         */
+        Set reservedNames;
+        /**
+         * The Count map.
+         */
+        Map countMap = new HashMap();
+        /**
+         * The Fill chars.
+         */
+        String fillChars;
+        /**
+         * The Min length.
+         */
+        int minLength;
     private static final String DUMMY = "(com.dummy.Dummy)";
 
-    protected boolean overloadEnabled = true;
+        /**
+         * The Overload enabled.
+         */
+        protected boolean overloadEnabled = true;
     private int counter = 1;
 
-    public boolean isOverloadEnabled() {
+        /**
+         * Is overload enabled boolean.
+         *
+         * @return the boolean
+         */
+        public boolean isOverloadEnabled() {
       return overloadEnabled;
     }
 
-    public void setOverloadEnabled(boolean overloadEnabled) {
+        /**
+         * Sets overload enabled.
+         *
+         * @param overloadEnabled the overload enabled
+         */
+        public void setOverloadEnabled(boolean overloadEnabled) {
       this.overloadEnabled = overloadEnabled;
     }
 
 
-    AbstractNameMaker(String[] reservedNames){
+        /**
+         * Instantiates a new Abstract name maker.
+         *
+         * @param reservedNames the reserved names
+         */
+        AbstractNameMaker(String[] reservedNames){
       this(reservedNames, "0o", 256);
     }
 
-    AbstractNameMaker(String[] reservedNames, String fillChars, int minLength){
+        /**
+         * Instantiates a new Abstract name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param fillChars     the fill chars
+         * @param minLength     the min length
+         */
+        AbstractNameMaker(String[] reservedNames, String fillChars, int minLength){
       if (reservedNames!= null && reservedNames.length>0){
         this.reservedNames = new HashSet(Arrays.asList(reservedNames));
       } else {
@@ -1800,14 +2236,35 @@ public class ObfuscatorTask extends YGuardBaseTask
 //      }
 //    }
 
-    abstract String generateName(int i);
+        /**
+         * Generate name string.
+         *
+         * @param i the
+         * @return the string
+         */
+        abstract String generateName(int i);
   }
 
-  static final class ResourceCpResolver implements ClassResolver {
-    Path resource;
-    URLClassLoader urlClassLoader;
+    /**
+     * The type Resource cp resolver.
+     */
+    static final class ResourceCpResolver implements ClassResolver {
+        /**
+         * The Resource.
+         */
+        Path resource;
+        /**
+         * The Url class loader.
+         */
+        URLClassLoader urlClassLoader;
 
-    ResourceCpResolver(Path resources, Task target){
+        /**
+         * Instantiates a new Resource cp resolver.
+         *
+         * @param resources the resources
+         * @param target    the target
+         */
+        ResourceCpResolver(Path resources, Task target){
       this.resource = resources;
       String[] list = resources.list();
       List listUrls = new ArrayList();
@@ -1846,27 +2303,43 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  /** Setter for property replaceClassNameStrings.
-   * @param replaceClassNameStrings New value of property replaceClassNameStrings.
-   *
-   */
-  public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
+    /**
+     * Setter for property replaceClassNameStrings.
+     *
+     * @param replaceClassNameStrings New value of property replaceClassNameStrings.
+     */
+    public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
   {
     this.replaceClassNameStrings = replaceClassNameStrings;
   }
 
-  public void setScramble(boolean scramble) {
+    /**
+     * Sets scramble.
+     *
+     * @param scramble the scramble
+     */
+    public void setScramble(boolean scramble) {
     if (scramble) {
       YGuardNameFactory.scramble();
       com.yworks.yguard.obf.KeywordNameMaker.scramble();
     }
   }
-  public static final class MyLineNumberTableMapper implements com.yworks.yguard.obf.LineNumberTableMapper {
+
+    /**
+     * The type My line number table mapper.
+     */
+    public static final class MyLineNumberTableMapper implements com.yworks.yguard.obf.LineNumberTableMapper {
     private long salt;
     private LineNumberScrambler last;
     private long lastSeed;
     private Set classNames = new HashSet();
-    public MyLineNumberTableMapper(long salt){
+
+        /**
+         * Instantiates a new My line number table mapper.
+         *
+         * @param salt the salt
+         */
+        public MyLineNumberTableMapper(long salt){
       this.salt = salt;
       this.last = new LineNumberScrambler(3584, lastSeed);
     }
@@ -1899,7 +2372,10 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  public static final class LineNumberSqueezer implements LineNumberTableMapper {
+    /**
+     * The type Line number squeezer.
+     */
+    public static final class LineNumberSqueezer implements LineNumberTableMapper {
     private List squeezedNumbers = new ArrayList();
     public boolean mapLineNumberTable(String className, String methodName, String methodSignature, LineNumberTableAttrInfo lineNumberTable) {
       final LineNumberInfo[] table = lineNumberTable.getLineNumberTable();
@@ -1927,10 +2403,20 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  public static final class LineNumberScrambler {
+    /**
+     * The type Line number scrambler.
+     */
+    public static final class LineNumberScrambler {
     private int[] scrambled;
     private int[] unscrambled;
-    public LineNumberScrambler(int size, long seed){
+
+        /**
+         * Instantiates a new Line number scrambler.
+         *
+         * @param size the size
+         * @param seed the seed
+         */
+        public LineNumberScrambler(int size, long seed){
       this.scrambled = new int[size];
       this.unscrambled = new int[size];
       for (int i = 0; i < size; i++){
@@ -1964,7 +2450,13 @@ public class ObfuscatorTask extends YGuardBaseTask
 //      System.out.println("all is well");
     }
 
-    public int scramble(int i){
+        /**
+         * Scramble int.
+         *
+         * @param i the
+         * @return the int
+         */
+        public int scramble(int i){
       if (i >= scrambled.length){
         return scrambled[i % scrambled.length] + (i / scrambled.length) * scrambled.length;
       } else {
@@ -1972,7 +2464,13 @@ public class ObfuscatorTask extends YGuardBaseTask
       }
     }
 
-    public int unscramble(int i){
+        /**
+         * Unscramble int.
+         *
+         * @param i the
+         * @return the int
+         */
+        public int unscramble(int i){
       if (i >= scrambled.length){
         return unscrambled[i % scrambled.length] + (i / scrambled.length) * scrambled.length;
       } else {
@@ -1981,7 +2479,12 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  public static void main(String[] args){
+    /**
+     * Main.
+     *
+     * @param args the args
+     */
+    public static void main(String[] args){
     new LineNumberScrambler(2000, 234432);
   }
 
@@ -2016,11 +2519,21 @@ public class ObfuscatorTask extends YGuardBaseTask
 
   private String annotationClass;
 
-  public String getAnnotationClass() {
+    /**
+     * Gets annotation class.
+     *
+     * @return the annotation class
+     */
+    public String getAnnotationClass() {
     return annotationClass;
   }
 
-  public void setAnnotationClass(String annotationClass) {
+    /**
+     * Sets annotation class.
+     *
+     * @param annotationClass the annotation class
+     */
+    public void setAnnotationClass(String annotationClass) {
     this.annotationClass = annotationClass;
   }
 }

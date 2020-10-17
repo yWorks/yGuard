@@ -1,8 +1,15 @@
 package test.enclosing;
 
-/** @author schroede */
+/**
+ * The type Outer.
+ *
+ * @author schroede
+ */
 public class Outer {
-  public void foo(){
+    /**
+     * Foo.
+     */
+    public void foo(){
     new Object(){};
   }
 }

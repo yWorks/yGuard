@@ -14,7 +14,7 @@ import java.io.DataOutput;
 /**
  * Representation of a 'float' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class FloatCpInfo extends CpInfo
 {
@@ -28,7 +28,10 @@ public class FloatCpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Float cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected FloatCpInfo()
     {
         super(CONSTANT_Float);

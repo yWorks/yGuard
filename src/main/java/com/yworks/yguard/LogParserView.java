@@ -1,16 +1,12 @@
 package com.yworks.yguard;
 
+import com.yworks.util.Version;
 import com.yworks.yguard.YGuardLogParser.ClassStruct;
 import com.yworks.yguard.YGuardLogParser.Mapped;
 import com.yworks.yguard.YGuardLogParser.MethodStruct;
 import com.yworks.yguard.YGuardLogParser.PackageStruct;
-import com.yworks.util.Version;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -21,21 +17,7 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -44,14 +26,23 @@ import javax.swing.tree.TreeCellRenderer;
 
 /**
  * Displays a browsable yGuard mapping file and provides controls for
- * de-obfuscating obfuscated stacktraces. 
+ * de-obfuscating obfuscated stacktraces.
+ *
  * @author Thomas Behr
  */
 class LogParserView {
-  LogParserView() {
+    /**
+     * Instantiates a new Log parser view.
+     */
+    LogParserView() {
   }
 
-  void show( final File initialPath ) {
+    /**
+     * Show.
+     *
+     * @param initialPath the initial path
+     */
+    void show( final File initialPath ) {
     final JTree tree = new JTree(new DefaultTreeModel(new DefaultMutableTreeNode()));
     tree.setCellRenderer(new TreeCellRenderer() {
       DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
@@ -181,8 +172,14 @@ class LogParserView {
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
   }
-  
-  static void addRecent( final UiContext context, final File path ) {
+
+    /**
+     * Add recent.
+     *
+     * @param context the context
+     * @param path    the path
+     */
+    static void addRecent( final UiContext context, final File path ) {
     final JMenu menu = context.recentMenu;
     final int n = menu.getItemCount();
     if (n > 9) {
@@ -198,7 +195,13 @@ class LogParserView {
     }
   }
 
-  static void showErrorMessage( final String text, final JComponent parent ) {
+    /**
+     * Show error message.
+     *
+     * @param text   the text
+     * @param parent the parent
+     */
+    static void showErrorMessage( final String text, final JComponent parent ) {
     final JTextArea jta = new JTextArea(text);
     jta.setEditable(false);
     final JScrollPane jsp = new JScrollPane(jta);
@@ -206,7 +209,14 @@ class LogParserView {
     JOptionPane.showMessageDialog(parent, jsp, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
-  static String toErrorMessage( final File file, final Exception ex ) {
+    /**
+     * To error message string.
+     *
+     * @param file the file
+     * @param ex   the ex
+     * @return the string
+     */
+    static String toErrorMessage( final File file, final Exception ex ) {
     final StringWriter sw = new StringWriter();
     sw.write("Could not read ");
     sw.write(file.getAbsolutePath());
@@ -215,22 +225,47 @@ class LogParserView {
     return sw.toString();
   }
 
-  static YGuardLogParser getParser( final JTree tree ) {
+    /**
+     * Gets parser.
+     *
+     * @param tree the tree
+     * @return the parser
+     */
+    static YGuardLogParser getParser( final JTree tree ) {
     return (YGuardLogParser) tree.getClientProperty("PARSER");
   }
 
-  static void setParser( final JTree tree, final YGuardLogParser parser ) {
+    /**
+     * Sets parser.
+     *
+     * @param tree   the tree
+     * @param parser the parser
+     */
+    static void setParser( final JTree tree, final YGuardLogParser parser ) {
     tree.setModel(parser.getTreeModel());
     tree.putClientProperty("PARSER", parser);
   }
 
-  static YGuardLogParser newParser( final File file ) throws Exception {
+    /**
+     * New parser y guard log parser.
+     *
+     * @param file the file
+     * @return the y guard log parser
+     * @throws Exception the exception
+     */
+    static YGuardLogParser newParser( final File file ) throws Exception {
     final YGuardLogParser parser = new YGuardLogParser();
     parser.parse(file);
     return parser;
   }
 
-  static String newTitle( final String path ) {
+    /**
+     * New title string.
+     *
+     * @param path the path
+     * @return the string
+     */
+    static String newTitle( final String path ) {
     final String t = path == null ? "" : path.trim();
     if (t.length() > 31) {
       return newTitleSuffix(t);
@@ -239,7 +274,13 @@ class LogParserView {
     }
   }
 
-  static String newTitleSuffix( final String path ) {
+    /**
+     * New title suffix string.
+     *
+     * @param path the path
+     * @return the string
+     */
+    static String newTitleSuffix( final String path ) {
     int idx = path.lastIndexOf(File.separatorChar);
     if (idx > -1) {
       idx = path.lastIndexOf(File.separatorChar, idx - 1);
@@ -251,7 +292,13 @@ class LogParserView {
     }
   }
 
-  static void deobfuscate(
+    /**
+     * Deobfuscate.
+     *
+     * @param parser   the parser
+     * @param textArea the text area
+     */
+    static void deobfuscate(
           final YGuardLogParser parser, final JTextArea textArea
   ) {
     String[] lines = textArea.getText().split("\n");
@@ -264,7 +311,13 @@ class LogParserView {
     textArea.setCaretPosition(0);
   }
 
-  static void sort( final DefaultTreeModel model, final Comparator c ) {
+    /**
+     * Sort.
+     *
+     * @param model the model
+     * @param c     the c
+     */
+    static void sort( final DefaultTreeModel model, final Comparator c ) {
     sortRecursively((DefaultMutableTreeNode) model.getRoot(), c);
     model.nodeStructureChanged((DefaultMutableTreeNode) model.getRoot());
   }
@@ -294,7 +347,10 @@ class LogParserView {
   }
 
 
-  static final class MappedNameComparator implements Comparator {
+    /**
+     * The type Mapped name comparator.
+     */
+    static final class MappedNameComparator implements Comparator {
     public int compare(Object o1, Object o2) {
       Mapped m1 = (Mapped) ((DefaultMutableTreeNode)o1).getUserObject();
       Mapped m2 = (Mapped) ((DefaultMutableTreeNode)o2).getUserObject();
@@ -320,7 +376,10 @@ class LogParserView {
   }
 
 
-  static final class NameComparator implements Comparator {
+    /**
+     * The type Name comparator.
+     */
+    static final class NameComparator implements Comparator {
     public int compare(Object o1, Object o2) {
       Mapped m1 = (Mapped) ((DefaultMutableTreeNode)o1).getUserObject();
       Mapped m2 = (Mapped) ((DefaultMutableTreeNode)o2).getUserObject();
@@ -349,7 +408,13 @@ class LogParserView {
     private final String suffix;
     private final String description;
 
-    FileFilterImpl( final String suffix, final String description ) {
+      /**
+       * Instantiates a new File filter.
+       *
+       * @param suffix      the suffix
+       * @param description the description
+       */
+      FileFilterImpl( final String suffix, final String description ) {
       this.suffix = suffix == null ? "" : suffix.toLowerCase();
       this.description = description;
     }
@@ -365,13 +430,37 @@ class LogParserView {
 
 
   private static final class UiContext {
-    final JFrame frame;
-    final JTree mappingTree;
-    final JTextArea textArea;
-    final JMenu recentMenu;
-    final JFileChooser fileChooser;
+      /**
+       * The Frame.
+       */
+      final JFrame frame;
+      /**
+       * The Mapping tree.
+       */
+      final JTree mappingTree;
+      /**
+       * The Text area.
+       */
+      final JTextArea textArea;
+      /**
+       * The Recent menu.
+       */
+      final JMenu recentMenu;
+      /**
+       * The File chooser.
+       */
+      final JFileChooser fileChooser;
 
-    UiContext(
+      /**
+       * Instantiates a new Ui context.
+       *
+       * @param frame       the frame
+       * @param mappingTree the mapping tree
+       * @param textArea    the text area
+       * @param recentMenu  the recent menu
+       * @param fileChooser the file chooser
+       */
+      UiContext(
             final JFrame frame,
             final JTree mappingTree,
             final JTextArea textArea,
@@ -387,14 +476,28 @@ class LogParserView {
   }
 
   private abstract static class AbstractOpenAction extends AbstractAction {
-    final UiContext context;
+      /**
+       * The Context.
+       */
+      final UiContext context;
 
-    AbstractOpenAction( final UiContext context, final String name ) {
+      /**
+       * Instantiates a new Abstract open action.
+       *
+       * @param context the context
+       * @param name    the name
+       */
+      AbstractOpenAction( final UiContext context, final String name ) {
       super(name);
       this.context = context;
     }
 
-    void open( final File path ) {
+      /**
+       * Open.
+       *
+       * @param path the path
+       */
+      void open( final File path ) {
       final JTree tree = context.mappingTree;
       try {
         setParser(tree, newParser(path));
@@ -404,17 +507,35 @@ class LogParserView {
       }
     }
 
-    void onOpened( final UiContext context, final File path ) {
+      /**
+       * On opened.
+       *
+       * @param context the context
+       * @param path    the path
+       */
+      void onOpened( final UiContext context, final File path ) {
       context.textArea.setText("");
       context.frame.setTitle(newTitle(path.getAbsolutePath()));
     }
   }
 
   private static final class RecentAction extends AbstractOpenAction {
-    final File path;
-    JMenuItem item;
+      /**
+       * The Path.
+       */
+      final File path;
+      /**
+       * The Item.
+       */
+      JMenuItem item;
 
-    RecentAction( final UiContext context, final File path ) {
+      /**
+       * Instantiates a new Recent action.
+       *
+       * @param context the context
+       * @param path    the path
+       */
+      RecentAction( final UiContext context, final File path ) {
       super(context, LogParserView.newTitleSuffix(path.getAbsolutePath()));
       this.path = path;
     }
@@ -453,11 +574,21 @@ class LogParserView {
       }
     }
 
-    JMenuItem getItem() {
+      /**
+       * Gets item.
+       *
+       * @return the item
+       */
+      JMenuItem getItem() {
       return item;
     }
 
-    void setItem( final JMenuItem jc ) {
+      /**
+       * Sets item.
+       *
+       * @param jc the jc
+       */
+      void setItem( final JMenuItem jc ) {
       this.item = jc;
     }
   }

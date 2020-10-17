@@ -1,29 +1,36 @@
 package com.yworks.yshrink.core;
 
 import com.google.common.graph.Network;
+import com.yworks.graph.Edge;
+import com.yworks.graph.Node;
 import com.yworks.yshrink.model.AbstractDescriptor;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.EdgeType;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.NodeType;
-import com.yworks.graph.Node;
-import com.yworks.graph.Edge;
 import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
+ * The type Shrinker.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class Shrinker {
 
   //private Model model;
 
-  public void shrink( final Model model ) {
+    /**
+     * Shrink.
+     *
+     * @param model the model
+     */
+    public void shrink( final Model model ) {
     //this.model = model;
 
     final ShrinkDfs shrinkDfs = new ShrinkDfs( model );
@@ -61,12 +68,22 @@ public class Shrinker {
 
     private int mode = EXPLORE_MODE;
 
-    ShrinkDfs( final Model model ) {
+      /**
+       * Instantiates a new Shrink dfs.
+       *
+       * @param model the model
+       */
+      ShrinkDfs( final Model model ) {
       this.model = model;
       this.network = model.getNetwork();
     }
 
-    public void init( final Node entryPointNode ) {
+      /**
+       * Init.
+       *
+       * @param entryPointNode the entry point node
+       */
+      public void init( final Node entryPointNode ) {
 
       this.entryPointNode = entryPointNode;
 
@@ -79,7 +96,12 @@ public class Shrinker {
       }
     }
 
-    protected int nextRound() {
+      /**
+       * Next round int.
+       *
+       * @return the int
+       */
+      protected int nextRound() {
       round++;
       numSkipped = 0;
       numInstantiated = 0;
@@ -110,7 +132,10 @@ public class Shrinker {
       }
     }
 
-    protected void markReachableNodes() {
+      /**
+       * Mark reachable nodes.
+       */
+      protected void markReachableNodes() {
       int oldMode = mode;
       mode = RESULT_MODE;
       super.start( network, this.entryPointNode );
@@ -203,7 +228,12 @@ public class Shrinker {
       }
     }
 
-    protected int getNumSkipped() {
+      /**
+       * Gets num skipped.
+       *
+       * @return the num skipped
+       */
+      protected int getNumSkipped() {
       return numSkipped;
     }
   }

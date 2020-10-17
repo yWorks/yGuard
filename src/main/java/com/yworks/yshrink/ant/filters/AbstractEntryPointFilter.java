@@ -6,6 +6,8 @@ import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 
 /**
+ * The type Abstract entry point filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class AbstractEntryPointFilter implements EntryPointFilter {

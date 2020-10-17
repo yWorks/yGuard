@@ -1,14 +1,14 @@
 package com.yworks.yshrink;
 
-import com.yworks.yguard.ant.PatternMatchedClassesSection;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.EntryPointsSection;
+import com.yworks.common.ant.PatternMatchedSection;
 import com.yworks.common.ant.TypePatternSet;
+import com.yworks.yguard.ant.PatternMatchedClassesSection;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yshrink.ant.ClassSection;
 import com.yworks.yshrink.ant.FieldSection;
 import com.yworks.yshrink.ant.MethodSection;
-import com.yworks.common.ant.PatternMatchedSection;
 import com.yworks.yshrink.ant.ShrinkTask;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
@@ -17,15 +17,26 @@ import org.apache.tools.ant.types.PatternSet;
 import java.io.File;
 
 /**
+ * The type Y shrink invoker.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class YShrinkInvokerImpl implements YShrinkInvoker {
 
-  final ShrinkTask shrinkTask;
+    /**
+     * The Shrink task.
+     */
+    final ShrinkTask shrinkTask;
 
-  EntryPointsSection eps;
+    /**
+     * The Eps.
+     */
+    EntryPointsSection eps;
 
-  public YShrinkInvokerImpl() {
+    /**
+     * Instantiates a new Y shrink invoker.
+     */
+    public YShrinkInvokerImpl() {
     shrinkTask = new ShrinkTask();
     eps = new EntryPointsSection( shrinkTask );
   }

@@ -1,19 +1,26 @@
 package com.yworks.yshrink.ant.filters;
 
-import org.apache.tools.ant.Project;
 import com.yworks.yshrink.ant.MethodSection;
-import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.MethodDescriptor;
+import com.yworks.yshrink.model.Model;
+import org.apache.tools.ant.Project;
 
 import java.util.Collection;
 
 /**
+ * The type Serialization filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class SerializationFilter extends MethodFilter {
 
-  public SerializationFilter( Project project ) {
+    /**
+     * Instantiates a new Serialization filter.
+     *
+     * @param project the project
+     */
+    public SerializationFilter( Project project ) {
     super( project );
 
     MethodSection msWrite = new MethodSection();

@@ -1,16 +1,16 @@
 package com.yworks.yshrink.core;
 
+import com.yworks.common.ResourcePolicy;
+import com.yworks.common.ShrinkBag;
+import com.yworks.logging.Logger;
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.StreamProvider;
 import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
 import com.yworks.util.abstractjar.impl.DirectoryWrapper;
 import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.util.abstractjar.impl.JarStreamProvider;
-import com.yworks.common.ResourcePolicy;
-import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -23,6 +23,9 @@ import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Directory writer.
+ */
 public class DirectoryWriter implements ArchiveWriter {
   private static final String MANIFEST_FILENAME = "META-INF/MANIFEST.MF";
   private static final String SIGNATURE_FILE_PREFIX = "META-INF/";
@@ -32,7 +35,12 @@ public class DirectoryWriter implements ArchiveWriter {
   private Set<String> directoriesWritten = new HashSet<String>();
   private boolean createStubs;
 
-  public DirectoryWriter( boolean createStubs ) {
+    /**
+     * Instantiates a new Directory writer.
+     *
+     * @param createStubs the create stubs
+     */
+    public DirectoryWriter( boolean createStubs ) {
     this.createStubs = createStubs;
   }
 

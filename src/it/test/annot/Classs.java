@@ -2,15 +2,30 @@ package test.annot;
 
 import java.util.List;
 
+/**
+ * The type Classs.
+ */
 @TestAnnotation(value = "Class Annot Value")
 public class Classs {
 
-  @MyNotNull List<String> aList;
-  List<@MyNotNull String> anotherList;
-  
-  public static final String constantString = "bla";
+    /**
+     * The A list.
+     */
+    @MyNotNull List<String> aList;
+    /**
+     * The Another list.
+     */
+    List<@MyNotNull String> anotherList;
 
-  @TestAnnotation(value = "asdf")
+    /**
+     * The constant constantString.
+     */
+    public static final String constantString = "bla";
+
+    /**
+     * Foo.
+     */
+    @TestAnnotation(value = "asdf")
   public void foo(){
     
     Object instance = new @MyNotNull Classs();
@@ -20,38 +35,82 @@ public class Classs {
   private void doStuff(@MyNotNull String... stuffThings) {
     
   }
-  
-  @TestAnnotation()
+
+    /**
+     * Foo 2.
+     */
+    @TestAnnotation()
   public void foo2(){}
 
-  @TestInvAnnotation()
+    /**
+     * Foo inv.
+     */
+    @TestInvAnnotation()
   public void fooInv(){}
-  @TestInvAnnotation(invValue = "jkloe")
+
+    /**
+     * Foo 2 inv.
+     */
+    @TestInvAnnotation(invValue = "jkloe")
   public void foo2Inv(){}
 
-  @NestingTestAnnotation(value = @TestAnnotation(value = "overwritten"))
+    /**
+     * Krass.
+     */
+    @NestingTestAnnotation(value = @TestAnnotation(value = "overwritten"))
   public void krass(){}
 
-  @NestingTestAnnotation(value = @TestAnnotation())
+    /**
+     * Krass 2.
+     */
+    @NestingTestAnnotation(value = @TestAnnotation())
   public void krass2(){}
 
-  @NestingTestAnnotation()
+    /**
+     * Krass 3.
+     */
+    @NestingTestAnnotation()
   public void krass3(){}
 
 
-  @RequestForEnhancement(id = 23, synopsis = "theSynopsis" )
+    /**
+     * Annot with value.
+     */
+    @RequestForEnhancement(id = 23, synopsis = "theSynopsis" )
   public void annotWithValue() {}
 
-  public void paramAnnotTest( @ParameterAnnotation(paramAnnotFoo = "paramAnnotFooValue",paramAnnotBaz = "paramAnnotBazValue") String param1,
+    /**
+     * Param annot test.
+     *
+     * @param param1 the param 1
+     * @param param2 the param 2
+     */
+    public void paramAnnotTest( @ParameterAnnotation(paramAnnotFoo = "paramAnnotFooValue",paramAnnotBaz = "paramAnnotBazValue") String param1,
                               @ParameterAnnotation(paramAnnotFoo = "paramAnnotFooValue2") String param2 ) {}
 
-  public void invisibleParamAnnotTest(@TestInvParameterAnnotation(value = "TestInvParameterAnnotationValue")String param) {}
+    /**
+     * Invisible param annot test.
+     *
+     * @param param the param
+     */
+    public void invisibleParamAnnotTest(@TestInvParameterAnnotation(value = "TestInvParameterAnnotationValue")String param) {}
 
-  public void testTypeAnnotation(@MyNotNull Object o) {
+    /**
+     * Test type annotation.
+     *
+     * @param o the o
+     */
+    public void testTypeAnnotation(@MyNotNull Object o) {
     
   }
-  
-  public static void main(String[] args) throws NoSuchMethodException {
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws NoSuchMethodException the no such method exception
+     */
+    public static void main(String[] args) throws NoSuchMethodException {
 
 //    System.out.println("-- Method Annotations --");
 //

@@ -1,15 +1,15 @@
 package com.yworks.yshrink.model;
 
+import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.Network;
 import com.google.common.graph.NetworkBuilder;
-import com.yworks.yshrink.core.ClassResolver;
-import com.yworks.logging.Logger;
-import com.yworks.yshrink.util.Util;
-import com.yworks.graph.Node;
 import com.yworks.graph.Edge;
+import com.yworks.graph.Node;
+import com.yworks.logging.Logger;
+import com.yworks.yshrink.core.ClassResolver;
+import com.yworks.yshrink.util.Util;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
-import com.google.common.graph.MutableNetwork;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -24,16 +24,30 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * The type Model.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class Model {
 
-  Map<String, ClassDescriptor> model;
+    /**
+     * The Model.
+     */
+    Map<String, ClassDescriptor> model;
 
-  protected MutableNetwork<Node, Edge> network;
+    /**
+     * The Network.
+     */
+    protected MutableNetwork<Node, Edge> network;
   private Map<Object, Object> dependencyTypes;
-  protected Map<Object, Object> node2Descriptor;
-  protected Map<Object, Object> node2Type;
+    /**
+     * The Node 2 descriptor.
+     */
+    protected Map<Object, Object> node2Descriptor;
+    /**
+     * The Node 2 type.
+     */
+    protected Map<Object, Object> node2Type;
 
   private Node entryPointNode;
 
@@ -43,11 +57,22 @@ public class Model {
 
   private boolean allResolved = true;
 
-  public static String VOID_DESC = Type.getMethodDescriptor( Type.VOID_TYPE, new Type[0] );
-  public static final String CONSTRUCTOR_NAME = "<init>";
+    /**
+     * The constant VOID_DESC.
+     */
+    public static String VOID_DESC = Type.getMethodDescriptor( Type.VOID_TYPE, new Type[0] );
+    /**
+     * The constant CONSTRUCTOR_NAME.
+     */
+    public static final String CONSTRUCTOR_NAME = "<init>";
   //public static final String SYNTHETIC_NEW_NODE_NAME = "NEW";
 
-  public void setClassResolver( final ClassResolver res ) {
+    /**
+     * Sets class resolver.
+     *
+     * @param res the res
+     */
+    public void setClassResolver( final ClassResolver res ) {
     if ( res != null ) {
       resolver = res;
     } else {
@@ -55,7 +80,10 @@ public class Model {
     }
   }
 
-  public void setSimpleModelSet() {
+    /**
+     * Sets simple model set.
+     */
+    public void setSimpleModelSet() {
     this.simpleModelSet = true;
   }
 
@@ -68,15 +96,28 @@ public class Model {
     public void close() throws Exception {}
   }
 
-  public boolean isSimpleModelSet() {
+    /**
+     * Is simple model set boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isSimpleModelSet() {
     return simpleModelSet;
   }
 
-  public Model() {
+    /**
+     * Instantiates a new Model.
+     */
+    public Model() {
     this( null );
   }
 
-  public Model( MutableNetwork<Node, Edge> network ) {
+    /**
+     * Instantiates a new Model.
+     *
+     * @param network the network
+     */
+    public Model( MutableNetwork<Node, Edge> network ) {
     if ( network != null ) {
       this.network = network;
     } else {
@@ -98,24 +139,35 @@ public class Model {
     node2Type.put( entryPointNode, NodeType.ENTRYPOINT );
   }
 
-  public Node getEntryPointNode() {
+    /**
+     * Gets entry point node.
+     *
+     * @return the entry point node
+     */
+    public Node getEntryPointNode() {
     return entryPointNode;
   }
 
-  public boolean isClassModeled( final String className ) {
+    /**
+     * Is class modeled boolean.
+     *
+     * @param className the class name
+     * @return the boolean
+     */
+    public boolean isClassModeled( final String className ) {
     return model.containsKey( className );
   }
 
-  /**
-   * creates a dependency of type <code>type</code> iff no edge of the same type exists between <code>source</code> and
-   * <code>target</code>.
-   *
-   * @param source the edge source
-   * @param target the edge target
-   * @param type   the edge type
-   * @return the created edge, or null if no edge was created
-   */
-  public Edge createDependencyEdge( final AbstractDescriptor source, final AbstractDescriptor target,
+    /**
+     * creates a dependency of type <code>type</code> iff no edge of the same type exists between <code>source</code> and
+     * <code>target</code>.
+     *
+     * @param source the edge source
+     * @param target the edge target
+     * @param type   the edge type
+     * @return the created edge, or null if no edge was created
+     */
+    public Edge createDependencyEdge( final AbstractDescriptor source, final AbstractDescriptor target,
                                     final EdgeType type ) {
 
     if ( ( !source.equals( target ) ) ) {
@@ -125,7 +177,15 @@ public class Model {
     }
   }
 
-  public Edge createDependencyEdge( final Node sourceNode, final Node targetNode, final EdgeType edgeType ) {
+    /**
+     * Create dependency edge edge.
+     *
+     * @param sourceNode the source node
+     * @param targetNode the target node
+     * @param edgeType   the edge type
+     * @return the edge
+     */
+    public Edge createDependencyEdge( final Node sourceNode, final Node targetNode, final EdgeType edgeType ) {
     if ( hasEdge( sourceNode, targetNode, edgeType ) ) {
       return null;
     } else {
@@ -145,7 +205,17 @@ public class Model {
     return false;
   }
 
-  public ClassDescriptor newClassDescriptor( final String name, final String superName, final String[] interfaces,
+    /**
+     * New class descriptor class descriptor.
+     *
+     * @param name       the name
+     * @param superName  the super name
+     * @param interfaces the interfaces
+     * @param access     the access
+     * @param sourceJar  the source jar
+     * @return the class descriptor
+     */
+    public ClassDescriptor newClassDescriptor( final String name, final String superName, final String[] interfaces,
                                              final int access, final File sourceJar ) {
 
     final Node newNode = new Node(this.network);
@@ -167,7 +237,18 @@ public class Model {
     return cd;
   }
 
-  public MethodDescriptor newMethodDescriptor( final ClassDescriptor cd, final int access, final String name,
+    /**
+     * New method descriptor method descriptor.
+     *
+     * @param cd         the cd
+     * @param access     the access
+     * @param name       the name
+     * @param desc       the desc
+     * @param exceptions the exceptions
+     * @param sourceJar  the source jar
+     * @return the method descriptor
+     */
+    public MethodDescriptor newMethodDescriptor( final ClassDescriptor cd, final int access, final String name,
                                                final String desc,
                                                final String[] exceptions, final File sourceJar ) {
 
@@ -181,7 +262,17 @@ public class Model {
     return md;
   }
 
-  public FieldDescriptor newFieldDescriptor( final ClassDescriptor cd, final String desc, final String name,
+    /**
+     * New field descriptor field descriptor.
+     *
+     * @param cd        the cd
+     * @param desc      the desc
+     * @param name      the name
+     * @param access    the access
+     * @param sourceJar the source jar
+     * @return the field descriptor
+     */
+    public FieldDescriptor newFieldDescriptor( final ClassDescriptor cd, final String desc, final String name,
                                              final int access, final File sourceJar ) {
     final FieldDescriptor fd = new FieldDescriptor( desc, name, access, sourceJar );
     cd.addField( fd );
@@ -194,15 +285,31 @@ public class Model {
     return fd;
   }
 
-  public Collection<ClassDescriptor> getAllClassDescriptors() {
+    /**
+     * Gets all class descriptors.
+     *
+     * @return the all class descriptors
+     */
+    public Collection<ClassDescriptor> getAllClassDescriptors() {
     return model.values();
   }
 
-  public Collection<String> getAllClassNames() {
+    /**
+     * Gets all class names.
+     *
+     * @return the all class names
+     */
+    public Collection<String> getAllClassNames() {
     return model.keySet();
   }
 
-  public ClassDescriptor getClassDescriptor( final String className ) {
+    /**
+     * Gets class descriptor.
+     *
+     * @param className the class name
+     * @return the class descriptor
+     */
+    public ClassDescriptor getClassDescriptor( final String className ) {
     if ( isClassModeled( className ) ) {
       return model.get( className );
     } else {
@@ -210,11 +317,23 @@ public class Model {
     }
   }
 
-  public AbstractDescriptor getDescriptor( final Node n ) {
+    /**
+     * Gets descriptor.
+     *
+     * @param n the n
+     * @return the descriptor
+     */
+    public AbstractDescriptor getDescriptor( final Node n ) {
     return (AbstractDescriptor) node2Descriptor.get( n );
   }
 
-  public Node getClassNode( final Node memberNode ) {
+    /**
+     * Gets class node.
+     *
+     * @param memberNode the member node
+     * @return the class node
+     */
+    public Node getClassNode( final Node memberNode ) {
 
     if ( getDescriptor( memberNode ) instanceof ClassDescriptor ) {
       throw new IllegalArgumentException( "Node " + memberNode + " is a classNode " );
@@ -229,17 +348,23 @@ public class Model {
     throw new RuntimeException( "Node " + memberNode + " is homeless." );
   }
 
-  public EdgeType getDependencyType( final Edge e ) {
+    /**
+     * Gets dependency type.
+     *
+     * @param e the e
+     * @return the dependency type
+     */
+    public EdgeType getDependencyType( final Edge e ) {
     return (EdgeType) dependencyTypes.get( e );
   }
 
-  /**
-   * retrieve all implementing classes of <code>cd</code>.
-   *
-   * @param cd
-   * @return List of ClassDescriptors containing all classes that implement cd
-   */
-  public Set<ClassDescriptor> getAllImplementingClasses( final ClassDescriptor cd ) {
+    /**
+     * retrieve all implementing classes of <code>cd</code>.
+     *
+     * @param cd the cd
+     * @return List of ClassDescriptors containing all classes that implement cd
+     */
+    public Set<ClassDescriptor> getAllImplementingClasses( final ClassDescriptor cd ) {
     Set<ClassDescriptor> ret = null;
 
     for (final Edge e: cd.getNode().inEdges()) {
@@ -253,7 +378,13 @@ public class Model {
     return ret;
   }
 
-  public void getAllImplementedInterfaces( final String className, final Set<String> interfaces ) {
+    /**
+     * Gets all implemented interfaces.
+     *
+     * @param className  the class name
+     * @param interfaces the interfaces
+     */
+    public void getAllImplementedInterfaces( final String className, final Set<String> interfaces ) {
 
     if ( "java/lang/Object".equals( className ) ) {
       return;
@@ -285,7 +416,13 @@ public class Model {
     }
   }
 
-  public void getAllAncestorClasses( final String className,
+    /**
+     * Gets all ancestor classes.
+     *
+     * @param className the class name
+     * @param parents   the parents
+     */
+    public void getAllAncestorClasses( final String className,
                                      final Set<String> parents ) {
 
     if ( "java/lang/Object".equals( className ) ) {
@@ -309,7 +446,13 @@ public class Model {
     }
   }
 
-  public void getAllInternalAncestorEntrypointMethods( final String className,
+    /**
+     * Gets all internal ancestor entrypoint methods.
+     *
+     * @param className the class name
+     * @param methods   the methods
+     */
+    public void getAllInternalAncestorEntrypointMethods( final String className,
                                                        final List<MethodDescriptor> methods ) {
 
     if ( null == className || ! isClassModeled( className ) ) {
@@ -335,7 +478,14 @@ public class Model {
   }
 
 
-  public boolean getAllExternalAncestorMethods( final String className, final List<Method> methods ) {
+    /**
+     * Gets all external ancestor methods.
+     *
+     * @param className the class name
+     * @param methods   the methods
+     * @return the all external ancestor methods
+     */
+    public boolean getAllExternalAncestorMethods( final String className, final List<Method> methods ) {
 
     boolean r = true;
 
@@ -385,13 +535,13 @@ public class Model {
     return r;
   }
 
-  /**
-   * collects all subclasses of <code>cd</code>
-   *
-   * @param cd
-   * @param descendants
-   */
-  public void getInternalDescendants( final ClassDescriptor cd, final List<ClassDescriptor> descendants ) {
+    /**
+     * collects all subclasses of <code>cd</code>
+     *
+     * @param cd          the cd
+     * @param descendants the descendants
+     */
+    public void getInternalDescendants( final ClassDescriptor cd, final List<ClassDescriptor> descendants ) {
     for ( final Edge e: cd.getNode().inEdges() ) {
       if ( dependencyTypes.get( e ).equals( EdgeType.EXTENDS ) ) {
         final ClassDescriptor subClass = (ClassDescriptor) node2Descriptor.get( e.source() );
@@ -433,17 +583,16 @@ public class Model {
     return found;
   }
 
-  /**
-   * determine wether the method <code>md</code> is implemented in any superclasses of class <code>className</code> or
-   * if <code>md</code> is declared in any interface that class <code>className</code> or any superclass of class
-   * <code>className</code> implements.
-   *
-   * @param origClass
-   * @param md
-   * @return true iff an implementation or declaration of <code>md</code> is found in any ancestor class/interface of
-   *         class <code>className</code>
-   */
-  public boolean isMethodExternallyDefined( final ClassDescriptor origClass,
+    /**
+     * determine wether the method <code>md</code> is implemented in any superclasses of class <code>className</code> or
+     * if <code>md</code> is declared in any interface that class <code>className</code> or any superclass of class
+     * <code>className</code> implements.
+     *
+     * @param origClass the orig class
+     * @param md        the md
+     * @return true iff an implementation or declaration of <code>md</code> is found in any ancestor class/interface of         class <code>className</code>
+     */
+    public boolean isMethodExternallyDefined( final ClassDescriptor origClass,
                                             final MethodDescriptor md ) {
 
     boolean found = false;
@@ -543,7 +692,12 @@ public class Model {
     return found;
   }
 
-  public void createEntryPointEdges( List<AbstractDescriptor> entryPoints ) {
+    /**
+     * Create entry point edges.
+     *
+     * @param entryPoints the entry points
+     */
+    public void createEntryPointEdges( List<AbstractDescriptor> entryPoints ) {
 
     Node entryPointNode = getEntryPointNode();
 
@@ -575,7 +729,12 @@ public class Model {
     }
   }
 
-  public boolean isAllResolved() {
+    /**
+     * Is all resolved boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isAllResolved() {
     return allResolved;
   }
 
@@ -598,11 +757,22 @@ public class Model {
     return new MethodDescriptor( m.getName(), access, desc, exceptions, sourceJar );
   }
 
-  public int getNodeType( final Node n ) {
+    /**
+     * Gets node type.
+     *
+     * @param n the n
+     * @return the node type
+     */
+    public int getNodeType( final Node n ) {
     return (int) node2Type.get( n );
   }
 
-  public void markObsolete( final Node n ) {
+    /**
+     * Mark obsolete.
+     *
+     * @param n the n
+     */
+    public void markObsolete( final Node n ) {
 
     int type = getNodeType( n );
     if ( ! NodeType.isObsolete( type ) ) {
@@ -611,7 +781,12 @@ public class Model {
     }
   }
 
-  public void markNotObsolete( final Node n ) {
+    /**
+     * Mark not obsolete.
+     *
+     * @param n the n
+     */
+    public void markNotObsolete( final Node n ) {
 
     // TODO use ~
     int type = getNodeType( n );
@@ -621,7 +796,12 @@ public class Model {
     }
   }
 
-  public void markStubNeeded( final Node n ) {
+    /**
+     * Mark stub needed.
+     *
+     * @param n the n
+     */
+    public void markStubNeeded( final Node n ) {
     int type = getNodeType( n );
     if ( ! NodeType.isStubNeeded( type ) ) {
       type += NodeType.STUB;
@@ -629,15 +809,32 @@ public class Model {
     }
   }
 
-  public boolean isObsolete( final Node n ) {
+    /**
+     * Is obsolete boolean.
+     *
+     * @param n the n
+     * @return the boolean
+     */
+    public boolean isObsolete( final Node n ) {
     return NodeType.isObsolete( (int) node2Type.get( n ) );
   }
 
-  public boolean isStubNeeded( final Node n ) {
+    /**
+     * Is stub needed boolean.
+     *
+     * @param n the n
+     * @return the boolean
+     */
+    public boolean isStubNeeded( final Node n ) {
     return NodeType.isStubNeeded( (int) node2Type.get( n ) );
   }
 
-  public Network<Node, Edge> getNetwork() {
+    /**
+     * Gets network.
+     *
+     * @return the network
+     */
+    public Network<Node, Edge> getNetwork() {
     return network;
   }
 }

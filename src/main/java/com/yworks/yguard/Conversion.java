@@ -7,27 +7,41 @@
 package com.yworks.yguard;
 
 import com.yworks.yguard.obf.ClassTree;
-import java.util.StringTokenizer;
 
 /**
+ * The type Conversion.
  *
- * @author  muellese
+ * @author muellese
  */
 public class Conversion
 {
-  
-  /** Creates a new instance of Conversion */
-  protected Conversion(){}
 
-  public static String toJavaClass(String className){
+    /**
+     * Creates a new instance of Conversion
+     */
+    protected Conversion(){}
+
+    /**
+     * To java class string.
+     *
+     * @param className the class name
+     * @return the string
+     */
+    public static String toJavaClass(String className){
       if (className.endsWith(".class")){
         className = className.substring(0, className.length()- 6);
       }
       return className.replace('/','.');
   }
- 
 
-  public static String toJavaType(String type){
+
+    /**
+     * To java type string.
+     *
+     * @param type the type
+     * @return the string
+     */
+    public static String toJavaType(String type){
       StringBuffer nat = new StringBuffer(30);
       int arraydim = 0;
       while (type.charAt(arraydim)=='[') arraydim++;
@@ -81,15 +95,26 @@ public class Conversion
       }
       return nat.toString();
   }
-  
-    /** Mapping for signatures (used for generics in 1.5).
-     *  @see com.yworks.yguard.obf.classfile.NameMapper#mapSignature */
+
+    /**
+     * Mapping for signatures (used for generics in 1.5).
+     *
+     * @param signature the signature
+     * @return the string
+     * @see com.yworks.yguard.obf.classfile.NameMapper#mapSignature com.yworks.yguard.obf.classfile.NameMapper#mapSignature
+     */
     public static String mapSignature(String signature){
       return new ClassTree().mapSignature(signature);
     }
 
-  
-  public static String toJavaParameters(String parameters){
+
+    /**
+     * To java parameters string.
+     *
+     * @param parameters the parameters
+     * @return the string
+     */
+    public static String toJavaParameters(String parameters){
     StringBuffer nat = new StringBuffer(30);
     switch (parameters.charAt(0)){
         default:
@@ -150,8 +175,15 @@ public class Conversion
     }
     return nat.toString();
   }
-  
-  public static String toJavaMethod(String name, String signature){
+
+    /**
+     * To java method string.
+     *
+     * @param name      the name
+     * @param signature the signature
+     * @return the string
+     */
+    public static String toJavaMethod(String name, String signature){
     String argsonly = signature.substring(signature.indexOf('(')+1);
     String ret = signature.substring(signature.indexOf(')')+1);
     ret = toJavaType(ret);
@@ -165,7 +197,13 @@ public class Conversion
     return ret+" "+name+args.toString();
   }
 
-  public static String toJavaArguments(String args){
+    /**
+     * To java arguments string.
+     *
+     * @param args the args
+     * @return the string
+     */
+    public static String toJavaArguments(String args){
     StringBuffer b= new StringBuffer(args.length() + 32);
     toJavaArguments(args, b);
     return b.toString();

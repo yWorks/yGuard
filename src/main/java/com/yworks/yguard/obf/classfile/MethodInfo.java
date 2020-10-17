@@ -8,13 +8,13 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInput;
+import java.io.IOException;
 
 /**
  * Representation of a method from a class-file.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class MethodInfo extends ClassItemInfo
 {
@@ -25,9 +25,13 @@ public class MethodInfo extends ClassItemInfo
 
 
     // Class Methods ---------------------------------------------------------
+
     /**
      * Create a new MethodInfo from the file format data in the DataInput stream.
      *
+     * @param din the din
+     * @param cf  the cf
+     * @return the method info
      * @throws IOException if class file is corrupt or incomplete
      */
     public static MethodInfo create(DataInput din, ClassFile cf) throws java.io.IOException
@@ -39,6 +43,11 @@ public class MethodInfo extends ClassItemInfo
     }
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Method info.
+     *
+     * @param cf the cf
+     */
+// Instance Methods ------------------------------------------------------
     protected MethodInfo(ClassFile cf) {super(cf);}
 }

@@ -10,48 +10,91 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * The type Name maker factory.
  *
- * @author  muellese
+ * @author muellese
  */
 public abstract class NameMakerFactory
 {
   
   /** Holds value of property instance. */
   private static NameMakerFactory instance = new DefaultNameMakerFactory();
-  
-  /** Creates a new instance of NameMakerFactory */
-  protected NameMakerFactory()
+
+    /**
+     * Creates a new instance of NameMakerFactory
+     */
+    protected NameMakerFactory()
   {}
-  
-  /** Getter for property instance.
-   * @return Value of property instance.
-   *
-   */
-  public static NameMakerFactory getInstance()
+
+    /**
+     * Getter for property instance.
+     *
+     * @return Value of property instance.
+     */
+    public static NameMakerFactory getInstance()
   {
     return instance;
   }
-  
-  /** Setter for property instance.
-   * @param _instance New value of property instance.
-   *
-   */
-  protected void setInstance(NameMakerFactory _instance)
+
+    /**
+     * Setter for property instance.
+     *
+     * @param _instance New value of property instance.
+     */
+    protected void setInstance(NameMakerFactory _instance)
   {
     instance = _instance;
   }
-  
-  public abstract NameMaker getPackageNameMaker(String[] reservedNames, String packageName);
 
-  public abstract NameMaker getClassNameMaker(String[] reservedNames, String packageName);
-  
-  public abstract NameMaker getInnerClassNameMaker(String[] reservedNames, String packageName);
-  
-  public abstract NameMaker getMethodNameMaker(String[] reservedNames, String fqClassName);
+    /**
+     * Gets package name maker.
+     *
+     * @param reservedNames the reserved names
+     * @param packageName   the package name
+     * @return the package name maker
+     */
+    public abstract NameMaker getPackageNameMaker(String[] reservedNames, String packageName);
 
-  public abstract NameMaker getFieldNameMaker(String[] reservedNames, String fqClassName);
-  
-  public static class DefaultNameMakerFactory extends NameMakerFactory{
+    /**
+     * Gets class name maker.
+     *
+     * @param reservedNames the reserved names
+     * @param packageName   the package name
+     * @return the class name maker
+     */
+    public abstract NameMaker getClassNameMaker(String[] reservedNames, String packageName);
+
+    /**
+     * Gets inner class name maker.
+     *
+     * @param reservedNames the reserved names
+     * @param packageName   the package name
+     * @return the inner class name maker
+     */
+    public abstract NameMaker getInnerClassNameMaker(String[] reservedNames, String packageName);
+
+    /**
+     * Gets method name maker.
+     *
+     * @param reservedNames the reserved names
+     * @param fqClassName   the fq class name
+     * @return the method name maker
+     */
+    public abstract NameMaker getMethodNameMaker(String[] reservedNames, String fqClassName);
+
+    /**
+     * Gets field name maker.
+     *
+     * @param reservedNames the reserved names
+     * @param fqClassName   the fq class name
+     * @return the field name maker
+     */
+    public abstract NameMaker getFieldNameMaker(String[] reservedNames, String fqClassName);
+
+    /**
+     * The type Default name maker factory.
+     */
+    public static class DefaultNameMakerFactory extends NameMakerFactory{
     
     private Map classNameMap = new HashMap();
     private Map fieldNameMap = new HashMap();
@@ -68,8 +111,15 @@ public abstract class NameMakerFactory
       } 
       return res;
     }
-    
-    protected NameMaker createClassNameMaker(String[] reservedNames, String fqClassName){
+
+        /**
+         * Create class name maker name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param fqClassName   the fq class name
+         * @return the name maker
+         */
+        protected NameMaker createClassNameMaker(String[] reservedNames, String fqClassName){
       return new KeywordNameMaker(reservedNames); 
     }
     
@@ -83,7 +133,14 @@ public abstract class NameMakerFactory
       return res;
     }
 
-    protected NameMaker createFieldNameMaker(String[] reservedNames, String fqClassName){
+        /**
+         * Create field name maker name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param fqClassName   the fq class name
+         * @return the name maker
+         */
+        protected NameMaker createFieldNameMaker(String[] reservedNames, String fqClassName){
       return new KeywordNameMaker(reservedNames, false, true); 
     }
     
@@ -96,8 +153,15 @@ public abstract class NameMakerFactory
       } 
       return res;
     }
-    
-    protected NameMaker createInnerClassNameMaker(final String[] reservedNames, String fqInnerClassName){
+
+        /**
+         * Create inner class name maker name maker.
+         *
+         * @param reservedNames    the reserved names
+         * @param fqInnerClassName the fq inner class name
+         * @return the name maker
+         */
+        protected NameMaker createInnerClassNameMaker(final String[] reservedNames, String fqInnerClassName){
       final NameMaker inner = new KeywordNameMaker(null);
       //JBuilder7 incompatability workaround
       return new NameMaker(){
@@ -122,7 +186,14 @@ public abstract class NameMakerFactory
       return res;
     }
 
-    protected NameMaker createMethodNameMaker(String[] reservedNames, String fqClassName){
+        /**
+         * Create method name maker name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param fqClassName   the fq class name
+         * @return the name maker
+         */
+        protected NameMaker createMethodNameMaker(String[] reservedNames, String fqClassName){
       return new KeywordNameMaker(reservedNames, false, true); 
     }
     
@@ -135,8 +206,15 @@ public abstract class NameMakerFactory
       } 
       return res;
     }
-    
-    protected NameMaker createPackageNameMaker(String[] reservedNames, String packageName){
+
+        /**
+         * Create package name maker name maker.
+         *
+         * @param reservedNames the reserved names
+         * @param packageName   the package name
+         * @return the name maker
+         */
+        protected NameMaker createPackageNameMaker(String[] reservedNames, String packageName){
       return new KeywordNameMaker(reservedNames); 
     }
     

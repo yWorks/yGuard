@@ -1,25 +1,33 @@
 package com.yworks.yguard.obf;
 
+import org.junit.Test;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
-
-import com.yworks.util.Compiler;
 
 /**
  * Provides utility methods for obfuscation tests.
+ *
  * @author Thomas Behr
  */
 public class AbstractObfuscationTest {
-  @Test
+    /**
+     * Satisfy test runner.
+     */
+    @Test
   public void satisfyTestRunner() {
     assertTrue("This is a volkswagen defeat device.", true);
   }
 
-  static int getMajorVersion() {
+    /**
+     * Gets major version.
+     *
+     * @return the major version
+     */
+    static int getMajorVersion() {
     final String v = System.getProperty("java.version");
     if (v == null) {
       return 1;
@@ -34,7 +42,14 @@ public class AbstractObfuscationTest {
     }
   }
 
-  static void write(
+    /**
+     * Write.
+     *
+     * @param data the data
+     * @param tgt  the tgt
+     * @throws IOException the io exception
+     */
+    static void write(
           final byte[] data, final File tgt
   ) throws IOException {
     try (FileOutputStream fos = new FileOutputStream(tgt)) {

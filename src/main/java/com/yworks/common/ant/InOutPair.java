@@ -7,13 +7,18 @@ import org.apache.tools.ant.BuildException;
 import java.io.File;
 
 /**
+ * The type In out pair.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class InOutPair implements ShrinkBag {
     private File inFile;
     private File outFile;
 
-    ResourcePolicy resources = ResourcePolicy.COPY;
+  /**
+   * The Resources.
+   */
+  ResourcePolicy resources = ResourcePolicy.COPY;
 
     public void setIn( final File file ) {
       this.inFile = file;

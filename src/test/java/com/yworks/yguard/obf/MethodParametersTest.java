@@ -23,25 +23,42 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.assertEquals;
 
 /**
  * Tests if {@code MethodParameters} bytecode attributes are properly handled.
+ *
  * @author Thomas Behr
  */
 public class MethodParametersTest extends AbstractObfuscationTest {
-  @Rule
+    /**
+     * The Name.
+     */
+    @Rule
   public TestName name = new TestName();
-  static final int OPCODES_ASM = Opcodes.ASM7;
+    /**
+     * The Opcodes asm.
+     */
+    static final int OPCODES_ASM = Opcodes.ASM7;
 
-  @Test
+    /**
+     * Test simple method parameters.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testSimpleMethodParameters() throws Exception {
     impl(false);
   }
 
-  @Test
+    /**
+     * Test retain method parameters.
+     *
+     * @throws Exception the exception
+     */
+    @Test
   public void testRetainMethodParameters() throws Exception {
     impl(true);
   }
@@ -160,10 +177,21 @@ public class MethodParametersTest extends AbstractObfuscationTest {
 
 
   private static final class MethodParameterVisitor extends ClassVisitor {
-    String prefix;
-    final Map<String, Boolean> hasMethodParametersAttribute;
+      /**
+       * The Prefix.
+       */
+      String prefix;
+      /**
+       * The Has method parameters attribute.
+       */
+      final Map<String, Boolean> hasMethodParametersAttribute;
 
-    MethodParameterVisitor( final Map<String, Boolean> hasMethodParametersAttribute ) {
+      /**
+       * Instantiates a new Method parameter visitor.
+       *
+       * @param hasMethodParametersAttribute the has method parameters attribute
+       */
+      MethodParameterVisitor( final Map<String, Boolean> hasMethodParametersAttribute ) {
       super(OPCODES_ASM);
       this.prefix = "";
       this.hasMethodParametersAttribute = hasMethodParametersAttribute;
@@ -211,7 +239,13 @@ public class MethodParametersTest extends AbstractObfuscationTest {
     private final String methodId;
     private final Map<String, Boolean> hasMethodParametersAttribute;
 
-    ParameterVisitor(
+      /**
+       * Instantiates a new Parameter visitor.
+       *
+       * @param methodId                     the method id
+       * @param hasMethodParametersAttribute the has method parameters attribute
+       */
+      ParameterVisitor(
             final String methodId,
             final Map<String, Boolean> hasMethodParametersAttribute
     ) {
@@ -235,13 +269,23 @@ public class MethodParametersTest extends AbstractObfuscationTest {
     private boolean type;
     private String del;
 
-    SignatureBuilder() {
+      /**
+       * Instantiates a new Signature builder.
+       */
+      SignatureBuilder() {
       dim = 0;
       type = false;
       del = "";
     }
 
-    StringBuilder appendSignature(
+      /**
+       * Append signature string builder.
+       *
+       * @param sb         the sb
+       * @param descriptor the descriptor
+       * @return the string builder
+       */
+      StringBuilder appendSignature(
             final StringBuilder sb, final String descriptor
     ) {
       dim = 0;

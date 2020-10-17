@@ -7,10 +7,17 @@
 package com.yworks.util;
 
 /**
+ * The interface Filter.
  *
- * @author  Sebastian Mueller, yWorks GmbH http://www.yworks.com
+ * @author Sebastian Mueller, yWorks GmbH http://www.yworks.com
  */
 public interface Filter
 {
-  boolean accepts(Object o);
+    /**
+     * Accepts boolean.
+     *
+     * @param o the o
+     * @return the boolean
+     */
+    boolean accepts(Object o);
 }

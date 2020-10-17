@@ -1,7 +1,7 @@
 package com.yworks.yguard.ant;
 
-import com.yworks.yguard.ObfuscatorTask;
 import com.yworks.common.ant.YGuardBaseTask;
+import com.yworks.yguard.ObfuscatorTask;
 import com.yworks.yguard.obf.YGuardRule;
 import org.apache.tools.ant.types.PatternSet;
 import org.apache.tools.ant.types.ZipFileSet;
@@ -25,36 +25,74 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
 
   private final YGuardBaseTask task;
 
-  public ClassSection() {
+    /**
+     * Instantiates a new Class section.
+     */
+    public ClassSection() {
     task = null;
   }
 
-  public ClassSection( YGuardBaseTask task ) {
+    /**
+     * Instantiates a new Class section.
+     *
+     * @param task the task
+     */
+    public ClassSection( YGuardBaseTask task ) {
     this.task = task;
   }
 
-  public void setName( String name ) {
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public void setName( String name ) {
     this.name = name;
   }
 
-  public void setClasses( ObfuscatorTask.Modifiers m ) {
+    /**
+     * Sets classes.
+     *
+     * @param m the m
+     */
+    public void setClasses( ObfuscatorTask.Modifiers m ) {
     this.classMode = m.getModifierValue();
     this.classesSet = true;
   }
 
-  public void setMethods( ObfuscatorTask.Modifiers m ) {
+    /**
+     * Sets methods.
+     *
+     * @param m the m
+     */
+    public void setMethods( ObfuscatorTask.Modifiers m ) {
     this.methodMode = m.getModifierValue();
   }
 
-  public void setFields( ObfuscatorTask.Modifiers m ) {
+    /**
+     * Sets fields.
+     *
+     * @param m the m
+     */
+    public void setFields( ObfuscatorTask.Modifiers m ) {
     fieldMode = m.getModifierValue();
   }
 
-  public void setMap( String mapTo ) {
+    /**
+     * Sets map.
+     *
+     * @param mapTo the map to
+     */
+    public void setMap( String mapTo ) {
     this.mapTo = mapTo;
   }
 
-  public void setExtends( String extendsType ) {
+    /**
+     * Sets extends.
+     *
+     * @param extendsType the extends type
+     */
+    public void setExtends( String extendsType ) {
     this.extendsType = ObfuscatorTask.toNativeClass( extendsType );
     if ( task instanceof ObfuscatorTask ) {
       ( (ObfuscatorTask) task ).setNeedYShrinkModel( true );
@@ -62,18 +100,33 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
 
   }
 
-  public String getExtends() {
+    /**
+     * Gets extends.
+     *
+     * @return the extends
+     */
+    public String getExtends() {
     return extendsType;
   }
 
-  public void setImplements( String implementsType ) {
+    /**
+     * Sets implements.
+     *
+     * @param implementsType the implements type
+     */
+    public void setImplements( String implementsType ) {
     this.implementsType = ObfuscatorTask.toNativeClass( implementsType );
     if ( task instanceof ObfuscatorTask ) {
       ( (ObfuscatorTask) task ).setNeedYShrinkModel( true );
     }
   }
 
-  public String getImplements() {
+    /**
+     * Gets implements.
+     *
+     * @return the implements
+     */
+    public String getImplements() {
     return implementsType;
   }
 
@@ -104,19 +157,39 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     entries.add( entry );
   }
 
-  public int getClassMode() {
+    /**
+     * Gets class mode.
+     *
+     * @return the class mode
+     */
+    public int getClassMode() {
     return classMode;
   }
 
-  public int getFieldMode() {
+    /**
+     * Gets field mode.
+     *
+     * @return the field mode
+     */
+    public int getFieldMode() {
     return fieldMode;
   }
 
-  public int getMethodMode() {
+    /**
+     * Gets method mode.
+     *
+     * @return the method mode
+     */
+    public int getMethodMode() {
     return methodMode;
   }
 
-  public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
     return name;
   }
 

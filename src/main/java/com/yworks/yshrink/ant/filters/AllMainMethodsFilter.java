@@ -1,9 +1,9 @@
 package com.yworks.yshrink.ant.filters;
 
+import com.yworks.logging.Logger;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.logging.Logger;
 
 /**
  * marks all main methods as entry points
@@ -12,7 +12,10 @@ import com.yworks.logging.Logger;
  */
 public class AllMainMethodsFilter extends AbstractEntryPointFilter {
 
-  static String MAIN_DESC = "([Ljava/lang/String;)V";
+    /**
+     * The Main desc.
+     */
+    static String MAIN_DESC = "([Ljava/lang/String;)V";
 
   @Override
   public boolean isEntryPointMethod( final Model model, final ClassDescriptor cd, final MethodDescriptor md ) {

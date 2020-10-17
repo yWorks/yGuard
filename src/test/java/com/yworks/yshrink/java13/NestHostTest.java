@@ -20,11 +20,20 @@ import java.util.List;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * The type Nest host test.
+ */
 public class NestHostTest {
-  @Rule
+    /**
+     * The Name.
+     */
+    @Rule
   public TestName name = new TestName();
 
-  @Test
+    /**
+     * Test no stub created.
+     */
+    @Test
   public void TestNoStubCreated() {
     // LambdaMetaFactory bootstrap methods are used only in Java 8 and newer
     final String testTypeName = "com.yworks.yshrink.java13.NestHostStubTest";

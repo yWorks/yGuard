@@ -7,13 +7,20 @@ import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 
 /**
+ * The type Entry point jar filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class EntryPointJarFilter extends AbstractEntryPointFilter {
 
   private final EntryPointJar entryPointJar;
 
-  public EntryPointJarFilter( EntryPointJar entryPointJar ) {
+    /**
+     * Instantiates a new Entry point jar filter.
+     *
+     * @param entryPointJar the entry point jar
+     */
+    public EntryPointJarFilter( EntryPointJar entryPointJar ) {
     this.entryPointJar = entryPointJar;
   }
 

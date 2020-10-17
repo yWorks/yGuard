@@ -17,7 +17,7 @@ package com.yworks.yguard.obf;
 /**
  * A Tools class containing generally useful, miscellaneous static methods.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class Tools
 {
@@ -28,8 +28,13 @@ public class Tools
 
 
     // Class Methods ---------------------------------------------------------
+
     /**
      * Is the string one of the ones in the array?
+     *
+     * @param s    the s
+     * @param list the list
+     * @return the boolean
      */
     public static boolean isInArray(String s, String[] list)
     {
@@ -44,6 +49,13 @@ public class Tools
         'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 
         'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'};
     private static final char pad = '=';
+
+    /**
+     * To base 64 string.
+     *
+     * @param b the b
+     * @return the string
+     */
     public static String toBase64(byte[] b)
     {
         StringBuffer sb = new StringBuffer();

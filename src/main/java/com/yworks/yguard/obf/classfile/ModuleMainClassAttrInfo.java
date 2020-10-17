@@ -5,7 +5,8 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 /**
- * Representation of the module main class attribute. 
+ * Representation of the module main class attribute.
+ *
  * @author Thomas Behr
  */
 public class ModuleMainClassAttrInfo extends AttrInfo {
@@ -19,7 +20,14 @@ public class ModuleMainClassAttrInfo extends AttrInfo {
   // Class Methods ---------------------------------------------------------
 
 
-  // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Module main class attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
+// Instance Methods ------------------------------------------------------
   ModuleMainClassAttrInfo(
           final ClassFile cf, final int attrNameIndex, final int attrLength
   ) {

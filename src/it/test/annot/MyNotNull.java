@@ -11,6 +11,15 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * The interface My not null.
+ */
 @Retention(RUNTIME)
 @Target({TYPE_USE})
-public @interface MyNotNull {String value() default "";}
+public @interface MyNotNull {
+    /**
+     * Value string.
+     *
+     * @return the string
+     */
+    String value() default "";}

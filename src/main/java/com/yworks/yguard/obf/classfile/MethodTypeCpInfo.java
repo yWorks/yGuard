@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Representation of a 'methodtype' entry in the ConstantPool.
  *
- * @author      Sebastian Rheinnecker, yworks
+ * @author Sebastian Rheinnecker, yworks
  */
 public class MethodTypeCpInfo extends CpInfo {
     // Constants -------------------------------------------------------------
@@ -19,7 +19,10 @@ public class MethodTypeCpInfo extends CpInfo {
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Method type cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected MethodTypeCpInfo()
     {
       super(CONSTANT_MethodType);
@@ -33,7 +36,12 @@ public class MethodTypeCpInfo extends CpInfo {
       dout.writeShort(u2descriptorIndex);
     }
 
-  public int getU2descriptorIndex() {
+    /**
+     * Gets u 2 descriptor index.
+     *
+     * @return the u 2 descriptor index
+     */
+    public int getU2descriptorIndex() {
     return u2descriptorIndex;
   }
 
@@ -41,7 +49,12 @@ public class MethodTypeCpInfo extends CpInfo {
     pool.incRefCount(this.u2descriptorIndex);
   }
 
-  public void setU2descriptorIndex(int u2descriptorIndex) {
+    /**
+     * Sets u 2 descriptor index.
+     *
+     * @param u2descriptorIndex the u 2 descriptor index
+     */
+    public void setU2descriptorIndex(int u2descriptorIndex) {
     this.u2descriptorIndex = u2descriptorIndex;
   }
 }

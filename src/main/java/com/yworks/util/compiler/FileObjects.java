@@ -6,25 +6,39 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
-
 import javax.tools.JavaFileObject;
 import javax.tools.SimpleJavaFileObject;
 
 /**
  * Provides factory methods for {@link javax.tools.JavaFileObject} instances.
+ *
  * @author Thomas Behr
  */
 class FileObjects {
   private FileObjects() {
   }
 
-  static JavaFileObject newInMemoryFileObject(
+    /**
+     * New in memory file object java file object.
+     *
+     * @param typeName the type name
+     * @param code     the code
+     * @return the java file object
+     */
+    static JavaFileObject newInMemoryFileObject(
           final String typeName, final String code
   ) {
     return new InMemoryFileObject(typeName, code);
   }
 
-  static JavaFileObject newUrlFileObject(
+    /**
+     * New url file object java file object.
+     *
+     * @param typeName the type name
+     * @param url      the url
+     * @return the java file object
+     */
+    static JavaFileObject newUrlFileObject(
           final String typeName, final URL url
   ) {
     return new UrlFileObject(typeName, url);
@@ -33,11 +47,22 @@ class FileObjects {
 
 
   private abstract static class AbstractSourceObject extends SimpleJavaFileObject {
-    AbstractSourceObject( final String typname) {
+      /**
+       * Instantiates a new Abstract source object.
+       *
+       * @param typname the typname
+       */
+      AbstractSourceObject( final String typname) {
       super(asUri(typname), Kind.SOURCE);
     }
 
-    static URI asUri( final String typeName ) {
+      /**
+       * As uri uri.
+       *
+       * @param typeName the type name
+       * @return the uri
+       */
+      static URI asUri( final String typeName ) {
       return URI.create("string:///" + typeName.replace('.', '/') + Kind.SOURCE.extension);
     }
   }
@@ -45,7 +70,13 @@ class FileObjects {
   private static final class InMemoryFileObject extends AbstractSourceObject {
     private final String code;
 
-    InMemoryFileObject( final String typeName, final String code ) {
+      /**
+       * Instantiates a new In memory file object.
+       *
+       * @param typeName the type name
+       * @param code     the code
+       */
+      InMemoryFileObject( final String typeName, final String code ) {
       super(typeName);
       this.code = code;
     }
@@ -60,7 +91,13 @@ class FileObjects {
   private static final class UrlFileObject extends AbstractSourceObject {
     private final URL url;
 
-    UrlFileObject( final String typname, final URL url ) {
+      /**
+       * Instantiates a new Url file object.
+       *
+       * @param typname the typname
+       * @param url     the url
+       */
+      UrlFileObject( final String typname, final URL url ) {
       super(typname);
       this.url = url;
     }

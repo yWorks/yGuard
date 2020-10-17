@@ -1,12 +1,14 @@
 package com.yworks.yshrink.ant;
 
-import com.yworks.common.ant.TypePatternSet;
 import com.yworks.common.ant.PatternMatchedSection;
+import com.yworks.common.ant.TypePatternSet;
 import com.yworks.yshrink.util.Util;
 
 import java.util.EnumSet;
 
 /**
+ * The type Field section.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public final class FieldSection extends PatternMatchedSection {
@@ -22,27 +24,57 @@ public final class FieldSection extends PatternMatchedSection {
     );
   }
 
-  public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
     return name;
   }
 
-  public void setName( String name ) {
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public void setName( String name ) {
     this.name = name;
   }
 
-  public String getClassName() {
+    /**
+     * Gets class name.
+     *
+     * @return the class name
+     */
+    public String getClassName() {
     return className;
   }
 
-  public void setClass( String className ) {
+    /**
+     * Sets class.
+     *
+     * @param className the class name
+     */
+    public void setClass( String className ) {
     this.className = Util.toInternalClass( className );
   }
 
-  public String getType() {
+    /**
+     * Gets type.
+     *
+     * @return the type
+     */
+    public String getType() {
     return type;
   }
 
-  public void setType( String type ) {
+    /**
+     * Sets type.
+     *
+     * @param type the type
+     */
+    public void setType( String type ) {
     this.type = Util.toInternalClass( type );
   }
 

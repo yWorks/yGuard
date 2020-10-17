@@ -1,23 +1,38 @@
 package com.yworks.yshrink.ant.filters;
 
-import com.yworks.common.ant.TypePatternSet;
 import com.yworks.common.ant.PatternMatchedSection;
+import com.yworks.common.ant.TypePatternSet;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.PatternSet;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 /**
+ * The type Pattern matched filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class PatternMatchedFilter extends AbstractEntryPointFilter {
 
   private Project project;
 
-  public PatternMatchedFilter( final Project p ) {
+    /**
+     * Instantiates a new Pattern matched filter.
+     *
+     * @param p the p
+     */
+    public PatternMatchedFilter( final Project p ) {
     project = p;
   }
 
-  protected boolean match( TypePatternSet.Type type, String str, PatternMatchedSection section ) {
+    /**
+     * Match boolean.
+     *
+     * @param type    the type
+     * @param str     the str
+     * @param section the section
+     * @return the boolean
+     */
+    protected boolean match( TypePatternSet.Type type, String str, PatternMatchedSection section ) {
 
     PatternSet patternSet = section.getPatternSet( type );
 

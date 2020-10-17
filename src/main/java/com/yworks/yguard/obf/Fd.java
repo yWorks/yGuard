@@ -8,12 +8,10 @@
  */
 package com.yworks.yguard.obf;
 
-import com.yworks.yguard.obf.classfile.*;
-
 /**
  * Tree item representing a field.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class Fd extends MdFd
 {
@@ -27,7 +25,16 @@ public class Fd extends MdFd
 
 
     // Instance Methods ------------------------------------------------------
-    /** Ctor. */
+
+    /**
+     * Ctor.  @param parent the parent
+     *
+     * @param isSynthetic       the is synthetic
+     * @param name              the name
+     * @param descriptor        the descriptor
+     * @param access            the access
+     * @param obfuscationConfig the obfuscation config
+     */
     public Fd(TreeItem parent, boolean isSynthetic, String name, String descriptor,
               int access, ObfuscationConfig obfuscationConfig)
     {
@@ -40,12 +47,20 @@ public class Fd extends MdFd
         return ";";
     }
 
-    /** Is this field's name a match to the wildcard pattern? */
+    /**
+     * Is this field's name a match to the wildcard pattern?  @param namePattern the name pattern
+     *
+     * @return the boolean
+     */
     public boolean isWildcardMatch(String namePattern) {
         return isMatch(namePattern, getFullInName());
     }
 
-    /** Is this field's name a non-recursive match to the wildcard pattern? */
+    /**
+     * Is this field's name a non-recursive match to the wildcard pattern?  @param namePattern the name pattern
+     *
+     * @return the boolean
+     */
     public boolean isNRWildcardMatch(String namePattern) {
         return isNRMatch(namePattern, getFullInName());
     }

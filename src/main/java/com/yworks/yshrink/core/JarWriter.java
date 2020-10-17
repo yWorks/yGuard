@@ -1,18 +1,18 @@
 package com.yworks.yshrink.core;
 
+import com.yworks.common.ResourcePolicy;
+import com.yworks.common.ShrinkBag;
+import com.yworks.logging.Logger;
+import com.yworks.util.Version;
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.StreamProvider;
 import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
 import com.yworks.util.abstractjar.impl.DirectoryWrapper;
 import com.yworks.util.abstractjar.impl.JarFileWrapper;
 import com.yworks.util.abstractjar.impl.JarStreamProvider;
-import com.yworks.common.ResourcePolicy;
-import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
-import com.yworks.util.Version;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
@@ -32,6 +32,8 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
 /**
+ * The type Jar writer.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class JarWriter implements ArchiveWriter {
@@ -48,7 +50,13 @@ public class JarWriter implements ArchiveWriter {
   private final boolean createStubs;
   private final MessageDigest[] digests;
 
-  public JarWriter( boolean createStubs, String digestNamesStr ) {
+    /**
+     * Instantiates a new Jar writer.
+     *
+     * @param createStubs    the create stubs
+     * @param digestNamesStr the digest names str
+     */
+    public JarWriter( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
 
     String[] digestNames = ( digestNamesStr.trim().equalsIgnoreCase(
@@ -70,7 +78,12 @@ public class JarWriter implements ArchiveWriter {
     }
   }
 
-  public MessageDigest[] getDigests() {
+    /**
+     * Get digests message digest [ ].
+     *
+     * @return the message digest [ ]
+     */
+    public MessageDigest[] getDigests() {
     return digests;
   }
 

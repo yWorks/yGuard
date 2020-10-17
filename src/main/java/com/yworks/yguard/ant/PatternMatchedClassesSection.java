@@ -1,44 +1,75 @@
 package com.yworks.yguard.ant;
 
+import com.yworks.common.ant.ZipScannerTool;
+import com.yworks.yguard.ObfuscatorTask;
+import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.PatternSet;
 import org.apache.tools.ant.types.ZipFileSet;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.DirectoryScanner;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collection;
-import java.util.Iterator;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import com.yworks.yguard.ObfuscatorTask;
-import com.yworks.common.ant.ZipScannerTool;
-
-/** Used as a super class for ant's handling of the
+/**
+ * Used as a super class for ant's handling of the
  * elements which can contain a <code>patternset</code> child element.
  */
 public abstract class PatternMatchedClassesSection {
-  protected List patternSets = new ArrayList(5);
+    /**
+     * The Pattern sets.
+     */
+    protected List patternSets = new ArrayList(5);
 
-  protected final Map properties = new HashMap();
+    /**
+     * The Properties.
+     */
+    protected final Map properties = new HashMap();
 
-  protected boolean allowMatchAllPatternSet = false;
+    /**
+     * The Allow match all pattern set.
+     */
+    protected boolean allowMatchAllPatternSet = false;
 
-  public void addConfiguredPatternSet( PatternSet ps){
+    /**
+     * Add configured pattern set.
+     *
+     * @param ps the ps
+     */
+    public void addConfiguredPatternSet( PatternSet ps){
     patternSets.add(ps);
   }
 
-  public void addConfiguredProperty( Property p){
+    /**
+     * Add configured property.
+     *
+     * @param p the p
+     */
+    public void addConfiguredProperty( Property p){
     this.properties.put(p.getName(), p.getValue());
   }
 
-  public List getPatternSets() {
+    /**
+     * Gets pattern sets.
+     *
+     * @return the pattern sets
+     */
+    public List getPatternSets() {
     return patternSets;
   }
 
-  public void addEntries( Collection entries, ZipFileSet zf)throws IOException {
+    /**
+     * Add entries.
+     *
+     * @param entries the entries
+     * @param zf      the zf
+     * @throws IOException the io exception
+     */
+    public void addEntries( Collection entries, ZipFileSet zf)throws IOException {
     Project project = zf.getProject();
     for ( Iterator it = patternSets.iterator(); it.hasNext();)
     {
@@ -69,5 +100,12 @@ public abstract class PatternMatchedClassesSection {
       }
     }
   }
-  public abstract void addEntries(Collection entries, String matchedClass);
+
+    /**
+     * Add entries.
+     *
+     * @param entries      the entries
+     * @param matchedClass the matched class
+     */
+    public abstract void addEntries(Collection entries, String matchedClass);
 }

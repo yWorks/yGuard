@@ -1,11 +1,29 @@
 package test.clinit;
 
-/** @author schroede */
+/**
+ * The type Clinit test.
+ *
+ * @author schroede
+ */
 public class ClinitTest {
 
-  public enum Test { a, b};
+    /**
+     * The enum Test.
+     */
+    public enum Test {
+        /**
+         * A test.
+         */
+        a,
+        /**
+         * B test.
+         */
+        b};
 
-  public void foo(){
+    /**
+     * Foo.
+     */
+    public void foo(){
     switch (Test.a) {
       case a:
         System.out.println("a");

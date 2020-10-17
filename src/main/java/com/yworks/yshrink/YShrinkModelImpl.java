@@ -2,25 +2,33 @@ package com.yworks.yshrink;
 
 import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.ant.ResourceCpResolver;
-import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.core.Analyzer;
+import com.yworks.yshrink.model.Model;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
+import java.io.IOException;
 import java.util.Collection;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
-import java.io.IOException;
+import java.util.Set;
 
 /**
+ * The type Y shrink model.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class YShrinkModelImpl implements YShrinkModel {
 
-  Model model;
+    /**
+     * The Model.
+     */
+    Model model;
 
-  public YShrinkModelImpl() {
+    /**
+     * Instantiates a new Y shrink model.
+     */
+    public YShrinkModelImpl() {
     model = new Model();
   }
 

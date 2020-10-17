@@ -7,18 +7,31 @@ import java.io.IOException;
 /**
  * Representation of a bootstrap methods in the bootstrap method attribute section.
  *
- * @author      Sebastian Rheinnecker, yworks
-*/
+ * @author Sebastian Rheinnecker, yworks
+ */
 public class BootstrapMethod {
-  int u2bootstrapMethodRef;
-  int[] u2bootstrapArguments;
+    /**
+     * The U 2 bootstrap method ref.
+     */
+    int u2bootstrapMethodRef;
+    /**
+     * The U 2 bootstrap arguments.
+     */
+    int[] u2bootstrapArguments;
 
   private BootstrapMethod( int methodRef, int[] arguments ) {
     this.u2bootstrapMethodRef = methodRef;
     this.u2bootstrapArguments = arguments;
   }
 
-  static BootstrapMethod read( final DataInput din ) throws IOException {
+    /**
+     * Read bootstrap method.
+     *
+     * @param din the din
+     * @return the bootstrap method
+     * @throws IOException the io exception
+     */
+    static BootstrapMethod read( final DataInput din ) throws IOException {
     int methodRef = din.readUnsignedShort();
     int numArguments = din.readUnsignedShort();
     int[] arguments = new int[numArguments];
@@ -28,7 +41,13 @@ public class BootstrapMethod {
     return new BootstrapMethod(methodRef, arguments);
   }
 
-  void write( final DataOutput dout ) throws IOException {
+    /**
+     * Write.
+     *
+     * @param dout the dout
+     * @throws IOException the io exception
+     */
+    void write( final DataOutput dout ) throws IOException {
     dout.writeShort(u2bootstrapMethodRef);
     final int u2numBootstrapArguments = u2bootstrapArguments.length;
     dout.writeShort(u2numBootstrapArguments);
@@ -37,11 +56,21 @@ public class BootstrapMethod {
     }
   }
 
-  public int getBootstrapMethodRef() {
+    /**
+     * Gets bootstrap method ref.
+     *
+     * @return the bootstrap method ref
+     */
+    public int getBootstrapMethodRef() {
     return u2bootstrapMethodRef;
   }
 
-  public int[] getBootstrapArguments() {
+    /**
+     * Get bootstrap arguments int [ ].
+     *
+     * @return the int [ ]
+     */
+    public int[] getBootstrapArguments() {
     return u2bootstrapArguments;
   }
 }

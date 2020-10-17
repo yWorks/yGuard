@@ -1,17 +1,23 @@
 package com.yworks.yguard.ant;
 
-import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.common.ant.YGuardBaseTask;
+import com.yworks.yguard.obf.YGuardRule;
 
 import java.util.Collection;
 import java.util.StringTokenizer;
 
-/** Used by ant to handle the <code>attributes</code> element.
+/**
+ * Used by ant to handle the <code>attributes</code> element.
  */
 public final class AttributesSection extends PatternMatchedClassesSection implements Mappable {
   private YGuardBaseTask obfuscatorTask;
 
-  public AttributesSection( YGuardBaseTask obfuscatorTask ){
+    /**
+     * Instantiates a new Attributes section.
+     *
+     * @param obfuscatorTask the obfuscator task
+     */
+    public AttributesSection( YGuardBaseTask obfuscatorTask ){
     super();
     this.obfuscatorTask = obfuscatorTask;
     this.allowMatchAllPatternSet = true;
@@ -19,6 +25,11 @@ public final class AttributesSection extends PatternMatchedClassesSection implem
 
     private String attributes;
 
+    /**
+     * Set name.
+     *
+     * @param attributes the attributes
+     */
     public void setName(String attributes){
         this.attributes = attributes;
     }
@@ -36,7 +47,12 @@ public final class AttributesSection extends PatternMatchedClassesSection implem
     {
     }
 
-  public String getAttributes() {
+    /**
+     * Gets attributes.
+     *
+     * @return the attributes
+     */
+    public String getAttributes() {
     return attributes;
   }
 }

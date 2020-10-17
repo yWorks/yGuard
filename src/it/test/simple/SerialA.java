@@ -6,11 +6,16 @@ import java.io.Serializable;
 import java.io.ObjectInputStream;
 
 /**
+ * The type Serial a.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 class SerialA implements Serializable {
 
-  public SerialA() {}
+    /**
+     * Instantiates a new Serial a.
+     */
+    public SerialA() {}
 
   private void writeObject( ObjectOutputStream s ) throws IOException {
     s.defaultWriteObject();

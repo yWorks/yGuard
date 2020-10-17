@@ -6,9 +6,17 @@ import test.generics.GenericOuterNonGenericInner;
 
 import java.util.List;
 
+/**
+ * The type Generics usage.
+ */
 public class GenericsUsage {
 
-  public static void main( String[] args ) {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
+    public static void main( String[] args ) {
     GenericOuter<List<BlaClass.Inner<String>>> genericOuter = new GenericOuter<List<BlaClass.Inner<String>>>();
     //genericOuter.foo(inner, innerinner);
 

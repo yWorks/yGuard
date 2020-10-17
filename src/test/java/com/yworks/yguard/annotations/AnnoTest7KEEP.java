@@ -7,55 +7,103 @@ import com.yworks.util.annotation.Obfuscation;
  */
 public class AnnoTest7KEEP {
 
-  @Obfuscation(exclude = true, applyToMembers = true)
+    /**
+     * The type Keep 1.
+     */
+    @Obfuscation(exclude = true, applyToMembers = true)
   public class KEEP1 {
 
-    @Obfuscation(exclude = false, applyToMembers = true)
+        /**
+         * The type Inner obfuscate.
+         */
+        @Obfuscation(exclude = false, applyToMembers = true)
     public class InnerOBFUSCATE {
 
-      boolean innerFieldOBFUSCATE;
+            /**
+             * The Inner field obfuscate.
+             */
+            boolean innerFieldOBFUSCATE;
     }
   }
 
-  @Obfuscation(exclude = true, applyToMembers = true)
+    /**
+     * The type Keep 2.
+     */
+    @Obfuscation(exclude = true, applyToMembers = true)
   public class KEEP2 {
 
-    @Obfuscation(exclude = false, applyToMembers = false)
+        /**
+         * The type Inner obfuscate.
+         */
+        @Obfuscation(exclude = false, applyToMembers = false)
     public class InnerOBFUSCATE {
 
-      boolean innerFieldKEEP;
+            /**
+             * The Inner field keep.
+             */
+            boolean innerFieldKEEP;
     }
   }
 
-  @Obfuscation(exclude = true, applyToMembers = true)
+    /**
+     * The type Keep 3.
+     */
+    @Obfuscation(exclude = true, applyToMembers = true)
   public class KEEP3 {
 
-    @Obfuscation(exclude = false, applyToMembers = true)
+        /**
+         * The type Inner obfuscate.
+         */
+        @Obfuscation(exclude = false, applyToMembers = true)
     public class InnerOBFUSCATE {
 
-      boolean innerFieldOBFUSCATE;
+            /**
+             * The Inner field obfuscate.
+             */
+            boolean innerFieldOBFUSCATE;
 
-      class InnerInnerOBFUSCATE {
+            /**
+             * The type Inner inner obfuscate.
+             */
+            class InnerInnerOBFUSCATE {
 
-        // inherits from InnerObfuscate
+                /**
+                 * The Inner field obfuscate.
+                 */
+// inherits from InnerObfuscate
         boolean innerFieldOBFUSCATE;
       }
     }
   }
 
-  @Obfuscation(exclude = true, applyToMembers = true)
+    /**
+     * The type Keep 4.
+     */
+    @Obfuscation(exclude = true, applyToMembers = true)
   public class KEEP4 {
 
-    @Obfuscation(exclude = false, applyToMembers = false)
+        /**
+         * The type Inner obfuscate.
+         */
+        @Obfuscation(exclude = false, applyToMembers = false)
     public class InnerOBFUSCATE {
 
-      // inherits from KEEP4
+            /**
+             * The Inner field keep.
+             */
+// inherits from KEEP4
       boolean innerFieldKEEP;
 
-      @Obfuscation(exclude = false, applyToMembers = false)
+            /**
+             * The type Inner inner obfuscate.
+             */
+            @Obfuscation(exclude = false, applyToMembers = false)
       class InnerInnerOBFUSCATE {
 
-        // inherits from KEEP4
+                /**
+                 * The Inner field keep.
+                 */
+// inherits from KEEP4
         boolean innerFieldKEEP;
       }
     }

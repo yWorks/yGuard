@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The type Annotations test.
  *
  * @author muellese
  */
@@ -25,8 +26,10 @@ public class AnnotationsTest
 {
   private static final Logger log = Logger.getLogger(AnnotationsTest.class.getName() );
 
-  /** Creates a new instance of AnnotationsTest */
-  @TestAnnotation(id=23, test1="blah", test3=2, classType=AnnotationsTest.class, enumTest = TestEnum.V3, recursive = @YATAnnotation(blah = "gaga"), classArray= {AnnotationsTest.class, String.class}, intArray = {2,3,4})
+    /**
+     * Creates a new instance of AnnotationsTest
+     */
+    @TestAnnotation(id=23, test1="blah", test3=2, classType=AnnotationsTest.class, enumTest = TestEnum.V3, recursive = @YATAnnotation(blah = "gaga"), classArray= {AnnotationsTest.class, String.class}, intArray = {2,3,4})
   public AnnotationsTest()
   {
     try {
@@ -50,9 +53,12 @@ public class AnnotationsTest
       ex.printStackTrace();
     }    
   }
-  
 
-  @Test
+
+    /**
+     * Run.
+     */
+    @Test
   public void run() {
     Object o = new AnnotationsTest();
   }

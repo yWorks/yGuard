@@ -11,10 +11,16 @@
 package com.yworks.yguard.annotations;
 
 /**
+ * The interface Yat annotation.
  *
  * @author muellese
  */
 public @interface YATAnnotation
 {
-  String blah() default "blub";
+    /**
+     * Blah string.
+     *
+     * @return the string
+     */
+    String blah() default "blub";
 }

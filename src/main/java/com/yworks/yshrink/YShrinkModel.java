@@ -4,23 +4,54 @@ import com.yworks.common.ShrinkBag;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Path;
 
-import java.util.List;
-import java.util.Collection;
-import java.util.Set;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
+ * The interface Y shrink model.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public interface YShrinkModel {
 
-  public void createSimpleModel( List<ShrinkBag> bags ) throws IOException;
+    /**
+     * Create simple model.
+     *
+     * @param bags the bags
+     * @throws IOException the io exception
+     */
+    public void createSimpleModel( List<ShrinkBag> bags ) throws IOException;
 
-  Set<String> getAllAncestorClasses( String className );
+    /**
+     * Gets all ancestor classes.
+     *
+     * @param className the class name
+     * @return the all ancestor classes
+     */
+    Set<String> getAllAncestorClasses( String className );
 
-  Set<String> getAllImplementedInterfaces( String className );
+    /**
+     * Gets all implemented interfaces.
+     *
+     * @param className the class name
+     * @return the all implemented interfaces
+     */
+    Set<String> getAllImplementedInterfaces( String className );
 
-  Collection<String> getAllClassNames();
+    /**
+     * Gets all class names.
+     *
+     * @return the all class names
+     */
+    Collection<String> getAllClassNames();
 
-  void setResourceClassPath(Path resourceClassPath, Task target);
+    /**
+     * Sets resource class path.
+     *
+     * @param resourceClassPath the resource class path
+     * @param target            the target
+     */
+    void setResourceClassPath(Path resourceClassPath, Task target);
 }
