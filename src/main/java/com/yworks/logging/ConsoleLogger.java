@@ -7,10 +7,10 @@ package com.yworks.logging;
  */
 public class ConsoleLogger extends Logger {
 
-    /**
-     * Instantiates a new Console logger.
-     */
-    public ConsoleLogger() {
+  /**
+   * Instantiates a new Console logger.
+   */
+  public ConsoleLogger() {
     register();
   }
 
@@ -19,22 +19,22 @@ public class ConsoleLogger extends Logger {
   }
 
   public void doErr( final String s ) {
-    System.err.println( s );
+    System.err.println(s);
   }
 
   public void doWarn( final String s ) {
-    System.out.println( s );
+    System.out.println(s);
   }
 
   public void doWarnToLog( String s ) {
   }
 
   public void doShrinkLog( String s ) {
-    System.out.println( s );
+    System.out.println(s);
   }
 
   public void doErr( String s, Throwable ex ) {
-    System.out.println( s );
+    System.out.println(s);
     ex.printStackTrace();
   }
 

@@ -16,41 +16,41 @@ import java.util.List;
  */
 public class EntryPointFilters extends AbstractEntryPointFilter {
 
-    /**
-     * The Filters.
-     */
-    List<EntryPointFilter> filters;
+  /**
+   * The Filters.
+   */
+  List<EntryPointFilter> filters;
 
   private Exclude exclude;
 
-    /**
-     * Instantiates a new Entry point filters.
-     */
-    public EntryPointFilters() {
+  /**
+   * Instantiates a new Entry point filters.
+   */
+  public EntryPointFilters() {
     this.filters = new ArrayList<EntryPointFilter>();
   }
 
-    /**
-     * Sets exclude.
-     *
-     * @param exclude the exclude
-     */
-    public void setExclude( Exclude exclude ) {
+  /**
+   * Sets exclude.
+   *
+   * @param exclude the exclude
+   */
+  public void setExclude( Exclude exclude ) {
     this.exclude = exclude;
   }
 
-    /**
-     * Add entry point filter.
-     *
-     * @param entryPointFilter the entry point filter
-     */
-    public void addEntryPointFilter( final EntryPointFilter entryPointFilter ) {
-    filters.add( entryPointFilter );
+  /**
+   * Add entry point filter.
+   *
+   * @param entryPointFilter the entry point filter
+   */
+  public void addEntryPointFilter( final EntryPointFilter entryPointFilter ) {
+    filters.add(entryPointFilter);
   }
 
   public boolean isEntryPointClass( final Model model, final ClassDescriptor cd ) {
-    for ( EntryPointFilter entryPointFilter : filters ) {
-      if ( entryPointFilter.isEntryPointClass( model, cd ) ) {
+    for (EntryPointFilter entryPointFilter : filters) {
+      if (entryPointFilter.isEntryPointClass(model, cd)) {
         return true;
       }
     }
@@ -58,8 +58,8 @@ public class EntryPointFilters extends AbstractEntryPointFilter {
   }
 
   public boolean isEntryPointMethod( final Model model, final ClassDescriptor cd, final MethodDescriptor md ) {
-    for ( EntryPointFilter entryPointFilter : filters ) {
-      if ( entryPointFilter.isEntryPointMethod( model, cd, md ) ) {
+    for (EntryPointFilter entryPointFilter : filters) {
+      if (entryPointFilter.isEntryPointMethod(model, cd, md)) {
         return true;
       }
     }
@@ -67,8 +67,8 @@ public class EntryPointFilters extends AbstractEntryPointFilter {
   }
 
   public boolean isEntryPointField( final Model model, final ClassDescriptor cd, final FieldDescriptor fd ) {
-    for ( EntryPointFilter entryPointFilter : filters ) {
-      if ( entryPointFilter.isEntryPointField( model, cd, fd ) ) {
+    for (EntryPointFilter entryPointFilter : filters) {
+      if (entryPointFilter.isEntryPointField(model, cd, fd)) {
         return true;
       }
     }
@@ -77,8 +77,8 @@ public class EntryPointFilters extends AbstractEntryPointFilter {
 
   @Override
   public void setRetainAttribute( final ClassDescriptor cd ) {
-    for ( EntryPointFilter entryPointFilter : filters ) {
-      entryPointFilter.setRetainAttribute( cd );
+    for (EntryPointFilter entryPointFilter : filters) {
+      entryPointFilter.setRetainAttribute(cd);
     }
   }
 }

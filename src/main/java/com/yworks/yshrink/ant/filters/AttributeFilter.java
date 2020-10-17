@@ -16,37 +16,37 @@ import java.util.List;
  */
 public class AttributeFilter extends PatternMatchedFilter {
 
-  private List<AttributesSection> sections = new ArrayList<AttributesSection>( );
+  private final List<AttributesSection> sections = new ArrayList<AttributesSection>();
 
-    /**
-     * Instantiates a new Attribute filter.
-     *
-     * @param p the p
-     */
-    public AttributeFilter( Project p ) {
-    super( p );
+  /**
+   * Instantiates a new Attribute filter.
+   *
+   * @param p the p
+   */
+  public AttributeFilter( Project p ) {
+    super(p);
   }
 
-    /**
-     * Add attributes section.
-     *
-     * @param as the as
-     */
-    public void addAttributesSection( AttributesSection as ) {
-    sections.add( as );
+  /**
+   * Add attributes section.
+   *
+   * @param as the as
+   */
+  public void addAttributesSection( AttributesSection as ) {
+    sections.add(as);
   }
 
   public void setRetainAttribute( ClassDescriptor cd ) {
 
     String className = cd.getName();
-    String javaClassName = Util.toJavaClass( cd.getName() );
+    String javaClassName = Util.toJavaClass(cd.getName());
 
-    for ( AttributesSection section : sections ) {
-      if ( match( TypePatternSet.Type.NAME, javaClassName, section ) ||
-            match( TypePatternSet.Type.NAME, className, section ) ) {
+    for (AttributesSection section : sections) {
+      if (match(TypePatternSet.Type.NAME, javaClassName, section) ||
+          match(TypePatternSet.Type.NAME, className, section)) {
 
-        for ( String attr : section.getAttributes() ) {
-          cd.setRetainAttribute( attr );
+        for (String attr : section.getAttributes()) {
+          cd.setRetainAttribute(attr);
         }
       }
     }

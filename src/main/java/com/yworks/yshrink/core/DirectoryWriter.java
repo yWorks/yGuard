@@ -32,15 +32,15 @@ public class DirectoryWriter implements ArchiveWriter {
   private static final String SIGNATURE_FILE_SUFFIX = ".SF";
 
   private File out;
-  private Set<String> directoriesWritten = new HashSet<String>();
-  private boolean createStubs;
+  private final Set<String> directoriesWritten = new HashSet<String>();
+  private final boolean createStubs;
 
-    /**
-     * Instantiates a new Directory writer.
-     *
-     * @param createStubs the create stubs
-     */
-    public DirectoryWriter( boolean createStubs ) {
+  /**
+   * Instantiates a new Directory writer.
+   *
+   * @param createStubs the create stubs
+   */
+  public DirectoryWriter( boolean createStubs ) {
     this.createStubs = createStubs;
   }
 
@@ -58,15 +58,15 @@ public class DirectoryWriter implements ArchiveWriter {
   private void copyResource( String entryName, StreamProvider jarStreamProvider, DataInputStream stream ) throws IOException {
 
     // don't copy manifest/signature files.
-    if ( ! entryName.equals( MANIFEST_FILENAME )
-         && ! ( entryName.endsWith( SIGNATURE_FILE_SUFFIX ) && entryName.startsWith( SIGNATURE_FILE_PREFIX ) ) ) {
+    if (!entryName.equals(MANIFEST_FILENAME)
+        && !(entryName.endsWith(SIGNATURE_FILE_SUFFIX) && entryName.startsWith(SIGNATURE_FILE_PREFIX))) {
 
       int entrySize = (int) jarStreamProvider.getCurrentEntry().getSize();
-      if ( -1 != entrySize ) {
-        byte[] data = new byte[ entrySize ];
-        stream.readFully( data );
-        addDirectory( entryName );
-        Files.write( out.toPath().resolve(entryName), data );
+      if (-1 != entrySize) {
+        byte[] data = new byte[entrySize];
+        stream.readFully(data);
+        addDirectory(entryName);
+        Files.write(out.toPath().resolve(entryName), data);
       }
     }
   }
@@ -76,9 +76,9 @@ public class DirectoryWriter implements ArchiveWriter {
     File in = bag.getIn();
     out = bag.getOut();
 
-    Logger.log("writing shrinked " + in + " to " + out + "." );
+    Logger.log("writing shrinked " + in + " to " + out + ".");
 
-    Logger.shrinkLog( "<inOutPair in=\"" + in + "\" out=\"" + out + "\">" );
+    Logger.shrinkLog("<inOutPair in=\"" + in + "\" out=\"" + out + "\">");
 
     long inLength = in.length();
 
@@ -93,94 +93,94 @@ public class DirectoryWriter implements ArchiveWriter {
     int numObsoleteFields = 0;
     int numRemovedResources = 0;
 
-    Set<String> nonEmptyDirs = new HashSet<String>(5 );
+    Set<String> nonEmptyDirs = new HashSet<String>(5);
 
-    Logger.shrinkLog( "\t<removed-code>" );
+    Logger.shrinkLog("\t<removed-code>");
 
-    while ( stream != null ) {
+    while (stream != null) {
 
       String entryName = jarStreamProvider.getCurrentEntryName();
 
       numClasses++;
 
       ClassDescriptor cd = model.getClassDescriptor(
-              entryName.substring( 0, entryName.lastIndexOf( ".class" ) ) );
-      boolean obsolete = model.isObsolete( cd.getNode() );
+              entryName.substring(0, entryName.lastIndexOf(".class")));
+      boolean obsolete = model.isObsolete(cd.getNode());
 
-      if ( !obsolete ) {
+      if (!obsolete) {
 
-        nonEmptyDirs.add( jarStreamProvider.getCurrentDir() );
+        nonEmptyDirs.add(jarStreamProvider.getCurrentDir());
 
         // asm 3.x
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
-        OutputVisitor outputVisitor = new OutputVisitor( cw, model, createStubs );
-        ClassReader cr = new ClassReader(stream );
+        OutputVisitor outputVisitor = new OutputVisitor(cw, model, createStubs);
+        ClassReader cr = new ClassReader(stream);
 
         // asm 3.x
-        cr.accept( outputVisitor,0);
+        cr.accept(outputVisitor, 0);
 
 
         numObsoleteMethods += outputVisitor.getNumObsoleteMethods();
         numObsoleteFields += outputVisitor.getNumObsoleteFields();
 
         byte[] modifiedClass = cw.toByteArray();
-        addDirectory( entryName );
-        Files.write( out.toPath().resolve(entryName), modifiedClass );
+        addDirectory(entryName);
+        Files.write(out.toPath().resolve(entryName), modifiedClass);
       } else {
         numObsoleteClasses++;
-        Logger.shrinkLog("\t\t<class name=\"" + Util.toJavaClass(entryName ) + "\" />" );
+        Logger.shrinkLog("\t\t<class name=\"" + Util.toJavaClass(entryName) + "\" />");
       }
 
       stream = jarStreamProvider.getNextClassEntryStream();
     }
 
-    Logger.shrinkLog( "\t</removed-code>" );
-    Logger.shrinkLog( "\t<removed-resources>" );
+    Logger.shrinkLog("\t</removed-code>");
+    Logger.shrinkLog("\t<removed-resources>");
 
     ResourcePolicy resourcePolicy = bag.getResources();
 
-    if ( ! resourcePolicy.equals( ResourcePolicy.NONE ) ) {
+    if (!resourcePolicy.equals(ResourcePolicy.NONE)) {
 
       jarStreamProvider.reset();
       stream = jarStreamProvider.getNextResourceEntryStream();
 
-      while ( stream != null ) {
+      while (stream != null) {
         String entryName = jarStreamProvider.getCurrentEntryName();
 
-        if ( ! resourcePolicy.equals( ResourcePolicy.NONE )
-             &&
-             (
-                     resourcePolicy.equals( ResourcePolicy.COPY )
-                     ||
-                     ( resourcePolicy.equals( ResourcePolicy.AUTO ) &&
-                       nonEmptyDirs.contains( jarStreamProvider.getCurrentDir() ) ) ) ) {
+        if (!resourcePolicy.equals(ResourcePolicy.NONE)
+            &&
+            (
+                    resourcePolicy.equals(ResourcePolicy.COPY)
+                    ||
+                    (resourcePolicy.equals(ResourcePolicy.AUTO) &&
+                     nonEmptyDirs.contains(jarStreamProvider.getCurrentDir())))) {
 
-          copyResource( entryName, jarStreamProvider, stream );
+          copyResource(entryName, jarStreamProvider, stream);
         } else {
           numRemovedResources++;
           Logger.shrinkLog(
-                  "\t<resource dir=\"" + jarStreamProvider.getCurrentDir() + "\" name=\"" + jarStreamProvider.getCurrentFilename() + "\" />" );
+                  "\t<resource dir=\"" + jarStreamProvider.getCurrentDir() + "\" name=\"" + jarStreamProvider.getCurrentFilename() + "\" />");
         }
 
         stream = jarStreamProvider.getNextResourceEntryStream();
       }
     }
 
-    Logger.shrinkLog( "\t</removed-resources>" );
+    Logger.shrinkLog("\t</removed-resources>");
 
     long outLength = out.length();
 
     NumberFormat nf = NumberFormat.getPercentInstance();
-    nf.setMinimumFractionDigits( 2 );
-    String percent = nf.format( 1 - ( (double) outLength / (double) inLength ) );
+    nf.setMinimumFractionDigits(2);
+    String percent = nf.format(1 - ((double) outLength / (double) inLength));
 
-    Logger.log( "\tshrinked " + in + " BY " + percent + "." );
-    Logger.log( "\tsize before: " + inLength / 1024 + " KB, size after: " + outLength / 1024 + " KB." );
+    Logger.log("\tshrinked " + in + " BY " + percent + ".");
+    Logger.log("\tsize before: " + inLength / 1024 + " KB, size after: " + outLength / 1024 + " KB.");
     Logger.log(
-            "\tremoved " + numObsoleteClasses + " classes, " + numObsoleteMethods + " methods, " + numObsoleteFields + " fields, " + numRemovedResources + " resources." );
-    Logger.log( "\t" + ( numClasses - numObsoleteClasses ) + " classes remaining of " + numClasses + " total." );
+            "\tremoved " + numObsoleteClasses + " classes, " + numObsoleteMethods + " methods, " + numObsoleteFields + " fields, " + numRemovedResources + " resources.");
+    Logger.log("\t" + (numClasses - numObsoleteClasses) + " classes remaining of " + numClasses + " total.");
 
-    Logger.shrinkLog( "</inOutPair>" );
+    Logger.shrinkLog("</inOutPair>");
   }
 }

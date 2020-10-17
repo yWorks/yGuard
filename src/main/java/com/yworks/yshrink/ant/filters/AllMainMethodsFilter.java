@@ -12,16 +12,16 @@ import com.yworks.yshrink.model.Model;
  */
 public class AllMainMethodsFilter extends AbstractEntryPointFilter {
 
-    /**
-     * The Main desc.
-     */
-    static String MAIN_DESC = "([Ljava/lang/String;)V";
+  /**
+   * The Main desc.
+   */
+  static String MAIN_DESC = "([Ljava/lang/String;)V";
 
   @Override
   public boolean isEntryPointMethod( final Model model, final ClassDescriptor cd, final MethodDescriptor md ) {
 
-    if ( "main".equals( md.getName() ) ) {
-      Logger.log( "MainMethodFilter: main found in " + cd.getName() );
+    if ("main".equals(md.getName())) {
+      Logger.log("MainMethodFilter: main found in " + cd.getName());
       return true;
     } else {
       return false;

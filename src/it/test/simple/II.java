@@ -7,9 +7,9 @@ package test.simple;
  */
 public interface II {
 
-    /**
-     * G.
-     */
-    public void g();
+  /**
+   * G.
+   */
+  public void g();
 
 }

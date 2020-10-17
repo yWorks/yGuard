@@ -77,9 +77,11 @@ public abstract class YGuardBaseTask extends Task {
    * @return the attributes section
    */
   public AttributesSection createAttribute() {
-    if( attributesSections == null ) attributesSections = new ArrayList<AttributesSection>();
+    if (attributesSections == null) {
+      attributesSections = new ArrayList<AttributesSection>();
+    }
     AttributesSection as = new AttributesSection();
-    attributesSections.add( as );
+    attributesSections.add(as);
     return as;
   }
 
@@ -89,9 +91,11 @@ public abstract class YGuardBaseTask extends Task {
    * @return the shrink bag
    */
   public ShrinkBag createInOutPair() {
-    if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
+    if (pairs == null) {
+      pairs = new ArrayList<ShrinkBag>();
+    }
     ShrinkBag pair = new InOutPair();
-    pairs.add( pair );
+    pairs.add(pair);
     return pair;
   }
 
@@ -100,8 +104,10 @@ public abstract class YGuardBaseTask extends Task {
    *
    * @param section the section
    */
-  public void addConfiguredInOutPairs(InOutPairSection section){
-    if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
+  public void addConfiguredInOutPairs( InOutPairSection section ) {
+    if (pairs == null) {
+      pairs = new ArrayList<ShrinkBag>();
+    }
     pairs.addAll(section.createShrinkBags(getProject()));
   }
 
@@ -111,8 +117,10 @@ public abstract class YGuardBaseTask extends Task {
    * @param pair the pair
    */
   public void addConfiguredInOutPair( final ShrinkBag pair ) {
-    if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
-    pairs.add( pair );
+    if (pairs == null) {
+      pairs = new ArrayList<ShrinkBag>();
+    }
+    pairs.add(pair);
   }
 
   /**
@@ -121,10 +129,10 @@ public abstract class YGuardBaseTask extends Task {
    * @return the path
    */
   public Path createExternalClasses() {
-    if ( this.resourceClassPath != null ) {
-      throw new IllegalArgumentException( "Only one externalclasses element allowed!" );
+    if (this.resourceClassPath != null) {
+      throw new IllegalArgumentException("Only one externalclasses element allowed!");
     }
-    this.resourceClassPath = new Path( getProject() );
+    this.resourceClassPath = new Path(getProject());
     return this.resourceClassPath;
   }
 
@@ -156,7 +164,7 @@ public abstract class YGuardBaseTask extends Task {
    *
    * @param p the p
    */
-  public void addConfiguredProperty(Property p){
+  public void addConfiguredProperty( Property p ) {
     properties.put(p.getName(), p.getValue());
   }
 
@@ -176,9 +184,9 @@ public abstract class YGuardBaseTask extends Task {
     public void setResources( String resourcesStr ) {
 
       try {
-        resources = ResourcePolicy.valueOf( resourcesStr.trim().toUpperCase() );
-      } catch ( IllegalArgumentException e ) {
-        throw new BuildException( "Invalid resource policy: " + resourcesStr );
+        resources = ResourcePolicy.valueOf(resourcesStr.trim().toUpperCase());
+      } catch (IllegalArgumentException e) {
+        throw new BuildException("Invalid resource policy: " + resourcesStr);
       }
     }
 
@@ -193,7 +201,7 @@ public abstract class YGuardBaseTask extends Task {
      *
      * @param set the set
      */
-    public void addConfiguredFileSet(FileSet set){
+    public void addConfiguredFileSet( FileSet set ) {
       this.set = set;
     }
 
@@ -202,7 +210,7 @@ public abstract class YGuardBaseTask extends Task {
      *
      * @param mapper the mapper
      */
-    public void add(Mapper mapper){
+    public void add( Mapper mapper ) {
       this.mapper = mapper;
     }
 
@@ -212,8 +220,8 @@ public abstract class YGuardBaseTask extends Task {
      * @param project the project
      * @return the list
      */
-    public List<ShrinkBag> createShrinkBags(Project project){
-      if (mapper == null){
+    public List<ShrinkBag> createShrinkBags( Project project ) {
+      if (mapper == null) {
         Mapper.MapperType type = new Mapper.MapperType();
         type.setValue("glob");
         mapper = new Mapper(project);
@@ -227,8 +235,8 @@ public abstract class YGuardBaseTask extends Task {
       for (int i = 0; i < files.length; i++) {
         String inFile = files[i];
         String[] outFile = mapper.getImplementation().mapFileName(inFile);
-        if (outFile == null || outFile.length < 1 ||outFile[0].equals(inFile)){
-          throw new BuildException("Cannot obfuscate " + inFile +" using that mapping");
+        if (outFile == null || outFile.length < 1 || outFile[0].equals(inFile)) {
+          throw new BuildException("Cannot obfuscate " + inFile + " using that mapping");
         }
         InOutPair pair = new InOutPair();
         pair.resources = resources;

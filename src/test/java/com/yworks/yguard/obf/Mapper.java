@@ -23,36 +23,36 @@ class Mapper {
     this.mappings = mappings;
   }
 
-    /**
-     * Gets type name.
-     *
-     * @param tn the tn
-     * @return the type name
-     */
-    String getTypeName( final String tn ) {
+  /**
+   * Gets type name.
+   *
+   * @param tn the tn
+   * @return the type name
+   */
+  String getTypeName( final String tn ) {
     return mappings.get("c:" + tn);
   }
 
-    /**
-     * Gets method name.
-     *
-     * @param tn the tn
-     * @param mn the mn
-     * @return the method name
-     */
-    String getMethodName( final String tn, final String mn ) {
+  /**
+   * Gets method name.
+   *
+   * @param tn the tn
+   * @param mn the mn
+   * @return the method name
+   */
+  String getMethodName( final String tn, final String mn ) {
     return mappings.get("m:" + tn + '#' + mn);
   }
 
 
-    /**
-     * New instance mapper.
-     *
-     * @param log the log
-     * @return the mapper
-     * @throws Exception the exception
-     */
-    static Mapper newInstance( final String log ) throws Exception {
+  /**
+   * New instance mapper.
+   *
+   * @param log the log
+   * @return the mapper
+   * @throws Exception the exception
+   */
+  static Mapper newInstance( final String log ) throws Exception {
     final HashMap<String, String> mappings = new HashMap<String, String>();
     final SAXParserFactory factory = SAXParserFactory.newInstance();
     final SAXParser parser = factory.newSAXParser();
@@ -63,23 +63,22 @@ class Mapper {
   }
 
 
-
   private static class MapHandler extends DefaultHandler2 {
-      /**
-       * The Mappings.
-       */
-      final Map<String, String> mappings;
-      /**
-       * The Armed.
-       */
-      boolean armed;
+    /**
+     * The Mappings.
+     */
+    final Map<String, String> mappings;
+    /**
+     * The Armed.
+     */
+    boolean armed;
 
-      /**
-       * Instantiates a new Map handler.
-       *
-       * @param mappings the mappings
-       */
-      MapHandler( final Map<String, String> mappings ) {
+    /**
+     * Instantiates a new Map handler.
+     *
+     * @param mappings the mappings
+     */
+    MapHandler( final Map<String, String> mappings ) {
       this.mappings = mappings;
     }
 

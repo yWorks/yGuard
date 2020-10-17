@@ -18,23 +18,23 @@ import java.io.File;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ModelVisitor extends ClassVisitor {
-    /**
-     * The Opcodes asm.
-     */
-    static final int OPCODES_ASM = Opcodes.ASM7;
+  /**
+   * The Opcodes asm.
+   */
+  static final int OPCODES_ASM = Opcodes.ASM7;
 
-  private Model model;
+  private final Model model;
 
   private ClassDescriptor currentClass;
   private final File sourceJar;
 
-    /**
-     * Instantiates a new Model visitor.
-     *
-     * @param model     the model
-     * @param sourceJar the source jar
-     */
-    public ModelVisitor( final Model model, final File sourceJar ) {
+  /**
+   * Instantiates a new Model visitor.
+   *
+   * @param model     the model
+   * @param sourceJar the source jar
+   */
+  public ModelVisitor( final Model model, final File sourceJar ) {
     super(OPCODES_ASM);
     this.model = model;
     this.sourceJar = sourceJar;
@@ -47,12 +47,12 @@ public class ModelVisitor extends ClassVisitor {
   public void visit( final int version, final int access, final String name, final String signature,
                      final String superName, final String[] interfaces ) {
 
-    if ( ! model.isClassModeled( name ) ) {
-      currentClass = model.newClassDescriptor( name, superName, interfaces, access, sourceJar );
+    if (!model.isClassModeled(name)) {
+      currentClass = model.newClassDescriptor(name, superName, interfaces, access, sourceJar);
     } else {
-      currentClass = model.getClassDescriptor( name );
-      currentClass.setInterfaces( interfaces );
-      currentClass.setSuperName( superName );
+      currentClass = model.getClassDescriptor(name);
+      currentClass.setInterfaces(interfaces);
+      currentClass.setSuperName(superName);
     }
   }
 
@@ -60,22 +60,22 @@ public class ModelVisitor extends ClassVisitor {
 
   }
 
-  public void visitNestMember(java.lang.String nestMember) {
+  public void visitNestMember( java.lang.String nestMember ) {
     currentClass.setHasNestMembers(true);
   }
 
   public void visitOuterClass( final String owner, final String name, final String desc ) {
-    if ( name != null ) { // class declared in a method
-      currentClass.setEnclosingMethod( name, desc );
+    if (name != null) { // class declared in a method
+      currentClass.setEnclosingMethod(name, desc);
       currentClass.setEnclosingClass(owner);
     } else {
-      currentClass.setEnclosingClass( owner );
+      currentClass.setEnclosingClass(owner);
     }
   }
 
   public FieldVisitor visitField( final int access, final String name, final String desc, final String signature,
                                   final Object value ) {
-    model.newFieldDescriptor( currentClass, desc, name, access, sourceJar );
+    model.newFieldDescriptor(currentClass, desc, name, access, sourceJar);
     return null;
   }
 
@@ -98,19 +98,19 @@ public class ModelVisitor extends ClassVisitor {
   public void visitEnd() {
   }
 
+  /**
+   * The type Model method visitor.
+   */
+  class ModelMethodVisitor extends MethodVisitor {
+
+    private final MethodDescriptor currentMethod;
+
     /**
-     * The type Model method visitor.
+     * Instantiates a new Model method visitor.
+     *
+     * @param currentMethod the current method
      */
-    class ModelMethodVisitor extends MethodVisitor {
-
-    private MethodDescriptor currentMethod;
-
-        /**
-         * Instantiates a new Model method visitor.
-         *
-         * @param currentMethod the current method
-         */
-        public ModelMethodVisitor( MethodDescriptor currentMethod ) {
+    public ModelMethodVisitor( MethodDescriptor currentMethod ) {
       // increasing ASM opcodes level from 5 to 7 forces ASM to accept
       // CONSTANT_Dynamic_info byte code instructions
       //
@@ -125,19 +125,19 @@ public class ModelVisitor extends ClassVisitor {
     }
 
     public void visitMethodInsn( final int opcode, final String owner, final String name, final String desc, final boolean itf ) {
-      currentMethod.addInvocation( opcode, owner, name, desc );
+      currentMethod.addInvocation(opcode, owner, name, desc);
     }
 
     public void visitTypeInsn( final int opcode, final String desc ) {
-      currentMethod.addTypeInstruction( opcode, desc );
+      currentMethod.addTypeInstruction(opcode, desc);
     }
 
     public void visitMultiANewArrayInsn( final String desc, final int dims ) {
-      currentMethod.addTypeInstruction( Opcodes.MULTIANEWARRAY, desc );
+      currentMethod.addTypeInstruction(Opcodes.MULTIANEWARRAY, desc);
     }
 
     public void visitFieldInsn( final int opcode, final String owner, final String name, final String desc ) {
-      currentMethod.addFieldRef( owner, name );
+      currentMethod.addFieldRef(owner, name);
     }
 
     public AnnotationVisitor visitAnnotationDefault() {
@@ -153,13 +153,13 @@ public class ModelVisitor extends ClassVisitor {
     }
 
     public void visitAttribute( final Attribute attr ) {
-      
+
     }
 
     public void visitCode() {
     }
 
-    public void visitFrame(int i, int i1, Object[] objects, int i2, Object[] objects1) {
+    public void visitFrame( int i, int i1, Object[] objects, int i2, Object[] objects1 ) {
     }
 
     public void visitInsn( final int opcode ) {
@@ -168,7 +168,7 @@ public class ModelVisitor extends ClassVisitor {
     public void visitIntInsn( final int opcode, final int operand ) {
     }
 
-    public void visitInvokeDynamicInsn( String name, String descriptor, Handle bootstrapMethodHandle, Object... bootstrapMethodArguments) {
+    public void visitInvokeDynamicInsn( String name, String descriptor, Handle bootstrapMethodHandle, Object... bootstrapMethodArguments ) {
       if (bootstrapMethodHandle.getOwner().equals("java/lang/invoke/LambdaMetafactory")) {
         String className = descriptor.substring(descriptor.indexOf(")L") + 2, descriptor.length() - 1);
         // find out the method descriptor of the method
@@ -177,7 +177,7 @@ public class ModelVisitor extends ClassVisitor {
         Type methodDescriptor = (Type) bootstrapMethodArguments[0];
         Handle callerHandle = (Handle) bootstrapMethodArguments[1];
         currentMethod.addInvocation(Opcodes.INVOKEDYNAMIC, className, name, methodDescriptor.getDescriptor());
-        currentMethod.addInvocation(Opcodes.INVOKEDYNAMIC, callerHandle.getOwner(), callerHandle.getName(), callerHandle.getDesc() );
+        currentMethod.addInvocation(Opcodes.INVOKEDYNAMIC, callerHandle.getOwner(), callerHandle.getName(), callerHandle.getDesc());
       }
     }
 
@@ -191,9 +191,9 @@ public class ModelVisitor extends ClassVisitor {
     }
 
     public void visitLdcInsn( final Object cst ) {
-      if ( cst instanceof Type ) { // .class in class versions >= 0.49
+      if (cst instanceof Type) { // .class in class versions >= 0.49
         final Type type = (Type) cst;
-        currentMethod.addTypeInstruction( Opcodes.LDC, type.getDescriptor() );
+        currentMethod.addTypeInstruction(Opcodes.LDC, type.getDescriptor());
       }
     }
 
@@ -227,21 +227,21 @@ public class ModelVisitor extends ClassVisitor {
   // AnnotationVisitor
   //
 
-    /**
-     * The type Model annotation visitor.
-     */
-    class ModelAnnotationVisitor extends AnnotationVisitor {
+  /**
+   * The type Model annotation visitor.
+   */
+  class ModelAnnotationVisitor extends AnnotationVisitor {
     private final AbstractDescriptor currentItem;
     private final AnnotationUsage annotationUsage;
 
-        /**
-         * Instantiates a new Model annotation visitor.
-         *
-         * @param currentItem     the current item
-         * @param annotationUsage the annotation usage
-         */
-        public ModelAnnotationVisitor(
-        AbstractDescriptor currentItem, AnnotationUsage annotationUsage) {
+    /**
+     * Instantiates a new Model annotation visitor.
+     *
+     * @param currentItem     the current item
+     * @param annotationUsage the annotation usage
+     */
+    public ModelAnnotationVisitor(
+            AbstractDescriptor currentItem, AnnotationUsage annotationUsage ) {
       super(OPCODES_ASM);
       this.currentItem = currentItem;
       this.annotationUsage = annotationUsage;

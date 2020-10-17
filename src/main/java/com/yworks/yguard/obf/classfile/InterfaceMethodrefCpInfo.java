@@ -19,23 +19,21 @@ package com.yworks.yguard.obf.classfile;
  *
  * @author Mark Welsh
  */
-public class InterfaceMethodrefCpInfo extends RefCpInfo
-{
-    // Constants -------------------------------------------------------------
+public class InterfaceMethodrefCpInfo extends RefCpInfo {
+  // Constants -------------------------------------------------------------
 
 
-    // Fields ----------------------------------------------------------------
+  // Fields ----------------------------------------------------------------
 
 
-    // Class Methods ---------------------------------------------------------
+  // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Interface methodref cp info.
-     */
+  /**
+   * Instantiates a new Interface methodref cp info.
+   */
 // Instance Methods ------------------------------------------------------
-    protected InterfaceMethodrefCpInfo()
-    {
-        super(CONSTANT_InterfaceMethodref);
-    }
+  protected InterfaceMethodrefCpInfo() {
+    super(CONSTANT_InterfaceMethodref);
+  }
 }

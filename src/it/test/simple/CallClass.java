@@ -18,16 +18,16 @@ public class CallClass {
 
   private native void nativeMethod();
 
-    /**
-     * Call method.
-     *
-     * @RequestForEnhancement( id    = 2868724,   synopsis = "Enable time-travel",   engineer = "Mr. Peabody",   date     = "4/1/3007" )
-     */
-    public static void callMethod() {
+  /**
+   * Call method.
+   *
+   * @RequestForEnhancement( id    = 2868724,   synopsis = "Enable time-travel",   engineer = "Mr. Peabody",   date     = "4/1/3007" )
+   */
+  public static void callMethod() {
     //new CallClass().nativeMethod();
     C c = new C();
     c.g();
-    D d = new D( Constants.NODE_ID_DPKEY );
+    D d = new D(Constants.NODE_ID_DPKEY);
 
     ExtAII extaii = D.getExtAII();
 
@@ -35,13 +35,13 @@ public class CallClass {
     ab.g();
 
     A a = new A();
-    System.out.println( "A.field: "+ A.field);
+    System.out.println("A.field: " + A.field);
 
-    System.out.println( "d.afield: " + d.afield );
+    System.out.println("d.afield: " + d.afield);
 
-    ResourceBundle bundle = ResourceBundle.getBundle( "test.simple.MyResourceBundleClass", new Locale("fr")  );
-    String message = bundle.getString( "MESSAGE" );
-    System.out.println( "MESSAGE: "+message );
+    ResourceBundle bundle = ResourceBundle.getBundle("test.simple.MyResourceBundleClass", new Locale("fr"));
+    String message = bundle.getString("MESSAGE");
+    System.out.println("MESSAGE: " + message);
 
 //    YGraphMLIOHandler ioHandler = new YGraphMLIOHandler ();
 //    ioHandler.canRead();
@@ -57,38 +57,39 @@ public class CallClass {
 //    System.out.println( "CallClass.testGenericInner" );
 //  }
 
+  /**
+   * The interface Generic interface.
+   *
+   * @param <E> the type parameter
+   */
+  public static interface GenericInterface<E extends Exception> {
     /**
-     * The interface Generic interface.
+     * Method.
      *
-     * @param <E> the type parameter
+     * @throws E the e
      */
-    public static interface GenericInterface<E extends Exception>{
-        /**
-         * Method.
-         *
-         * @throws E the e
-         */
-        void method() throws E;
+    void method() throws E;
   }
 
-    /**
-     * The type My exception.
-     *
-     * @param <T> the type parameter
-     */
-    public static class MyException<T> extends Object {
+  /**
+   * The type My exception.
+   *
+   * @param <T> the type parameter
+   */
+  public static class MyException<T> extends Object {
 
   }
 
-    /**
-     * The interface Einfacher.
-     */
-    public static interface Einfacher {}
+  /**
+   * The interface Einfacher.
+   */
+  public static interface Einfacher {
+  }
 
-    /**
-     * The type My class.
-     */
-    public static class MyClass implements GenericInterface<RuntimeException>{
+  /**
+   * The type My class.
+   */
+  public static class MyClass implements GenericInterface<RuntimeException> {
 
     public void method() throws RuntimeException {
       throw new RuntimeException("Haha");
@@ -98,48 +99,48 @@ public class CallClass {
 //    public <T extends MyException<Object>> void method3(T t) {
 //    }
 
-        /**
-         * Method 2 blah.
-         *
-         * @param <T>    the type parameter
-         * @param <K>    the type parameter
-         * @param <Blah> the type parameter
-         * @return the blah
-         * @throws T the t
-         * @throws K the k
-         */
-        public <T extends Exception, K extends Throwable, Blah extends GenericInterface<Exception> & Runnable & Einfacher> Blah method2() throws T, K{
+    /**
+     * Method 2 blah.
+     *
+     * @param <T>    the type parameter
+     * @param <K>    the type parameter
+     * @param <Blah> the type parameter
+     * @return the blah
+     * @throws T the t
+     * @throws K the k
+     */
+    public <T extends Exception, K extends Throwable, Blah extends GenericInterface<Exception> & Runnable & Einfacher> Blah method2() throws T, K {
       throw (T) new MalformedURLException();
     }
   }
 
   private enum MyEnum {
-      /**
-       * Enum 1 my enum.
-       */
-      ENUM_1,
-      /**
-       * Enum 2 my enum.
-       */
-      ENUM_2,
-      /**
-       * Enum 3 my enum.
-       */
-      ENUM_3;
+    /**
+     * Enum 1 my enum.
+     */
+    ENUM_1,
+    /**
+     * Enum 2 my enum.
+     */
+    ENUM_2,
+    /**
+     * Enum 3 my enum.
+     */
+    ENUM_3;
   }
 
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    @RequestForEnhancement(
-     id       = 2868724,
-     synopsis = "Enable time-travel",
-     engineer = "Mr. Peabody",
-     date     = "4/1/3007"
-   )
+  /**
+   * The entry point of application.
+   *
+   * @param args the input arguments
+   */
+  @RequestForEnhancement(
+          id = 2868724,
+          synopsis = "Enable time-travel",
+          engineer = "Mr. Peabody",
+          date = "4/1/3007"
+  )
   public static void main( String[] args ) {
     callMethod();
 

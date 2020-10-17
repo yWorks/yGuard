@@ -10,18 +10,18 @@ import java.io.IOException;
  * @author Thomas Behr
  */
 public class ModuleRequires {
-    /**
-     * Reference to {@link ModuleCpInfo}
-     */
-    final int u2requiresIndex;
-    /**
-     * Access flags value
-     */
-    final int u2requiresFlags;
-    /**
-     * Reference to {@link Utf8CpInfo}
-     */
-    final int u2requiresVersionIndex;
+  /**
+   * Reference to {@link ModuleCpInfo}
+   */
+  final int u2requiresIndex;
+  /**
+   * Access flags value
+   */
+  final int u2requiresFlags;
+  /**
+   * Reference to {@link Utf8CpInfo}
+   */
+  final int u2requiresVersionIndex;
 
   private ModuleRequires( final int index, final int flags, final int versionIndex ) {
     this.u2requiresIndex = index;
@@ -29,27 +29,27 @@ public class ModuleRequires {
     this.u2requiresVersionIndex = versionIndex;
   }
 
-    /**
-     * Read module requires.
-     *
-     * @param din the din
-     * @return the module requires
-     * @throws IOException the io exception
-     */
-    static ModuleRequires read( final DataInput din ) throws IOException {
+  /**
+   * Read module requires.
+   *
+   * @param din the din
+   * @return the module requires
+   * @throws IOException the io exception
+   */
+  static ModuleRequires read( final DataInput din ) throws IOException {
     final int index = din.readUnsignedShort();
     final int flags = din.readUnsignedShort();
     final int versionIndex = din.readUnsignedShort();
     return new ModuleRequires(index, flags, versionIndex);
   }
 
-    /**
-     * Write.
-     *
-     * @param dout the dout
-     * @throws IOException the io exception
-     */
-    void write( final DataOutput dout ) throws IOException {
+  /**
+   * Write.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  void write( final DataOutput dout ) throws IOException {
     dout.writeShort(u2requiresIndex);
     dout.writeShort(u2requiresFlags);
     dout.writeShort(u2requiresVersionIndex);

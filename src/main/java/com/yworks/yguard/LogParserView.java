@@ -31,26 +31,27 @@ import javax.swing.tree.TreeCellRenderer;
  * @author Thomas Behr
  */
 class LogParserView {
-    /**
-     * Instantiates a new Log parser view.
-     */
-    LogParserView() {
+  /**
+   * Instantiates a new Log parser view.
+   */
+  LogParserView() {
   }
 
-    /**
-     * Show.
-     *
-     * @param initialPath the initial path
-     */
-    void show( final File initialPath ) {
+  /**
+   * Show.
+   *
+   * @param initialPath the initial path
+   */
+  void show( final File initialPath ) {
     final JTree tree = new JTree(new DefaultTreeModel(new DefaultMutableTreeNode()));
     tree.setCellRenderer(new TreeCellRenderer() {
-      DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
-      public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+      final DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
+
+      public Component getTreeCellRendererComponent( JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus ) {
         JComponent c = (JComponent) dtcr.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
         DefaultMutableTreeNode dmtr = (DefaultMutableTreeNode) value;
         if (dmtr.getUserObject() != null) {
-          dtcr.setIcon(((Mapped)dmtr.getUserObject()).getIcon());
+          dtcr.setIcon(((Mapped) dmtr.getUserObject()).getIcon());
         }
         return c;
       }
@@ -69,22 +70,22 @@ class LogParserView {
     button.setMnemonic('D');
     textPanel.add(button, BorderLayout.SOUTH);
     button.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed( ActionEvent e ) {
         deobfuscate(getParser(tree), textArea);
       }
     });
 
     final JPanel top = new JPanel(new BorderLayout());
     top.add(new JScrollPane(tree), BorderLayout.CENTER);
-    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0,0));
+    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
     buttonPanel.add(new JButton(new AbstractAction("Sort by Mapping") {
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed( ActionEvent e ) {
         final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
         sort(model, new MappedNameComparator());
       }
     }));
     buttonPanel.add(new JButton(new AbstractAction("Sort by Names") {
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed( ActionEvent e ) {
         final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
         sort(model, new NameComparator());
       }
@@ -173,13 +174,13 @@ class LogParserView {
     frame.setVisible(true);
   }
 
-    /**
-     * Add recent.
-     *
-     * @param context the context
-     * @param path    the path
-     */
-    static void addRecent( final UiContext context, final File path ) {
+  /**
+   * Add recent.
+   *
+   * @param context the context
+   * @param path    the path
+   */
+  static void addRecent( final UiContext context, final File path ) {
     final JMenu menu = context.recentMenu;
     final int n = menu.getItemCount();
     if (n > 9) {
@@ -195,13 +196,13 @@ class LogParserView {
     }
   }
 
-    /**
-     * Show error message.
-     *
-     * @param text   the text
-     * @param parent the parent
-     */
-    static void showErrorMessage( final String text, final JComponent parent ) {
+  /**
+   * Show error message.
+   *
+   * @param text   the text
+   * @param parent the parent
+   */
+  static void showErrorMessage( final String text, final JComponent parent ) {
     final JTextArea jta = new JTextArea(text);
     jta.setEditable(false);
     final JScrollPane jsp = new JScrollPane(jta);
@@ -209,14 +210,14 @@ class LogParserView {
     JOptionPane.showMessageDialog(parent, jsp, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
-    /**
-     * To error message string.
-     *
-     * @param file the file
-     * @param ex   the ex
-     * @return the string
-     */
-    static String toErrorMessage( final File file, final Exception ex ) {
+  /**
+   * To error message string.
+   *
+   * @param file the file
+   * @param ex   the ex
+   * @return the string
+   */
+  static String toErrorMessage( final File file, final Exception ex ) {
     final StringWriter sw = new StringWriter();
     sw.write("Could not read ");
     sw.write(file.getAbsolutePath());
@@ -225,47 +226,47 @@ class LogParserView {
     return sw.toString();
   }
 
-    /**
-     * Gets parser.
-     *
-     * @param tree the tree
-     * @return the parser
-     */
-    static YGuardLogParser getParser( final JTree tree ) {
+  /**
+   * Gets parser.
+   *
+   * @param tree the tree
+   * @return the parser
+   */
+  static YGuardLogParser getParser( final JTree tree ) {
     return (YGuardLogParser) tree.getClientProperty("PARSER");
   }
 
-    /**
-     * Sets parser.
-     *
-     * @param tree   the tree
-     * @param parser the parser
-     */
-    static void setParser( final JTree tree, final YGuardLogParser parser ) {
+  /**
+   * Sets parser.
+   *
+   * @param tree   the tree
+   * @param parser the parser
+   */
+  static void setParser( final JTree tree, final YGuardLogParser parser ) {
     tree.setModel(parser.getTreeModel());
     tree.putClientProperty("PARSER", parser);
   }
 
-    /**
-     * New parser y guard log parser.
-     *
-     * @param file the file
-     * @return the y guard log parser
-     * @throws Exception the exception
-     */
-    static YGuardLogParser newParser( final File file ) throws Exception {
+  /**
+   * New parser y guard log parser.
+   *
+   * @param file the file
+   * @return the y guard log parser
+   * @throws Exception the exception
+   */
+  static YGuardLogParser newParser( final File file ) throws Exception {
     final YGuardLogParser parser = new YGuardLogParser();
     parser.parse(file);
     return parser;
   }
 
-    /**
-     * New title string.
-     *
-     * @param path the path
-     * @return the string
-     */
-    static String newTitle( final String path ) {
+  /**
+   * New title string.
+   *
+   * @param path the path
+   * @return the string
+   */
+  static String newTitle( final String path ) {
     final String t = path == null ? "" : path.trim();
     if (t.length() > 31) {
       return newTitleSuffix(t);
@@ -274,13 +275,13 @@ class LogParserView {
     }
   }
 
-    /**
-     * New title suffix string.
-     *
-     * @param path the path
-     * @return the string
-     */
-    static String newTitleSuffix( final String path ) {
+  /**
+   * New title suffix string.
+   *
+   * @param path the path
+   * @return the string
+   */
+  static String newTitleSuffix( final String path ) {
     int idx = path.lastIndexOf(File.separatorChar);
     if (idx > -1) {
       idx = path.lastIndexOf(File.separatorChar, idx - 1);
@@ -292,13 +293,13 @@ class LogParserView {
     }
   }
 
-    /**
-     * Deobfuscate.
-     *
-     * @param parser   the parser
-     * @param textArea the text area
-     */
-    static void deobfuscate(
+  /**
+   * Deobfuscate.
+   *
+   * @param parser   the parser
+   * @param textArea the text area
+   */
+  static void deobfuscate(
           final YGuardLogParser parser, final JTextArea textArea
   ) {
     String[] lines = textArea.getText().split("\n");
@@ -311,30 +312,30 @@ class LogParserView {
     textArea.setCaretPosition(0);
   }
 
-    /**
-     * Sort.
-     *
-     * @param model the model
-     * @param c     the c
-     */
-    static void sort( final DefaultTreeModel model, final Comparator c ) {
+  /**
+   * Sort.
+   *
+   * @param model the model
+   * @param c     the c
+   */
+  static void sort( final DefaultTreeModel model, final Comparator c ) {
     sortRecursively((DefaultMutableTreeNode) model.getRoot(), c);
     model.nodeStructureChanged((DefaultMutableTreeNode) model.getRoot());
   }
 
-  private static void sortRecursively(DefaultMutableTreeNode parent, Comparator c) {
+  private static void sortRecursively( DefaultMutableTreeNode parent, Comparator c ) {
     if (parent.getChildCount() > 0) {
       if (parent.getChildCount() > 1) {
         sort(parent, c);
       }
-      for (Enumeration enu = parent.children(); enu.hasMoreElements();) {
-        DefaultMutableTreeNode tn =  (DefaultMutableTreeNode) enu.nextElement();
+      for (Enumeration enu = parent.children(); enu.hasMoreElements(); ) {
+        DefaultMutableTreeNode tn = (DefaultMutableTreeNode) enu.nextElement();
         sortRecursively(tn, c);
       }
     }
   }
 
-  private static void sort(DefaultMutableTreeNode parent, Comparator c) {
+  private static void sort( DefaultMutableTreeNode parent, Comparator c ) {
     DefaultMutableTreeNode[] children = new DefaultMutableTreeNode[parent.getChildCount()];
     for (int i = 0; i < children.length; ++i) {
       children[i] = ((DefaultMutableTreeNode) parent.getChildAt(i));
@@ -347,13 +348,13 @@ class LogParserView {
   }
 
 
-    /**
-     * The type Mapped name comparator.
-     */
-    static final class MappedNameComparator implements Comparator {
-    public int compare(Object o1, Object o2) {
-      Mapped m1 = (Mapped) ((DefaultMutableTreeNode)o1).getUserObject();
-      Mapped m2 = (Mapped) ((DefaultMutableTreeNode)o2).getUserObject();
+  /**
+   * The type Mapped name comparator.
+   */
+  static final class MappedNameComparator implements Comparator {
+    public int compare( Object o1, Object o2 ) {
+      Mapped m1 = (Mapped) ((DefaultMutableTreeNode) o1).getUserObject();
+      Mapped m2 = (Mapped) ((DefaultMutableTreeNode) o2).getUserObject();
       if (m1.getClass() != m2.getClass()) {
         if (m1.getClass() == PackageStruct.class) {
           return -1;
@@ -376,13 +377,13 @@ class LogParserView {
   }
 
 
-    /**
-     * The type Name comparator.
-     */
-    static final class NameComparator implements Comparator {
-    public int compare(Object o1, Object o2) {
-      Mapped m1 = (Mapped) ((DefaultMutableTreeNode)o1).getUserObject();
-      Mapped m2 = (Mapped) ((DefaultMutableTreeNode)o2).getUserObject();
+  /**
+   * The type Name comparator.
+   */
+  static final class NameComparator implements Comparator {
+    public int compare( Object o1, Object o2 ) {
+      Mapped m1 = (Mapped) ((DefaultMutableTreeNode) o1).getUserObject();
+      Mapped m2 = (Mapped) ((DefaultMutableTreeNode) o2).getUserObject();
       if (m1.getClass() != m2.getClass()) {
         if (m1.getClass() == PackageStruct.class) {
           return -1;
@@ -408,13 +409,13 @@ class LogParserView {
     private final String suffix;
     private final String description;
 
-      /**
-       * Instantiates a new File filter.
-       *
-       * @param suffix      the suffix
-       * @param description the description
-       */
-      FileFilterImpl( final String suffix, final String description ) {
+    /**
+     * Instantiates a new File filter.
+     *
+     * @param suffix      the suffix
+     * @param description the description
+     */
+    FileFilterImpl( final String suffix, final String description ) {
       this.suffix = suffix == null ? "" : suffix.toLowerCase();
       this.description = description;
     }
@@ -430,37 +431,37 @@ class LogParserView {
 
 
   private static final class UiContext {
-      /**
-       * The Frame.
-       */
-      final JFrame frame;
-      /**
-       * The Mapping tree.
-       */
-      final JTree mappingTree;
-      /**
-       * The Text area.
-       */
-      final JTextArea textArea;
-      /**
-       * The Recent menu.
-       */
-      final JMenu recentMenu;
-      /**
-       * The File chooser.
-       */
-      final JFileChooser fileChooser;
+    /**
+     * The Frame.
+     */
+    final JFrame frame;
+    /**
+     * The Mapping tree.
+     */
+    final JTree mappingTree;
+    /**
+     * The Text area.
+     */
+    final JTextArea textArea;
+    /**
+     * The Recent menu.
+     */
+    final JMenu recentMenu;
+    /**
+     * The File chooser.
+     */
+    final JFileChooser fileChooser;
 
-      /**
-       * Instantiates a new Ui context.
-       *
-       * @param frame       the frame
-       * @param mappingTree the mapping tree
-       * @param textArea    the text area
-       * @param recentMenu  the recent menu
-       * @param fileChooser the file chooser
-       */
-      UiContext(
+    /**
+     * Instantiates a new Ui context.
+     *
+     * @param frame       the frame
+     * @param mappingTree the mapping tree
+     * @param textArea    the text area
+     * @param recentMenu  the recent menu
+     * @param fileChooser the file chooser
+     */
+    UiContext(
             final JFrame frame,
             final JTree mappingTree,
             final JTextArea textArea,
@@ -476,28 +477,28 @@ class LogParserView {
   }
 
   private abstract static class AbstractOpenAction extends AbstractAction {
-      /**
-       * The Context.
-       */
-      final UiContext context;
+    /**
+     * The Context.
+     */
+    final UiContext context;
 
-      /**
-       * Instantiates a new Abstract open action.
-       *
-       * @param context the context
-       * @param name    the name
-       */
-      AbstractOpenAction( final UiContext context, final String name ) {
+    /**
+     * Instantiates a new Abstract open action.
+     *
+     * @param context the context
+     * @param name    the name
+     */
+    AbstractOpenAction( final UiContext context, final String name ) {
       super(name);
       this.context = context;
     }
 
-      /**
-       * Open.
-       *
-       * @param path the path
-       */
-      void open( final File path ) {
+    /**
+     * Open.
+     *
+     * @param path the path
+     */
+    void open( final File path ) {
       final JTree tree = context.mappingTree;
       try {
         setParser(tree, newParser(path));
@@ -507,35 +508,35 @@ class LogParserView {
       }
     }
 
-      /**
-       * On opened.
-       *
-       * @param context the context
-       * @param path    the path
-       */
-      void onOpened( final UiContext context, final File path ) {
+    /**
+     * On opened.
+     *
+     * @param context the context
+     * @param path    the path
+     */
+    void onOpened( final UiContext context, final File path ) {
       context.textArea.setText("");
       context.frame.setTitle(newTitle(path.getAbsolutePath()));
     }
   }
 
   private static final class RecentAction extends AbstractOpenAction {
-      /**
-       * The Path.
-       */
-      final File path;
-      /**
-       * The Item.
-       */
-      JMenuItem item;
+    /**
+     * The Path.
+     */
+    final File path;
+    /**
+     * The Item.
+     */
+    JMenuItem item;
 
-      /**
-       * Instantiates a new Recent action.
-       *
-       * @param context the context
-       * @param path    the path
-       */
-      RecentAction( final UiContext context, final File path ) {
+    /**
+     * Instantiates a new Recent action.
+     *
+     * @param context the context
+     * @param path    the path
+     */
+    RecentAction( final UiContext context, final File path ) {
       super(context, LogParserView.newTitleSuffix(path.getAbsolutePath()));
       this.path = path;
     }
@@ -574,21 +575,21 @@ class LogParserView {
       }
     }
 
-      /**
-       * Gets item.
-       *
-       * @return the item
-       */
-      JMenuItem getItem() {
+    /**
+     * Gets item.
+     *
+     * @return the item
+     */
+    JMenuItem getItem() {
       return item;
     }
 
-      /**
-       * Sets item.
-       *
-       * @param jc the jc
-       */
-      void setItem( final JMenuItem jc ) {
+    /**
+     * Sets item.
+     *
+     * @param jc the jc
+     */
+    void setItem( final JMenuItem jc ) {
       this.item = jc;
     }
   }

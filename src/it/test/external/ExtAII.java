@@ -7,14 +7,14 @@ package test.external;
  */
 public interface ExtAII {
 
-    /**
-     * External method.
-     */
-    public void externalMethod();
+  /**
+   * External method.
+   */
+  public void externalMethod();
 
-    /**
-     * The constant field.
-     */
-    public int field = 1;
+  /**
+   * The constant field.
+   */
+  public int field = 1;
 
 }

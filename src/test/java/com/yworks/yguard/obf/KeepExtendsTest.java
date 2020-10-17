@@ -30,18 +30,18 @@ import static junit.framework.TestCase.assertTrue;
  * @author Thomas Behr
  */
 public class KeepExtendsTest extends AbstractObfuscationTest {
-    /**
-     * The Name.
-     */
-    @Rule
+  /**
+   * The Name.
+   */
+  @Rule
   public TestName name = new TestName();
 
-    /**
-     * Test extends.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test extends.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testExtends() throws Exception {
     impl(new TypeStruct("asm/AbstractBaseClass.txt", "com.yworks.ext.test.AbstractBaseClass"),
          new TypeStruct("asm/Impl.txt", "com.yworks.impl.test.Impl"),
@@ -49,12 +49,12 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
          new TypeStruct("asm/Sample.txt", "com.yworks.impl.test.Sample"));
   }
 
-    /**
-     * Test nests.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test nests.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testNests() throws Exception {
     impl(new TypeStruct("asm/OuterClass.txt", "com.yworks.yguard.obf.asm.OuterClass"));
   }
@@ -97,9 +97,9 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
       final ArrayList<ShrinkBag> bags = new ArrayList<ShrinkBag>();
       bags.add(pair);
 
-      final YShrinkModel wrapper =  new YShrinkModelImpl();
+      final YShrinkModel wrapper = new YShrinkModelImpl();
       final Model model = getModel(wrapper);
-      model.setClassResolver(new URLCpResolver(new URL[] {inTmp.toURI().toURL()}));
+      model.setClassResolver(new URLCpResolver(new URL[]{inTmp.toURI().toURL()}));
 
       wrapper.createSimpleModel(bags);
     } finally {
@@ -118,24 +118,23 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
   }
 
 
-
   private static final class TypeStruct {
-      /**
-       * The File name.
-       */
-      final String fileName;
-      /**
-       * The Type name.
-       */
-      final String typeName;
+    /**
+     * The File name.
+     */
+    final String fileName;
+    /**
+     * The Type name.
+     */
+    final String typeName;
 
-      /**
-       * Instantiates a new Type struct.
-       *
-       * @param fileName the file name
-       * @param typeName the type name
-       */
-      TypeStruct( final String fileName, final String typeName ) {
+    /**
+     * Instantiates a new Type struct.
+     *
+     * @param fileName the file name
+     * @param typeName the type name
+     */
+    TypeStruct( final String fileName, final String typeName ) {
       this.fileName = fileName;
       this.typeName = typeName;
     }

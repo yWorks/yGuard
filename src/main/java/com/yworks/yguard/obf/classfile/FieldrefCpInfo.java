@@ -20,7 +20,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * The author may be contacted at markw@retrologic.com 
+ * The author may be contacted at markw@retrologic.com
  *
  *
  * $Date$
@@ -33,23 +33,21 @@ package com.yworks.yguard.obf.classfile;
  *
  * @author Mark Welsh
  */
-public class FieldrefCpInfo extends RefCpInfo
-{
-    // Constants -------------------------------------------------------------
+public class FieldrefCpInfo extends RefCpInfo {
+  // Constants -------------------------------------------------------------
 
 
-    // Fields ----------------------------------------------------------------
+  // Fields ----------------------------------------------------------------
 
 
-    // Class Methods ---------------------------------------------------------
+  // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Fieldref cp info.
-     */
+  /**
+   * Instantiates a new Fieldref cp info.
+   */
 // Instance Methods ------------------------------------------------------
-    protected FieldrefCpInfo()
-    {
-        super(CONSTANT_Fieldref);
-    }
+  protected FieldrefCpInfo() {
+    super(CONSTANT_Fieldref);
+  }
 }

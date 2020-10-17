@@ -14,31 +14,31 @@ import static junit.framework.TestCase.assertTrue;
  */
 public class TestPatternMatchedSection {
 
-    /**
-     * Test is access level.
-     */
-    @Test
+  /**
+   * Test is access level.
+   */
+  @Test
   public void testIsAccessLevel() {
 
     assertTrue(
-        PatternMatchedSection.Access.PUBLIC.isAccessLevel(
-            Opcodes.ACC_PUBLIC ) );
+            PatternMatchedSection.Access.PUBLIC.isAccessLevel(
+                    Opcodes.ACC_PUBLIC));
 
     assertFalse(
-        PatternMatchedSection.Access.PUBLIC.isAccessLevel(
-            Opcodes.ACC_PRIVATE ) );
+            PatternMatchedSection.Access.PUBLIC.isAccessLevel(
+                    Opcodes.ACC_PRIVATE));
 
     assertFalse(
-        PatternMatchedSection.Access.PUBLIC.isAccessLevel(
-            Opcodes.ACC_PROTECTED ) );
+            PatternMatchedSection.Access.PUBLIC.isAccessLevel(
+                    Opcodes.ACC_PROTECTED));
 
     assertFalse(
-        PatternMatchedSection.Access.PROTECTED.isAccessLevel(
-            Opcodes.ACC_PRIVATE ) );
+            PatternMatchedSection.Access.PROTECTED.isAccessLevel(
+                    Opcodes.ACC_PRIVATE));
 
     assertFalse(
-        PatternMatchedSection.Access.PUBLIC.isAccessLevel(
-            PatternMatchedSection.Access.FRIENDLY ) );
+            PatternMatchedSection.Access.PUBLIC.isAccessLevel(
+                    PatternMatchedSection.Access.FRIENDLY));
 
   }
 }

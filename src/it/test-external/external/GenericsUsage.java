@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class GenericsUsage {
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     */
-    public static void main( String[] args ) {
+  /**
+   * The entry point of application.
+   *
+   * @param args the input arguments
+   */
+  public static void main( String[] args ) {
     GenericOuter<List<BlaClass.Inner<String>>> genericOuter = new GenericOuter<List<BlaClass.Inner<String>>>();
     //genericOuter.foo(inner, innerinner);
 
@@ -25,9 +25,9 @@ public class GenericsUsage {
     genericOuter.foo(inner);
 
     GenericOuterNonGenericInner<List<BlaClass.Inner<String>>> outerNonGenericInner =
-        new GenericOuterNonGenericInner<List<BlaClass.Inner<String>>>();
+            new GenericOuterNonGenericInner<List<BlaClass.Inner<String>>>();
 
-    outerNonGenericInner.foo(null,null);
+    outerNonGenericInner.foo(null, null);
 
   }
 

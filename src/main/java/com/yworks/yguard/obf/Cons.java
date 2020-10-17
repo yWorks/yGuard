@@ -16,29 +16,28 @@ package com.yworks.yguard.obf;
  *
  * @author Mark Welsh
  */
-public class Cons
-{
-    /**
-     * The Car.
-     */
+public class Cons {
+  /**
+   * The Car.
+   */
 // Fields ----------------------------------------------------------------
-    public Object car;
-    /**
-     * The Cdr.
-     */
-    public Object cdr;
+  public Object car;
+  /**
+   * The Cdr.
+   */
+  public Object cdr;
 
 
-    // Instance Methods ---------------------------------------------------------
+  // Instance Methods ---------------------------------------------------------
 
-    /**
-     * Ctor.  @param car the car
-     *
-     * @param cdr the cdr
-     */
-    public Cons(Object car, Object cdr)
-    {
-        this.car = car;
-        this.cdr = cdr;
-    }
+  /**
+   * Ctor.
+   *
+   * @param car the car
+   * @param cdr the cdr
+   */
+  public Cons( Object car, Object cdr ) {
+    this.car = car;
+    this.cdr = cdr;
+  }
 }

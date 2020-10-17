@@ -23,16 +23,16 @@ import static org.junit.Assert.assertEquals;
  * The type Default method test.
  */
 public class DefaultMethodTest {
-    /**
-     * The Name.
-     */
-    @Rule
+  /**
+   * The Name.
+   */
+  @Rule
   public TestName name = new TestName();
 
-    /**
-     * Direct super interface test.
-     */
-    @Test
+  /**
+   * Direct super interface test.
+   */
+  @Test
   public void DirectSuperInterfaceTest() {
     final String testTypeName = "com.yworks.yshrink.java13.DirectSuperInterfaceTest";
 
@@ -64,7 +64,7 @@ public class DefaultMethodTest {
       final ByteArrayOutputStream output = new ByteArrayOutputStream();
       final ClassLoader cl = URLClassLoader.newInstance(new URL[]{outTmp.toURI().toURL()});
       final Class shrinkedType = Class.forName(testTypeName, true, cl);
-      final Method run =  shrinkedType.getMethod("run", PrintStream.class);
+      final Method run = shrinkedType.getMethod("run", PrintStream.class);
       run.invoke(null, new PrintStream(output));
 
       //   check test method output
@@ -81,10 +81,10 @@ public class DefaultMethodTest {
     }
   }
 
-    /**
-     * Simple chain test.
-     */
-    @Test
+  /**
+   * Simple chain test.
+   */
+  @Test
   public void SimpleChainTest() {
     final String testTypeName = "com.yworks.yshrink.java13.SimpleChainTest";
 
@@ -116,7 +116,7 @@ public class DefaultMethodTest {
       final ByteArrayOutputStream output = new ByteArrayOutputStream();
       final ClassLoader cl = URLClassLoader.newInstance(new URL[]{outTmp.toURI().toURL()});
       final Class shrinkedType = Class.forName(testTypeName, true, cl);
-      final Method run =  shrinkedType.getMethod("run", PrintStream.class);
+      final Method run = shrinkedType.getMethod("run", PrintStream.class);
       run.invoke(null, new PrintStream(output));
 
       //   check test method output

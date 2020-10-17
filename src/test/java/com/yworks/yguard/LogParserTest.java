@@ -15,242 +15,242 @@ import static junit.framework.TestCase.assertEquals;
  * @author Thomas Behr
  */
 public class LogParserTest {
-    /**
-     * Test common mappings.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test common mappings.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testCommonMappings() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      // obfuscated input
-      new String[] {
-        "A.A.A.A",
-        "A.A.A.B$C",
-        "\tat A.A.A.A.A()",
-        "\tat A.A.A.B$C.A()",
-      },
-      // expected deobfuscated output
-      new String[] {
-        "com.yworks.test.Test",
-        "com.yworks.test.EnclosingClass$InnerClass",
-        "\tat com.yworks.test.Test.run(Test.java:0)",
-        "\tat com.yworks.test.EnclosingClass$InnerClass.run(EnclosingClass.java:0)",
-      });
+            insert(MAPPINGS, ""),
+            // obfuscated input
+            new String[]{
+                    "A.A.A.A",
+                    "A.A.A.B$C",
+                    "\tat A.A.A.A.A()",
+                    "\tat A.A.A.B$C.A()",
+                    },
+            // expected deobfuscated output
+            new String[]{
+                    "com.yworks.test.Test",
+                    "com.yworks.test.EnclosingClass$InnerClass",
+                    "\tat com.yworks.test.Test.run(Test.java:0)",
+                    "\tat com.yworks.test.EnclosingClass$InnerClass.run(EnclosingClass.java:0)",
+                    });
   }
 
-    /**
-     * Test invalid mappings.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test invalid mappings.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testInvalidMappings() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      // obfuscated input
-      new String[] {
-        "A.A.A.D",
-        "yguard.A.A.A.D",
-        "\tat A.A.A.D.A()",
-        "\tat yguard.A.A.A.D.A()",
-      },
-      // expected deobfuscated output
-      new String[] {
-        "com.yworks.test.D",
-        "yguard.A.A.A.D",
-        "\tat com.yworks.test.D.A()",
-        "\tat yguard.A.A.A.D.A()",
-      });
+            insert(MAPPINGS, ""),
+            // obfuscated input
+            new String[]{
+                    "A.A.A.D",
+                    "yguard.A.A.A.D",
+                    "\tat A.A.A.D.A()",
+                    "\tat yguard.A.A.A.D.A()",
+                    },
+            // expected deobfuscated output
+            new String[]{
+                    "com.yworks.test.D",
+                    "yguard.A.A.A.D",
+                    "\tat com.yworks.test.D.A()",
+                    "\tat yguard.A.A.A.D.A()",
+                    });
     deobfuscate(
-      insert(MAPPINGS, "yguard"),
-      // obfuscated input
-      new String[] {
-        "A.A.A.D",
-        "yguard.A.A.A.D",
-        "\tat A.A.A.D.A()",
-        "\tat yguard.A.A.A.D.A()",
-      },
-      // expected deobfuscated output
-      new String[] {
-        "A.A.A.D",
-        "yguard.A.A.A.D",
-        "\tat A.A.A.D.A()",
-        "\tat yguard.A.A.A.D.A()",
-      });
+            insert(MAPPINGS, "yguard"),
+            // obfuscated input
+            new String[]{
+                    "A.A.A.D",
+                    "yguard.A.A.A.D",
+                    "\tat A.A.A.D.A()",
+                    "\tat yguard.A.A.A.D.A()",
+                    },
+            // expected deobfuscated output
+            new String[]{
+                    "A.A.A.D",
+                    "yguard.A.A.A.D",
+                    "\tat A.A.A.D.A()",
+                    "\tat yguard.A.A.A.D.A()",
+                    });
   }
 
-    /**
-     * Test leading dollar qualified name.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test leading dollar qualified name.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testLeadingDollarQualifiedName() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      // obfuscated input
-      new String[] {
-        "A.A.A.$A",
-        "A.A.A.$A$$C",
-      },
-      // expected deobfuscated output
-      new String[] {
-        "com.yworks.test.DollarSign",
-        "com.yworks.test.DollarSign$InnerClass",
-      });
+            insert(MAPPINGS, ""),
+            // obfuscated input
+            new String[]{
+                    "A.A.A.$A",
+                    "A.A.A.$A$$C",
+                    },
+            // expected deobfuscated output
+            new String[]{
+                    "com.yworks.test.DollarSign",
+                    "com.yworks.test.DollarSign$InnerClass",
+                    });
   }
 
-    /**
-     * Test leading dollar stacktrace entry.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test leading dollar stacktrace entry.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testLeadingDollarStacktraceEntry() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      // obfuscated input
-      new String[] {
-        "\tat A.A.A.$A.$A()",
-        "\tat A.A.A.$A$$C.$A()",
-      },
-      // expected deobfuscated output
-      new String[] {
-        "\tat com.yworks.test.DollarSign.run(DollarSign.java:0)",
-        "\tat com.yworks.test.DollarSign$InnerClass.run(DollarSign.java:0)",
-      });
+            insert(MAPPINGS, ""),
+            // obfuscated input
+            new String[]{
+                    "\tat A.A.A.$A.$A()",
+                    "\tat A.A.A.$A$$C.$A()",
+                    },
+            // expected deobfuscated output
+            new String[]{
+                    "\tat com.yworks.test.DollarSign.run(DollarSign.java:0)",
+                    "\tat com.yworks.test.DollarSign$InnerClass.run(DollarSign.java:0)",
+                    });
   }
 
-    /**
-     * Test module qualified name.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test module qualified name.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testModuleQualifiedName() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      new String[] {
-        "yfiles.test/A.A.A.A",
-        "yfiles.test@10.0.1/A.A.A.A",
-        "app/yfiles.test@10.0.1/A.A.A.A",
-        "app//A.A.A.A",
-      },
-      new String[] {
-        "yfiles.test/com.yworks.test.Test",
-        "yfiles.test@10.0.1/com.yworks.test.Test",
-        "app/yfiles.test@10.0.1/com.yworks.test.Test",
-        "app//com.yworks.test.Test",
-      });
+            insert(MAPPINGS, ""),
+            new String[]{
+                    "yfiles.test/A.A.A.A",
+                    "yfiles.test@10.0.1/A.A.A.A",
+                    "app/yfiles.test@10.0.1/A.A.A.A",
+                    "app//A.A.A.A",
+                    },
+            new String[]{
+                    "yfiles.test/com.yworks.test.Test",
+                    "yfiles.test@10.0.1/com.yworks.test.Test",
+                    "app/yfiles.test@10.0.1/com.yworks.test.Test",
+                    "app//com.yworks.test.Test",
+                    });
   }
 
-    /**
-     * Test module stacktrace entry.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test module stacktrace entry.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testModuleStacktraceEntry() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      new String[] {
-        "\tat yfiles.test/A.A.A.A.A()",
-        "\tat yfiles.test/A.A.A.A.A(Unknown Source)",
-        "\tat yfiles.test@10.0.1/A.A.A.A.A()",
-        "\tat yfiles.test@10.0.1/A.A.A.A.A(Unknown Source)",
-        "\tat app/yfiles.test@10.0.1/A.A.A.A.A()",
-        "\tat app/yfiles.test@10.0.1/A.A.A.A.A(Unknown Source)",
-        "\tat app//A.A.A.A.A()",
-        "\tat app//A.A.A.A.A(Unknown Source)",
-      },
-      new String[] {
-        "\tat yfiles.test/com.yworks.test.Test.run(Test.java:0)",
-        "\tat yfiles.test/com.yworks.test.Test.run(Test.java:0)",
-        "\tat yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
-        "\tat yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
-        "\tat app/yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
-        "\tat app/yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
-        "\tat app//com.yworks.test.Test.run(Test.java:0)",
-        "\tat app//com.yworks.test.Test.run(Test.java:0)",
-      });
+            insert(MAPPINGS, ""),
+            new String[]{
+                    "\tat yfiles.test/A.A.A.A.A()",
+                    "\tat yfiles.test/A.A.A.A.A(Unknown Source)",
+                    "\tat yfiles.test@10.0.1/A.A.A.A.A()",
+                    "\tat yfiles.test@10.0.1/A.A.A.A.A(Unknown Source)",
+                    "\tat app/yfiles.test@10.0.1/A.A.A.A.A()",
+                    "\tat app/yfiles.test@10.0.1/A.A.A.A.A(Unknown Source)",
+                    "\tat app//A.A.A.A.A()",
+                    "\tat app//A.A.A.A.A(Unknown Source)",
+                    },
+            new String[]{
+                    "\tat yfiles.test/com.yworks.test.Test.run(Test.java:0)",
+                    "\tat yfiles.test/com.yworks.test.Test.run(Test.java:0)",
+                    "\tat yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
+                    "\tat yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
+                    "\tat app/yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
+                    "\tat app/yfiles.test@10.0.1/com.yworks.test.Test.run(Test.java:0)",
+                    "\tat app//com.yworks.test.Test.run(Test.java:0)",
+                    "\tat app//com.yworks.test.Test.run(Test.java:0)",
+                    });
   }
 
-    /**
-     * Test overload qualified name.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test overload qualified name.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testOverloadQualifiedName() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      new String[] {
-        "A.A.A.A.B",
-        "A.A.A.A.Z",
-      },
-      new String[] {
-        "com.yworks.test.Test.isEnabled|setEnabled(boolean)",
-        "com.yworks.test.Test.Z",
-      });
+            insert(MAPPINGS, ""),
+            new String[]{
+                    "A.A.A.A.B",
+                    "A.A.A.A.Z",
+                    },
+            new String[]{
+                    "com.yworks.test.Test.isEnabled|setEnabled(boolean)",
+                    "com.yworks.test.Test.Z",
+                    });
   }
 
-    /**
-     * Test overload stacktrace entry.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test overload stacktrace entry.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testOverloadStacktraceEntry() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, ""),
-      new String[] {
-        "\tat A.A.A.A.B()",
-      },
-      new String[] {
-        "\tat com.yworks.test.Test.isEnabled|setEnabled(boolean)(Test.java:0)",
-      });
+            insert(MAPPINGS, ""),
+            new String[]{
+                    "\tat A.A.A.A.B()",
+                    },
+            new String[]{
+                    "\tat com.yworks.test.Test.isEnabled|setEnabled(boolean)(Test.java:0)",
+                    });
   }
 
-    /**
-     * Test prefixed qualified name.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test prefixed qualified name.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testPrefixedQualifiedName() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, "yguard/"),
-      // obfuscated input
-      new String[] {
-        "yguard.A.A.A.A",
-        "yguard.A.A.A.B$C",
-      },
-      // expected deobfuscated output
-      new String[] {
-        "com.yworks.test.Test",
-        "com.yworks.test.EnclosingClass$InnerClass",
-      });
+            insert(MAPPINGS, "yguard/"),
+            // obfuscated input
+            new String[]{
+                    "yguard.A.A.A.A",
+                    "yguard.A.A.A.B$C",
+                    },
+            // expected deobfuscated output
+            new String[]{
+                    "com.yworks.test.Test",
+                    "com.yworks.test.EnclosingClass$InnerClass",
+                    });
   }
 
-    /**
-     * Test prefixed stacktrace entry.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test prefixed stacktrace entry.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testPrefixedStacktraceEntry() throws Exception {
     deobfuscate(
-      insert(MAPPINGS, "yguard/"),
-      new String[] {
-        "\tat yguard.A.A.A.A.A()",
-        "\tat yguard.A.A.A.B$C.A()",
-      },
-      new String[] {
-        "\tat com.yworks.test.Test.run(Test.java:0)",
-        "\tat com.yworks.test.EnclosingClass$InnerClass.run(EnclosingClass.java:0)",
-      });
+            insert(MAPPINGS, "yguard/"),
+            new String[]{
+                    "\tat yguard.A.A.A.A.A()",
+                    "\tat yguard.A.A.A.B$C.A()",
+                    },
+            new String[]{
+                    "\tat com.yworks.test.Test.run(Test.java:0)",
+                    "\tat com.yworks.test.EnclosingClass$InnerClass.run(EnclosingClass.java:0)",
+                    });
   }
 
 
@@ -283,24 +283,24 @@ public class LogParserTest {
 
 
   private static final String MAPPINGS =
-      "<yguard version=\"1.5\">\n" +
-      "  <expose>\n" +
-      "  </expose>\n" +
-      "  <map>\n" +
-      "    <package name=\"com\" map=\"[PREFIX]A\"/>\n" +
-      "    <package name=\"com.yworks\" map=\"A\"/>\n" +
-      "    <package name=\"com.yworks.test\" map=\"A\"/>\n" +
-      "    <class name=\"com.yworks.test.Test\" map=\"A\"/>\n" +
-      "    <method class=\"com.yworks.test.Test\" name=\"void run()\" map=\"A\"/>\n" +
-      "    <method class=\"com.yworks.test.Test\" name=\"boolean isEnabled()\" map=\"B\"/>\n" +
-      "    <method class=\"com.yworks.test.Test\" name=\"void setEnabled(boolean)\" map=\"B\"/>\n" +
-      "    <class name=\"com.yworks.test.EnclosingClass\" map=\"B\"/>\n" +
-      "    <class name=\"com.yworks.test.EnclosingClass$InnerClass\" map=\"C\"/>\n" +
-      "    <method class=\"com.yworks.test.EnclosingClass$InnerClass\" name=\"void run()\" map=\"A\"/>\n" +
-      "    <class name=\"com.yworks.test.DollarSign\" map=\"$A\"/>\n" +
-      "    <method class=\"com.yworks.test.DollarSign\" name=\"void run()\" map=\"$A\"/>\n" +
-      "    <class name=\"com.yworks.test.DollarSign$InnerClass\" map=\"$C\"/>\n" +
-      "    <method class=\"com.yworks.test.DollarSign$InnerClass\" name=\"void run()\" map=\"$A\"/>\n" +
-      "  </map>\n" +
-      "</yguard>\n";
+          "<yguard version=\"1.5\">\n" +
+          "  <expose>\n" +
+          "  </expose>\n" +
+          "  <map>\n" +
+          "    <package name=\"com\" map=\"[PREFIX]A\"/>\n" +
+          "    <package name=\"com.yworks\" map=\"A\"/>\n" +
+          "    <package name=\"com.yworks.test\" map=\"A\"/>\n" +
+          "    <class name=\"com.yworks.test.Test\" map=\"A\"/>\n" +
+          "    <method class=\"com.yworks.test.Test\" name=\"void run()\" map=\"A\"/>\n" +
+          "    <method class=\"com.yworks.test.Test\" name=\"boolean isEnabled()\" map=\"B\"/>\n" +
+          "    <method class=\"com.yworks.test.Test\" name=\"void setEnabled(boolean)\" map=\"B\"/>\n" +
+          "    <class name=\"com.yworks.test.EnclosingClass\" map=\"B\"/>\n" +
+          "    <class name=\"com.yworks.test.EnclosingClass$InnerClass\" map=\"C\"/>\n" +
+          "    <method class=\"com.yworks.test.EnclosingClass$InnerClass\" name=\"void run()\" map=\"A\"/>\n" +
+          "    <class name=\"com.yworks.test.DollarSign\" map=\"$A\"/>\n" +
+          "    <method class=\"com.yworks.test.DollarSign\" name=\"void run()\" map=\"$A\"/>\n" +
+          "    <class name=\"com.yworks.test.DollarSign$InnerClass\" map=\"$C\"/>\n" +
+          "    <method class=\"com.yworks.test.DollarSign$InnerClass\" name=\"void run()\" map=\"$A\"/>\n" +
+          "  </map>\n" +
+          "</yguard>\n";
 }

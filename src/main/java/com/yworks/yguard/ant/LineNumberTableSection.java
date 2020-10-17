@@ -13,27 +13,28 @@ import java.util.Collection;
  * Used by ant to handle the <code>attributes</code> element.
  */
 public final class LineNumberTableSection extends PatternMatchedClassesSection implements Mappable {
-  private YGuardBaseTask obfuscatorTask;
+  private final YGuardBaseTask obfuscatorTask;
 
-    /**
-     * Instantiates a new Line number table section.
-     *
-     * @param obfuscatorTask the obfuscator task
-     */
-    public LineNumberTableSection( YGuardBaseTask obfuscatorTask ){
+  /**
+   * Instantiates a new Line number table section.
+   *
+   * @param obfuscatorTask the obfuscator task
+   */
+  public LineNumberTableSection( YGuardBaseTask obfuscatorTask ) {
     super();
     this.obfuscatorTask = obfuscatorTask;
     this.allowMatchAllPatternSet = true;
   }
 
-    public void addEntries( Collection entries, String className){
-      YGuardRule rule = createRule(className);
-      entries.add(rule);
-    }
+  public void addEntries( Collection entries, String className ) {
+    YGuardRule rule = createRule(className);
+    entries.add(rule);
+  }
 
   private LineNumberTableMapper mapper;
-  private YGuardRule createRule(String className) {
-    if (mapper == null){
+
+  private YGuardRule createRule( String className ) {
+    if (mapper == null) {
       mapper = createMapper();
     }
     return new YGuardRule(className, mapper);
@@ -41,13 +42,13 @@ public final class LineNumberTableSection extends PatternMatchedClassesSection i
 
   private LineNumberTableMapper createMapper() {
     LineNumberTableMapper lntMapper = null;
-    if (properties.containsKey("mapping-scheme")){
+    if (properties.containsKey("mapping-scheme")) {
       String ms = (String) properties.get("mapping-scheme");
-      if ("squeeze".equals(ms)){
+      if ("squeeze".equals(ms)) {
         lntMapper = new ObfuscatorTask.LineNumberSqueezer();
-      } else if ("scramble".equals(ms)){
+      } else if ("scramble".equals(ms)) {
         long saltValue = (long) (Math.random() * 4242L);
-        if (properties.containsKey("scrambling-salt")){
+        if (properties.containsKey("scrambling-salt")) {
           String salt = (String) properties.get("scrambling-salt");
           try {
             saltValue = Long.parseLong(salt);
@@ -63,11 +64,11 @@ public final class LineNumberTableSection extends PatternMatchedClassesSection i
     }
     if (lntMapper == null) {
       lntMapper = new LineNumberTableMapper() {
-        public boolean mapLineNumberTable(String className, String methodName, String methodSignature, LineNumberTableAttrInfo lineNumberTable) {
+        public boolean mapLineNumberTable( String className, String methodName, String methodSignature, LineNumberTableAttrInfo lineNumberTable ) {
           return true;
         }
 
-        public void logProperties( PrintWriter pw) {
+        public void logProperties( PrintWriter pw ) {
           return;
         }
       };
@@ -75,7 +76,6 @@ public final class LineNumberTableSection extends PatternMatchedClassesSection i
     return lntMapper;
   }
 
-  public void addMapEntries(Collection entries)
-  {
+  public void addMapEntries( Collection entries ) {
   }
 }

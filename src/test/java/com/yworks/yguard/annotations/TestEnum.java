@@ -15,18 +15,17 @@ package com.yworks.yguard.annotations;
  *
  * @author muellese
  */
-public enum TestEnum
-{
-    /**
-     * V 1 test enum.
-     */
-    V1,
-    /**
-     * V 2 test enum.
-     */
-    V2,
-    /**
-     * V 3 test enum.
-     */
-    V3;
+public enum TestEnum {
+  /**
+   * V 1 test enum.
+   */
+  V1,
+  /**
+   * V 2 test enum.
+   */
+  V2,
+  /**
+   * V 3 test enum.
+   */
+  V3
 }

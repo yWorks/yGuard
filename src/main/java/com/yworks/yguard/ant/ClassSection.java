@@ -25,171 +25,171 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
 
   private final YGuardBaseTask task;
 
-    /**
-     * Instantiates a new Class section.
-     */
-    public ClassSection() {
+  /**
+   * Instantiates a new Class section.
+   */
+  public ClassSection() {
     task = null;
   }
 
-    /**
-     * Instantiates a new Class section.
-     *
-     * @param task the task
-     */
-    public ClassSection( YGuardBaseTask task ) {
+  /**
+   * Instantiates a new Class section.
+   *
+   * @param task the task
+   */
+  public ClassSection( YGuardBaseTask task ) {
     this.task = task;
   }
 
-    /**
-     * Sets name.
-     *
-     * @param name the name
-     */
-    public void setName( String name ) {
+  /**
+   * Sets name.
+   *
+   * @param name the name
+   */
+  public void setName( String name ) {
     this.name = name;
   }
 
-    /**
-     * Sets classes.
-     *
-     * @param m the m
-     */
-    public void setClasses( ObfuscatorTask.Modifiers m ) {
+  /**
+   * Sets classes.
+   *
+   * @param m the m
+   */
+  public void setClasses( ObfuscatorTask.Modifiers m ) {
     this.classMode = m.getModifierValue();
     this.classesSet = true;
   }
 
-    /**
-     * Sets methods.
-     *
-     * @param m the m
-     */
-    public void setMethods( ObfuscatorTask.Modifiers m ) {
+  /**
+   * Sets methods.
+   *
+   * @param m the m
+   */
+  public void setMethods( ObfuscatorTask.Modifiers m ) {
     this.methodMode = m.getModifierValue();
   }
 
-    /**
-     * Sets fields.
-     *
-     * @param m the m
-     */
-    public void setFields( ObfuscatorTask.Modifiers m ) {
+  /**
+   * Sets fields.
+   *
+   * @param m the m
+   */
+  public void setFields( ObfuscatorTask.Modifiers m ) {
     fieldMode = m.getModifierValue();
   }
 
-    /**
-     * Sets map.
-     *
-     * @param mapTo the map to
-     */
-    public void setMap( String mapTo ) {
+  /**
+   * Sets map.
+   *
+   * @param mapTo the map to
+   */
+  public void setMap( String mapTo ) {
     this.mapTo = mapTo;
   }
 
-    /**
-     * Sets extends.
-     *
-     * @param extendsType the extends type
-     */
-    public void setExtends( String extendsType ) {
-    this.extendsType = ObfuscatorTask.toNativeClass( extendsType );
-    if ( task instanceof ObfuscatorTask ) {
-      ( (ObfuscatorTask) task ).setNeedYShrinkModel( true );
+  /**
+   * Sets extends.
+   *
+   * @param extendsType the extends type
+   */
+  public void setExtends( String extendsType ) {
+    this.extendsType = ObfuscatorTask.toNativeClass(extendsType);
+    if (task instanceof ObfuscatorTask) {
+      ((ObfuscatorTask) task).setNeedYShrinkModel(true);
     }
 
   }
 
-    /**
-     * Gets extends.
-     *
-     * @return the extends
-     */
-    public String getExtends() {
+  /**
+   * Gets extends.
+   *
+   * @return the extends
+   */
+  public String getExtends() {
     return extendsType;
   }
 
-    /**
-     * Sets implements.
-     *
-     * @param implementsType the implements type
-     */
-    public void setImplements( String implementsType ) {
-    this.implementsType = ObfuscatorTask.toNativeClass( implementsType );
-    if ( task instanceof ObfuscatorTask ) {
-      ( (ObfuscatorTask) task ).setNeedYShrinkModel( true );
+  /**
+   * Sets implements.
+   *
+   * @param implementsType the implements type
+   */
+  public void setImplements( String implementsType ) {
+    this.implementsType = ObfuscatorTask.toNativeClass(implementsType);
+    if (task instanceof ObfuscatorTask) {
+      ((ObfuscatorTask) task).setNeedYShrinkModel(true);
     }
   }
 
-    /**
-     * Gets implements.
-     *
-     * @return the implements
-     */
-    public String getImplements() {
+  /**
+   * Gets implements.
+   *
+   * @return the implements
+   */
+  public String getImplements() {
     return implementsType;
   }
 
   public void addEntries( Collection entries, ZipFileSet zf ) throws IOException {
-    if ( classesSet && patternSets.size() < 1 ) {
+    if (classesSet && patternSets.size() < 1) {
       PatternSet ps = new PatternSet();
-      ps.setProject( zf.getProject() );
-      ps.setIncludes( "**.*" );
-      patternSets.add( ps );
+      ps.setProject(zf.getProject());
+      ps.setIncludes("**.*");
+      patternSets.add(ps);
     }
-    super.addEntries( entries, zf );
+    super.addEntries(entries, zf);
   }
 
   public void addEntries( Collection entries, String name ) {
-    String className = ObfuscatorTask.toNativeClass( name );
-    YGuardRule centry = new YGuardRule( YGuardRule.TYPE_CLASS, className );
+    String className = ObfuscatorTask.toNativeClass(name);
+    YGuardRule centry = new YGuardRule(YGuardRule.TYPE_CLASS, className);
     centry.retainFields = fieldMode;
     centry.retainMethods = methodMode;
-    if ( classesSet ) {
+    if (classesSet) {
       centry.retainClasses = classMode;
     }
-    entries.add( centry );
+    entries.add(centry);
   }
 
   public void addMapEntries( Collection entries ) {
-    YGuardRule entry = new YGuardRule( YGuardRule.TYPE_CLASS_MAP, ObfuscatorTask.toNativeClass( name ) );
-    entry.obfName = ObfuscatorTask.toNativeClass( mapTo );
-    entries.add( entry );
+    YGuardRule entry = new YGuardRule(YGuardRule.TYPE_CLASS_MAP, ObfuscatorTask.toNativeClass(name));
+    entry.obfName = ObfuscatorTask.toNativeClass(mapTo);
+    entries.add(entry);
   }
 
-    /**
-     * Gets class mode.
-     *
-     * @return the class mode
-     */
-    public int getClassMode() {
+  /**
+   * Gets class mode.
+   *
+   * @return the class mode
+   */
+  public int getClassMode() {
     return classMode;
   }
 
-    /**
-     * Gets field mode.
-     *
-     * @return the field mode
-     */
-    public int getFieldMode() {
+  /**
+   * Gets field mode.
+   *
+   * @return the field mode
+   */
+  public int getFieldMode() {
     return fieldMode;
   }
 
-    /**
-     * Gets method mode.
-     *
-     * @return the method mode
-     */
-    public int getMethodMode() {
+  /**
+   * Gets method mode.
+   *
+   * @return the method mode
+   */
+  public int getMethodMode() {
     return methodMode;
   }
 
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
-    public String getName() {
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
+  public String getName() {
     return name;
   }
 

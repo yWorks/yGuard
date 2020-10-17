@@ -8,17 +8,17 @@ package test.simple;
 public class C extends B {
 
   private final Object privateField = "private field";
-    /**
-     * The Friendly field.
-     */
-    final Object friendlyField = "friendly field";
+  /**
+   * The Friendly field.
+   */
+  final Object friendlyField = "friendly field";
 
 
-    /**
-     * G.
-     */
-    @Override
+  /**
+   * G.
+   */
+  @Override
   public void g() {
-    System.out.println( "C.g" );
+    System.out.println("C.g");
   }
 }

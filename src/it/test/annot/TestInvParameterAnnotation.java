@@ -12,11 +12,11 @@ import java.lang.annotation.ElementType;
 @Target(ElementType.PARAMETER)
 public @interface TestInvParameterAnnotation {
 
-    /**
-     * Value string.
-     *
-     * @return the string
-     */
-    String value() default "DefaultInvisibleParameterAnnotString";
+  /**
+   * Value string.
+   *
+   * @return the string
+   */
+  String value() default "DefaultInvisibleParameterAnnotString";
 
 }

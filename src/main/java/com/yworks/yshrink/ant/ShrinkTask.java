@@ -39,8 +39,8 @@ import java.util.zip.GZIPOutputStream;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ShrinkTask extends YGuardBaseTask {
-  
-  private File logFile = new File( "yshrinklog.xml" );
+
+  private File logFile = new File("yshrinklog.xml");
 
   private boolean createStubs = false;
 
@@ -48,84 +48,84 @@ public class ShrinkTask extends YGuardBaseTask {
 
   private EntryPointsSection entryPointsSection;
 
-    /**
-     * Instantiates a new Shrink task.
-     */
-    public ShrinkTask() {
+  /**
+   * Instantiates a new Shrink task.
+   */
+  public ShrinkTask() {
     super();
   }
 
-    /**
-     * Instantiates a new Shrink task.
-     *
-     * @param mode the mode
-     */
-    public ShrinkTask( boolean mode ) {
-    super( mode );
+  /**
+   * Instantiates a new Shrink task.
+   *
+   * @param mode the mode
+   */
+  public ShrinkTask( boolean mode ) {
+    super(mode);
   }
 
   @Override
   public void execute() throws BuildException {
 
-    getProject().log(this,"yGuard Shrinker v" + Version.getVersion() + " - http://www.yworks.com/products/yguard", Project.MSG_INFO);
+    getProject().log(this, "yGuard Shrinker v" + Version.getVersion() + " - http://www.yworks.com/products/yguard", Project.MSG_INFO);
     super.execute();
 
-    Logger xmlLogger = new XmlLogger( getLogWriter() );
+    Logger xmlLogger = new XmlLogger(getLogWriter());
     Logger antLogger = new AntLogger(getProject(), this);
 
     final EntryPointFilters epfs = new EntryPointFilters();
 
     List<com.yworks.common.ant.AttributesSection> attributesSections = entryPointsSection != null ? entryPointsSection.getAttributesSections() : this.attributesSections;
 
-    if ( entryPointsSection != null ) {
+    if (entryPointsSection != null) {
 
-      epfs.setExclude( entryPointsSection );
+      epfs.setExclude(entryPointsSection);
 
       List<MethodSection> methodSections = entryPointsSection.getMethodSections();
       List<FieldSection> fieldSections = entryPointsSection.getFieldSections();
       List<ClassSection> classSections = entryPointsSection.getClassSections();
 
-      if ( methodSections.size() > 0 ) {
-        MethodFilter mf = new MethodFilter( getProject() );
-        for ( MethodSection ms : methodSections ) {
-          mf.addMethodSection( ms );
+      if (methodSections.size() > 0) {
+        MethodFilter mf = new MethodFilter(getProject());
+        for (MethodSection ms : methodSections) {
+          mf.addMethodSection(ms);
         }
-        epfs.addEntryPointFilter( mf );
+        epfs.addEntryPointFilter(mf);
       }
 
-      if ( fieldSections.size() > 0 ) {
-        FieldFilter ff = new FieldFilter( getProject() );
-        for ( FieldSection fs : fieldSections ) {
-          ff.addFieldSection( fs );
+      if (fieldSections.size() > 0) {
+        FieldFilter ff = new FieldFilter(getProject());
+        for (FieldSection fs : fieldSections) {
+          ff.addFieldSection(fs);
         }
-        epfs.addEntryPointFilter( ff );
+        epfs.addEntryPointFilter(ff);
       }
 
-      if ( classSections.size() > 0 ) {
-        ClassFilter cf = new ClassFilter( getProject() );
-        for ( ClassSection cs : classSections ) {
-          cf.addClassSection( cs );
+      if (classSections.size() > 0) {
+        ClassFilter cf = new ClassFilter(getProject());
+        for (ClassSection cs : classSections) {
+          cf.addClassSection(cs);
         }
-        epfs.addEntryPointFilter( cf );
+        epfs.addEntryPointFilter(cf);
       }
 
       AttributeFilter attributeFilter = new AttributeFilter(getProject());
-      if (entryPointsSection.isRiAnn()){
+      if (entryPointsSection.isRiAnn()) {
         AttributesSection as = new AttributesSection();
         as.setName(ClassConstants.ATTR_RuntimeInvisibleAnnotations);
         attributeFilter.addAttributesSection(as);
       }
-      if (entryPointsSection.isRiPann()){
+      if (entryPointsSection.isRiPann()) {
         AttributesSection as = new AttributesSection();
         as.setName(ClassConstants.ATTR_RuntimeInvisibleParameterAnnotations);
         attributeFilter.addAttributesSection(as);
       }
-      if (entryPointsSection.isRvAnn()){
+      if (entryPointsSection.isRvAnn()) {
         AttributesSection as = new AttributesSection();
         as.setName(ClassConstants.ATTR_RuntimeVisibleAnnotations);
         attributeFilter.addAttributesSection(as);
       }
-       if (entryPointsSection.isRvPann()){
+      if (entryPointsSection.isRvPann()) {
         AttributesSection as = new AttributesSection();
         as.setName(ClassConstants.ATTR_RuntimeVisibleParameterAnnotations);
         attributeFilter.addAttributesSection(as);
@@ -168,24 +168,24 @@ public class ShrinkTask extends YGuardBaseTask {
       epfs.addEntryPointFilter(classFilter);
     }
 
-    if ( null != attributesSections && attributesSections.size() > 0 ) {
-      AttributeFilter af = new AttributeFilter( getProject() );
-      for ( com.yworks.common.ant.AttributesSection as : attributesSections ) {
-        af.addAttributesSection( as );
+    if (null != attributesSections && attributesSections.size() > 0) {
+      AttributeFilter af = new AttributeFilter(getProject());
+      for (com.yworks.common.ant.AttributesSection as : attributesSections) {
+        af.addAttributesSection(as);
       }
-      epfs.addEntryPointFilter( af );
+      epfs.addEntryPointFilter(af);
     }
 
-    if ( pairs == null ) {
-      throw new BuildException( "no files to shrink" );
+    if (pairs == null) {
+      throw new BuildException("no files to shrink");
     } else {
       boolean containsInOutPair = false;
       boolean containsEntryPointJar = false;
-      for ( ShrinkBag shrinkBag : pairs ) {
-        if ( shrinkBag.isEntryPointJar() ) {
+      for (ShrinkBag shrinkBag : pairs) {
+        if (shrinkBag.isEntryPointJar()) {
 
-          EntryPointJarFilter epjf = new EntryPointJarFilter( (EntryPointJar) shrinkBag );
-          epfs.addEntryPointFilter( epjf );
+          EntryPointJarFilter epjf = new EntryPointJarFilter((EntryPointJar) shrinkBag);
+          epfs.addEntryPointFilter(epjf);
 
           containsEntryPointJar = true;
         } else {
@@ -193,51 +193,51 @@ public class ShrinkTask extends YGuardBaseTask {
         }
       }
 
-      if ( ! containsInOutPair ) {
-        throw new BuildException( "no files to shrink" );
+      if (!containsInOutPair) {
+        throw new BuildException("no files to shrink");
       }
 
-      if ( ( ! containsEntryPointJar ) && ( null == entryPointsSection ) ) {
-        Logger.log( "no entrypoints given - using class access public and protected on all inoutpairs." );
-        entryPointsSection = new EntryPointsSection( this );
-        ClassFilter cf = new ClassFilter( getProject() );
+      if ((!containsEntryPointJar) && (null == entryPointsSection)) {
+        Logger.log("no entrypoints given - using class access public and protected on all inoutpairs.");
+        entryPointsSection = new EntryPointsSection(this);
+        ClassFilter cf = new ClassFilter(getProject());
         ClassSection cs = new ClassSection();
-        cs.setAccess( "protected" );
-        cf.addClassSection( cs );
-        epfs.addEntryPointFilter( cf );
-        epfs.setExclude( entryPointsSection );
+        cs.setAccess("protected");
+        cf.addClassSection(cs);
+        epfs.addEntryPointFilter(cf);
+        epfs.setExclude(entryPointsSection);
       }
     }
 
     ResourceCpResolver resolver = null;
 
-    if ( resourceClassPath != null ) {
-      resolver = new ResourceCpResolver( resourceClassPath, this );
+    if (resourceClassPath != null) {
+      resolver = new ResourceCpResolver(resourceClassPath, this);
     }
 
     if (properties.containsKey("digests")) {
       setDigests((String) properties.get("digests"));
     }
 
-    final YShrink yShrink = new YShrink( createStubs, digests );
+    final YShrink yShrink = new YShrink(createStubs, digests);
 
     //epfs.addEntryPointFilter( new SerializationFilter( getProject() ) );
 
     try {
 
-      yShrink.doShrinkPairs( pairs, epfs, resolver );
-    } catch ( RuntimeException rte ) {
-      if ( rte.getMessage() != null ) {
-        Logger.err( rte.getMessage(), rte );
+      yShrink.doShrinkPairs(pairs, epfs, resolver);
+    } catch (RuntimeException rte) {
+      if (rte.getMessage() != null) {
+        Logger.err(rte.getMessage(), rte);
       }
-      throw new BuildException( "yShrink encountered an unknown problem!", rte );
-    } catch ( Throwable e ) {
-      if ( e.getMessage() != null ) {
-        Logger.err( e.getMessage(), e );
+      throw new BuildException("yShrink encountered an unknown problem!", rte);
+    } catch (Throwable e) {
+      if (e.getMessage() != null) {
+        Logger.err(e.getMessage(), e);
       } else {
-          Logger.err(e.getClass().getName(), e);
+        Logger.err(e.getClass().getName(), e);
       }
-      throw new BuildException( "yShrink encountered an unknown severe problem!", e );
+      throw new BuildException("yShrink encountered an unknown severe problem!", e);
 
     } finally {
       try {
@@ -252,104 +252,104 @@ public class ShrinkTask extends YGuardBaseTask {
 
   private PrintWriter getLogWriter() {
     PrintWriter log = null;
-    if ( logFile != null ) {
+    if (logFile != null) {
       try {
-        if ( logFile.getName().endsWith( ".gz" ) ) {
+        if (logFile.getName().endsWith(".gz")) {
           log = new PrintWriter(
-              new BufferedWriter(
-                  new OutputStreamWriter(
-                      new GZIPOutputStream(
-                          new FileOutputStream( logFile )
-                      )
+                  new BufferedWriter(
+                          new OutputStreamWriter(
+                                  new GZIPOutputStream(
+                                          new FileOutputStream(logFile)
+                                  )
+                          )
                   )
-              )
           );
         } else {
-          log = new PrintWriter( new BufferedWriter( new FileWriter( logFile ) ) );
+          log = new PrintWriter(new BufferedWriter(new FileWriter(logFile)));
         }
-      } catch ( IOException ioe ) {
-        getProject().log( this, "Could not create logfile: " + ioe, Project.MSG_ERR );
-        log = new PrintWriter( System.out );
+      } catch (IOException ioe) {
+        getProject().log(this, "Could not create logfile: " + ioe, Project.MSG_ERR);
+        log = new PrintWriter(System.out);
       }
     } else {
-      log = new PrintWriter( System.out );
+      log = new PrintWriter(System.out);
     }
     return log;
   }
 
-    /**
-     * Gets create stubs.
-     *
-     * @return the create stubs
-     */
-    public boolean getCreateStubs() {
+  /**
+   * Gets create stubs.
+   *
+   * @return the create stubs
+   */
+  public boolean getCreateStubs() {
     return createStubs;
   }
 
-    /**
-     * Sets create stubs.
-     *
-     * @param createStubs the create stubs
-     */
-    public void setCreateStubs( boolean createStubs ) {
+  /**
+   * Sets create stubs.
+   *
+   * @param createStubs the create stubs
+   */
+  public void setCreateStubs( boolean createStubs ) {
     this.createStubs = createStubs;
   }
 
-    /**
-     * Gets digests.
-     *
-     * @return the digests
-     */
-    public String getDigests() {
+  /**
+   * Gets digests.
+   *
+   * @return the digests
+   */
+  public String getDigests() {
     return digests;
   }
 
-    /**
-     * Sets digests.
-     *
-     * @param digests the digests
-     */
-    public void setDigests( String digests ) {
+  /**
+   * Sets digests.
+   *
+   * @param digests the digests
+   */
+  public void setDigests( String digests ) {
     this.digests = digests;
   }
 
-    /**
-     * Sets log file.
-     *
-     * @param file the file
-     */
-    public void setLogFile( File file ) {
+  /**
+   * Sets log file.
+   *
+   * @param file the file
+   */
+  public void setLogFile( File file ) {
     this.logFile = file;
   }
 
-    /**
-     * Used by ant to handle the nested <code>entryPoint</code> element.
-     *
-     * @return an EntryPointsSection instance
-     */
-    public EntryPointsSection createEntryPoints() {
-    if ( this.entryPointsSection != null ) {
-      throw new IllegalArgumentException( "Only one entrypoints or expose element allowed!" );
+  /**
+   * Used by ant to handle the nested <code>entryPoint</code> element.
+   *
+   * @return an EntryPointsSection instance
+   */
+  public EntryPointsSection createEntryPoints() {
+    if (this.entryPointsSection != null) {
+      throw new IllegalArgumentException("Only one entrypoints or expose element allowed!");
     }
-    this.entryPointsSection = new EntryPointsSection( this );
+    this.entryPointsSection = new EntryPointsSection(this);
     return entryPointsSection;
   }
 
-    /**
-     * not for ant, used if the ShrinkTask is created 'artificially'.
-     *
-     * @param eps the eps
-     */
-    public void setEntryPointsExternally( EntryPointsSection eps ) {
+  /**
+   * not for ant, used if the ShrinkTask is created 'artificially'.
+   *
+   * @param eps the eps
+   */
+  public void setEntryPointsExternally( EntryPointsSection eps ) {
     this.entryPointsSection = eps;
   }
 
-    /**
-     * Create expose entry points section.
-     *
-     * @return the entry points section
-     */
-    public EntryPointsSection createExpose() {
+  /**
+   * Create expose entry points section.
+   *
+   * @return the entry points section
+   */
+  public EntryPointsSection createExpose() {
     return createEntryPoints();
   }
 
@@ -358,12 +358,12 @@ public class ShrinkTask extends YGuardBaseTask {
   }
 
   public void addAttributesSections( List<com.yworks.common.ant.AttributesSection> attributesSections ) {
-    if ( null != entryPointsSection ) {
-      for ( com.yworks.common.ant.AttributesSection attributesSection : attributesSections ) {
-        entryPointsSection.addConfiguredAttribute( attributesSection );
+    if (null != entryPointsSection) {
+      for (com.yworks.common.ant.AttributesSection attributesSection : attributesSections) {
+        entryPointsSection.addConfiguredAttribute(attributesSection);
       }
     } else {
-      if( null != this.attributesSections ) {
+      if (null != this.attributesSections) {
         this.attributesSections.addAll(attributesSections);
       } else {
         this.attributesSections = attributesSections;
@@ -371,13 +371,15 @@ public class ShrinkTask extends YGuardBaseTask {
     }
   }
 
-    /**
-     * Add configured entrypointjar.
-     *
-     * @param entrypointjar the entrypointjar
-     */
-    public void addConfiguredEntrypointjar( final EntryPointJar entrypointjar ) {
-    if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
-    pairs.add( entrypointjar );
+  /**
+   * Add configured entrypointjar.
+   *
+   * @param entrypointjar the entrypointjar
+   */
+  public void addConfiguredEntrypointjar( final EntryPointJar entrypointjar ) {
+    if (pairs == null) {
+      pairs = new ArrayList<ShrinkBag>();
+    }
+    pairs.add(entrypointjar);
   }
 }

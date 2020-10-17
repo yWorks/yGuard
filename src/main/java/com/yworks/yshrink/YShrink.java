@@ -57,75 +57,77 @@ public class YShrink {
 
   private String digests;
 
-    /**
-     * Instantiates a new Y shrink.
-     */
-    public YShrink() {
+  /**
+   * Instantiates a new Y shrink.
+   */
+  public YShrink() {
     this.createStubs = true;
   }
 
-    /**
-     * Instantiates a new Y shrink.
-     *
-     * @param createStubs the create stubs
-     * @param digests     the digests
-     */
-    public YShrink( boolean createStubs, String digests ) {
+  /**
+   * Instantiates a new Y shrink.
+   *
+   * @param createStubs the create stubs
+   * @param digests     the digests
+   */
+  public YShrink( boolean createStubs, String digests ) {
     this.createStubs = createStubs;
     this.digests = digests;
   }
 
-    /**
-     * Basic steps
-     * - Init model: create nodes for each class, method and field. Additionally, create a single entrypoint-node and one NEW-node for each class.
-     * - Mark all entrypoints: using a composite EntryPointFilter, mark/log every entrypoint-node in the model.
-     * - Create all dependency edges using the com.yworks.yshrink.core.Analyzer.
-     * - Create additional entrypoint-edges between the entrypoint-node and each entrypoint that doesn't represent an ordinary method (non-abstract,non-static,non-constructor).
-     * - Mark all obsolete classes, methods and fields using the com.yworks.yshrink.core.Shrinker.
-     * - Write out all non-obsolete classes using the com.yworks.yshrink.core.Writer.
-     *
-     * @param pairs    the pairs
-     * @param epf      the epf
-     * @param resolver the resolver
-     * @throws IOException the io exception
-     */
-    public void doShrinkPairs( List<ShrinkBag> pairs, EntryPointFilter epf, ClassResolver resolver ) throws
-      IOException {
+  /**
+   * Basic steps
+   * - Init model: create nodes for each class, method and field. Additionally, create a single entrypoint-node and one NEW-node for each class.
+   * - Mark all entrypoints: using a composite EntryPointFilter, mark/log every entrypoint-node in the model.
+   * - Create all dependency edges using the com.yworks.yshrink.core.Analyzer.
+   * - Create additional entrypoint-edges between the entrypoint-node and each entrypoint that doesn't represent an ordinary method (non-abstract,non-static,non-constructor).
+   * - Mark all obsolete classes, methods and fields using the com.yworks.yshrink.core.Shrinker.
+   * - Write out all non-obsolete classes using the com.yworks.yshrink.core.Writer.
+   *
+   * @param pairs    the pairs
+   * @param epf      the epf
+   * @param resolver the resolver
+   * @throws IOException the io exception
+   */
+  public void doShrinkPairs( List<ShrinkBag> pairs, EntryPointFilter epf, ClassResolver resolver ) throws
+          IOException {
 
     final Analyzer analyzer = new Analyzer();
 
     Model model = new Model();
 
-    if ( null != resolver ) model.setClassResolver( resolver );
+    if (null != resolver) {
+      model.setClassResolver(resolver);
+    }
 
     // create nodes
-    if ( ! model.isSimpleModelSet() ) {
-      analyzer.initModel( model, pairs );
+    if (!model.isSimpleModelSet()) {
+      analyzer.initModel(model, pairs);
     }
 
     // mark entrypoints
-    List<AbstractDescriptor> entryPoints = markEntryPoints( model, epf );
+    List<AbstractDescriptor> entryPoints = markEntryPoints(model, epf);
 
     // create edges
-    if ( model.isSimpleModelSet() ) {
-      analyzer.createDependencyEdges( model );
+    if (model.isSimpleModelSet()) {
+      analyzer.createDependencyEdges(model);
     } else {
-      analyzer.createEdges( model );
+      analyzer.createEdges(model);
     }
-    model.createEntryPointEdges( entryPoints );
+    model.createEntryPointEdges(entryPoints);
 
     final Shrinker shrinker = new Shrinker();
-    shrinker.shrink( model );
+    shrinker.shrink(model);
 
-    for ( ShrinkBag bag : pairs ) {
-      if ( ! bag.isEntryPointJar() ) {
-        ArchiveWriter writer = ( bag.getOut().isDirectory() ) ? new DirectoryWriter( createStubs ) : new JarWriter( createStubs, digests );
-        writer.write( model, bag );
+    for (ShrinkBag bag : pairs) {
+      if (!bag.isEntryPointJar()) {
+        ArchiveWriter writer = (bag.getOut().isDirectory()) ? new DirectoryWriter(createStubs) : new JarWriter(createStubs, digests);
+        writer.write(model, bag);
       }
     }
 
-    if ( !model.isAllResolved() ) {
-      Logger.warn( "Not all dependencies could be resolved. Please see the logfile for details." );
+    if (!model.isAllResolved()) {
+      Logger.warn("Not all dependencies could be resolved. Please see the logfile for details.");
     }
   }
 
@@ -139,69 +141,69 @@ public class YShrink {
                                                     final EntryPointFilter epFilter ) {
 
     StringBuilder buf = new StringBuilder();
-    buf.append( "<entrypoints>\n" );
+    buf.append("<entrypoints>\n");
 
     final List<AbstractDescriptor> entryPoints = new ArrayList<AbstractDescriptor>();
 
-    for ( ClassDescriptor cd : model.getAllClassDescriptors() ) {
+    for (ClassDescriptor cd : model.getAllClassDescriptors()) {
 
-      epFilter.setRetainAttribute( cd );
+      epFilter.setRetainAttribute(cd);
 
-      if ( epFilter.isEntryPointClass( model, cd ) ) {
-        buf.append( "\t<class name=\"" );
-        buf.append( Util.toJavaClass( cd.getName() ) );
-        buf.append( "\" />\n" );
-        entryPoints.add( cd );
-        cd.setEntryPoint( true );
-        model.markNotObsolete( cd.getNode() );
+      if (epFilter.isEntryPointClass(model, cd)) {
+        buf.append("\t<class name=\"");
+        buf.append(Util.toJavaClass(cd.getName()));
+        buf.append("\" />\n");
+        entryPoints.add(cd);
+        cd.setEntryPoint(true);
+        model.markNotObsolete(cd.getNode());
       }
-      for ( MethodDescriptor md : cd.getMethods() ) {
-        if ( epFilter.isEntryPointMethod( model, cd, md ) ) {
+      for (MethodDescriptor md : cd.getMethods()) {
+        if (epFilter.isEntryPointMethod(model, cd, md)) {
           buf.append(
-              "\t<method signature=\"" );
-          buf.append( XmlLogger.replaceSpecialChars( md.getSignature() ) );
-          buf.append( "\" class=\"" );
-          buf.append( Util.toJavaClass(
-              cd.getName() ) );
-          buf.append( "\" />\n" );
+                  "\t<method signature=\"");
+          buf.append(XmlLogger.replaceSpecialChars(md.getSignature()));
+          buf.append("\" class=\"");
+          buf.append(Util.toJavaClass(
+                  cd.getName()));
+          buf.append("\" />\n");
 
-          entryPoints.add( md );
-          md.setEntryPoint( true );
+          entryPoints.add(md);
+          md.setEntryPoint(true);
 
-          if ( md.getName().equals( Model.CONSTRUCTOR_NAME ) ) {
-            AbstractDescriptor newNodeDesc = model.getDescriptor( cd.getNewNode() );
-            if ( ! newNodeDesc.isEntryPoint() ) {
-              newNodeDesc.setEntryPoint( true );
-              entryPoints.add( newNodeDesc );
+          if (md.getName().equals(Model.CONSTRUCTOR_NAME)) {
+            AbstractDescriptor newNodeDesc = model.getDescriptor(cd.getNewNode());
+            if (!newNodeDesc.isEntryPoint()) {
+              newNodeDesc.setEntryPoint(true);
+              entryPoints.add(newNodeDesc);
             }
           }
         }
       }
-      for ( FieldDescriptor fd : cd.getFields() ) {
-        if ( epFilter.isEntryPointField( model, cd, fd ) ) {
-          buf.append( "\t<field name=\"" );
-          buf.append( Util.toJavaClass( fd.getName() ) );
-          buf.append( "\" class=\"" );
-          buf.append( Util.toJavaClass( cd.getName() ) );
-          buf.append( "\" />\n" );
-          entryPoints.add( fd );
-          fd.setEntryPoint( true );
+      for (FieldDescriptor fd : cd.getFields()) {
+        if (epFilter.isEntryPointField(model, cd, fd)) {
+          buf.append("\t<field name=\"");
+          buf.append(Util.toJavaClass(fd.getName()));
+          buf.append("\" class=\"");
+          buf.append(Util.toJavaClass(cd.getName()));
+          buf.append("\" />\n");
+          entryPoints.add(fd);
+          fd.setEntryPoint(true);
         }
       }
     }
 
-    buf.append( "</entrypoints>\n" );
-    Logger.shrinkLog( buf.toString() );
+    buf.append("</entrypoints>\n");
+    Logger.shrinkLog(buf.toString());
 
     return entryPoints;
   }
 
-    /**
-     * Main.
-     *
-     * @param args the args
-     */
-    public static void main( final String[] args ) {
+  /**
+   * Main.
+   *
+   * @param args the args
+   */
+  public static void main( final String[] args ) {
 
     new ConsoleLogger();
 
@@ -212,38 +214,38 @@ public class YShrink {
       File in = null;
       File out = null;
 
-      if ( args.length > 0 ) {
-        in = new File( args[ 0 ] );
+      if (args.length > 0) {
+        in = new File(args[0]);
       }
 
-      if ( null == in ) {
-        in = new File( ClassLoader.getSystemResource( "yshrink.jar" ).getFile() );
+      if (null == in) {
+        in = new File(ClassLoader.getSystemResource("yshrink.jar").getFile());
       }
 
-      if ( args.length > 1 ) {
-        out = new File( args[ 1 ] );
+      if (args.length > 1) {
+        out = new File(args[1]);
       }
 
-      if ( null == out ) {
-        out = new File( System.getProperty( "user.dir" ) + "/out.jar" );
+      if (null == out) {
+        out = new File(System.getProperty("user.dir") + "/out.jar");
       }
 
-      if ( args.length > 2 ) {
-        showGraph = Boolean.parseBoolean( args[ 2 ] );
+      if (args.length > 2) {
+        showGraph = Boolean.parseBoolean(args[2]);
       }
 
       final URL[] externalLibs = new URL[]{
-          //ClassLoader.getSystemResource( "asm-2.2.2.jar" ),
-          //ClassLoader.getSystemResource( "y.jar" ),
-          ClassLoader.getSystemResource( "external.jar" )
+              //ClassLoader.getSystemResource( "asm-2.2.2.jar" ),
+              //ClassLoader.getSystemResource( "y.jar" ),
+              ClassLoader.getSystemResource("external.jar")
       };
 
       final YShrink yshrink = new YShrink();
 
       final EntryPointFilter epf = new AllMainMethodsFilter();
 
-    } catch ( Exception e ) {
-      Logger.err( "An Exception occured.", e );
+    } catch (Exception e) {
+      Logger.err("An Exception occured.", e);
     }
   }
 }

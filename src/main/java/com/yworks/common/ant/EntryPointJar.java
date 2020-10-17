@@ -24,12 +24,12 @@ public class EntryPointJar implements ShrinkBag {
    *
    * @param fileName the file name
    */
-  public void setName(File fileName) {
+  public void setName( File fileName ) {
     inFile = fileName;
   }
 
   public void setOut( File file ) {
-    throw new BuildException( "You can't set an outfile on an EntryPointJar." );
+    throw new BuildException("You can't set an outfile on an EntryPointJar.");
   }
 
   public File getIn() {
@@ -45,7 +45,7 @@ public class EntryPointJar implements ShrinkBag {
   }
 
   public void setResources( String resourcesStr ) {
-    throw new BuildException( "You can't set resources on an EntryPointJar." );
+    throw new BuildException("You can't set resources on an EntryPointJar.");
   }
 
   public ResourcePolicy getResources() {

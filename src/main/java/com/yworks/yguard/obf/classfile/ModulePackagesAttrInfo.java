@@ -20,13 +20,13 @@ public class ModulePackagesAttrInfo extends AttrInfo {
   // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Module packages attr info.
-     *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
-     */
+  /**
+   * Instantiates a new Module packages attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
 // Instance Methods ------------------------------------------------------
   ModulePackagesAttrInfo(
           final ClassFile cf, final int attrNameIndex, final int attrLength

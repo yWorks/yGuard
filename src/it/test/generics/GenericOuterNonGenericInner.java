@@ -10,25 +10,25 @@ import java.util.List;
  */
 public class GenericOuterNonGenericInner<T extends List<BlaClass.Inner<String>>> {
 
-    /**
-     * Foo.
-     *
-     * @param b the b
-     * @param c the c
-     */
-    public void foo( Inner b, Inner.InnerInner c ) {
-    System.out.println("bla: "+b);
+  /**
+   * Foo.
+   *
+   * @param b the b
+   * @param c the c
+   */
+  public void foo( Inner b, Inner.InnerInner c ) {
+    System.out.println("bla: " + b);
   }
 
-    /**
-     * The type Inner.
-     */
-    public class Inner {
+  /**
+   * The type Inner.
+   */
+  public class Inner {
 
-        /**
-         * The type Inner inner.
-         */
-        public class InnerInner {
+    /**
+     * The type Inner inner.
+     */
+    public class InnerInner {
 
     }
 

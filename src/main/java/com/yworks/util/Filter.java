@@ -11,13 +11,12 @@ package com.yworks.util;
  *
  * @author Sebastian Mueller, yWorks GmbH http://www.yworks.com
  */
-public interface Filter
-{
-    /**
-     * Accepts boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
-    boolean accepts(Object o);
+public interface Filter {
+  /**
+   * Accepts boolean.
+   *
+   * @param o the o
+   * @return the boolean
+   */
+  boolean accepts( Object o );
 }

@@ -10,52 +10,52 @@ import java.io.IOException;
  */
 public interface StreamProvider {
 
-    /**
-     * Gets next class entry stream.
-     *
-     * @return the next class entry stream
-     * @throws IOException the io exception
-     */
-    DataInputStream getNextClassEntryStream() throws IOException;
+  /**
+   * Gets next class entry stream.
+   *
+   * @return the next class entry stream
+   * @throws IOException the io exception
+   */
+  DataInputStream getNextClassEntryStream() throws IOException;
 
-    /**
-     * Gets next resource entry stream.
-     *
-     * @return the next resource entry stream
-     * @throws IOException the io exception
-     */
-    DataInputStream getNextResourceEntryStream() throws IOException;
+  /**
+   * Gets next resource entry stream.
+   *
+   * @return the next resource entry stream
+   * @throws IOException the io exception
+   */
+  DataInputStream getNextResourceEntryStream() throws IOException;
 
-    /**
-     * Gets current entry.
-     *
-     * @return the current entry
-     */
-    Entry getCurrentEntry();
+  /**
+   * Gets current entry.
+   *
+   * @return the current entry
+   */
+  Entry getCurrentEntry();
 
-    /**
-     * Gets current entry name.
-     *
-     * @return the current entry name
-     */
-    String getCurrentEntryName();
+  /**
+   * Gets current entry name.
+   *
+   * @return the current entry name
+   */
+  String getCurrentEntryName();
 
-    /**
-     * Gets current dir.
-     *
-     * @return the current dir
-     */
-    String getCurrentDir();
+  /**
+   * Gets current dir.
+   *
+   * @return the current dir
+   */
+  String getCurrentDir();
 
-    /**
-     * Gets current filename.
-     *
-     * @return the current filename
-     */
-    String getCurrentFilename();
+  /**
+   * Gets current filename.
+   *
+   * @return the current filename
+   */
+  String getCurrentFilename();
 
-    /**
-     * Reset.
-     */
-    void reset();
+  /**
+   * Reset.
+   */
+  void reset();
 }

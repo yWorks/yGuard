@@ -1,8 +1,7 @@
 /**
  * YGuard -- an obfuscation library for Java(TM) classfiles.
- *
+ * <p>
  * Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
- *
  */
 package com.yworks.yguard.obf;
 
@@ -11,13 +10,13 @@ package com.yworks.yguard.obf;
  *
  * @author Sebastian Mueller, yWorks GmbH http://www.yworks.com
  */
-public interface Filter
-{
-    /**
-     * Accepts boolean.
-     *
-     * @param o the o
-     * @return the boolean
-     */
-    boolean accepts(Object o);
+public interface Filter {
+  /**
+   * Accepts boolean.
+   *
+   *
+   *@param o the o
+   * @return the boolean
+   */
+  boolean accepts( Object o );
 }

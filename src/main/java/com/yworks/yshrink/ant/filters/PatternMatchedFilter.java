@@ -13,44 +13,44 @@ import org.apache.tools.ant.types.selectors.SelectorUtils;
  */
 public class PatternMatchedFilter extends AbstractEntryPointFilter {
 
-  private Project project;
+  private final Project project;
 
-    /**
-     * Instantiates a new Pattern matched filter.
-     *
-     * @param p the p
-     */
-    public PatternMatchedFilter( final Project p ) {
+  /**
+   * Instantiates a new Pattern matched filter.
+   *
+   * @param p the p
+   */
+  public PatternMatchedFilter( final Project p ) {
     project = p;
   }
 
-    /**
-     * Match boolean.
-     *
-     * @param type    the type
-     * @param str     the str
-     * @param section the section
-     * @return the boolean
-     */
-    protected boolean match( TypePatternSet.Type type, String str, PatternMatchedSection section ) {
+  /**
+   * Match boolean.
+   *
+   * @param type    the type
+   * @param str     the str
+   * @param section the section
+   * @return the boolean
+   */
+  protected boolean match( TypePatternSet.Type type, String str, PatternMatchedSection section ) {
 
-    PatternSet patternSet = section.getPatternSet( type );
+    PatternSet patternSet = section.getPatternSet(type);
 
-    if ( patternSet != null ) {
+    if (patternSet != null) {
 
-      String[] excludePatterns = patternSet.getExcludePatterns( project );
-      if ( null != excludePatterns ) {
-        for ( String excludePattern : excludePatterns ) {
-          if ( SelectorUtils.match( excludePattern, str ) ) {
+      String[] excludePatterns = patternSet.getExcludePatterns(project);
+      if (null != excludePatterns) {
+        for (String excludePattern : excludePatterns) {
+          if (SelectorUtils.match(excludePattern, str)) {
             return false;
           }
         }
       }
 
-      String[] includePatterns = patternSet.getIncludePatterns( project );
-      if ( null != includePatterns ) {
-        for ( String includePattern : includePatterns ) {
-          if ( SelectorUtils.match( includePattern, str ) ) {
+      String[] includePatterns = patternSet.getIncludePatterns(project);
+      if (null != includePatterns) {
+        for (String includePattern : includePatterns) {
+          if (SelectorUtils.match(includePattern, str)) {
             return true;
           }
         }

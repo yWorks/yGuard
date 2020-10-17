@@ -23,22 +23,22 @@ import java.io.File;
  */
 public class YShrinkInvokerImpl implements YShrinkInvoker {
 
-    /**
-     * The Shrink task.
-     */
-    final ShrinkTask shrinkTask;
+  /**
+   * The Shrink task.
+   */
+  final ShrinkTask shrinkTask;
 
-    /**
-     * The Eps.
-     */
-    EntryPointsSection eps;
+  /**
+   * The Eps.
+   */
+  EntryPointsSection eps;
 
-    /**
-     * Instantiates a new Y shrink invoker.
-     */
-    public YShrinkInvokerImpl() {
+  /**
+   * Instantiates a new Y shrink invoker.
+   */
+  public YShrinkInvokerImpl() {
     shrinkTask = new ShrinkTask();
-    eps = new EntryPointsSection( shrinkTask );
+    eps = new EntryPointsSection(shrinkTask);
   }
 
   public void setEntyPoints( EntryPointsSection eps ) {
@@ -46,10 +46,10 @@ public class YShrinkInvokerImpl implements YShrinkInvoker {
   }
 
   public void setLogFile( File shrinkLog ) {
-    shrinkTask.setLogFile( shrinkLog );
+    shrinkTask.setLogFile(shrinkLog);
   }
 
-  public void setContext(Task task) {
+  public void setContext( Task task ) {
     shrinkTask.setProject(task.getProject());
     shrinkTask.setOwningTarget(task.getOwningTarget());
     shrinkTask.setTaskName(task.getTaskName());
@@ -59,73 +59,73 @@ public class YShrinkInvokerImpl implements YShrinkInvoker {
   }
 
   public void execute() {
-    shrinkTask.setEntryPointsExternally( eps );
+    shrinkTask.setEntryPointsExternally(eps);
     shrinkTask.execute();
   }
 
   public void addPair( ShrinkBag pair ) {
-    shrinkTask.addConfiguredInOutPair( pair );
+    shrinkTask.addConfiguredInOutPair(pair);
   }
 
   public void setResourceClassPath( Path path ) {
-    shrinkTask.setResourceClassPath( path );
+    shrinkTask.setResourceClassPath(path);
   }
 
   public void addClassSection( com.yworks.yguard.ant.ClassSection cs ) {
 
     ClassSection yShrinkCS = new ClassSection();
 
-    addPatternSets( cs, yShrinkCS, "name" );
+    addPatternSets(cs, yShrinkCS, "name");
 
-    yShrinkCS.setClasses( YShrinkInvokerImpl.convertAccess( cs.getClassMode() ).name() );
-    yShrinkCS.setFields( YShrinkInvokerImpl.convertAccess( cs.getFieldMode() ).name() );
-    yShrinkCS.setMethods( YShrinkInvokerImpl.convertAccess( cs.getMethodMode() ).name() );
+    yShrinkCS.setClasses(YShrinkInvokerImpl.convertAccess(cs.getClassMode()).name());
+    yShrinkCS.setFields(YShrinkInvokerImpl.convertAccess(cs.getFieldMode()).name());
+    yShrinkCS.setMethods(YShrinkInvokerImpl.convertAccess(cs.getMethodMode()).name());
 
-    if ( null != cs.getName() ) {
-      yShrinkCS.setName( cs.getName() );
+    if (null != cs.getName()) {
+      yShrinkCS.setName(cs.getName());
     }
-    eps.addConfiguredClass( yShrinkCS );
+    eps.addConfiguredClass(yShrinkCS);
   }
 
   public void addMethodSection( com.yworks.yguard.ant.MethodSection ms ) {
 
     MethodSection yShrinkMS = new MethodSection();
 
-    addPatternSets( ms, yShrinkMS, "class" );
+    addPatternSets(ms, yShrinkMS, "class");
 
-    yShrinkMS.setName( ms.getName() );
-    yShrinkMS.setClass( ms.getClassName() );
+    yShrinkMS.setName(ms.getName());
+    yShrinkMS.setClass(ms.getClassName());
 
-    eps.addConfiguredMethod( yShrinkMS );
+    eps.addConfiguredMethod(yShrinkMS);
   }
 
   public void addFieldSection( com.yworks.yguard.ant.FieldSection fs ) {
 
     FieldSection yShrinkFS = new FieldSection();
 
-    addPatternSets( fs, yShrinkFS, "class" );
+    addPatternSets(fs, yShrinkFS, "class");
 
-    yShrinkFS.setName( fs.getName() );
-    yShrinkFS.setClass( fs.getClassName() );
+    yShrinkFS.setName(fs.getName());
+    yShrinkFS.setClass(fs.getClassName());
 
-    eps.addConfiguredField( yShrinkFS );
+    eps.addConfiguredField(yShrinkFS);
   }
 
   private void addPatternSets( PatternMatchedClassesSection yGuardSection,
                                com.yworks.common.ant.PatternMatchedSection yShrinkSection, String type ) {
-    if ( null != yGuardSection.getPatternSets() ) {
-      for ( PatternSet ps : (Iterable<? extends PatternSet>) yGuardSection.getPatternSets() ) {
+    if (null != yGuardSection.getPatternSets()) {
+      for (PatternSet ps : (Iterable<? extends PatternSet>) yGuardSection.getPatternSets()) {
         TypePatternSet tps = new TypePatternSet();
-        tps.append( ps, shrinkTask.getProject() );
-        tps.setType( type );
-        yShrinkSection.addPatternSet( tps, tps.getType() );
+        tps.append(ps, shrinkTask.getProject());
+        tps.setType(type);
+        yShrinkSection.addPatternSet(tps, tps.getType());
       }
     }
   }
 
   private static PatternMatchedSection.Access convertAccess( int yGuardAccess ) {
 
-    switch ( yGuardAccess ) {
+    switch (yGuardAccess) {
       case YGuardRule.LEVEL_PRIVATE:
         return PatternMatchedSection.Access.PRIVATE;
       case YGuardRule.LEVEL_FRIENDLY:

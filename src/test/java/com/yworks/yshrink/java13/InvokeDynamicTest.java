@@ -23,16 +23,16 @@ import static org.junit.Assert.assertEquals;
  * The type Invoke dynamic test.
  */
 public class InvokeDynamicTest {
-    /**
-     * The Name.
-     */
-    @Rule
+  /**
+   * The Name.
+   */
+  @Rule
   public TestName name = new TestName();
 
-    /**
-     * String concat factory test.
-     */
-    @Test
+  /**
+   * String concat factory test.
+   */
+  @Test
   public void StringConcatFactoryTest() {
     // StringConcatFactory bootstrap methods are used only in Java 8 and newer
     final String testTypeName = "com.yworks.yshrink.java13.StringConcatFactoryTest";
@@ -68,7 +68,7 @@ public class InvokeDynamicTest {
       final ByteArrayOutputStream output = new ByteArrayOutputStream();
       final ClassLoader cl = URLClassLoader.newInstance(new URL[]{outTmp.toURI().toURL()});
       final Class shrinkedType = Class.forName("com.yworks.yshrink.java13.StringConcatFactoryTest", true, cl);
-      final Method run =  shrinkedType.getMethod("run", PrintStream.class);
+      final Method run = shrinkedType.getMethod("run", PrintStream.class);
       run.invoke(null, new PrintStream(output));
 
       //   check test method output
@@ -85,10 +85,10 @@ public class InvokeDynamicTest {
     }
   }
 
-    /**
-     * Lambda meta factory test.
-     */
-    @Test
+  /**
+   * Lambda meta factory test.
+   */
+  @Test
   public void LambdaMetaFactoryTest() {
     // LambdaMetaFactory bootstrap methods are used only in Java 8 and newer
     final String testTypeName = "com.yworks.yshrink.java13.LambdaMetaFactoryTest";
@@ -124,7 +124,7 @@ public class InvokeDynamicTest {
       final ByteArrayOutputStream output = new ByteArrayOutputStream();
       final ClassLoader cl = URLClassLoader.newInstance(new URL[]{outTmp.toURI().toURL()});
       final Class shrinkedType = Class.forName("com.yworks.yshrink.java13.LambdaMetaFactoryTest", true, cl);
-      final Method run =  shrinkedType.getMethod("run", PrintStream.class);
+      final Method run = shrinkedType.getMethod("run", PrintStream.class);
       run.invoke(null, new PrintStream(output));
 
       //   check test method output

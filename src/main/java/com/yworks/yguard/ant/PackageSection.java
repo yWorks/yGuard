@@ -22,48 +22,48 @@ import java.util.Set;
 public final class PackageSection implements Mappable {
   private String name;
   private String mapTo;
-    /**
-     * The Pattern sets.
-     */
-    protected List patternSets = new ArrayList(5);
+  /**
+   * The Pattern sets.
+   */
+  protected List patternSets = new ArrayList(5);
 
-    /**
-     * The Allow match all pattern set.
-     */
-    protected boolean allowMatchAllPatternSet = false;
+  /**
+   * The Allow match all pattern set.
+   */
+  protected boolean allowMatchAllPatternSet = false;
 
-    /**
-     * Add configured pattern set.
-     *
-     * @param ps the ps
-     */
-    public void addConfiguredPatternSet(PatternSet ps) {
+  /**
+   * Add configured pattern set.
+   *
+   * @param ps the ps
+   */
+  public void addConfiguredPatternSet( PatternSet ps ) {
     patternSets.add(ps);
   }
 
-    /**
-     * Sets name.
-     *
-     * @param name the name
-     */
-    public void setName(String name) {
+  /**
+   * Sets name.
+   *
+   * @param name the name
+   */
+  public void setName( String name ) {
     this.name = name;
   }
 
-    /**
-     * Add entries.
-     *
-     * @param entries the entries
-     * @param zf      the zf
-     * @throws IOException the io exception
-     */
-    public void addEntries(Collection entries, ZipFileSet zf) throws IOException {
+  /**
+   * Add entries.
+   *
+   * @param entries the entries
+   * @param zf      the zf
+   * @throws IOException the io exception
+   */
+  public void addEntries( Collection entries, ZipFileSet zf ) throws IOException {
     Project project = zf.getProject();
     Set packages = new HashSet();
     if (name != null) {
       packages.add(ObfuscatorTask.toNativeClass(name));
     }
-    for (Iterator it = patternSets.iterator(); it.hasNext();) {
+    for (Iterator it = patternSets.iterator(); it.hasNext(); ) {
       PatternSet ps = (PatternSet) it.next();
       DirectoryScanner scanner = zf.getDirectoryScanner(project);
       scanner.setIncludes(ObfuscatorTask.toNativePattern(ps.getIncludePatterns(project)));
@@ -93,23 +93,23 @@ public final class PackageSection implements Mappable {
       }
     }
 
-    for (Iterator iterator = packages.iterator(); iterator.hasNext();) {
+    for (Iterator iterator = packages.iterator(); iterator.hasNext(); ) {
       String pack = (String) iterator.next();
       YGuardRule rule = new YGuardRule(YGuardRule.TYPE_PACKAGE, pack);
       entries.add(rule);
     }
   }
 
-    /**
-     * Sets map.
-     *
-     * @param mapTo the map to
-     */
-    public void setMap(String mapTo) {
+  /**
+   * Sets map.
+   *
+   * @param mapTo the map to
+   */
+  public void setMap( String mapTo ) {
     this.mapTo = mapTo;
   }
 
-  public void addMapEntries(Collection entries) {
+  public void addMapEntries( Collection entries ) {
     YGuardRule entry = new YGuardRule(YGuardRule.TYPE_PACKAGE_MAP, ObfuscatorTask.toNativeClass(name));
     entry.obfName = ObfuscatorTask.toNativeClass(mapTo);
     entries.add(entry);

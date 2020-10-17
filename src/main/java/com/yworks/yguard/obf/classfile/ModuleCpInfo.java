@@ -6,10 +6,10 @@ package com.yworks.yguard.obf.classfile;
  * @author Thomas Behr
  */
 public class ModuleCpInfo extends AbstractTypeCpInfo {
-    /**
-     * Instantiates a new Module cp info.
-     */
-    protected ModuleCpInfo() {
+  /**
+   * Instantiates a new Module cp info.
+   */
+  protected ModuleCpInfo() {
     super(CONSTANT_Module);
   }
 }

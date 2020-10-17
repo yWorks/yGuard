@@ -38,7 +38,7 @@ import java.util.jar.Manifest;
  */
 public class JarWriter implements ArchiveWriter {
 
-  private Set<String> directoriesWritten = new HashSet<String>();
+  private final Set<String> directoriesWritten = new HashSet<String>();
   private FileOutputStream fos;
   private JarOutputStream jos;
   private Manifest manifest;
@@ -50,40 +50,40 @@ public class JarWriter implements ArchiveWriter {
   private final boolean createStubs;
   private final MessageDigest[] digests;
 
-    /**
-     * Instantiates a new Jar writer.
-     *
-     * @param createStubs    the create stubs
-     * @param digestNamesStr the digest names str
-     */
-    public JarWriter( boolean createStubs, String digestNamesStr ) {
+  /**
+   * Instantiates a new Jar writer.
+   *
+   * @param createStubs    the create stubs
+   * @param digestNamesStr the digest names str
+   */
+  public JarWriter( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
 
-    String[] digestNames = ( digestNamesStr.trim().equalsIgnoreCase(
-        "none" ) ) ? new String[ 0 ] : digestNamesStr.split( "," );
+    String[] digestNames = (digestNamesStr.trim().equalsIgnoreCase(
+            "none")) ? new String[0] : digestNamesStr.split(",");
 
-    for ( int i = 0; i < digestNames.length; i++ ) {
-      digestNames[ i ] = digestNames[ i ].trim();
+    for (int i = 0; i < digestNames.length; i++) {
+      digestNames[i] = digestNames[i].trim();
     }
 
-    digests = new MessageDigest[ digestNames.length ];
+    digests = new MessageDigest[digestNames.length];
 
-    for ( int i = digestNames.length - 1; i >= 0; i-- ) {
+    for (int i = digestNames.length - 1; i >= 0; i--) {
       try {
-        digests[ i ] = MessageDigest.getInstance( digestNames[ i ] );
-      } catch ( NoSuchAlgorithmException e ) {
-        Logger.err( "Unknwon digest algorithm: " + digestNames[ i ] );
-        digests[ i ] = null;
+        digests[i] = MessageDigest.getInstance(digestNames[i]);
+      } catch (NoSuchAlgorithmException e) {
+        Logger.err("Unknwon digest algorithm: " + digestNames[i]);
+        digests[i] = null;
       }
     }
   }
 
-    /**
-     * Get digests message digest [ ].
-     *
-     * @return the message digest [ ]
-     */
-    public MessageDigest[] getDigests() {
+  /**
+   * Get digests message digest [ ].
+   *
+   * @return the message digest [ ]
+   */
+  public MessageDigest[] getDigests() {
     return digests;
   }
 
@@ -94,7 +94,7 @@ public class JarWriter implements ArchiveWriter {
     if (null != oldEntryAttributes) {
       Set<Object> keys = oldEntryAttributes.keySet();
       for (Object key : keys) {
-        if (((Attributes.Name) key).toString().indexOf("Digest") == -1) {
+        if (key.toString().indexOf("Digest") == -1) {
           newEntryAttributes.put(key, oldEntryAttributes.get(key));
         }
       }
@@ -185,9 +185,9 @@ public class JarWriter implements ArchiveWriter {
     File in = bag.getIn();
     File out = bag.getOut();
 
-    Logger.log( "writing shrinked " + in + " to " + out + "." );
+    Logger.log("writing shrinked " + in + " to " + out + ".");
 
-    Logger.shrinkLog( "<inOutPair in=\"" + in + "\" out=\"" + out + "\">" );
+    Logger.shrinkLog("<inOutPair in=\"" + in + "\" out=\"" + out + "\">");
 
     long inLength = in.length();
 
@@ -196,9 +196,11 @@ public class JarWriter implements ArchiveWriter {
     StreamProvider jarStreamProvider = (in.isDirectory()) ? new DirectoryStreamProvider(in) : new JarStreamProvider(in);
     DataInputStream stream = jarStreamProvider.getNextClassEntryStream();
 
-    if ( !out.exists() ) out.createNewFile();
+    if (!out.exists()) {
+      out.createNewFile();
+    }
 
-    manifest = ( inJar.getManifest() != null) ? new Manifest( inJar.getManifest() ) : new Manifest();
+    manifest = (inJar.getManifest() != null) ? new Manifest(inJar.getManifest()) : new Manifest();
     fos = new FileOutputStream(out);
     jos = new JarOutputStream(new BufferedOutputStream(fos));
 
@@ -208,23 +210,23 @@ public class JarWriter implements ArchiveWriter {
     int numObsoleteFields = 0;
     int numRemovedResources = 0;
 
-    Set<String> nonEmptyDirs = new HashSet<String>( 5 );
+    Set<String> nonEmptyDirs = new HashSet<String>(5);
 
-    Logger.shrinkLog( "\t<removed-code>" );
+    Logger.shrinkLog("\t<removed-code>");
 
-    while ( stream != null ) {
+    while (stream != null) {
 
       String entryName = jarStreamProvider.getCurrentEntryName();
 
       numClasses++;
 
       ClassDescriptor cd = model.getClassDescriptor(
-          entryName.substring( 0, entryName.lastIndexOf( ".class" ) ) );
-      boolean obsolete = model.isObsolete( cd.getNode() );
+              entryName.substring(0, entryName.lastIndexOf(".class")));
+      boolean obsolete = model.isObsolete(cd.getNode());
 
-      if ( !obsolete ) {
+      if (!obsolete) {
 
-        nonEmptyDirs.add( jarStreamProvider.getCurrentDir() );
+        nonEmptyDirs.add(jarStreamProvider.getCurrentDir());
 
         // asm 3.x
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -232,11 +234,11 @@ public class JarWriter implements ArchiveWriter {
         // asm 2.x
         // ClassWriter cw = new ClassWriter(true);
 
-        OutputVisitor outputVisitor = new OutputVisitor( cw, model, createStubs );
-        ClassReader cr = new ClassReader( stream );
+        OutputVisitor outputVisitor = new OutputVisitor(cw, model, createStubs);
+        ClassReader cr = new ClassReader(stream);
 
         // asm 3.x
-        cr.accept( outputVisitor,0);
+        cr.accept(outputVisitor, 0);
 
         // asm 2.x
         // cr.accept( outputVisitor,false);
@@ -245,78 +247,78 @@ public class JarWriter implements ArchiveWriter {
         numObsoleteFields += outputVisitor.getNumObsoleteFields();
 
         byte[] modifiedClass = cw.toByteArray();
-        addEntry( entryName, modifiedClass );
+        addEntry(entryName, modifiedClass);
       } else {
-        manifest.getEntries().remove( entryName );
+        manifest.getEntries().remove(entryName);
         numObsoleteClasses++;
-        Logger.shrinkLog( "\t\t<class name=\"" + Util.toJavaClass( entryName ) + "\" />" );
+        Logger.shrinkLog("\t\t<class name=\"" + Util.toJavaClass(entryName) + "\" />");
       }
 
       stream = jarStreamProvider.getNextClassEntryStream();
     }
 
-    Logger.shrinkLog( "\t</removed-code>" );
-    Logger.shrinkLog( "\t<removed-resources>" );
+    Logger.shrinkLog("\t</removed-code>");
+    Logger.shrinkLog("\t<removed-resources>");
 
     ResourcePolicy resourcePolicy = bag.getResources();
 
-    if ( ! resourcePolicy.equals( ResourcePolicy.NONE ) ) {
+    if (!resourcePolicy.equals(ResourcePolicy.NONE)) {
 
       jarStreamProvider.reset();
       stream = jarStreamProvider.getNextResourceEntryStream();
 
-      while ( stream != null ) {
+      while (stream != null) {
         String entryName = jarStreamProvider.getCurrentEntryName();
 
-        if ( ! resourcePolicy.equals( ResourcePolicy.NONE )
+        if (!resourcePolicy.equals(ResourcePolicy.NONE)
             &&
             (
-                resourcePolicy.equals( ResourcePolicy.COPY )
+                    resourcePolicy.equals(ResourcePolicy.COPY)
                     ||
-                    ( resourcePolicy.equals( ResourcePolicy.AUTO ) &&
-                        nonEmptyDirs.contains( jarStreamProvider.getCurrentDir() ) ) ) ) {
+                    (resourcePolicy.equals(ResourcePolicy.AUTO) &&
+                     nonEmptyDirs.contains(jarStreamProvider.getCurrentDir())))) {
 
-          copyResource( entryName, jarStreamProvider, stream );
+          copyResource(entryName, jarStreamProvider, stream);
         } else {
           numRemovedResources++;
           Logger.shrinkLog(
-              "\t<resource dir=\"" + jarStreamProvider.getCurrentDir() + "\" name=\"" + jarStreamProvider.getCurrentFilename() + "\" />" );
+                  "\t<resource dir=\"" + jarStreamProvider.getCurrentDir() + "\" name=\"" + jarStreamProvider.getCurrentFilename() + "\" />");
         }
 
         stream = jarStreamProvider.getNextResourceEntryStream();
       }
     }
 
-    Logger.shrinkLog( "\t</removed-resources>" );
+    Logger.shrinkLog("\t</removed-resources>");
 
     close();
 
     long outLength = out.length();
 
     NumberFormat nf = NumberFormat.getPercentInstance();
-    nf.setMinimumFractionDigits( 2 );
-    String percent = nf.format( 1 - ( (double) outLength / (double) inLength ) );
+    nf.setMinimumFractionDigits(2);
+    String percent = nf.format(1 - ((double) outLength / (double) inLength));
 
-    Logger.log( "\tshrinked " + in + " BY " + percent + "." );
-    Logger.log( "\tsize before: " + inLength / 1024 + " KB, size after: " + outLength / 1024 + " KB." );
+    Logger.log("\tshrinked " + in + " BY " + percent + ".");
+    Logger.log("\tsize before: " + inLength / 1024 + " KB, size after: " + outLength / 1024 + " KB.");
     Logger.log(
-        "\tremoved " + numObsoleteClasses + " classes, " + numObsoleteMethods + " methods, " + numObsoleteFields + " fields, " + numRemovedResources + " resources." );
-    Logger.log( "\t" + ( numClasses - numObsoleteClasses ) + " classes remaining of " + numClasses + " total." );
+            "\tremoved " + numObsoleteClasses + " classes, " + numObsoleteMethods + " methods, " + numObsoleteFields + " fields, " + numRemovedResources + " resources.");
+    Logger.log("\t" + (numClasses - numObsoleteClasses) + " classes remaining of " + numClasses + " total.");
 
-    Logger.shrinkLog( "</inOutPair>" );
+    Logger.shrinkLog("</inOutPair>");
   }
 
   private void copyResource( String entryName, StreamProvider jarStreamProvider, DataInputStream stream ) throws IOException {
 
     // don't copy manifest/signature files.
-    if ( ! entryName.equals( MANIFEST_FILENAME )
-        && ! ( entryName.endsWith( SIGNATURE_FILE_SUFFIX ) && entryName.startsWith( SIGNATURE_FILE_PREFIX ) ) ) {
+    if (!entryName.equals(MANIFEST_FILENAME)
+        && !(entryName.endsWith(SIGNATURE_FILE_SUFFIX) && entryName.startsWith(SIGNATURE_FILE_PREFIX))) {
 
       int entrySize = (int) jarStreamProvider.getCurrentEntry().getSize();
-      if ( -1 != entrySize ) {
-        byte[] data = new byte[ entrySize ];
-        stream.readFully( data );
-        addEntry( entryName, data );
+      if (-1 != entrySize) {
+        byte[] data = new byte[entrySize];
+        stream.readFully(data);
+        addEntry(entryName, data);
       }
     }
   }

@@ -15,23 +15,23 @@ import java.util.Collection;
  */
 public class SerializationFilter extends MethodFilter {
 
-    /**
-     * Instantiates a new Serialization filter.
-     *
-     * @param project the project
-     */
-    public SerializationFilter( Project project ) {
-    super( project );
+  /**
+   * Instantiates a new Serialization filter.
+   *
+   * @param project the project
+   */
+  public SerializationFilter( Project project ) {
+    super(project);
 
     MethodSection msWrite = new MethodSection();
-    msWrite.setSignature( "void writeObject(java.io.ObjectOutputStream)" );
-    msWrite.setAccess( "private" );
-    addMethodSection( msWrite );
+    msWrite.setSignature("void writeObject(java.io.ObjectOutputStream)");
+    msWrite.setAccess("private");
+    addMethodSection(msWrite);
 
     MethodSection msRead = new MethodSection();
-    msRead.setSignature( "void readObject(java.io.ObjectInputStream)" );
-    msRead.setAccess( "private" );
-    addMethodSection( msRead );
+    msRead.setSignature("void readObject(java.io.ObjectInputStream)");
+    msRead.setAccess("private");
+    addMethodSection(msRead);
 
   }
 
@@ -40,11 +40,11 @@ public class SerializationFilter extends MethodFilter {
 
     boolean r = false;
 
-    Collection<String> interfaces = cd.getAllImplementedInterfaces( model );
-    if ( interfaces.contains( "java/io/Serializable" ) ) {
+    Collection<String> interfaces = cd.getAllImplementedInterfaces(model);
+    if (interfaces.contains("java/io/Serializable")) {
       r = true;
     }
 
-    return r && super.isEntryPointMethod( model, cd, md );
+    return r && super.isEntryPointMethod(model, cd, md);
   }
 }

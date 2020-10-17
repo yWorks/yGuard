@@ -43,52 +43,52 @@ public class Analyzer {
   private static final String SYNTHETIC_DOT_CLASS_FIELD_START = "class$";
   private static final String CLASS_DESC = "Ljava/lang/Class;";
 
-    /**
-     * Create edges.
-     *
-     * @param model the model
-     */
-    public void createEdges( Model model ) {
-    createInheritanceEdges( model );
-    createDependencyEdges( model );
+  /**
+   * Create edges.
+   *
+   * @param model the model
+   */
+  public void createEdges( Model model ) {
+    createInheritanceEdges(model);
+    createDependencyEdges(model);
   }
 
-    /**
-     * Create all nodes needed for dependency analysis using a <code>ModelVisitor</code>. Also creates artificial
-     * &lt;clinit&gt; nodes for each (non-inner) class if not already present.
-     *
-     * @param model the model
-     * @param bags  the bags
-     * @throws IOException the io exception
-     */
-    public void initModel( Model model, List<ShrinkBag> bags ) throws IOException {
+  /**
+   * Create all nodes needed for dependency analysis using a <code>ModelVisitor</code>. Also creates artificial
+   * &lt;clinit&gt; nodes for each (non-inner) class if not already present.
+   *
+   * @param model the model
+   * @param bags  the bags
+   * @throws IOException the io exception
+   */
+  public void initModel( Model model, List<ShrinkBag> bags ) throws IOException {
 
-    for ( ShrinkBag bag : bags ) {
-      ModelVisitor mv = new ModelVisitor( model, bag.getIn() );
-      Logger.log( "parsing " + bag.getIn() );
-      visitAllClasses( mv, bag.getIn() );
+    for (ShrinkBag bag : bags) {
+      ModelVisitor mv = new ModelVisitor(model, bag.getIn());
+      Logger.log("parsing " + bag.getIn());
+      visitAllClasses(mv, bag.getIn());
     }
 
-    for ( ClassDescriptor cd : model.getAllClassDescriptors() ) {
+    for (ClassDescriptor cd : model.getAllClassDescriptors()) {
 
       // add static initializers if not present
-      MethodDescriptor clinit = cd.getMethod( "<clinit>", Model.VOID_DESC );
+      MethodDescriptor clinit = cd.getMethod("<clinit>", Model.VOID_DESC);
 
-      if ( ! cd.isInnerClass() ) {
+      if (!cd.isInnerClass()) {
 
-        if ( clinit == null ) {
-          clinit = model.newMethodDescriptor( cd, Opcodes.ACC_STATIC, "<clinit>", Model.VOID_DESC, null,
-              cd.getSourceJar() );
+        if (clinit == null) {
+          clinit = model.newMethodDescriptor(cd, Opcodes.ACC_STATIC, "<clinit>", Model.VOID_DESC, null,
+                                             cd.getSourceJar());
         }
 
       }
       if (null != clinit) {
         // make sure to create an edge to existing clinit methods, inner classes *can* contain static
         // initializers if created synthetically (e.g. enum tableswitch)
-        model.createDependencyEdge( cd, clinit, EdgeType.INVOKES );
+        model.createDependencyEdge(cd, clinit, EdgeType.INVOKES);
       }
 
-      createEnumEdges(model,cd);
+      createEnumEdges(model, cd);
 
     }
   }
@@ -105,11 +105,11 @@ public class Analyzer {
     final StreamProvider jarStreamProvider = (jarFile.isDirectory()) ? new DirectoryStreamProvider(jarFile) : new JarStreamProvider(jarFile);
     InputStream stream = jarStreamProvider.getNextClassEntryStream();
     ClassReader cr;
-    while ( stream != null ) {
-      cr = new ClassReader( stream );
+    while (stream != null) {
+      cr = new ClassReader(stream);
 
       // asm 3.1
-      cr.accept( v, 0 );
+      cr.accept(v, 0);
 
       // asm 2.2.2
       //cr.accept( v, false );
@@ -118,26 +118,26 @@ public class Analyzer {
     }
   }
 
-    /**
-     * create EXTENDS / IMPLEMENTS edges.
-     *
-     * @param model the model
-     */
-    public void createInheritanceEdges( final Model model ) {
+  /**
+   * create EXTENDS / IMPLEMENTS edges.
+   *
+   * @param model the model
+   */
+  public void createInheritanceEdges( final Model model ) {
 
-    for ( ClassDescriptor cm : model.getAllClassDescriptors() ) {
+    for (ClassDescriptor cm : model.getAllClassDescriptors()) {
 
       // EXTENDS
-      if ( model.isClassModeled( cm.getSuperName() ) ) {
-        final ClassDescriptor superDescriptor = model.getClassDescriptor( cm.getSuperName() );
-        model.createDependencyEdge( cm, superDescriptor, EdgeType.EXTENDS );
+      if (model.isClassModeled(cm.getSuperName())) {
+        final ClassDescriptor superDescriptor = model.getClassDescriptor(cm.getSuperName());
+        model.createDependencyEdge(cm, superDescriptor, EdgeType.EXTENDS);
       }
 
       // IMPLEMENTS
-      for ( String interfc : cm.getInterfaces() ) {
-        if ( model.isClassModeled( interfc ) ) {
-          final ClassDescriptor superDescriptor = model.getClassDescriptor( interfc );
-          model.createDependencyEdge( cm, superDescriptor, EdgeType.IMPLEMENTS );
+      for (String interfc : cm.getInterfaces()) {
+        if (model.isClassModeled(interfc)) {
+          final ClassDescriptor superDescriptor = model.getClassDescriptor(interfc);
+          model.createDependencyEdge(cm, superDescriptor, EdgeType.IMPLEMENTS);
         }
       }
     }
@@ -145,36 +145,36 @@ public class Analyzer {
     model.setSimpleModelSet();
   }
 
-    /**
-     * Create all kinds of dependency edges for the whole <code>model</code>.
-     *
-     * @param model the model
-     */
-    public void createDependencyEdges( final Model model ) {
+  /**
+   * Create all kinds of dependency edges for the whole <code>model</code>.
+   *
+   * @param model the model
+   */
+  public void createDependencyEdges( final Model model ) {
 
-    for ( ClassDescriptor cd : model.getAllClassDescriptors() ) {
+    for (ClassDescriptor cd : model.getAllClassDescriptors()) {
 
       createAnnotationEdges(cd, model);
 
-      model.createDependencyEdge( cd.getNewNode(), cd.getNode(), EdgeType.MEMBER_OF );
+      model.createDependencyEdge(cd.getNewNode(), cd.getNode(), EdgeType.MEMBER_OF);
 
-      createInnerClassEdges( model, cd );
-      createAssumeEdges( model, cd );
+      createInnerClassEdges(model, cd);
+      createAssumeEdges(model, cd);
 
-      for ( MethodDescriptor md : cd.getMethods() ) {
+      for (MethodDescriptor md : cd.getMethods()) {
 
         createAnnotationEdges(md, model);
 
-        model.createDependencyEdge( md, cd, EdgeType.MEMBER_OF );
+        model.createDependencyEdge(md, cd, EdgeType.MEMBER_OF);
 
-        createReferenceEdges( model, md );
-        createMethodSignatureEdges( model, md );
-        createInvokeEdges( model, cd, md );
-        createTypeInstructionEdges( model, md );
+        createReferenceEdges(model, md);
+        createMethodSignatureEdges(model, md);
+        createInvokeEdges(model, cd, md);
+        createTypeInstructionEdges(model, md);
       }
-      for ( FieldDescriptor fd : cd.getFields() ) {
+      for (FieldDescriptor fd : cd.getFields()) {
         createAnnotationEdges(fd, model);
-        model.createDependencyEdge( fd, cd, EdgeType.MEMBER_OF );
+        model.createDependencyEdge(fd, cd, EdgeType.MEMBER_OF);
 
         // resolve edge for field type
         // not required for verification, but obfuscator will complain if the type is not found.
@@ -188,7 +188,7 @@ public class Analyzer {
     }
   }
 
-  private void createAnnotationEdges(AbstractDescriptor cd, Model model) {
+  private void createAnnotationEdges( AbstractDescriptor cd, Model model ) {
     for (AnnotationUsage annotationUsage : cd.getAnnotations()) {
       if (model.isClassModeled(annotationUsage.getDescriptor())) {
         ClassDescriptor annotationClassDescriptor = model.getClassDescriptor(annotationUsage.getDescriptor());
@@ -215,28 +215,28 @@ public class Analyzer {
    * @param md
    */
   private void createTypeInstructionEdges( final Model model, final MethodDescriptor md ) {
-    for ( AbstractMap.SimpleEntry<Object, Object> typeInstruction : md.getTypeInstructions() ) {
+    for (AbstractMap.SimpleEntry<Object, Object> typeInstruction : md.getTypeInstructions()) {
       final int opcode = (Integer) typeInstruction.getKey();
       final String desc = (String) typeInstruction.getValue();
 
-      final String type = Util.getTypeNameFromDescriptor( desc );
+      final String type = Util.getTypeNameFromDescriptor(desc);
 
-      if ( opcode == Opcodes.ANEWARRAY
+      if (opcode == Opcodes.ANEWARRAY
           || opcode == Opcodes.MULTIANEWARRAY
           || opcode == Opcodes.INSTANCEOF
           || opcode == Opcodes.CHECKCAST
-          || opcode == Opcodes.LDC ) // .class, version >= 49.0
+          || opcode == Opcodes.LDC) // .class, version >= 49.0
       {
 
-        if ( model.isClassModeled( type ) ) {
-          ClassDescriptor cd = model.getClassDescriptor( type );
-          model.createDependencyEdge( md, cd, EdgeType.RESOLVE );
+        if (model.isClassModeled(type)) {
+          ClassDescriptor cd = model.getClassDescriptor(type);
+          model.createDependencyEdge(md, cd, EdgeType.RESOLVE);
         }
-      } else if ( opcode == Opcodes.NEW ) {
+      } else if (opcode == Opcodes.NEW) {
 
-        if ( model.isClassModeled( type ) ) {
-          ClassDescriptor targetClass = model.getClassDescriptor( type );
-          model.createDependencyEdge( md.getNode(), targetClass.getNewNode(), EdgeType.CREATES );
+        if (model.isClassModeled(type)) {
+          ClassDescriptor targetClass = model.getClassDescriptor(type);
+          model.createDependencyEdge(md.getNode(), targetClass.getNewNode(), EdgeType.CREATES);
         }
       }
     }
@@ -246,36 +246,36 @@ public class Analyzer {
 
 
     Set parents = new HashSet();
-    model.getAllAncestorClasses( cd.getName(), parents );
+    model.getAllAncestorClasses(cd.getName(), parents);
 
-    if( parents.contains("java/lang/Enum") ) {
+    if (parents.contains("java/lang/Enum")) {
 
       String enumName = cd.getName();
       Type enumType = Type.getType(Util.verboseToNativeType(enumName));
       Type stringType = Type.getType(Util.verboseToNativeType("java/lang/String"));
-      Type enumArray = Type.getType(Util.verboseToNativeType(enumName + "[]" ) );
+      Type enumArray = Type.getType(Util.verboseToNativeType(enumName + "[]"));
 
       Collection<MethodDescriptor> methods = cd.getMethods();
-      for( MethodDescriptor method : methods ) {
+      for (MethodDescriptor method : methods) {
         boolean isStatic = method.isStatic();
         Type retval = method.getReturnType();
         String name = method.getName();
         Type[] args = method.getArgumentTypes();
 
         // public static test.simple.EnumTest$FontType valueOf(java.lang.String);
-        if( isStatic
+        if (isStatic
             && retval.equals(enumType)
             && "valueOf".equals(name)
             && args.length == 1
             && args[0].equals(stringType)) {
-          model.createDependencyEdge( cd,  method, EdgeType.INVOKES );
+          model.createDependencyEdge(cd, method, EdgeType.INVOKES);
         } else
-           // public static test.simple.EnumTest$FontType[] values();
-          if( isStatic &&
+          // public static test.simple.EnumTest$FontType[] values();
+          if (isStatic &&
               args.length == 0 &&
               "values".equals(name) &&
-              retval.equals(enumArray) ) {
-            model.createDependencyEdge( cd,  method, EdgeType.INVOKES );
+              retval.equals(enumArray)) {
+            model.createDependencyEdge(cd, method, EdgeType.INVOKES);
           }
       }
     }
@@ -293,66 +293,70 @@ public class Analyzer {
    */
   private void createAssumeEdges( final Model model, final ClassDescriptor cd ) {
 
-    if ( cd.isInterface() ) {
+    if (cd.isInterface()) {
       return;
     }
 
     Node newNode = cd.getNewNode();
 
-    if ( newNode == null ) {
-      Logger.err( "no NEW-Node found for " + cd.getName() );
+    if (newNode == null) {
+      Logger.err("no NEW-Node found for " + cd.getName());
       return;
     }
 
-    List<Method> externalMethods = new ArrayList<Method>( 5 );
+    List<Method> externalMethods = new ArrayList<Method>(5);
 
-    boolean resolvable = model.getAllExternalAncestorMethods( cd.getName(), externalMethods );
+    boolean resolvable = model.getAllExternalAncestorMethods(cd.getName(), externalMethods);
 
-    if ( resolvable ) {
-      for ( Method method : externalMethods ) {
+    if (resolvable) {
+      for (Method method : externalMethods) {
         String mName = method.getName();
-        String mDesc = Type.getMethodDescriptor( method );
+        String mDesc = Type.getMethodDescriptor(method);
 
-        if ( cd.implementsMethod( mName, mDesc ) ) {
+        if (cd.implementsMethod(mName, mDesc)) {
 
-          model.createDependencyEdge( newNode, cd.getMethod( mName, mDesc ).getNode(), EdgeType.ASSUME );
+          model.createDependencyEdge(newNode, cd.getMethod(mName, mDesc).getNode(), EdgeType.ASSUME);
         } else {
           List<ClassDescriptor> modeledClasses = new ArrayList<>();
-          for ( String interfaceName: cd.getInterfaces() ) {
-            if ( model.isClassModeled( interfaceName ) ) modeledClasses.add( model.getClassDescriptor( interfaceName ) );
+          for (String interfaceName : cd.getInterfaces()) {
+            if (model.isClassModeled(interfaceName)) {
+              modeledClasses.add(model.getClassDescriptor(interfaceName));
+            }
           }
-          if ( model.isClassModeled( cd.getSuperName() ) ) modeledClasses.add( model.getClassDescriptor( cd.getSuperName() ) );
+          if (model.isClassModeled(cd.getSuperName())) {
+            modeledClasses.add(model.getClassDescriptor(cd.getSuperName()));
+          }
 
-          for ( ClassDescriptor superDescriptor: modeledClasses ) {
-            createEdgeToImplementingMethod( superDescriptor, mName, mDesc, model, newNode, EdgeType.ASSUME, false );
+          for (ClassDescriptor superDescriptor : modeledClasses) {
+            createEdgeToImplementingMethod(superDescriptor, mName, mDesc, model, newNode, EdgeType.ASSUME, false);
           }
         }
       }
     } else {  // assume all non-private methods are called.
-      for ( MethodDescriptor md : cd.getMethods() ) {
-        if ( ! md.isPrivate() ) {
-          model.createDependencyEdge( newNode, md.getNode(), EdgeType.ASSUME );
+      for (MethodDescriptor md : cd.getMethods()) {
+        if (!md.isPrivate()) {
+          model.createDependencyEdge(newNode, md.getNode(), EdgeType.ASSUME);
         }
       }
     }
 
     List<MethodDescriptor> internalMethods = new ArrayList<MethodDescriptor>();
-    model.getAllInternalAncestorEntrypointMethods( cd.getName(), internalMethods );
+    model.getAllInternalAncestorEntrypointMethods(cd.getName(), internalMethods);
 
-    for ( MethodDescriptor md : internalMethods ) {
+    for (MethodDescriptor md : internalMethods) {
 
       String mName = md.getName();
       String mDesc = md.getDesc();
 
-      if ( !md.isStatic() || mName.equals( Model.CONSTRUCTOR_NAME ) ) {
+      if (!md.isStatic() || mName.equals(Model.CONSTRUCTOR_NAME)) {
 
-        if ( cd.implementsMethod( mName, mDesc ) ) {
-          model.createDependencyEdge( newNode, cd.getMethod( mName, mDesc ).getNode(), EdgeType.ASSUME );
+        if (cd.implementsMethod(mName, mDesc)) {
+          model.createDependencyEdge(newNode, cd.getMethod(mName, mDesc).getNode(), EdgeType.ASSUME);
         } else {
-          if ( model.isClassModeled( cd.getSuperName() ) ) {
-            ClassDescriptor superCd = model.getClassDescriptor( cd.getSuperName() );
+          if (model.isClassModeled(cd.getSuperName())) {
+            ClassDescriptor superCd = model.getClassDescriptor(cd.getSuperName());
 
-            createEdgeToImplementingMethod( superCd, mName, mDesc, model, newNode, EdgeType.ASSUME, false );
+            createEdgeToImplementingMethod(superCd, mName, mDesc, model, newNode, EdgeType.ASSUME, false);
           }
         }
       }
@@ -378,64 +382,64 @@ public class Analyzer {
    */
   private void createInvokeEdges( final Model model, final ClassDescriptor cd, final MethodDescriptor md ) {
 
-    for ( Invocation invocation : md.getInvocations() ) {
+    for (Invocation invocation : md.getInvocations()) {
 
       final int opcode = invocation.getOpcode();
       final String targetType = invocation.getType();
       final String targetMethod = invocation.getName();
       final String targetDesc = invocation.getDesc();
 
-      if ( model.isClassModeled( targetType ) ) { // else: external class (ignored)
+      if (model.isClassModeled(targetType)) { // else: external class (ignored)
 
-        ClassDescriptor target = model.getClassDescriptor( targetType );
+        ClassDescriptor target = model.getClassDescriptor(targetType);
 
         // super calls: CHAIN and SUPER edges.
-        if ( opcode == Opcodes.INVOKESPECIAL &&
-            targetType.equals( cd.getSuperName() ) ) {
+        if (opcode == Opcodes.INVOKESPECIAL &&
+            targetType.equals(cd.getSuperName())) {
           // "CHAIN" calls to super constructor
-          if ( Model.CONSTRUCTOR_NAME.equals( targetMethod ) &&
-              Model.CONSTRUCTOR_NAME.equals( md.getName() ) ) {
+          if (Model.CONSTRUCTOR_NAME.equals(targetMethod) &&
+              Model.CONSTRUCTOR_NAME.equals(md.getName())) {
 
-            final MethodDescriptor initMethod = target.getMethod( targetMethod, targetDesc );
+            final MethodDescriptor initMethod = target.getMethod(targetMethod, targetDesc);
 
-            model.createDependencyEdge( md,
-                initMethod,
-                EdgeType.CHAIN );
+            model.createDependencyEdge(md,
+                                       initMethod,
+                                       EdgeType.CHAIN);
           } else { // calls to super-methods
 
-            while ( ! target.implementsMethod( targetMethod, targetDesc ) &&
-                model.isClassModeled( target.getSuperName() ) ) {
-              target = model.getClassDescriptor( target.getSuperName() );
+            while (!target.implementsMethod(targetMethod, targetDesc) &&
+                   model.isClassModeled(target.getSuperName())) {
+              target = model.getClassDescriptor(target.getSuperName());
             }
 
-            if ( target.implementsMethod( targetMethod, targetDesc ) ) {
-              model.createDependencyEdge( md,
-                  target.getMethod( targetMethod, targetDesc ),
-                  EdgeType.SUPER );
+            if (target.implementsMethod(targetMethod, targetDesc)) {
+              model.createDependencyEdge(md,
+                                         target.getMethod(targetMethod, targetDesc),
+                                         EdgeType.SUPER);
             }
           }
         } else {
 
-          if ( target.isInterface() || target.isAbstract() ) {
+          if (target.isInterface() || target.isAbstract()) {
 
 //            ClassDescriptor temp = findDeclaringClass( model, target, targetMethod, targetDesc );
 //            if ( temp != null ) {
 //              target = temp;
 //            }
-            createEdgeToDeclaration( model, target, targetMethod, targetDesc, md );
+            createEdgeToDeclaration(model, target, targetMethod, targetDesc, md);
           }
 
           // RULE 1.1.1
-          createEdgesToAncestorMethods( model, target, md, targetMethod, targetDesc );
+          createEdgesToAncestorMethods(model, target, md, targetMethod, targetDesc);
 
-          if ( ! targetMethod.equals( Model.CONSTRUCTOR_NAME ) ) {
+          if (!targetMethod.equals(Model.CONSTRUCTOR_NAME)) {
             // RULE 1.1.2
-            createSubtreeEdges( model, cd, target, md, targetMethod, targetDesc );
+            createSubtreeEdges(model, cd, target, md, targetMethod, targetDesc);
           }
         }
 
-        if ( opcode == Opcodes.INVOKEDYNAMIC ) {
-          final MethodDescriptor initMethod = target.getMethod( targetMethod, targetDesc );
+        if (opcode == Opcodes.INVOKEDYNAMIC) {
+          final MethodDescriptor initMethod = target.getMethod(targetMethod, targetDesc);
           model.createDependencyEdge(md, initMethod, EdgeType.INVOKEDYNAMIC);
         }
       }
@@ -459,28 +463,28 @@ public class Analyzer {
                                         final String targetMethod,
                                         final String targetDesc, MethodDescriptor source ) {
 
-    if ( targetClass.implementsMethod( targetMethod, targetDesc )
-        && ( targetClass.isAbstract() || targetClass.isInterface() ) ) {
-      model.createDependencyEdge( source, targetClass.getMethod( targetMethod, targetDesc ), EdgeType.RESOLVE );
+    if (targetClass.implementsMethod(targetMethod, targetDesc)
+        && (targetClass.isAbstract() || targetClass.isInterface())) {
+      model.createDependencyEdge(source, targetClass.getMethod(targetMethod, targetDesc), EdgeType.RESOLVE);
       return;
     }
 
     String[] interfaces = targetClass.getInterfaces();
-    if ( null != interfaces ) {
+    if (null != interfaces) {
 
-      for ( String interfc : interfaces ) {
-        if ( model.isClassModeled( interfc ) ) {
-          ClassDescriptor interfaceDesc = model.getClassDescriptor( interfc );
-          createEdgeToDeclaration( model, interfaceDesc, targetMethod, targetDesc, source );
+      for (String interfc : interfaces) {
+        if (model.isClassModeled(interfc)) {
+          ClassDescriptor interfaceDesc = model.getClassDescriptor(interfc);
+          createEdgeToDeclaration(model, interfaceDesc, targetMethod, targetDesc, source);
         }
       }
     }
 
-    if ( !targetClass.isInterface() ) {
+    if (!targetClass.isInterface()) {
       String superName = targetClass.getSuperName();
-      if ( model.isClassModeled( superName ) ) {
-        ClassDescriptor superDesc = model.getClassDescriptor( superName );
-        createEdgeToDeclaration( model, superDesc, targetMethod, targetDesc, source );
+      if (model.isClassModeled(superName)) {
+        ClassDescriptor superDesc = model.getClassDescriptor(superName);
+        createEdgeToDeclaration(model, superDesc, targetMethod, targetDesc, source);
       }
     }
   }
@@ -504,32 +508,33 @@ public class Analyzer {
   private void createEdgesToAncestorMethods( final Model model, ClassDescriptor owner, final MethodDescriptor md,
                                              final String targetMethod, final String targetDesc ) {
 
-    if ( owner.isInterface() ) {
+    if (owner.isInterface()) {
 
-      final Set<ClassDescriptor> implementingClasses = model.getAllImplementingClasses( owner );
+      final Set<ClassDescriptor> implementingClasses = model.getAllImplementingClasses(owner);
 
-      if ( implementingClasses != null ) {
-        for ( ClassDescriptor ownerImpl : implementingClasses ) {
-          createEdgesToAncestorMethods( model, ownerImpl, md, targetMethod, targetDesc );
-          createSubtreeEdges( model, owner, ownerImpl, md, targetMethod, targetDesc );
+      if (implementingClasses != null) {
+        for (ClassDescriptor ownerImpl : implementingClasses) {
+          createEdgesToAncestorMethods(model, ownerImpl, md, targetMethod, targetDesc);
+          createSubtreeEdges(model, owner, ownerImpl, md, targetMethod, targetDesc);
         }
       }
     }
 
-    createEdgeToImplementingMethod( owner, targetMethod, targetDesc, model, md, EdgeType.INVOKES, true );
+    createEdgeToImplementingMethod(owner, targetMethod, targetDesc, model, md, EdgeType.INVOKES, true);
   }
 
   private void createEdgeToImplementingMethod( ClassDescriptor owner, String targetMethod, String targetDesc,
                                                Model model, MethodDescriptor md,
                                                EdgeType type, boolean createResolveEdge ) {
 
-    createEdgeToImplementingMethod( owner, targetMethod, targetDesc, model, md.getNode(), type, createResolveEdge );
+    createEdgeToImplementingMethod(owner, targetMethod, targetDesc, model, md.getNode(), type, createResolveEdge);
   }
 
   /**
    * Finds all preceding interfaces relative to start.
+   *
    * @param start - the interface to start with
-   * @param path - a initial path, should include the start element
+   * @param path  - a initial path, should include the start element
    * @param paths - a empty list of paths that all paths will be appended to
    */
   private void findSuperInterfaces( Model model, ClassDescriptor start, List<ClassDescriptor> path, List<List<ClassDescriptor>> paths ) {
@@ -571,27 +576,27 @@ public class Analyzer {
 
     ArrayList<ClassDescriptor> classHierarchy = new ArrayList<ClassDescriptor>();
     classHierarchy.add(owner);
-    while ( ! owner.implementsMethod( targetMethod, targetDesc ) &&
-        model.isClassModeled( owner.getSuperName() ) ) {
-      model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
-      owner = model.getClassDescriptor( owner.getSuperName() );
+    while (!owner.implementsMethod(targetMethod, targetDesc) &&
+           model.isClassModeled(owner.getSuperName())) {
+      model.createDependencyEdge(node, owner.getNode(), EdgeType.RESOLVE);
+      owner = model.getClassDescriptor(owner.getSuperName());
       classHierarchy.add(owner);
     }
-    if ( owner.implementsMethod( targetMethod, targetDesc ) ) {
+    if (owner.implementsMethod(targetMethod, targetDesc)) {
 
-      final MethodDescriptor targetMethodImp = owner.getMethod( targetMethod, targetDesc );
+      final MethodDescriptor targetMethodImp = owner.getMethod(targetMethod, targetDesc);
 
-      model.createDependencyEdge( node, targetMethodImp.getNode(), type );
+      model.createDependencyEdge(node, targetMethodImp.getNode(), type);
       // RESOLVE dependency needed since INVOKES-dependency edge might not be traversed if owner is not instantiated.
-      if ( createResolveEdge && !owner.isInterface() ) {
-        model.createDependencyEdge( node, targetMethodImp.getNode(), EdgeType.RESOLVE );
+      if (createResolveEdge && !owner.isInterface()) {
+        model.createDependencyEdge(node, targetMethodImp.getNode(), EdgeType.RESOLVE);
       }
 
       // static methods: RESOLVE dependency to implementing class
-      if ( targetMethodImp.isStatic() ) {
-        model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
+      if (targetMethodImp.isStatic()) {
+        model.createDependencyEdge(node, owner.getNode(), EdgeType.RESOLVE);
       }
-    // method is not implemented by any super class of owner, thus it must be a default method inherited from a interface
+      // method is not implemented by any super class of owner, thus it must be a default method inherited from a interface
     } else {
       // gather all direct interfaces of the class and its super classes
       final HashSet<String> seen = new HashSet<String>();
@@ -600,7 +605,7 @@ public class Analyzer {
         seen.add(owner.getName());
         interfaceDescriptors.add(owner);
       }
-      for (ClassDescriptor cd: classHierarchy) {
+      for (ClassDescriptor cd : classHierarchy) {
         for (String interfaceName : cd.getInterfaces()) {
           if (seen.add(interfaceName) && model.isClassModeled(interfaceName)) {
             interfaceDescriptors.add(model.getClassDescriptor(interfaceName));
@@ -610,7 +615,7 @@ public class Analyzer {
 
       // find all paths from all direct interfaces to their super interfaces
       final List<List<ClassDescriptor>> interfaceHierarchies = new ArrayList<List<ClassDescriptor>>();
-      for (ClassDescriptor cd: interfaceDescriptors) {
+      for (ClassDescriptor cd : interfaceDescriptors) {
         findSuperInterfaces(model, cd, new ArrayList<ClassDescriptor>(), interfaceHierarchies);
       }
 
@@ -628,18 +633,18 @@ public class Analyzer {
         }
       }
 
-      if ( mostSpecific != null ) {
-        final MethodDescriptor targetMethodImp = mostSpecific.getMethod( targetMethod, targetDesc );
+      if (mostSpecific != null) {
+        final MethodDescriptor targetMethodImp = mostSpecific.getMethod(targetMethod, targetDesc);
 
-        model.createDependencyEdge( node, targetMethodImp.getNode(), type );
+        model.createDependencyEdge(node, targetMethodImp.getNode(), type);
         // RESOLVE dependency needed since INVOKES-dependency edge might not be traversed if owner is not instantiated.
-        if ( createResolveEdge ) {
-          model.createDependencyEdge( node, targetMethodImp.getNode(), EdgeType.RESOLVE );
+        if (createResolveEdge) {
+          model.createDependencyEdge(node, targetMethodImp.getNode(), EdgeType.RESOLVE);
         }
 
         // default methods: RESOLVE dependency to implementing interface
-        if ( targetMethodImp.hasFlag(Opcodes.ACC_PUBLIC) && !targetMethodImp.hasFlag(Opcodes.ACC_ABSTRACT) ) {
-          model.createDependencyEdge( node, owner.getNode(), EdgeType.RESOLVE );
+        if (targetMethodImp.hasFlag(Opcodes.ACC_PUBLIC) && !targetMethodImp.hasFlag(Opcodes.ACC_ABSTRACT)) {
+          model.createDependencyEdge(node, owner.getNode(), EdgeType.RESOLVE);
         }
       }
     }
@@ -649,12 +654,13 @@ public class Analyzer {
    * Determines the index of the first class descriptor in the given list that
    * {@link ClassDescriptor#implementsMethod(String, String) implements} the
    * method identified by the given method name and method descriptor.
+   *
    * @return the index of the first class descriptor that implements the given
    * method or {@code -1} if there is no such descriptor in the given list.
    */
   private static int indexOf(
-    final List<ClassDescriptor> interfaces,
-    final String methodName, final String methodDescriptor
+          final List<ClassDescriptor> interfaces,
+          final String methodName, final String methodDescriptor
   ) {
     int idx = -1;
     for (ClassDescriptor cd : interfaces) {
@@ -670,15 +676,16 @@ public class Analyzer {
    * Determines the index of the last class descriptor in the given list that
    * {@link ClassDescriptor#implementsMethod(String, String) implements} the
    * method identified by the given method name and method descriptor.
+   *
    * @return the index of the last class descriptor that implements the given
    * method or {@code -1} if there is no such descriptor in the given list.
    */
   private static int lastIndexOf(
-    final List<ClassDescriptor> interfaces,
-    final String methodName, final String methodDescriptor
+          final List<ClassDescriptor> interfaces,
+          final String methodName, final String methodDescriptor
   ) {
     int idx = interfaces.size();
-    for (ListIterator<ClassDescriptor> it = interfaces.listIterator(idx); it.hasPrevious();) {
+    for (ListIterator<ClassDescriptor> it = interfaces.listIterator(idx); it.hasPrevious(); ) {
       --idx;
       final ClassDescriptor cd = it.previous();
       if (cd.implementsMethod(methodName, methodDescriptor)) {
@@ -703,12 +710,12 @@ public class Analyzer {
                                    final String targetMethod, final String targetDesc ) {
 
     final List<ClassDescriptor> subClasses = new ArrayList<ClassDescriptor>();
-    model.getInternalDescendants( target, subClasses );
+    model.getInternalDescendants(target, subClasses);
 
-    for ( ClassDescriptor targetSubclass : subClasses ) {
-      if ( targetSubclass != cd ) {
-        if ( targetSubclass.implementsMethod( targetMethod, targetDesc ) ) {
-          model.createDependencyEdge( mm, targetSubclass.getMethod( targetMethod, targetDesc ), EdgeType.INVOKES );
+    for (ClassDescriptor targetSubclass : subClasses) {
+      if (targetSubclass != cd) {
+        if (targetSubclass.implementsMethod(targetMethod, targetDesc)) {
+          model.createDependencyEdge(mm, targetSubclass.getMethod(targetMethod, targetDesc), EdgeType.INVOKES);
         }
       }
     }
@@ -724,26 +731,26 @@ public class Analyzer {
   private void createMethodSignatureEdges( final Model model, final MethodDescriptor source ) {
 
     // arguments
-    for ( Type argumentType : source.getArgumentTypes() ) {
-      final String className = Util.getTypeNameFromDescriptor( argumentType.getDescriptor() );
-      if ( model.isClassModeled( className ) ) {
-        model.createDependencyEdge( source, model.getClassDescriptor( className ), EdgeType.RESOLVE );
+    for (Type argumentType : source.getArgumentTypes()) {
+      final String className = Util.getTypeNameFromDescriptor(argumentType.getDescriptor());
+      if (model.isClassModeled(className)) {
+        model.createDependencyEdge(source, model.getClassDescriptor(className), EdgeType.RESOLVE);
       }
     }
 
     // return type
     final Type returnType = source.getReturnType();
-    final String className = Util.getTypeNameFromDescriptor( returnType.getDescriptor() );
-    if ( model.isClassModeled( className ) ) {
-      model.createDependencyEdge( source, model.getClassDescriptor( className ), EdgeType.RESOLVE );
+    final String className = Util.getTypeNameFromDescriptor(returnType.getDescriptor());
+    if (model.isClassModeled(className)) {
+      model.createDependencyEdge(source, model.getClassDescriptor(className), EdgeType.RESOLVE);
     }
 
     // Exceptions
-    if ( source.getExceptions() != null ) {
-      for ( String exception : source.getExceptions() ) {
-        if ( model.isClassModeled( exception ) ) {
-          final ClassDescriptor target = model.getClassDescriptor( exception );
-          model.createDependencyEdge( source, target, EdgeType.RESOLVE );
+    if (source.getExceptions() != null) {
+      for (String exception : source.getExceptions()) {
+        if (model.isClassModeled(exception)) {
+          final ClassDescriptor target = model.getClassDescriptor(exception);
+          model.createDependencyEdge(source, target, EdgeType.RESOLVE);
         }
       }
     }
@@ -757,17 +764,17 @@ public class Analyzer {
    */
   private void createInnerClassEdges( final Model model, final ClassDescriptor cd ) {
 
-    if ( cd.isInnerClass() ) {
-      final ClassDescriptor enclosingClass = model.getClassDescriptor( cd.getEnclosingClass() );
-      model.createDependencyEdge( cd, enclosingClass, EdgeType.ENCLOSE );
+    if (cd.isInnerClass()) {
+      final ClassDescriptor enclosingClass = model.getClassDescriptor(cd.getEnclosingClass());
+      model.createDependencyEdge(cd, enclosingClass, EdgeType.ENCLOSE);
     }
-    if ( cd.getEnclosingMethod() != null ) {
-      final ClassDescriptor enclosingClass = model.getClassDescriptor( cd.getEnclosingClass() );
+    if (cd.getEnclosingMethod() != null) {
+      final ClassDescriptor enclosingClass = model.getClassDescriptor(cd.getEnclosingClass());
       MethodDescriptor enclosingMethodDescriptor = enclosingClass.getMethod(cd.getEnclosingMethod());
       if (null == enclosingMethodDescriptor) {
-        Logger.log("Missing enclosing method declaration in "+enclosingClass.getName()+ ": "+cd.getEnclosingMethod().getValue());
+        Logger.log("Missing enclosing method declaration in " + enclosingClass.getName() + ": " + cd.getEnclosingMethod().getValue());
       } else {
-        model.createDependencyEdge( cd, enclosingMethodDescriptor, EdgeType.ENCLOSE );
+        model.createDependencyEdge(cd, enclosingMethodDescriptor, EdgeType.ENCLOSE);
       }
     }
   }
@@ -782,25 +789,25 @@ public class Analyzer {
    */
   private void createReferenceEdges( final Model model, final MethodDescriptor md ) {
 
-    for ( String[] fieldRef : md.getFieldRefs() ) {
+    for (String[] fieldRef : md.getFieldRefs()) {
 
-      final String refDesc = fieldRef[ 0 ];
-      final String refName = fieldRef[ 1 ];
+      final String refDesc = fieldRef[0];
+      final String refName = fieldRef[1];
 
-      if ( model.isClassModeled( refDesc ) ) {
+      if (model.isClassModeled(refDesc)) {
 
-        ClassDescriptor owner = model.getClassDescriptor( refDesc );
-        boolean declarationFound = owner.declaresField( refName );
+        ClassDescriptor owner = model.getClassDescriptor(refDesc);
+        boolean declarationFound = owner.declaresField(refName);
 
-        while ( model.isClassModeled( owner.getSuperName() ) && !declarationFound ) {
-          if ( ! owner.declaresField( refName ) ) { // declared in interfaces?
-            model.createDependencyEdge( md, owner, EdgeType.RESOLVE );
+        while (model.isClassModeled(owner.getSuperName()) && !declarationFound) {
+          if (!owner.declaresField(refName)) { // declared in interfaces?
+            model.createDependencyEdge(md, owner, EdgeType.RESOLVE);
 
-            for ( String interfc : owner.getInterfaces() ) {
-              if ( model.isClassModeled( interfc ) ) {
-                final ClassDescriptor interfcDesc = model.getClassDescriptor( interfc );
-                if ( interfcDesc.declaresField( refName ) ) {
-                  model.createDependencyEdge( md, interfcDesc.getField( refName ), EdgeType.REFERENCES );
+            for (String interfc : owner.getInterfaces()) {
+              if (model.isClassModeled(interfc)) {
+                final ClassDescriptor interfcDesc = model.getClassDescriptor(interfc);
+                if (interfcDesc.declaresField(refName)) {
+                  model.createDependencyEdge(md, interfcDesc.getField(refName), EdgeType.REFERENCES);
                   declarationFound = true;
                 }
               }
@@ -808,13 +815,13 @@ public class Analyzer {
           } else {
             declarationFound = true;
           }
-          owner = model.getClassDescriptor( owner.getSuperName() );
+          owner = model.getClassDescriptor(owner.getSuperName());
         }
 
-        if ( owner.declaresField( refName ) ) {
+        if (owner.declaresField(refName)) {
 
-          model.createDependencyEdge( md, owner.getField( refName ), EdgeType.REFERENCES );
-          checkLegacyDotClassField( refName, owner, model );
+          model.createDependencyEdge(md, owner.getField(refName), EdgeType.REFERENCES);
+          checkLegacyDotClassField(refName, owner, model);
         }
       }
     }
@@ -822,17 +829,17 @@ public class Analyzer {
 
   private void checkLegacyDotClassField( String refName, ClassDescriptor owner, Model model ) {
 
-    if ( refName.startsWith( SYNTHETIC_DOT_CLASS_FIELD_START ) ) {
-      FieldDescriptor fd = owner.getField( refName );
-      if ( CLASS_DESC.equals( fd.getDesc() ) && fd.isSynthetic() ) {
+    if (refName.startsWith(SYNTHETIC_DOT_CLASS_FIELD_START)) {
+      FieldDescriptor fd = owner.getField(refName);
+      if (CLASS_DESC.equals(fd.getDesc()) && fd.isSynthetic()) {
 
-        StringBuilder[] possibleClassNames = getPossibleClassNames( refName );
+        StringBuilder[] possibleClassNames = getPossibleClassNames(refName);
 
-        for ( StringBuilder possibleClassName : possibleClassNames ) {
+        for (StringBuilder possibleClassName : possibleClassNames) {
           String className = possibleClassName.toString();
-          if ( model.isClassModeled( className ) ) {
-            ClassDescriptor cd = model.getClassDescriptor( className );
-            model.createDependencyEdge( fd, cd, EdgeType.RESOLVE );
+          if (model.isClassModeled(className)) {
+            ClassDescriptor cd = model.getClassDescriptor(className);
+            model.createDependencyEdge(fd, cd, EdgeType.RESOLVE);
           }
         }
       }
@@ -848,21 +855,21 @@ public class Analyzer {
    */
   private StringBuilder[] getPossibleClassNames( String fieldName ) {
 
-    String[] toks = fieldName.substring( 6 ).split( "\\$" );
+    String[] toks = fieldName.substring(6).split("\\$");
 
-    StringBuilder[] possibleClassNames = new StringBuilder[ toks.length ];
+    StringBuilder[] possibleClassNames = new StringBuilder[toks.length];
 
-    for ( int i = 0; i < possibleClassNames.length; i++ ) {
-      possibleClassNames[ i ] = new StringBuilder();
-      possibleClassNames[ i ].append( toks[ 0 ] );
+    for (int i = 0; i < possibleClassNames.length; i++) {
+      possibleClassNames[i] = new StringBuilder();
+      possibleClassNames[i].append(toks[0]);
     }
 
-    for ( int i = 1; i < toks.length; i++ ) {
-      for ( int j = i - 1; j >= 0; j-- ) {
-        possibleClassNames[ j ].append( "$" ).append( toks[ i ] );
+    for (int i = 1; i < toks.length; i++) {
+      for (int j = i - 1; j >= 0; j--) {
+        possibleClassNames[j].append("$").append(toks[i]);
       }
-      for ( int j = 0; j < i; j++ ) {
-        possibleClassNames[ i ].append( "/" ).append( toks[ j + 1 ] );
+      for (int j = 0; j < i; j++) {
+        possibleClassNames[i].append("/").append(toks[j + 1]);
       }
     }
     return possibleClassNames;

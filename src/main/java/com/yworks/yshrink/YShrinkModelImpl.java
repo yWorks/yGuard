@@ -20,35 +20,35 @@ import java.util.Set;
  */
 public class YShrinkModelImpl implements YShrinkModel {
 
-    /**
-     * The Model.
-     */
-    Model model;
+  /**
+   * The Model.
+   */
+  Model model;
 
-    /**
-     * Instantiates a new Y shrink model.
-     */
-    public YShrinkModelImpl() {
+  /**
+   * Instantiates a new Y shrink model.
+   */
+  public YShrinkModelImpl() {
     model = new Model();
   }
 
   public void createSimpleModel( List<ShrinkBag> bags ) throws IOException {
 
     Analyzer analyzer = new Analyzer();
-    analyzer.initModel( model, bags );
-    analyzer.createInheritanceEdges( model );
+    analyzer.initModel(model, bags);
+    analyzer.createInheritanceEdges(model);
 
   }
 
   public Set<String> getAllAncestorClasses( String className ) {
-    Set<String> parents = new HashSet<String>( 3 );
-    model.getAllAncestorClasses( className, parents );
+    Set<String> parents = new HashSet<String>(3);
+    model.getAllAncestorClasses(className, parents);
     return parents;
   }
 
   public Set<String> getAllImplementedInterfaces( String className ) {
-    Set<String> interfaces = new HashSet<String>( 3 );
-    model.getAllImplementedInterfaces( className, interfaces );
+    Set<String> interfaces = new HashSet<String>(3);
+    model.getAllImplementedInterfaces(className, interfaces);
     return interfaces;
   }
 
@@ -56,7 +56,7 @@ public class YShrinkModelImpl implements YShrinkModel {
     return model.getAllClassNames();
   }
 
-  public void setResourceClassPath(Path resourceClassPath, Task target) {
+  public void setResourceClassPath( Path resourceClassPath, Task target ) {
     ResourceCpResolver resourceCpResolver = new ResourceCpResolver(resourceClassPath, target);
     model.setClassResolver(resourceCpResolver);
   }

@@ -52,6 +52,6 @@ public class TypePatternSet extends PatternSet {
    * @param type the type
    */
   public void setType( String type ) {
-    this.type = Type.valueOf( type.toUpperCase() );
+    this.type = Type.valueOf(type.toUpperCase());
   }
 }

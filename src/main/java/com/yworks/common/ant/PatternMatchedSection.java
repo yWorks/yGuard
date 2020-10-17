@@ -49,8 +49,10 @@ public abstract class PatternMatchedSection {
      */
     public boolean isAccessLevel( Access level ) {
 //      System.out.println( "compare: " + this.compareTo( level ) );
-      if( this.equals( NONE ) && (!level.equals( NONE )) ) return false;
-      return ( this.compareTo( level ) >= 0 );
+      if (this.equals(NONE) && (!level.equals(NONE))) {
+        return false;
+      }
+      return (this.compareTo(level) >= 0);
     }
 
     /**
@@ -60,7 +62,7 @@ public abstract class PatternMatchedSection {
      * @return the boolean
      */
     public boolean isAccessLevel( int asmAccess ) {
-      return isAccessLevel( Access.valueOf( asmAccess ) );
+      return isAccessLevel(Access.valueOf(asmAccess));
     }
 
     /**
@@ -71,17 +73,17 @@ public abstract class PatternMatchedSection {
      */
     public static Access valueOf( int asmAccess ) {
 
-      if ( ( asmAccess & Opcodes.ACC_PUBLIC ) == Opcodes.ACC_PUBLIC ) {
+      if ((asmAccess & Opcodes.ACC_PUBLIC) == Opcodes.ACC_PUBLIC) {
         return PUBLIC;
-      } else if ( ( asmAccess & Opcodes.ACC_PROTECTED ) == Opcodes.ACC_PROTECTED ) {
+      } else if ((asmAccess & Opcodes.ACC_PROTECTED) == Opcodes.ACC_PROTECTED) {
         return PROTECTED;
-      } else if ( ( asmAccess & Opcodes.ACC_PRIVATE ) == Opcodes.ACC_PRIVATE ) {
+      } else if ((asmAccess & Opcodes.ACC_PRIVATE) == Opcodes.ACC_PRIVATE) {
         return PRIVATE;
       } else {
         return FRIENDLY;
       }
     }
-    
+
   }
 
   private Access access = null;
@@ -103,7 +105,7 @@ public abstract class PatternMatchedSection {
    */
   public TypePatternSet createPatternSet() {
     TypePatternSet typePatternSet = new TypePatternSet();
-    addPatternSet( typePatternSet, typePatternSet.getType() );
+    addPatternSet(typePatternSet, typePatternSet.getType());
     return typePatternSet;
   }
 
@@ -119,16 +121,16 @@ public abstract class PatternMatchedSection {
    * @param type the type
    */
   public void addPatternSet( final PatternSet ps, TypePatternSet.Type type ) {
-    if ( null == patternSets ) {
-      patternSets = new EnumMap<TypePatternSet.Type, PatternSet>( TypePatternSet.Type.class );
+    if (null == patternSets) {
+      patternSets = new EnumMap<TypePatternSet.Type, PatternSet>(TypePatternSet.Type.class);
     }
 
     // merge patternsets of same type
-    if ( null != patternSets.get( type ) ) {
-      PatternSet existing = patternSets.get( type );
-      ps.addConfiguredPatternset( existing );
+    if (null != patternSets.get(type)) {
+      PatternSet existing = patternSets.get(type);
+      ps.addConfiguredPatternset(existing);
     }
-    patternSets.put( type, ps );
+    patternSets.put(type, ps);
   }
 
   /**
@@ -138,8 +140,8 @@ public abstract class PatternMatchedSection {
    * @return the pattern set
    */
   public PatternSet getPatternSet( TypePatternSet.Type type ) {
-    if ( null != patternSets ) {
-      return patternSets.get( type );
+    if (null != patternSets) {
+      return patternSets.get(type);
     } else {
       return null;
     }
@@ -151,7 +153,7 @@ public abstract class PatternMatchedSection {
    * @param access the access
    */
   public void setAccess( String access ) {
-    this.access = Access.valueOf( access.toUpperCase() );
+    this.access = Access.valueOf(access.toUpperCase());
   }
 
   /**
@@ -171,13 +173,13 @@ public abstract class PatternMatchedSection {
    */
   protected Access accessValue( String accessString ) {
     Access access = null;
-    if ( accessString.trim().equals( "" ) ) {
-      throw new BuildException( "You specified an empty access modifier." );
+    if (accessString.trim().equals("")) {
+      throw new BuildException("You specified an empty access modifier.");
     }
     try {
-      access = Access.valueOf( accessString.trim().toUpperCase() );
-    } catch ( java.lang.IllegalArgumentException e ) {
-      throw new BuildException( "Illegal access modifier: " + accessString );
+      access = Access.valueOf(accessString.trim().toUpperCase());
+    } catch (java.lang.IllegalArgumentException e) {
+      throw new BuildException("Illegal access modifier: " + accessString);
     }
     return access;
   }

@@ -15,12 +15,11 @@ package com.yworks.yguard.annotations;
  *
  * @author muellese
  */
-public @interface YATAnnotation
-{
-    /**
-     * Blah string.
-     *
-     * @return the string
-     */
-    String blah() default "blub";
+public @interface YATAnnotation {
+  /**
+   * Blah string.
+   *
+   * @return the string
+   */
+  String blah() default "blub";
 }

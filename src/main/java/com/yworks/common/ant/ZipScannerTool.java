@@ -27,84 +27,84 @@ import java.util.zip.ZipInputStream;
  *
  * @author muellese
  */
-public class ZipScannerTool
-{
-  
-  /** Creates a new instance of ZipScanner */
-  private ZipScannerTool()
-  {
+public class ZipScannerTool {
+
+  /**
+   * Creates a new instance of ZipScanner
+   */
+  private ZipScannerTool() {
   }
 
-    /**
-     * Get matches string [ ].
-     *
-     * @param fs      the fs
-     * @param scanner the scanner
-     * @return the string [ ]
-     * @throws IOException the io exception
-     */
-    public static String[] getMatches(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
+  /**
+   * Get matches string [ ].
+   *
+   * @param fs      the fs
+   * @param scanner the scanner
+   * @return the string [ ]
+   * @throws IOException the io exception
+   */
+  public static String[] getMatches( ZipFileSet fs, DirectoryScanner scanner ) throws IOException {
     Collection result = getMatchedCollection(fs, scanner);
-    return (String[])(result.toArray(new String[result.size()]));
+    return (String[]) (result.toArray(new String[result.size()]));
   }
 
-    /**
-     * Gets matched collection.
-     *
-     * @param fs      the fs
-     * @param scanner the scanner
-     * @return the matched collection
-     * @throws IOException the io exception
-     */
-    public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
-    return getMatchedCollection(fs,scanner,"");
+  /**
+   * Gets matched collection.
+   *
+   * @param fs      the fs
+   * @param scanner the scanner
+   * @return the matched collection
+   * @throws IOException the io exception
+   */
+  public static Collection getMatchedCollection( ZipFileSet fs, DirectoryScanner scanner ) throws IOException {
+    return getMatchedCollection(fs, scanner, "");
   }
 
-    /**
-     * Zip file set get src file.
-     *
-     * @param fs the fs
-     * @return the file
-     */
-    public static File zipFileSetGetSrc(ZipFileSet fs) {
+  /**
+   * Zip file set get src file.
+   *
+   * @param fs the fs
+   * @return the file
+   */
+  public static File zipFileSetGetSrc( ZipFileSet fs ) {
     Method ant15 = null;
     Method ant16 = null;
     try {
-      ant15 = fs.getClass().getMethod("getSrc", new Class[]{});
-    } catch (NoSuchMethodException nsme){
-      try{
-        ant16 = fs.getClass().getMethod("getSrc", new Class[]{Project.class});
-      } catch (NoSuchMethodException nsme2){
+      ant15 = fs.getClass().getMethod("getSrc");
+    } catch (NoSuchMethodException nsme) {
+      try {
+        ant16 = fs.getClass().getMethod("getSrc", Project.class);
+      } catch (NoSuchMethodException nsme2) {
         throw new BuildException("Could not determine getSrc method of ZipFileSet class");
       }
     }
     try {
-      if (ant16 != null){
+      if (ant16 != null) {
         return (File) ant16.invoke(fs, new Object[]{fs.getProject()});
       } else {
-        return (File) ant15.invoke(fs, (Object[])null);
+        return (File) ant15.invoke(fs, (Object[]) null);
       }
-    } catch (IllegalAccessException iaex){
+    } catch (IllegalAccessException iaex) {
       throw new BuildException("Could not invoke getSrc method of ZipFileSet class", iaex);
-    } catch (InvocationTargetException itex){
-      if (itex.getTargetException() instanceof BuildException){
+    } catch (InvocationTargetException itex) {
+      if (itex.getTargetException() instanceof BuildException) {
         throw (BuildException) itex.getTargetException();
       } else {
-        throw new BuildException("Internal error: getSrc invocation failed! "+itex.getTargetException().getMessage());
+        throw new BuildException("Internal error: getSrc invocation failed! " + itex.getTargetException().getMessage());
       }
     }
   }
 
-    /**
-     * Gets matched collection.
-     *
-     * @param fs      the fs
-     * @param scanner the scanner
-     * @param baseDir the base dir
-     * @return the matched collection
-     * @throws IOException the io exception
-     */
-    public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner, String baseDir) throws IOException{
+  /**
+   * Gets matched collection.
+   *
+   * @param fs      the fs
+   * @param scanner the scanner
+   * @param baseDir the base dir
+   * @return the matched collection
+   * @throws IOException the io exception
+   */
+  public static Collection getMatchedCollection( ZipFileSet fs, DirectoryScanner scanner, String baseDir ) throws IOException {
     Collection result = new ArrayList(20);
     File zipSrc = zipFileSetGetSrc(fs);
     ZipScanner zipScanner = (ZipScanner) scanner;
@@ -112,21 +112,21 @@ public class ZipScannerTool
     java.util.zip.ZipEntry origEntry;
     ZipInputStream in = null;
     try {
-        in = new ZipInputStream(new FileInputStream(zipSrc));
-        while ((origEntry = in.getNextEntry()) != null) {
-            entry = new ZipEntry(origEntry);
-            String vPath = entry.getName();
-            //System.out.println(vPath);
-            if (zipScanner.match(vPath)) {
-              result.add(vPath);
-            }
+      in = new ZipInputStream(new FileInputStream(zipSrc));
+      while ((origEntry = in.getNextEntry()) != null) {
+        entry = new ZipEntry(origEntry);
+        String vPath = entry.getName();
+        //System.out.println(vPath);
+        if (zipScanner.match(vPath)) {
+          result.add(vPath);
         }
+      }
     } finally {
-        if (in != null) {
-            in.close();
-        }
+      if (in != null) {
+        in.close();
+      }
     }
     return result;
   }
-  
+
 }

@@ -6,10 +6,10 @@ package com.yworks.yguard.obf.classfile;
  * @author Sebastian Rheinnecker, yworks
  */
 public class InvokeDynamicCpInfo extends AbstractDynamicCpInfo {
-    /**
-     * Instantiates a new Invoke dynamic cp info.
-     */
-    protected InvokeDynamicCpInfo() {
+  /**
+   * Instantiates a new Invoke dynamic cp info.
+   */
+  protected InvokeDynamicCpInfo() {
     super(CONSTANT_InvokeDynamic);
   }
 }

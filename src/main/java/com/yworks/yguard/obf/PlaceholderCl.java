@@ -1,9 +1,8 @@
 /**
  * YGuard -- an obfuscation library for Java(TM) classfiles.
- *
+ * <p>
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
- *
  */
 package com.yworks.yguard.obf;
 
@@ -13,28 +12,29 @@ package com.yworks.yguard.obf;
  *
  * @author Mark Welsh
  */
-public class PlaceholderCl extends Cl
-{
-    // Constants -------------------------------------------------------------
+public class PlaceholderCl extends Cl {
+  // Constants -------------------------------------------------------------
 
 
-    // Fields ----------------------------------------------------------------
+  // Fields ----------------------------------------------------------------
 
 
-    // Class Methods ---------------------------------------------------------
+  // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  // Instance Methods ------------------------------------------------------
 
-    /**
-     * Ctor.  @param parent the parent
-     *
-     * @param isInnerClass the is inner class
-     * @param name         the name
-     */
-    public PlaceholderCl(TreeItem parent, boolean isInnerClass, String name) 
-    {
-        super(parent, isInnerClass, name, null, null, 0, null);
-    }
+  /**
+   * Ctor.
+   *@param parent the parent
+   *
+   *
+   *@param isInnerClass the is inner class
+   *
+   *@param name         the name
+   */
+  public PlaceholderCl( TreeItem parent, boolean isInnerClass, String name ) {
+    super(parent, isInnerClass, name, null, null, 0, null);
+  }
 }
 

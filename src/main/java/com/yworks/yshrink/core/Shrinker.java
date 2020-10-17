@@ -25,27 +25,27 @@ public class Shrinker {
 
   //private Model model;
 
-    /**
-     * Shrink.
-     *
-     * @param model the model
-     */
-    public void shrink( final Model model ) {
+  /**
+   * Shrink.
+   *
+   * @param model the model
+   */
+  public void shrink( final Model model ) {
     //this.model = model;
 
-    final ShrinkDfs shrinkDfs = new ShrinkDfs( model );
-    shrinkDfs.setDirectedMode( true );
+    final ShrinkDfs shrinkDfs = new ShrinkDfs(model);
+    shrinkDfs.setDirectedMode(true);
 
     // initially mark all nodes OBSOLETE
-    for ( final Object o: model.getNetwork().nodes() ) {
+    for (final Object o : model.getNetwork().nodes()) {
       Node node = (Node) o;
-      model.markObsolete( node );
+      model.markObsolete(node);
     }
 
-    shrinkDfs.init( model.getEntryPointNode() );
+    shrinkDfs.init(model.getEntryPointNode());
 
     int numInstantiated = -1;
-    while ( shrinkDfs.numInstantiated > numInstantiated ) {
+    while (shrinkDfs.numInstantiated > numInstantiated) {
       numInstantiated = shrinkDfs.numInstantiated;
       shrinkDfs.nextRound();
     }
@@ -55,8 +55,8 @@ public class Shrinker {
 
   private class ShrinkDfs extends Dfs {
 
-    private Model model;
-    private Network<Node, Edge> network;
+    private final Model model;
+    private final Network<Node, Edge> network;
     private Node entryPointNode;
     private Map<Object, Object> instanceMap;
     private int numInstantiated = 0;
@@ -68,56 +68,56 @@ public class Shrinker {
 
     private int mode = EXPLORE_MODE;
 
-      /**
-       * Instantiates a new Shrink dfs.
-       *
-       * @param model the model
-       */
-      ShrinkDfs( final Model model ) {
+    /**
+     * Instantiates a new Shrink dfs.
+     *
+     * @param model the model
+     */
+    ShrinkDfs( final Model model ) {
       this.model = model;
       this.network = model.getNetwork();
     }
 
-      /**
-       * Init.
-       *
-       * @param entryPointNode the entry point node
-       */
-      public void init( final Node entryPointNode ) {
+    /**
+     * Init.
+     *
+     * @param entryPointNode the entry point node
+     */
+    public void init( final Node entryPointNode ) {
 
       this.entryPointNode = entryPointNode;
 
       round = 0;
-      if ( instanceMap == null ) {
+      if (instanceMap == null) {
         this.instanceMap = new HashMap<>();
       }
-      for ( final Object n: network.nodes() ) {
-        instanceMap.put( n, -1 );
+      for (final Object n : network.nodes()) {
+        instanceMap.put(n, -1);
       }
     }
 
-      /**
-       * Next round int.
-       *
-       * @return the int
-       */
-      protected int nextRound() {
+    /**
+     * Next round int.
+     *
+     * @return the int
+     */
+    protected int nextRound() {
       round++;
       numSkipped = 0;
       numInstantiated = 0;
-      super.start( network, entryPointNode );
+      super.start(network, entryPointNode);
       return numInstantiated;
     }
 
     @Override
     protected void postVisit( final Node node, final int i, final int j ) {
 
-      if ( mode == EXPLORE_MODE ) {
-        if ( NodeType.isNewNode( model.getNodeType( node ) ) ) {
+      if (mode == EXPLORE_MODE) {
+        if (NodeType.isNewNode(model.getNodeType(node))) {
 
-          final Node classNode = model.getClassNode( node );
+          final Node classNode = model.getClassNode(node);
 
-          instanceMap.put( classNode, round );
+          instanceMap.put(classNode, round);
           numInstantiated++;
         }
       }
@@ -126,19 +126,19 @@ public class Shrinker {
     @Override
     protected void preVisit( final Node node, final int dfsNumber ) {
 
-      if ( mode == RESULT_MODE ) {
+      if (mode == RESULT_MODE) {
 
-        model.markNotObsolete( node );
+        model.markNotObsolete(node);
       }
     }
 
-      /**
-       * Mark reachable nodes.
-       */
-      protected void markReachableNodes() {
+    /**
+     * Mark reachable nodes.
+     */
+    protected void markReachableNodes() {
       int oldMode = mode;
       mode = RESULT_MODE;
-      super.start( network, this.entryPointNode );
+      super.start(network, this.entryPointNode);
       mode = oldMode;
     }
 
@@ -149,20 +149,20 @@ public class Shrinker {
 
       // TODO use NodeType
       final Node target = edge.target();
-      
+
       // class, field node: allow always
-      if ( !NodeType.isMethodNode( model.getNodeType( target ) ) ) {
+      if (!NodeType.isMethodNode(model.getNodeType(target))) {
 
         allowed = true;
       } else {
 
-        if ( ! (model.getDependencyType( edge ).equals( EdgeType.RESOLVE ) ||
-                model.getDependencyType( edge ).equals( EdgeType.ENCLOSE ))) {
+        if (!(model.getDependencyType(edge).equals(EdgeType.RESOLVE) ||
+              model.getDependencyType(edge).equals(EdgeType.ENCLOSE))) {
 
-          final AbstractDescriptor targetDescriptor = model.getDescriptor( target );
+          final AbstractDescriptor targetDescriptor = model.getDescriptor(target);
           final MethodDescriptor targetMethod = (MethodDescriptor) targetDescriptor;
-          final Node classNode = model.getClassNode( target );
-          final ClassDescriptor targetClass = (ClassDescriptor) model.getDescriptor( classNode );
+          final Node classNode = model.getClassNode(target);
+          final ClassDescriptor targetClass = (ClassDescriptor) model.getDescriptor(classNode);
 
           allowed = allowed || targetMethod.isStatic();
 
@@ -171,24 +171,24 @@ public class Shrinker {
 
           allowed = allowed || targetClass.isAnnotation();
 
-          allowed = allowed || ( model.getDependencyType( edge ).equals( EdgeType.SUPER ) );
+          allowed = allowed || (model.getDependencyType(edge).equals(EdgeType.SUPER));
 
           allowed = allowed ||
-              ( NodeType.isNewNode( model.getNodeType( target ) ) );
+                    (NodeType.isNewNode(model.getNodeType(target)));
 
-          allowed = allowed || ( Model.CONSTRUCTOR_NAME.equals( targetMethod.getName() ) );
+          allowed = allowed || (Model.CONSTRUCTOR_NAME.equals(targetMethod.getName()));
 
-          allowed = allowed || ( targetMethod.isPrivate() );
+          allowed = allowed || (targetMethod.isPrivate());
 
-          allowed = allowed || wasClassInstantiated( edge );
+          allowed = allowed || wasClassInstantiated(edge);
 
-          allowed = allowed || isMethodNeeded( targetClass, targetMethod );
+          allowed = allowed || isMethodNeeded(targetClass, targetMethod);
 
-          allowed = allowed || model.getDependencyType( edge ).equals( EdgeType.INVOKEDYNAMIC );
+          allowed = allowed || model.getDependencyType(edge).equals(EdgeType.INVOKEDYNAMIC);
 
           // resolve edge: mark target stub as needed
-        } else if ( mode == RESULT_MODE ) {
-          model.markStubNeeded( target );
+        } else if (mode == RESULT_MODE) {
+          model.markStubNeeded(target);
         }
       }
 
@@ -201,13 +201,13 @@ public class Shrinker {
      */
     private boolean isMethodNeeded( ClassDescriptor cd, MethodDescriptor md ) {
 
-      List<ClassDescriptor> descendants = new ArrayList<ClassDescriptor>( 5 );
-      model.getInternalDescendants( cd, descendants );
+      List<ClassDescriptor> descendants = new ArrayList<ClassDescriptor>(5);
+      model.getInternalDescendants(cd, descendants);
 
-      for ( ClassDescriptor descendant : descendants ) {
+      for (ClassDescriptor descendant : descendants) {
 
-        if ( ( !descendant.implementsMethod( md.getName(), md.getDesc() ) ) &&
-          (int) instanceMap.get( descendant.getNode() ) >= ( round - 1 ) ) {
+        if ((!descendant.implementsMethod(md.getName(), md.getDesc())) &&
+            (int) instanceMap.get(descendant.getNode()) >= (round - 1)) {
           return true;
         }
       }
@@ -217,8 +217,8 @@ public class Shrinker {
     private boolean wasClassInstantiated( final Edge edge ) {
 
       final Node targetNode = edge.target();
-      final Node classNode = model.getClassNode( targetNode );
-      if ( (int) instanceMap.get( classNode ) >= ( round - 1 ) ) {
+      final Node classNode = model.getClassNode(targetNode);
+      if ((int) instanceMap.get(classNode) >= (round - 1)) {
         return true;
       } else {
 
@@ -228,12 +228,12 @@ public class Shrinker {
       }
     }
 
-      /**
-       * Gets num skipped.
-       *
-       * @return the num skipped
-       */
-      protected int getNumSkipped() {
+    /**
+     * Gets num skipped.
+     *
+     * @return the num skipped
+     */
+    protected int getNumSkipped() {
       return numSkipped;
     }
   }

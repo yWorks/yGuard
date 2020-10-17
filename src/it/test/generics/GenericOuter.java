@@ -13,13 +13,13 @@ public class GenericOuter<T extends List<BlaClass.Inner<String>>> {
 //    System.out.println("bla: "+b);
 //  }
 
-    /**
-     * Foo.
-     *
-     * @param b the b
-     */
-    public void foo( Inner<Inner.InnerInner> b ) {
-    System.out.println("bla: "+b);
+  /**
+   * Foo.
+   *
+   * @param b the b
+   */
+  public void foo( Inner<Inner.InnerInner> b ) {
+    System.out.println("bla: " + b);
   }
 //
 //  public void baz(BlaClass.Inner<String> a) {
@@ -34,26 +34,26 @@ public class GenericOuter<T extends List<BlaClass.Inner<String>>> {
 //    new Inner();
 //  }
 
-    /**
-     * The type Inner.
-     *
-     * @param <K> the type parameter
-     */
-    public class Inner<K> {
+  /**
+   * The type Inner.
+   *
+   * @param <K> the type parameter
+   */
+  public class Inner<K> {
 
-        /**
-         * Inner foo.
-         */
-        public void innerFoo() {
+    /**
+     * Inner foo.
+     */
+    public void innerFoo() {
       new InnerInner();
     }
 
-        /**
-         * The type Inner inner.
-         *
-         * @param <K> the type parameter
-         */
-        public class InnerInner<K> {
+    /**
+     * The type Inner inner.
+     *
+     * @param <K> the type parameter
+     */
+    public class InnerInner<K> {
 
     }
 

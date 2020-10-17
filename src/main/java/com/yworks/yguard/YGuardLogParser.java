@@ -34,56 +34,55 @@ import javax.xml.parsers.SAXParserFactory;
  * The type Y guard log parser.
  */
 public class YGuardLogParser {
-  private DefaultTreeModel tree;
+  private final DefaultTreeModel tree;
 
   private final MyContentHandler contentHandler = new MyContentHandler();
 
+  /**
+   * The interface Mapped.
+   */
+  interface Mapped {
     /**
-     * The interface Mapped.
+     * Gets name.
+     *
+     * @return the name
      */
-    interface Mapped {
-        /**
-         * Gets name.
-         *
-         * @return the name
-         */
-        String getName();
+    String getName();
 
-        /**
-         * Gets mapped name.
-         *
-         * @return the mapped name
-         */
-        String getMappedName();
+    /**
+     * Gets mapped name.
+     *
+     * @return the mapped name
+     */
+    String getMappedName();
 
-        /**
-         * Gets icon.
-         *
-         * @return the icon
-         */
-        Icon getIcon();
+    /**
+     * Gets icon.
+     *
+     * @return the icon
+     */
+    Icon getIcon();
   }
 
   private static class AbstractMappedStruct implements Mapped {
     private String name;
     private String mappedName;
-    private Icon icon;
+    private final Icon icon;
 
-      /**
-       * Instantiates a new Abstract mapped struct.
-       *
-       * @param namePart   the name part
-       * @param mappedName the mapped name
-       * @param icon       the icon
-       */
-      public AbstractMappedStruct(String namePart, String mappedName, Icon icon) {
+    /**
+     * Instantiates a new Abstract mapped struct.
+     *
+     * @param namePart   the name part
+     * @param mappedName the mapped name
+     * @param icon       the icon
+     */
+    public AbstractMappedStruct( String namePart, String mappedName, Icon icon ) {
       this.name = namePart;
       this.mappedName = mappedName;
       this.icon = icon;
     }
 
-    public String getMappedName()
-    {
+    public String getMappedName() {
       return mappedName;
     }
 
@@ -91,136 +90,137 @@ public class YGuardLogParser {
       return icon;
     }
 
-    public String getName()
-    {
+    public String getName() {
       return name;
     }
 
-      /**
-       * Sets mapped name.
-       *
-       * @param n the n
-       */
-      public void setMappedName(String n)
-    {
+    /**
+     * Sets mapped name.
+     *
+     * @param n the n
+     */
+    public void setMappedName( String n ) {
       this.mappedName = n;
     }
 
-      /**
-       * Sets name.
-       *
-       * @param n the n
-       */
-      public void setName(String n)
-    {
+    /**
+     * Sets name.
+     *
+     * @param n the n
+     */
+    public void setName( String n ) {
       this.name = n;
     }
 
     public String toString() {
-      return getName()+" -> "+getMappedName();
+      return getName() + " -> " + getMappedName();
     }
   }
 
+  /**
+   * The type Package struct.
+   */
+  static final class PackageStruct extends AbstractMappedStruct {
     /**
-     * The type Package struct.
+     * Instantiates a new Package struct.
+     *
+     * @param name the name
+     * @param map  the map
      */
-    static final class PackageStruct extends AbstractMappedStruct {
-        /**
-         * Instantiates a new Package struct.
-         *
-         * @param name the name
-         * @param map  the map
-         */
-        PackageStruct(String name, String map) {
+    PackageStruct( String name, String map ) {
       super(name, map, Icons.PACKAGE_ICON);
     }
+
     public String toString() {
-      return getName()+" -> "+getMappedName();
+      return getName() + " -> " + getMappedName();
     }
   }
 
+  /**
+   * The type Class struct.
+   */
+  static final class ClassStruct extends AbstractMappedStruct {
     /**
-     * The type Class struct.
+     * Instantiates a new Class struct.
+     *
+     * @param name the name
+     * @param map  the map
      */
-    static final class ClassStruct extends AbstractMappedStruct {
-        /**
-         * Instantiates a new Class struct.
-         *
-         * @param name the name
-         * @param map  the map
-         */
-        ClassStruct(String name, String map) {
+    ClassStruct( String name, String map ) {
       super(name, map, Icons.CLASS_ICON);
     }
+
     public String toString() {
-      return getName()+" -> "+getMappedName();
+      return getName() + " -> " + getMappedName();
     }
   }
 
+  /**
+   * The type Method struct.
+   */
+  static final class MethodStruct extends AbstractMappedStruct {
     /**
-     * The type Method struct.
+     * Instantiates a new Method struct.
+     *
+     * @param name the name
+     * @param map  the map
      */
-    static final class MethodStruct extends AbstractMappedStruct {
-        /**
-         * Instantiates a new Method struct.
-         *
-         * @param name the name
-         * @param map  the map
-         */
-        MethodStruct(String name, String map) {
+    MethodStruct( String name, String map ) {
       super(name, map, Icons.METHOD_ICON);
     }
+
     public String toString() {
-      return getName()+" -> "+getMappedName();
+      return getName() + " -> " + getMappedName();
     }
   }
 
   private static final class FieldStruct extends AbstractMappedStruct {
-      /**
-       * Instantiates a new Field struct.
-       *
-       * @param name the name
-       * @param map  the map
-       */
-      FieldStruct(String name, String map) {
+    /**
+     * Instantiates a new Field struct.
+     *
+     * @param name the name
+     * @param map  the map
+     */
+    FieldStruct( String name, String map ) {
       super(name, map, Icons.FIELD_ICON);
     }
+
     public String toString() {
-      return getName()+" -> "+getMappedName();
+      return getName() + " -> " + getMappedName();
     }
   }
 
-    /**
-     * Instantiates a new Y guard log parser.
-     */
-    public YGuardLogParser() {
+  /**
+   * Instantiates a new Y guard log parser.
+   */
+  public YGuardLogParser() {
     DefaultMutableTreeNode root = new DefaultMutableTreeNode(null, true);
     this.tree = new DefaultTreeModel(root, true);
   }
 
-    /**
-     * Find child default mutable tree node.
-     *
-     * @param node   the node
-     * @param name   the name
-     * @param ofType the of type
-     * @return the default mutable tree node
-     */
-    protected DefaultMutableTreeNode findChild(TreeNode node, String name, Class ofType) {
+  /**
+   * Find child default mutable tree node.
+   *
+   * @param node   the node
+   * @param name   the name
+   * @param ofType the of type
+   * @return the default mutable tree node
+   */
+  protected DefaultMutableTreeNode findChild( TreeNode node, String name, Class ofType ) {
     return findChild(node, name, ofType, false);
   }
 
-    /**
-     * Find child default mutable tree node.
-     *
-     * @param node   the node
-     * @param name   the name
-     * @param ofType the of type
-     * @param useMap the use map
-     * @return the default mutable tree node
-     */
-    protected DefaultMutableTreeNode findChild(TreeNode node, String name, Class ofType, boolean useMap) {
-    for (Enumeration enumeration = node.children(); enumeration.hasMoreElements();) {
+  /**
+   * Find child default mutable tree node.
+   *
+   * @param node   the node
+   * @param name   the name
+   * @param ofType the of type
+   * @param useMap the use map
+   * @return the default mutable tree node
+   */
+  protected DefaultMutableTreeNode findChild( TreeNode node, String name, Class ofType, boolean useMap ) {
+    for (Enumeration enumeration = node.children(); enumeration.hasMoreElements(); ) {
       DefaultMutableTreeNode child = (DefaultMutableTreeNode) enumeration.nextElement();
       Mapped m = (Mapped) child.getUserObject();
       if (ofType == null || ofType.isAssignableFrom(m.getClass())) {
@@ -251,24 +251,24 @@ public class YGuardLogParser {
 //    return node;
 //  }
 
-    /**
-     * Gets package node.
-     *
-     * @param packageName the package name
-     * @return the package node
-     */
-    protected DefaultMutableTreeNode getPackageNode(String packageName) {
+  /**
+   * Gets package node.
+   *
+   * @param packageName the package name
+   * @return the package node
+   */
+  protected DefaultMutableTreeNode getPackageNode( String packageName ) {
     return getPackageNode(packageName, false);
   }
 
-    /**
-     * Gets package node.
-     *
-     * @param packageName the package name
-     * @param useMap      the use map
-     * @return the package node
-     */
-    protected DefaultMutableTreeNode getPackageNode(String packageName, boolean useMap) {
+  /**
+   * Gets package node.
+   *
+   * @param packageName the package name
+   * @param useMap      the use map
+   * @return the package node
+   */
+  protected DefaultMutableTreeNode getPackageNode( String packageName, boolean useMap ) {
     DefaultMutableTreeNode node = getRoot();
     if (packageName != null) {
       StringTokenizer st = new StringTokenizer(packageName, ".", false);
@@ -286,78 +286,78 @@ public class YGuardLogParser {
     return node;
   }
 
-    /**
-     * Gets class.
-     *
-     * @param fqn the fqn
-     * @return the class
-     */
-    protected ClassStruct getClass(String fqn) {
-    return (ClassStruct)getClassNode(fqn).getUserObject();
+  /**
+   * Gets class.
+   *
+   * @param fqn the fqn
+   * @return the class
+   */
+  protected ClassStruct getClass( String fqn ) {
+    return (ClassStruct) getClassNode(fqn).getUserObject();
   }
 
-    /**
-     * Gets package.
-     *
-     * @param fqn the fqn
-     * @return the package
-     */
-    protected PackageStruct getPackage(String fqn) {
-    return (PackageStruct)getPackageNode(fqn).getUserObject();
+  /**
+   * Gets package.
+   *
+   * @param fqn the fqn
+   * @return the package
+   */
+  protected PackageStruct getPackage( String fqn ) {
+    return (PackageStruct) getPackageNode(fqn).getUserObject();
   }
 
-    /**
-     * Gets method.
-     *
-     * @param fqn       the fqn
-     * @param signature the signature
-     * @return the method
-     */
-    protected MethodStruct getMethod(String fqn, String signature) {
-    return (MethodStruct)getMethodNode(fqn, signature).getUserObject();
+  /**
+   * Gets method.
+   *
+   * @param fqn       the fqn
+   * @param signature the signature
+   * @return the method
+   */
+  protected MethodStruct getMethod( String fqn, String signature ) {
+    return (MethodStruct) getMethodNode(fqn, signature).getUserObject();
   }
 
-    /**
-     * Gets field.
-     *
-     * @param fqn       the fqn
-     * @param signature the signature
-     * @return the field
-     */
-    protected FieldStruct getField(String fqn, String signature) {
-    return (FieldStruct)getFieldNode(fqn, signature).getUserObject();
+  /**
+   * Gets field.
+   *
+   * @param fqn       the fqn
+   * @param signature the signature
+   * @return the field
+   */
+  protected FieldStruct getField( String fqn, String signature ) {
+    return (FieldStruct) getFieldNode(fqn, signature).getUserObject();
   }
 
-    /**
-     * Gets class node.
-     *
-     * @param fqn the fqn
-     * @return the class node
-     */
-    protected DefaultMutableTreeNode getClassNode(String fqn) {
+  /**
+   * Gets class node.
+   *
+   * @param fqn the fqn
+   * @return the class node
+   */
+  protected DefaultMutableTreeNode getClassNode( String fqn ) {
     return getClassNode(fqn, false);
   }
 
-    /**
-     * Gets class node.
-     *
-     * @param fqn    the fqn
-     * @param useMap the use map
-     * @return the class node
-     */
-    protected DefaultMutableTreeNode getClassNode(String fqn, boolean useMap) {
+  /**
+   * Gets class node.
+   *
+   * @param fqn    the fqn
+   * @param useMap the use map
+   * @return the class node
+   */
+  protected DefaultMutableTreeNode getClassNode( String fqn, boolean useMap ) {
     String packageName;
     String className;
-    if (fqn.indexOf('.')<0) {
+    if (fqn.indexOf('.') < 0) {
       packageName = null;
       className = fqn;
     } else {
       packageName = fqn.substring(0, fqn.lastIndexOf('.'));
-      className = fqn.substring(fqn.lastIndexOf('.')+1);
+      className = fqn.substring(fqn.lastIndexOf('.') + 1);
     }
     DefaultMutableTreeNode pn = getPackageNode(packageName);
     if (className.indexOf('$') > 0) {
-      for (StringTokenizer st = new StringTokenizer(className, "$", false); st.hasMoreTokens();) {
+      for (StringTokenizer st = new StringTokenizer(className, "$", false); st.hasMoreTokens(); ) {
         String token = st.nextToken();
         DefaultMutableTreeNode child = findChild(pn, token, ClassStruct.class, useMap);
         if (child == null) {
@@ -377,27 +377,27 @@ public class YGuardLogParser {
     }
   }
 
-    /**
-     * Gets method node.
-     *
-     * @param cname the cname
-     * @param fqn   the fqn
-     * @return the method node
-     */
-    protected DefaultMutableTreeNode getMethodNode(String cname, String fqn) {
+  /**
+   * Gets method node.
+   *
+   * @param cname the cname
+   * @param fqn   the fqn
+   * @return the method node
+   */
+  protected DefaultMutableTreeNode getMethodNode( String cname, String fqn ) {
     return getMethodNode(cname, fqn, false);
   }
 
 
-    /**
-     * Gets method node.
-     *
-     * @param cname  the cname
-     * @param fqn    the fqn
-     * @param useMap the use map
-     * @return the method node
-     */
-    protected DefaultMutableTreeNode getMethodNode(String cname, String fqn, boolean useMap) {
+  /**
+   * Gets method node.
+   *
+   * @param cname  the cname
+   * @param fqn    the fqn
+   * @param useMap the use map
+   * @return the method node
+   */
+  protected DefaultMutableTreeNode getMethodNode( String cname, String fqn, boolean useMap ) {
     DefaultMutableTreeNode cn = getClassNode(cname);
     DefaultMutableTreeNode child = findChild(cn, fqn, MethodStruct.class, useMap);
     if (child == null) {
@@ -408,13 +408,13 @@ public class YGuardLogParser {
     return child;
   }
 
-  private int calcChildIndex(DefaultMutableTreeNode cn, DefaultMutableTreeNode child) {
+  private int calcChildIndex( DefaultMutableTreeNode cn, DefaultMutableTreeNode child ) {
     int left = 0;
     int right = cn.getChildCount() - 1;
     Object userObject = child.getUserObject();
     while (right >= left) {
-      int test = (left + right) /2;
-      Object testObject = ((DefaultMutableTreeNode)cn.getChildAt(test)).getUserObject();
+      int test = (left + right) / 2;
+      Object testObject = ((DefaultMutableTreeNode) cn.getChildAt(test)).getUserObject();
       int cmp = compare(userObject, testObject);
       if (cmp == 0) {
         return test;
@@ -429,7 +429,7 @@ public class YGuardLogParser {
     return left;
   }
 
-  private int compare(Object o1, Object o2) {
+  private int compare( Object o1, Object o2 ) {
     Mapped m1 = (Mapped) o1;
     Mapped m2 = (Mapped) o2;
     if (m1.getClass() != m2.getClass()) {
@@ -452,26 +452,26 @@ public class YGuardLogParser {
     return m1.getName().compareTo(m2.getName());
   }
 
-    /**
-     * Gets field node.
-     *
-     * @param cname the cname
-     * @param fqn   the fqn
-     * @return the field node
-     */
-    protected DefaultMutableTreeNode getFieldNode(String cname, String fqn) {
+  /**
+   * Gets field node.
+   *
+   * @param cname the cname
+   * @param fqn   the fqn
+   * @return the field node
+   */
+  protected DefaultMutableTreeNode getFieldNode( String cname, String fqn ) {
     return getFieldNode(cname, fqn, false);
   }
 
-    /**
-     * Gets field node.
-     *
-     * @param cname  the cname
-     * @param fqn    the fqn
-     * @param useMap the use map
-     * @return the field node
-     */
-    protected DefaultMutableTreeNode getFieldNode(String cname, String fqn, boolean useMap) {
+  /**
+   * Gets field node.
+   *
+   * @param cname  the cname
+   * @param fqn    the fqn
+   * @param useMap the use map
+   * @return the field node
+   */
+  protected DefaultMutableTreeNode getFieldNode( String cname, String fqn, boolean useMap ) {
     DefaultMutableTreeNode cn = getClassNode(cname);
     DefaultMutableTreeNode child = findChild(cn, fqn, FieldStruct.class, useMap);
     if (child == null) {
@@ -482,15 +482,15 @@ public class YGuardLogParser {
     return child;
   }
 
-    /**
-     * Parse.
-     *
-     * @param file the file
-     * @throws ParserConfigurationException the parser configuration exception
-     * @throws SAXException                 the sax exception
-     * @throws IOException                  the io exception
-     */
-    void parse( final File file ) throws ParserConfigurationException, SAXException, IOException {
+  /**
+   * Parse.
+   *
+   * @param file the file
+   * @throws ParserConfigurationException the parser configuration exception
+   * @throws SAXException                 the sax exception
+   * @throws IOException                  the io exception
+   */
+  void parse( final File file ) throws ParserConfigurationException, SAXException, IOException {
     if (file.getName().toLowerCase().endsWith(".gz")) {
       parse(new InputSource(new GZIPInputStream(new FileInputStream(file))));
     } else {
@@ -501,27 +501,27 @@ public class YGuardLogParser {
     }
   }
 
-    /**
-     * Parse.
-     *
-     * @param url the url
-     * @throws ParserConfigurationException the parser configuration exception
-     * @throws SAXException                 the sax exception
-     * @throws IOException                  the io exception
-     */
-    public void parse(URL url) throws ParserConfigurationException, SAXException, IOException {
+  /**
+   * Parse.
+   *
+   * @param url the url
+   * @throws ParserConfigurationException the parser configuration exception
+   * @throws SAXException                 the sax exception
+   * @throws IOException                  the io exception
+   */
+  public void parse( URL url ) throws ParserConfigurationException, SAXException, IOException {
     parse(new InputSource(url.openStream()));
   }
 
-    /**
-     * Parse.
-     *
-     * @param is the is
-     * @throws ParserConfigurationException the parser configuration exception
-     * @throws SAXException                 the sax exception
-     * @throws IOException                  the io exception
-     */
-    public void parse(InputSource is) throws ParserConfigurationException, SAXException, IOException {
+  /**
+   * Parse.
+   *
+   * @param is the is
+   * @throws ParserConfigurationException the parser configuration exception
+   * @throws SAXException                 the sax exception
+   * @throws IOException                  the io exception
+   */
+  public void parse( InputSource is ) throws ParserConfigurationException, SAXException, IOException {
     SAXParserFactory f = SAXParserFactory.newInstance();
     f.setValidating(false);
     SAXParser parser = f.newSAXParser();
@@ -530,20 +530,20 @@ public class YGuardLogParser {
     r.parse(is);
   }
 
-    /**
-     * Translate string.
-     *
-     * @param fqn the fqn
-     * @return the string
-     */
-    public String translate(String fqn) {
+  /**
+   * Translate string.
+   *
+   * @param fqn the fqn
+   * @return the string
+   */
+  public String translate( String fqn ) {
     DefaultMutableTreeNode node = getRoot();
 
     final StringBuffer ocnSb = new StringBuffer();
 
     final StringBuffer sb = new StringBuffer();
     boolean buildPrefix = true;
-    for (StringTokenizer st = new StringTokenizer(fqn,"$.",true); st.hasMoreTokens();) {
+    for (StringTokenizer st = new StringTokenizer(fqn, "$.", true); st.hasMoreTokens(); ) {
       String token = st.nextToken();
       sb.append(token);
 
@@ -590,13 +590,13 @@ public class YGuardLogParser {
     return ocnSb.toString();
   }
 
-    /**
-     * Translate my stack trace element.
-     *
-     * @param ste the ste
-     * @return the my stack trace element
-     */
-    public MyStackTraceElement translate(MyStackTraceElement ste) {
+  /**
+   * Translate my stack trace element.
+   *
+   * @param ste the ste
+   * @return the my stack trace element
+   */
+  public MyStackTraceElement translate( MyStackTraceElement ste ) {
     try {
       DefaultMutableTreeNode classNode = getRoot();
       int dollarPos = ste.getClassName().indexOf('$');
@@ -612,7 +612,7 @@ public class YGuardLogParser {
 
       final StringBuffer sb = new StringBuffer();
       boolean buildPrefix = true;
-      for (StringTokenizer st = new StringTokenizer(packageName,".",true); st.hasMoreTokens();) {
+      for (StringTokenizer st = new StringTokenizer(packageName, ".", true); st.hasMoreTokens(); ) {
         String token = st.nextToken();
         sb.append(token);
 
@@ -644,7 +644,7 @@ public class YGuardLogParser {
       }
 
       sb.setLength(0);
-      for (StringTokenizer st = new StringTokenizer(classAndInnerClassName,"$.",true); st.hasMoreTokens();) {
+      for (StringTokenizer st = new StringTokenizer(classAndInnerClassName, "$.", true); st.hasMoreTokens(); ) {
         String token = st.nextToken();
         sb.append(token);
         if (!"$".equals(token) && !".".equals(token)) {
@@ -681,7 +681,7 @@ public class YGuardLogParser {
             if (saltString != null) {
               try {
                 salt = Long.parseLong(saltString);
-                final long seed = salt ^ originalClassName.replace('$','.').hashCode();
+                final long seed = salt ^ originalClassName.replace('$', '.').hashCode();
 
                 final ObfuscatorTask.LineNumberScrambler scrambler = new ObfuscatorTask.LineNumberScrambler(3584, seed);
                 lineNumber = scrambler.unscramble(lineNumber);
@@ -702,11 +702,11 @@ public class YGuardLogParser {
     }
   }
 
-  private static String translateMethodName(DefaultMutableTreeNode node, String mappedName) {
+  private static String translateMethodName( DefaultMutableTreeNode node, String mappedName ) {
     final StringBuffer originalName = new StringBuffer();
     if (node != null) {
       String del = "";
-      for (Enumeration en = node.children(); en.hasMoreElements();) {
+      for (Enumeration en = node.children(); en.hasMoreElements(); ) {
         DefaultMutableTreeNode child = (DefaultMutableTreeNode) en.nextElement();
         Mapped mapped = (Mapped) child.getUserObject();
         if (mapped.getClass() == MethodStruct.class) {
@@ -731,13 +731,13 @@ public class YGuardLogParser {
     return originalName.length() < 1 ? mappedName : originalName.toString();
   }
 
-    /**
-     * The entry point of application.
-     *
-     * @param args the input arguments
-     * @throws Exception the exception
-     */
-    public static void main(String[] args) throws Exception {
+  /**
+   * The entry point of application.
+   *
+   * @param args the input arguments
+   * @throws Exception the exception
+   */
+  public static void main( String[] args ) throws Exception {
     if (args.length < 1) {
       System.out.println("Usage java -jar yguard.jar logfile.xml[.gz] [-pipe] [name]");
       System.out.println(" where 'logfile.xml' is the logfile that has been generated ");
@@ -754,7 +754,7 @@ public class YGuardLogParser {
     }
     final File file = new File(args[0]);
     if (!file.isFile() || !file.canRead()) {
-      System.err.println("Could not open file "+args[0]);
+      System.err.println("Could not open file " + args[0]);
       System.exit(-1);
     }
 
@@ -773,13 +773,13 @@ public class YGuardLogParser {
         InputStreamReader er = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(er);
         String s;
-        while ( (s = br.readLine()) != null) {
-          System.out.println(parser.translate(new String[] {s})[0]);
+        while ((s = br.readLine()) != null) {
+          System.out.println(parser.translate(new String[]{s})[0]);
         }
       } else {
         String[] strings = new String[args.length - 1];
         System.arraycopy(args, 1, strings, 0, args.length - 1);
-        String [] s = parser.translate(strings);
+        String[] s = parser.translate(strings);
         for (int i = 0; i < s.length; i++) {
           System.out.println(s[i]);
         }
@@ -796,20 +796,20 @@ public class YGuardLogParser {
 //  at A.A.A.A.E.main(Unknown Source)
 
 
-    /**
-     * Translate string [ ].
-     *
-     * @param args the args
-     * @return the string [ ]
-     */
-    String[] translate(String[] args) {
+  /**
+   * Translate string [ ].
+   *
+   * @param args the args
+   * @return the string [ ]
+   */
+  String[] translate( String[] args ) {
     String[] resultArr = new String[args.length];
     final Pattern jrockitPattern = Pattern.compile("(.*\\s+)?([^;()\\s]+)\\.([^;()\\s]+)\\(([^)]*)\\)(.+)\\(([^:)]+)(?::(\\d*))?\\)(.*)");
     final Pattern stePattern = Pattern.compile("(.*\\s+)?([^(\\s]+)\\.([^(\\s]+)\\(([^:)]*)(?::(\\d*))?\\)(.*)");
     final Pattern fqnPattern = Pattern.compile("([^:;()\\s]+\\.)+([^:;()\\s]+)");
 
     for (int i = 0; i < args.length; i++) {
-      args[i] = CharConverter.convert( args[i]);
+      args[i] = CharConverter.convert(args[i]);
       Matcher m2 = jrockitPattern.matcher(args[i]);
       if (m2.matches()) {
         final String[] moduleAndType = split(m2.group(2));
@@ -870,17 +870,17 @@ public class YGuardLogParser {
 
   private static String[] split( final String moduleAndType ) {
     if (moduleAndType == null) {
-      return new String[] {"", ""};
+      return new String[]{"", ""};
     } else {
       final int idx1 = moduleAndType.indexOf('$');
       final int idx2 = idx1 > -1 ? moduleAndType.lastIndexOf('/', idx1) : moduleAndType.lastIndexOf('/');
       if (idx2 > -1) {
-        return new String[] {
+        return new String[]{
                 moduleAndType.substring(0, idx2 + 1),
                 moduleAndType.substring(idx2 + 1)
         };
       } else {
-        return new String[] {"", moduleAndType};
+        return new String[]{"", moduleAndType};
       }
     }
   }
@@ -895,24 +895,24 @@ public class YGuardLogParser {
     }
   }
 
-    /**
-     * Gets tree model.
-     *
-     * @return the tree model
-     */
-    DefaultTreeModel getTreeModel() {
+  /**
+   * Gets tree model.
+   *
+   * @return the tree model
+   */
+  DefaultTreeModel getTreeModel() {
     return tree;
   }
 
   private DefaultMutableTreeNode getRoot() {
-    return (DefaultMutableTreeNode)tree.getRoot();
+    return (DefaultMutableTreeNode) tree.getRoot();
   }
 
-  private static String getOriginalName(DefaultMutableTreeNode node) {
+  private static String getOriginalName( DefaultMutableTreeNode node ) {
     return ((Mapped) node.getUserObject()).getName();
   }
 
-  private static String escapeReplacement(String replacementString) {
+  private static String escapeReplacement( String replacementString ) {
     if ((replacementString.indexOf('\\') == -1) && (replacementString.indexOf('$') == -1)) {
       return replacementString;
     }
@@ -930,14 +930,14 @@ public class YGuardLogParser {
     return result.toString();
   }
 
-  private static StringBuffer append(StringBuffer sb, StringTokenizer st) {
+  private static StringBuffer append( StringBuffer sb, StringTokenizer st ) {
     while (st.hasMoreTokens()) {
       sb.append(st.nextToken());
     }
     return sb;
   }
 
-  private static String buildFilename(String qualifiedName) {
+  private static String buildFilename( String qualifiedName ) {
     String fileName = "";
     int idxDot = qualifiedName.lastIndexOf('.');
     if (idxDot > 0) {
@@ -956,18 +956,18 @@ public class YGuardLogParser {
     private boolean inMapSection;
     private boolean inLogSection;
     private boolean inExposeSection;
-      /**
-       * The Owner properties.
-       */
-      final Map ownerProperties = new HashMap();
+    /**
+     * The Owner properties.
+     */
+    final Map ownerProperties = new HashMap();
 
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters( char[] ch, int start, int length ) throws SAXException {
     }
 
     public void endDocument() throws SAXException {
     }
 
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement( String uri, String localName, String qName ) throws SAXException {
       if ("expose".equals(qName)) {
         inExposeSection = false;
       }
@@ -979,26 +979,26 @@ public class YGuardLogParser {
       }
     }
 
-    public void endPrefixMapping(String prefix) throws SAXException {
+    public void endPrefixMapping( String prefix ) throws SAXException {
     }
 
-    public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
+    public void ignorableWhitespace( char[] ch, int start, int length ) throws SAXException {
     }
 
-    public void processingInstruction(String target, String data) throws SAXException {
+    public void processingInstruction( String target, String data ) throws SAXException {
     }
 
-    public void setDocumentLocator(Locator locator) {
+    public void setDocumentLocator( Locator locator ) {
     }
 
-    public void skippedEntity(String name) throws SAXException {
+    public void skippedEntity( String name ) throws SAXException {
     }
 
     public void startDocument() throws SAXException {
       ownerProperties.clear();
     }
 
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+    public void startElement( String uri, String localName, String qName, Attributes attributes ) throws SAXException {
       if ("expose".equals(qName)) {
         inExposeSection = true;
       }
@@ -1075,125 +1075,125 @@ public class YGuardLogParser {
       }
     }
 
-    public void startPrefixMapping(String prefix, String uri) throws SAXException {
+    public void startPrefixMapping( String prefix, String uri ) throws SAXException {
     }
   }
 
+  /**
+   * The type Char converter.
+   */
+  public static final class CharConverter {
+    private static final Pattern unicodeEscape = Pattern.compile("&#(\\d{1,5});");
+
     /**
-     * The type Char converter.
+     * Convert string.
+     *
+     * @param s the s
+     * @return the string
      */
-    public static final class CharConverter {
-    private static final Pattern unicodeEscape = Pattern.compile( "&#(\\d{1,5});" );
+    public static String convert( String s ) {
+      StringBuilder r = new StringBuilder();
 
-        /**
-         * Convert string.
-         *
-         * @param s the s
-         * @return the string
-         */
-        public static String convert( String s ) {
-      StringBuilder r = new StringBuilder( );
-
-      Matcher matcher = unicodeEscape.matcher( s );
+      Matcher matcher = unicodeEscape.matcher(s);
 
       int lastMatchEnd = 0;
 
-      while( matcher.find()) {
-        String match = matcher.group( 1 );
-        r.append( s.substring( lastMatchEnd, matcher.start() ) );
-        r.append( (char)(Integer.parseInt( match )) );
+      while (matcher.find()) {
+        String match = matcher.group(1);
+        r.append(s, lastMatchEnd, matcher.start());
+        r.append((char) (Integer.parseInt(match)));
         lastMatchEnd = matcher.end();
       }
-      r.append( s.substring( lastMatchEnd, s.length() ) );
+      r.append(s.substring(lastMatchEnd));
 
       return r.toString();
     }
   }
 
-    /**
-     * The type My stack trace element.
-     */
-    public static final class MyStackTraceElement {
-    private String className;
+  /**
+   * The type My stack trace element.
+   */
+  public static final class MyStackTraceElement {
+    private final String className;
     private String methodName;
     private String fileName;
     private int lineNumber;
 
-        /**
-         * Instantiates a new My stack trace element.
-         *
-         * @param className  the class name
-         * @param methodName the method name
-         * @param fileName   the file name
-         * @param lineNumber the line number
-         */
-        public MyStackTraceElement(String className, String methodName, String fileName, int lineNumber) {
+    /**
+     * Instantiates a new My stack trace element.
+     *
+     * @param className  the class name
+     * @param methodName the method name
+     * @param fileName   the file name
+     * @param lineNumber the line number
+     */
+    public MyStackTraceElement( String className, String methodName, String fileName, int lineNumber ) {
       this.className = className;
       this.methodName = methodName;
       this.fileName = fileName;
       this.lineNumber = lineNumber;
     }
 
-        /**
-         * Gets class name.
-         *
-         * @return the class name
-         */
-        public String getClassName() {
+    /**
+     * Gets class name.
+     *
+     * @return the class name
+     */
+    public String getClassName() {
       return className;
     }
 
-        /**
-         * Sets method name.
-         *
-         * @param methodName the method name
-         */
-        public void setMethodName(String methodName) {
+    /**
+     * Sets method name.
+     *
+     * @param methodName the method name
+     */
+    public void setMethodName( String methodName ) {
       this.methodName = methodName;
     }
 
-        /**
-         * Gets file name.
-         *
-         * @return the file name
-         */
-        public String getFileName() {
+    /**
+     * Gets file name.
+     *
+     * @return the file name
+     */
+    public String getFileName() {
       return fileName;
     }
 
-        /**
-         * Sets file name.
-         *
-         * @param fileName the file name
-         */
-        public void setFileName(String fileName) {
+    /**
+     * Sets file name.
+     *
+     * @param fileName the file name
+     */
+    public void setFileName( String fileName ) {
       this.fileName = fileName;
     }
 
-        /**
-         * Gets line number.
-         *
-         * @return the line number
-         */
-        public int getLineNumber() {
+    /**
+     * Gets line number.
+     *
+     * @return the line number
+     */
+    public int getLineNumber() {
       return lineNumber;
     }
 
-        /**
-         * Sets line number.
-         *
-         * @param lineNumber the line number
-         */
-        public void setLineNumber(int lineNumber) {
+    /**
+     * Sets line number.
+     *
+     * @param lineNumber the line number
+     */
+    public void setLineNumber( int lineNumber ) {
       this.lineNumber = lineNumber;
     }
 
-        /**
-         * Gets method name.
-         *
-         * @return the method name
-         */
-        public String getMethodName() {
+    /**
+     * Gets method name.
+     *
+     * @return the method name
+     */
+    public String getMethodName() {
       return methodName;
     }
 
@@ -1202,50 +1202,50 @@ public class YGuardLogParser {
     }
   }
 
+  /**
+   * The type Icons.
+   */
+  public static final class Icons implements Icon {
     /**
-     * The type Icons.
+     * The constant CLASS_ICON.
      */
-    public static final class Icons implements Icon {
-        /**
-         * The constant CLASS_ICON.
-         */
-        public static final Icon CLASS_ICON = new Icons(Color.blue, "C");
-        /**
-         * The constant METHOD_ICON.
-         */
-        public static final Icon METHOD_ICON = new Icons(Color.red, "M");
-        /**
-         * The constant PACKAGE_ICON.
-         */
-        public static final Icon PACKAGE_ICON = new Icons(Color.yellow, "P");
-        /**
-         * The constant FIELD_ICON.
-         */
-        public static final Icon FIELD_ICON = new Icons(Color.green, "F");
+    public static final Icon CLASS_ICON = new Icons(Color.blue, "C");
+    /**
+     * The constant METHOD_ICON.
+     */
+    public static final Icon METHOD_ICON = new Icons(Color.red, "M");
+    /**
+     * The constant PACKAGE_ICON.
+     */
+    public static final Icon PACKAGE_ICON = new Icons(Color.yellow, "P");
+    /**
+     * The constant FIELD_ICON.
+     */
+    public static final Icon FIELD_ICON = new Icons(Color.green, "F");
 
-    private static final Ellipse2D circle = new Ellipse2D.Double(1,1, 14, 14);
+    private static final Ellipse2D circle = new Ellipse2D.Double(1, 1, 14, 14);
 
-        /**
-         * The Color.
-         */
-        protected Color color;
-        /**
-         * The Label.
-         */
-        protected String label;
+    /**
+     * The Color.
+     */
+    protected Color color;
+    /**
+     * The Label.
+     */
+    protected String label;
 
-        /**
-         * Instantiates a new Icons.
-         *
-         * @param color the color
-         * @param label the label
-         */
-        public Icons(Color color, String label) {
+    /**
+     * Instantiates a new Icons.
+     *
+     * @param color the color
+     * @param label the label
+     */
+    public Icons( Color color, String label ) {
       this.color = color;
       this.label = label;
     }
 
-    public void paintIcon(Component c, Graphics g, int x, int y) {
+    public void paintIcon( Component c, Graphics g, int x, int y ) {
       g.translate(x, y);
       g.setColor(color);
       Graphics2D g2d = (Graphics2D) g;

@@ -14,24 +14,24 @@ public class AntLogger extends Logger {
   private final Task task;
   private final Project project;
 
-    /**
-     * Instantiates a new Ant logger.
-     *
-     * @param project the project
-     * @param task    the task
-     */
-    public AntLogger( final Project project, final Task task ) {
+  /**
+   * Instantiates a new Ant logger.
+   *
+   * @param project the project
+   * @param task    the task
+   */
+  public AntLogger( final Project project, final Task task ) {
     this.project = project;
     this.task = task;
     register();
   }
 
   public void doLog( final String s ) {
-    project.log( task, s, Project.MSG_INFO );
+    project.log(task, s, Project.MSG_INFO);
   }
 
   public void doErr( final String s ) {
-    project.log( task, "ERROR: "+s, Project.MSG_ERR );
+    project.log(task, "ERROR: " + s, Project.MSG_ERR);
   }
 
   public void doWarn( String s ) {
@@ -46,7 +46,7 @@ public class AntLogger extends Logger {
   }
 
   public void doErr( String s, Throwable ex ) {
-    project.log( task, "ERROR: "+s + "\n" + ex.getMessage(), Project.MSG_ERR );
+    project.log(task, "ERROR: " + s + "\n" + ex.getMessage(), Project.MSG_ERR);
   }
 
   public void close() {

@@ -22,25 +22,25 @@ public class MethodFilter extends PatternMatchedFilter {
 
   private List<MethodSection> sections;
 
-    /**
-     * Instantiates a new Method filter.
-     *
-     * @param project the project
-     */
-    public MethodFilter( Project project ) {
-    super( project );
+  /**
+   * Instantiates a new Method filter.
+   *
+   * @param project the project
+   */
+  public MethodFilter( Project project ) {
+    super(project);
   }
 
-    /**
-     * Add method section.
-     *
-     * @param methodSection the method section
-     */
-    public void addMethodSection( MethodSection methodSection ) {
-    if ( null == sections ) {
-      sections = new ArrayList<MethodSection>( 5 );
+  /**
+   * Add method section.
+   *
+   * @param methodSection the method section
+   */
+  public void addMethodSection( MethodSection methodSection ) {
+    if (null == sections) {
+      sections = new ArrayList<MethodSection>(5);
     }
-    sections.add( methodSection );
+    sections.add(methodSection);
   }
 
   @Override
@@ -49,7 +49,7 @@ public class MethodFilter extends PatternMatchedFilter {
     String className = cd.getName();
     String methodName = md.getName();
 
-    for ( MethodSection ms : sections ) {
+    for (MethodSection ms : sections) {
 
       String entryMethodName = ms.getName();
       String entryMethodClass = ms.getClassName();
@@ -57,25 +57,25 @@ public class MethodFilter extends PatternMatchedFilter {
       boolean r = true;
 
       // returnType
-      if ( null != ms.getReturnType() ) {
-        Type requiredReturnType = Type.getType( Util.verboseToNativeType( ms.getReturnType() ) );
-        r &= ( requiredReturnType.equals( md.getReturnType() ) );
+      if (null != ms.getReturnType()) {
+        Type requiredReturnType = Type.getType(Util.verboseToNativeType(ms.getReturnType()));
+        r &= (requiredReturnType.equals(md.getReturnType()));
       }
 
       // arguments
-      if ( null != ms.getArgs() ) {
-        String[] requiredArgTypes = ms.getArgs().split( "\\s*,\\s*" );
-        if ( requiredArgTypes.length == 1 && requiredArgTypes[ 0 ].length() == 0 ) { // args=""
+      if (null != ms.getArgs()) {
+        String[] requiredArgTypes = ms.getArgs().split("\\s*,\\s*");
+        if (requiredArgTypes.length == 1 && requiredArgTypes[0].length() == 0) { // args=""
           requiredArgTypes = new String[0];
         }
         Type[] argTypes = md.getArgumentTypes();
 
-        if ( requiredArgTypes.length == argTypes.length ) {
-          for ( int i = 0; i < argTypes.length; i++ ) {
-            Type argType = argTypes[ i ];
-            Type requiredArgType = Type.getType( Util.verboseToNativeType( requiredArgTypes[ i ].trim() ) );
+        if (requiredArgTypes.length == argTypes.length) {
+          for (int i = 0; i < argTypes.length; i++) {
+            Type argType = argTypes[i];
+            Type requiredArgType = Type.getType(Util.verboseToNativeType(requiredArgTypes[i].trim()));
 
-            r &= argType.equals( requiredArgType );
+            r &= argType.equals(requiredArgType);
           }
         } else {
           r = false;
@@ -83,33 +83,32 @@ public class MethodFilter extends PatternMatchedFilter {
       }
 
       // access
-      if ( null != ms.getAccess() ) {
-        r &= ms.getAccess().isAccessLevel( md.getAccess() );
+      if (null != ms.getAccess()) {
+        r &= ms.getAccess().isAccessLevel(md.getAccess());
       }
 
       // class
-      if ( null == entryMethodClass || entryMethodClass.length() == 0 ) {
-        r &= match( TypePatternSet.Type.CLASS, className, ms ) ||
-                match( TypePatternSet.Type.CLASS, Util.toJavaClass( className ), ms );
+      if (null == entryMethodClass || entryMethodClass.length() == 0) {
+        r &= match(TypePatternSet.Type.CLASS, className, ms) ||
+             match(TypePatternSet.Type.CLASS, Util.toJavaClass(className), ms);
       } else {
-        r &= entryMethodClass.equals( className );
+        r &= entryMethodClass.equals(className);
       }
 
       // throws
-      if ( null != ms.getThrows() ) {
+      if (null != ms.getThrows()) {
 
-        StringTokenizer tokenizer = new StringTokenizer( ms.getThrows(), "," );
+        StringTokenizer tokenizer = new StringTokenizer(ms.getThrows(), ",");
 
-        while ( tokenizer.hasMoreTokens() ) {
-          String exception = Util.toInternalClass( tokenizer.nextToken().trim() );
-
+        while (tokenizer.hasMoreTokens()) {
+          String exception = Util.toInternalClass(tokenizer.nextToken().trim());
 
 
           boolean found = false;
 
-          if ( null != md.getExceptions() ) {
-            for ( String exception2 : md.getExceptions() ) {
-              if ( exception2.equals( exception ) ) {
+          if (null != md.getExceptions()) {
+            for (String exception2 : md.getExceptions()) {
+              if (exception2.equals(exception)) {
                 found = true;
               }
             }
@@ -121,13 +120,13 @@ public class MethodFilter extends PatternMatchedFilter {
       }
 
       // name
-      if ( null == entryMethodName || entryMethodName.length() == 0 ) {
-        r &= match( TypePatternSet.Type.NAME, methodName, ms );
+      if (null == entryMethodName || entryMethodName.length() == 0) {
+        r &= match(TypePatternSet.Type.NAME, methodName, ms);
       } else {
-        r &= entryMethodName.equals( methodName );
+        r &= entryMethodName.equals(methodName);
       }
 
-      if ( r ) {
+      if (r) {
         return r;
       }
     }

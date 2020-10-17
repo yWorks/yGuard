@@ -7,6 +7,5 @@ package test.external;
  */
 public interface ExtAI extends ExtAII {
 
-  
 
 }

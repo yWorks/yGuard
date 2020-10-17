@@ -4,7 +4,8 @@ import java.util.List;
 
 /**
  * Offers functional utilities based on list folding
- * @param <T> - a number type to fold
+ * 
+*@param <T> - a number type to fold
  * @deprecated You should use java.util.functional and stream.reduce in Java 8
  */
 @Deprecated

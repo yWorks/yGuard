@@ -21,18 +21,18 @@ import java.util.List;
  * The type Directory stream provider.
  */
 public class DirectoryStreamProvider extends SimpleFileVisitor<Path> implements StreamProvider {
-  private File directory;
-  private List<Entry> entries = new ArrayList<>();
+  private final File directory;
+  private final List<Entry> entries = new ArrayList<>();
   private Iterator<Entry> entryIterator;
   private Entry currentEntry;
 
-    /**
-     * Instantiates a new Directory stream provider.
-     *
-     * @param directory the directory
-     * @throws IOException the io exception
-     */
-    public DirectoryStreamProvider( File directory ) throws IOException {
+  /**
+   * Instantiates a new Directory stream provider.
+   *
+   * @param directory the directory
+   * @throws IOException the io exception
+   */
+  public DirectoryStreamProvider( File directory ) throws IOException {
     this.directory = directory;
     Files.walkFileTree(directory.toPath(), this);
     entryIterator = entries.iterator();
@@ -50,16 +50,16 @@ public class DirectoryStreamProvider extends SimpleFileVisitor<Path> implements 
   public DataInputStream getNextClassEntryStream() throws IOException {
     FileEntryWrapper entry = null;
 
-    while ( entryIterator.hasNext() ) {
-      entry = (FileEntryWrapper)entryIterator.next();
-      if ( entry.getName().endsWith(".class") ) {
+    while (entryIterator.hasNext()) {
+      entry = (FileEntryWrapper) entryIterator.next();
+      if (entry.getName().endsWith(".class")) {
         break;
       }
     }
 
-    if ( entry != null  && entry.getName().endsWith(".class") ) {
+    if (entry != null && entry.getName().endsWith(".class")) {
       currentEntry = entry;
-      return new DataInputStream( new BufferedInputStream(new FileInputStream(entry.getFile()) ));
+      return new DataInputStream(new BufferedInputStream(new FileInputStream(entry.getFile())));
     } else {
       currentEntry = null;
       return null;
@@ -70,16 +70,16 @@ public class DirectoryStreamProvider extends SimpleFileVisitor<Path> implements 
   public DataInputStream getNextResourceEntryStream() throws IOException {
     FileEntryWrapper entry = null;
 
-    while ( entryIterator.hasNext() ) {
-      entry = (FileEntryWrapper)entryIterator.next();
-      if ( !entry.getName().endsWith(".class") ) {
+    while (entryIterator.hasNext()) {
+      entry = (FileEntryWrapper) entryIterator.next();
+      if (!entry.getName().endsWith(".class")) {
         break;
       }
     }
 
-    if ( entry != null  && !entry.getName().endsWith(".class") && !entry.isDirectory() ) {
+    if (entry != null && !entry.getName().endsWith(".class") && !entry.isDirectory()) {
       currentEntry = entry;
-      return new DataInputStream( new BufferedInputStream(new FileInputStream(entry.getFile()) ));
+      return new DataInputStream(new BufferedInputStream(new FileInputStream(entry.getFile())));
     } else {
       currentEntry = null;
       return null;

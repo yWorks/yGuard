@@ -32,33 +32,33 @@ public class ModuleAttrInfo extends AttrInfo {
   // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Module attr info.
-     *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
-     */
+  /**
+   * Instantiates a new Module attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
 // Instance Methods ------------------------------------------------------
   ModuleAttrInfo( final ClassFile cf, final int attrNameIndex, final int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
-    /**
-     * Gets module name index.
-     *
-     * @return the module name index
-     */
-    int getModuleNameIndex() {
+  /**
+   * Gets module name index.
+   *
+   * @return the module name index
+   */
+  int getModuleNameIndex() {
     return u2moduleNameIndex;
   }
 
-    /**
-     * Sets module name index.
-     *
-     * @param idx the idx
-     */
-    void setModuleNameIndex( final int idx ) {
+  /**
+   * Sets module name index.
+   *
+   * @param idx the idx
+   */
+  void setModuleNameIndex( final int idx ) {
     this.u2moduleNameIndex = idx;
   }
 

@@ -18,28 +18,29 @@ import java.util.jar.JarFile;
  */
 public class JarStreamProvider implements StreamProvider {
 
-  private JarFile f;
+  private final JarFile f;
   private Enumeration<? extends JarEntry> en;
 
-    /**
-     * The Current entry.
-     */
-    JarEntry currentEntry;
+  /**
+   * The Current entry.
+   */
+  JarEntry currentEntry;
   private String currentEntryName;
   private String currentDir;
   private String currentFilename;
 
-    /**
-     * Instantiates a new Jar stream provider.
-     *
-     * @param jarFile the jar file
-     * @throws IOException the io exception
-     */
-    public JarStreamProvider( final File jarFile ) throws IOException {
-    if ( !jarFile.exists() )
+  /**
+   * Instantiates a new Jar stream provider.
+   *
+   * @param jarFile the jar file
+   * @throws IOException the io exception
+   */
+  public JarStreamProvider( final File jarFile ) throws IOException {
+    if (!jarFile.exists()) {
       throw new IllegalArgumentException("jar file not found: " + jarFile.toString());
+    }
 
-    f = new JarFile( jarFile );
+    f = new JarFile(jarFile);
     en = f.entries();
   }
 
@@ -53,19 +54,19 @@ public class JarStreamProvider implements StreamProvider {
 
     JarEntry entry = null;
 
-    while ( en.hasMoreElements() ) {
+    while (en.hasMoreElements()) {
 
       entry = en.nextElement();
-      if ( entry.getName().endsWith( ".class" ) ) {
+      if (entry.getName().endsWith(".class")) {
         break;
       }
     }
 
-    if ( entry != null && entry.getName().endsWith( ".class" ) ) {
-      setCurrentEntry( entry );
-      return new DataInputStream( new BufferedInputStream( f.getInputStream( entry ) ) );
+    if (entry != null && entry.getName().endsWith(".class")) {
+      setCurrentEntry(entry);
+      return new DataInputStream(new BufferedInputStream(f.getInputStream(entry)));
     } else {
-      setCurrentEntry( null );
+      setCurrentEntry(null);
       return null;
     }
   }
@@ -74,19 +75,19 @@ public class JarStreamProvider implements StreamProvider {
   public DataInputStream getNextResourceEntryStream() throws IOException {
     JarEntry entry = null;
 
-    while ( en.hasMoreElements() ) {
+    while (en.hasMoreElements()) {
 
       entry = en.nextElement();
-      if ( !entry.getName().endsWith( ".class" ) && ! entry.isDirectory() ) {
+      if (!entry.getName().endsWith(".class") && !entry.isDirectory()) {
         break;
       }
     }
 
-    if ( entry != null && !entry.getName().endsWith( ".class" ) && ! entry.isDirectory() ) {
-      setCurrentEntry( entry );
-      return new DataInputStream( new BufferedInputStream( f.getInputStream( entry ) ) );
+    if (entry != null && !entry.getName().endsWith(".class") && !entry.isDirectory()) {
+      setCurrentEntry(entry);
+      return new DataInputStream(new BufferedInputStream(f.getInputStream(entry)));
     } else {
-      setCurrentEntry( null );
+      setCurrentEntry(null);
       return null;
     }
   }
@@ -111,11 +112,11 @@ public class JarStreamProvider implements StreamProvider {
 
   private void setCurrentEntry( JarEntry entry ) {
 
-    if ( null != entry ) {
+    if (null != entry) {
       currentEntry = entry;
       currentEntryName = currentEntry.getName();
-      File entryFile = new File( currentEntryName );
-      currentDir = ( entryFile.getParent() ) != null ? entryFile.getParent() : "";
+      File entryFile = new File(currentEntryName);
+      currentDir = (entryFile.getParent()) != null ? entryFile.getParent() : "";
       currentFilename = entryFile.getName();
     } else {
       currentEntry = null;

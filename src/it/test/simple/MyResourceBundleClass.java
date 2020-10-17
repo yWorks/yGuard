@@ -11,22 +11,21 @@ import java.util.ListResourceBundle;
  */
 public class MyResourceBundleClass extends ListResourceBundle {
 
-    /**
-     * The Contents.
-     */
-    static final Object[][] contents = {
-              {"MESSAGE", "DEFAULT_MESSAGE"},
-      };
+  /**
+   * The Contents.
+   */
+  static final Object[][] contents = {
+          {"MESSAGE", "DEFAULT_MESSAGE"},
+          };
 
-    /**
-     * Get contents object [ ] [ ].
-     *
-     * @return the object [ ] [ ]
-     */
-    protected Object[][] getContents() {
+  /**
+   * Get contents object [ ] [ ].
+   *
+   * @return the object [ ] [ ]
+   */
+  protected Object[][] getContents() {
     return contents;
   }
-  
 
 
 }

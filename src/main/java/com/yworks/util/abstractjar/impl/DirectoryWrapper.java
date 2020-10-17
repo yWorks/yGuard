@@ -22,23 +22,23 @@ import java.util.jar.Manifest;
  * The type Directory wrapper.
  */
 public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive {
-  private File directory;
-  private Map<Entry, File> entries = new HashMap<>();
+  private final File directory;
+  private final Map<Entry, File> entries = new HashMap<>();
 
-    /**
-     * Instantiates a new Directory wrapper.
-     *
-     * @param directory the directory
-     * @throws IOException the io exception
-     */
-    public DirectoryWrapper( File directory ) throws IOException {
+  /**
+   * Instantiates a new Directory wrapper.
+   *
+   * @param directory the directory
+   * @throws IOException the io exception
+   */
+  public DirectoryWrapper( File directory ) throws IOException {
     this.directory = directory;
     Files.walkFileTree(directory.toPath(), this);
   }
 
   @Override
   public FileVisitResult visitFile( final Path path, final BasicFileAttributes attrs ) throws IOException {
-    if ( attrs.isRegularFile() ) {
+    if (attrs.isRegularFile()) {
       entries.put(new FileEntryWrapper(path.toFile()), path.toFile());
     }
     return FileVisitResult.CONTINUE;

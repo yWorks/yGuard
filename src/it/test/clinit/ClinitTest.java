@@ -7,23 +7,26 @@ package test.clinit;
  */
 public class ClinitTest {
 
+  /**
+   * The enum Test.
+   */
+  public enum Test {
     /**
-     * The enum Test.
+     * A test.
      */
-    public enum Test {
-        /**
-         * A test.
-         */
-        a,
-        /**
-         * B test.
-         */
-        b};
+    a,
+    /**
+     * B test.
+     */
+    b
+  }
 
-    /**
-     * Foo.
-     */
-    public void foo(){
+  ;
+
+  /**
+   * Foo.
+   */
+  public void foo() {
     switch (Test.a) {
       case a:
         System.out.println("a");

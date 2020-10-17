@@ -12,18 +12,18 @@ import java.lang.annotation.ElementType;
 @Target(ElementType.PARAMETER)
 public @interface ParameterAnnotation {
 
-    /**
-     * Param annot foo string.
-     *
-     * @return the string
-     */
-    String paramAnnotFoo();
+  /**
+   * Param annot foo string.
+   *
+   * @return the string
+   */
+  String paramAnnotFoo();
 
-    /**
-     * Param annot baz string.
-     *
-     * @return the string
-     */
-    String paramAnnotBaz() default "[param annot default]";
+  /**
+   * Param annot baz string.
+   *
+   * @return the string
+   */
+  String paramAnnotBaz() default "[param annot default]";
 
 }

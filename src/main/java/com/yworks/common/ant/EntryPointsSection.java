@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class EntryPointsSection extends Exclude {
 
-  private List<MethodSection> methodSections = new ArrayList<MethodSection>( 5 );
-  private List<ClassSection> classSections = new ArrayList<ClassSection>( 5 );
-  private List<FieldSection> fieldSections = new ArrayList<FieldSection>( 5 );
-  private List<AttributesSection> attributesSections = new ArrayList<AttributesSection>( 1 );
+  private final List<MethodSection> methodSections = new ArrayList<MethodSection>(5);
+  private final List<ClassSection> classSections = new ArrayList<ClassSection>(5);
+  private final List<FieldSection> fieldSections = new ArrayList<FieldSection>(5);
+  private final List<AttributesSection> attributesSections = new ArrayList<AttributesSection>(1);
 
   /**
    * Instantiates a new Entry points section.
@@ -23,7 +23,7 @@ public class EntryPointsSection extends Exclude {
    * @param task the task
    */
   public EntryPointsSection( YGuardBaseTask task ) {
-    super( task );
+    super(task);
   }
 
   /**
@@ -32,7 +32,7 @@ public class EntryPointsSection extends Exclude {
    * @param ms the ms
    */
   public void addConfiguredMethod( MethodSection ms ) {
-    this.methodSections.add( ms );
+    this.methodSections.add(ms);
   }
 
   /**
@@ -41,7 +41,7 @@ public class EntryPointsSection extends Exclude {
    * @param cs the cs
    */
   public void addConfiguredClass( ClassSection cs ) {
-    this.classSections.add( cs );
+    this.classSections.add(cs);
   }
 
   /**
@@ -50,7 +50,7 @@ public class EntryPointsSection extends Exclude {
    * @param fs the fs
    */
   public void addConfiguredField( FieldSection fs ) {
-    this.fieldSections.add( fs );
+    this.fieldSections.add(fs);
   }
 
   /**
@@ -59,7 +59,7 @@ public class EntryPointsSection extends Exclude {
    * @param as the as
    */
   public void addConfiguredAttribute( AttributesSection as ) {
-    this.attributesSections.add( as );
+    this.attributesSections.add(as);
   }
 
   /**

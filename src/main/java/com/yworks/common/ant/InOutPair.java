@@ -12,48 +12,48 @@ import java.io.File;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class InOutPair implements ShrinkBag {
-    private File inFile;
-    private File outFile;
+  private File inFile;
+  private File outFile;
 
   /**
    * The Resources.
    */
   ResourcePolicy resources = ResourcePolicy.COPY;
 
-    public void setIn( final File file ) {
-      this.inFile = file;
-    }
+  public void setIn( final File file ) {
+    this.inFile = file;
+  }
 
-    public void setOut( final File file ) {
-      this.outFile = file;
-    }
+  public void setOut( final File file ) {
+    this.outFile = file;
+  }
 
-    public File getIn() {
-      return inFile;
-    }
+  public File getIn() {
+    return inFile;
+  }
 
-    public File getOut() {
-      return outFile;
-    }
+  public File getOut() {
+    return outFile;
+  }
 
-    public boolean isEntryPointJar() {
-      return false;
-    }
+  public boolean isEntryPointJar() {
+    return false;
+  }
 
-    public void setResources( String resourcesStr ) {
+  public void setResources( String resourcesStr ) {
 
-      try {
-        resources = ResourcePolicy.valueOf( resourcesStr.trim().toUpperCase() );
-      } catch ( IllegalArgumentException e ) {
-        throw new BuildException( "Invalid resource policy: " + resourcesStr );
-      }
-    }
-
-    public ResourcePolicy getResources() {
-      return resources;
-    }
-
-    public String toString() {
-      return "in: " + inFile + "; out: " + outFile;
+    try {
+      resources = ResourcePolicy.valueOf(resourcesStr.trim().toUpperCase());
+    } catch (IllegalArgumentException e) {
+      throw new BuildException("Invalid resource policy: " + resourcesStr);
     }
   }
+
+  public ResourcePolicy getResources() {
+    return resources;
+  }
+
+  public String toString() {
+    return "in: " + inFile + "; out: " + outFile;
+  }
+}

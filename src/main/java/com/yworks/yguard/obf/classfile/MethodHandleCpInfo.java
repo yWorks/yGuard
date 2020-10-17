@@ -10,50 +10,49 @@ import java.io.IOException;
  * @author Sebastian Rheinnecker, yworks
  */
 public class MethodHandleCpInfo extends CpInfo {
-    // Constants -------------------------------------------------------------
+  // Constants -------------------------------------------------------------
 
 
-    // Fields ----------------------------------------------------------------
-    private int u1referenceKind;
-    private int u2referenceIndex;
+  // Fields ----------------------------------------------------------------
+  private int u1referenceKind;
+  private int u2referenceIndex;
 
-    // Class Methods ---------------------------------------------------------
+  // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Method handle cp info.
-     */
+  /**
+   * Instantiates a new Method handle cp info.
+   */
 // Instance Methods ------------------------------------------------------
-    protected MethodHandleCpInfo()
-    {
-      super(CONSTANT_MethodHandle);
-    }
+  protected MethodHandleCpInfo() {
+    super(CONSTANT_MethodHandle);
+  }
 
-    protected void readInfo(DataInput din) throws IOException {
-      u1referenceKind = din.readUnsignedByte();
-      u2referenceIndex = din.readUnsignedShort();
-    }
+  protected void readInfo( DataInput din ) throws IOException {
+    u1referenceKind = din.readUnsignedByte();
+    u2referenceIndex = din.readUnsignedShort();
+  }
 
-    protected void writeInfo(DataOutput dout) throws IOException {
-      dout.writeByte(u1referenceKind);
-      dout.writeShort(u2referenceIndex);
-    }
+  protected void writeInfo( DataOutput dout ) throws IOException {
+    dout.writeByte(u1referenceKind);
+    dout.writeShort(u2referenceIndex);
+  }
 
-    /**
-     * Gets reference kind.
-     *
-     * @return the reference kind
-     */
-    protected int getReferenceKind() {
-      return u1referenceKind;
-    }
+  /**
+   * Gets reference kind.
+   *
+   * @return the reference kind
+   */
+  protected int getReferenceKind() {
+    return u1referenceKind;
+  }
 
-    /**
-     * Gets reference index.
-     *
-     * @return the reference index
-     */
-    protected int getReferenceIndex() {
-      return u2referenceIndex;
-    }
+  /**
+   * Gets reference index.
+   *
+   * @return the reference index
+   */
+  protected int getReferenceIndex() {
+    return u2referenceIndex;
+  }
 }

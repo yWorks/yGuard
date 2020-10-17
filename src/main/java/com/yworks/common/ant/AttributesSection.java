@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
  */
 public class AttributesSection extends PatternMatchedSection {
 
-  private Set<String> attributes = new HashSet<String>( );
+  private final Set<String> attributes = new HashSet<String>();
   private String attributesStr;
 
   /**
@@ -40,9 +40,9 @@ public class AttributesSection extends PatternMatchedSection {
   public void setName( String attributeStr ) {
 
     this.attributesStr = attributeStr;
-    StringTokenizer tok = new StringTokenizer( attributeStr, "," );
-    while ( tok.hasMoreElements() ) {
-      attributes.add( tok.nextToken().trim() );
+    StringTokenizer tok = new StringTokenizer(attributeStr, ",");
+    while (tok.hasMoreElements()) {
+      attributes.add(tok.nextToken().trim());
     }
 
   }

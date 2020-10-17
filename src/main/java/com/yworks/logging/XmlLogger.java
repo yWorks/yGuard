@@ -13,47 +13,47 @@ import java.io.StringReader;
  */
 public class XmlLogger extends Logger {
 
-  private PrintWriter pw;
+  private final PrintWriter pw;
 
-    /**
-     * Instantiates a new Xml logger.
-     *
-     * @param pw the pw
-     */
-    public XmlLogger( PrintWriter pw ) {
+  /**
+   * Instantiates a new Xml logger.
+   *
+   * @param pw the pw
+   */
+  public XmlLogger( PrintWriter pw ) {
     this.pw = pw;
     pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-    pw.println("<yshrink version=\""+Version.getVersion()+"\">");
+    pw.println("<yshrink version=\"" + Version.getVersion() + "\">");
     register();
   }
 
   public void doLog( String s ) {
-    pw.println( "<!-- " + s + " -->" );
+    pw.println("<!-- " + s + " -->");
   }
 
   public void doErr( String s ) {
-    pw.println( "<!-- ERROR: " );
-    pw.println( s );
-    pw.println( "-->" );
+    pw.println("<!-- ERROR: ");
+    pw.println(s);
+    pw.println("-->");
   }
 
   public void doErr( String s, Throwable ex ) {
-    pw.println( "<!-- ERROR: " );
-    pw.println( s );
-    ex.printStackTrace( pw );
-    pw.println( "-->" );
+    pw.println("<!-- ERROR: ");
+    pw.println(s);
+    ex.printStackTrace(pw);
+    pw.println("-->");
   }
 
   public void doWarn( String s ) {
-    pw.println( "<!-- WARNING:" + s + " -->" );
+    pw.println("<!-- WARNING:" + s + " -->");
   }
 
   public void doWarnToLog( String s ) {
-    pw.println( "<!-- WARNING:" + s + " -->" );
+    pw.println("<!-- WARNING:" + s + " -->");
   }
 
   public void doShrinkLog( String s ) {
-    pw.println( s );
+    pw.println(s);
   }
 
   public void close() {
@@ -63,41 +63,41 @@ public class XmlLogger extends Logger {
     unregister();
   }
 
-    /**
-     * Replace special chars string.
-     *
-     * @param s the s
-     * @return the string
-     */
-    public static String replaceSpecialChars( String s ) {
+  /**
+   * Replace special chars string.
+   *
+   * @param s the s
+   * @return the string
+   */
+  public static String replaceSpecialChars( String s ) {
 
-    StringReader reader = new StringReader( s );
+    StringReader reader = new StringReader(s);
 
     StringBuilder r = new StringBuilder();
 
     int i;
     try {
-      while( (i = reader.read()) != -1 ) {
+      while ((i = reader.read()) != -1) {
 
         char c = (char) i;
 
-        switch( c ) {
+        switch (c) {
 
-          case '>' :
-              r.append( "&gt;" );
-              break;
+          case '>':
+            r.append("&gt;");
+            break;
 
           case '<':
-              r.append( "&lt;" );
-              break;
+            r.append("&lt;");
+            break;
 
           default:
-            r.append( c );
+            r.append(c);
         }
 
       }
-    } catch ( IOException e ) {
-      Logger.err( e.getMessage() );
+    } catch (IOException e) {
+      Logger.err(e.getMessage());
     }
     return r.toString();
   }

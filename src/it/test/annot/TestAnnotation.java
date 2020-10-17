@@ -9,20 +9,20 @@ import java.lang.annotation.ElementType;
  * The interface Test annotation.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD,ElementType.PACKAGE,ElementType.TYPE})
+@Target({ElementType.METHOD, ElementType.PACKAGE, ElementType.TYPE})
 public @interface TestAnnotation {
 
-    /**
-     * Value string.
-     *
-     * @return the string
-     */
-    String value() default "DefaultString";
+  /**
+   * Value string.
+   *
+   * @return the string
+   */
+  String value() default "DefaultString";
 
-    /**
-     * Unused value string.
-     *
-     * @return the string
-     */
-    String unusedValue() default "FindMe!";
+  /**
+   * Unused value string.
+   *
+   * @return the string
+   */
+  String unusedValue() default "FindMe!";
 }

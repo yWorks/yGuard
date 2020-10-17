@@ -11,39 +11,39 @@ class D extends C {
 
   private Object key;
 
-    /**
-     * Instantiates a new D.
-     *
-     * @param key the key
-     */
-    public D( Object key ) {
+  /**
+   * Instantiates a new D.
+   *
+   * @param key the key
+   */
+  public D( Object key ) {
     this.key = key;
-    System.out.println( "D.D: "+key );
+    System.out.println("D.D: " + key);
   }
 
-    /**
-     * G.
-     */
-    @Override
+  /**
+   * G.
+   */
+  @Override
   public void g() {
-    System.out.println( "D.g" );
+    System.out.println("D.g");
   }
 
-    /**
-     * Long name method.
-     */
-    public void longNameMethod() {
-    System.out.println( "D.longNameMethod" );
+  /**
+   * Long name method.
+   */
+  public void longNameMethod() {
+    System.out.println("D.longNameMethod");
   }
 
-    /**
-     * Gets ext aii.
-     *
-     * @return the ext aii
-     */
-    public static ExtAII getExtAII() {
-     return null;
-   }
+  /**
+   * Gets ext aii.
+   *
+   * @return the ext aii
+   */
+  public static ExtAII getExtAII() {
+    return null;
+  }
 
 
 }

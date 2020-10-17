@@ -62,7 +62,7 @@ public abstract class Exclude {
    *
    * @param task the task
    */
-  public Exclude(YGuardBaseTask task) {
+  public Exclude( YGuardBaseTask task ) {
     this.task = task;
   }
 
@@ -71,7 +71,7 @@ public abstract class Exclude {
    *
    * @param sf the sf
    */
-  public void setSourcefile(boolean sf) {
+  public void setSourcefile( boolean sf ) {
     this.source = sf;
   }
 
@@ -80,7 +80,7 @@ public abstract class Exclude {
    *
    * @param vt the vt
    */
-  public void setLocalvariabletable(boolean vt) {
+  public void setLocalvariabletable( boolean vt ) {
     this.vtable = vt;
   }
 
@@ -89,7 +89,7 @@ public abstract class Exclude {
    *
    * @param lt the lt
    */
-  public void setLinenumbertable(boolean lt) {
+  public void setLinenumbertable( boolean lt ) {
     this.ltable = lt;
   }
 
@@ -98,7 +98,7 @@ public abstract class Exclude {
    *
    * @param v the v
    */
-  public void setRuntimeVisibleAnnotations(boolean v) {
+  public void setRuntimeVisibleAnnotations( boolean v ) {
     this.rvAnn = v;
   }
 
@@ -107,7 +107,7 @@ public abstract class Exclude {
    *
    * @param v the v
    */
-  public void setRuntimeVisibleTypeAnnotations(boolean v) {
+  public void setRuntimeVisibleTypeAnnotations( boolean v ) {
     this.rvTypeAnn = v;
   }
 
@@ -116,8 +116,8 @@ public abstract class Exclude {
    *
    * @param v the v
    */
-  public void setRuntimeInvisibleAnnotations(boolean v) {
-      this.riAnn = v;
+  public void setRuntimeInvisibleAnnotations( boolean v ) {
+    this.riAnn = v;
   }
 
   /**
@@ -125,7 +125,7 @@ public abstract class Exclude {
    *
    * @param v the v
    */
-  public void setRuntimeInvisibleTypeAnnotations(boolean v) {
+  public void setRuntimeInvisibleTypeAnnotations( boolean v ) {
     this.riTypeAnn = v;
   }
 
@@ -134,7 +134,7 @@ public abstract class Exclude {
    *
    * @param v the v
    */
-  public void setRuntimeVisibleParameterAnnotations(boolean v) {
+  public void setRuntimeVisibleParameterAnnotations( boolean v ) {
     this.rvPann = v;
   }
 
@@ -143,7 +143,7 @@ public abstract class Exclude {
    *
    * @param v the v
    */
-  public void setRuntimeInvisibleParameterAnnotations(boolean v) {
+  public void setRuntimeInvisibleParameterAnnotations( boolean v ) {
     this.riPann = v;
   }
 
@@ -152,7 +152,7 @@ public abstract class Exclude {
    *
    * @param lt the lt
    */
-  public void setLocalVariableTypeTable(boolean lt) {
+  public void setLocalVariableTypeTable( boolean lt ) {
     this.lttable = lt;
   }
 
@@ -161,7 +161,7 @@ public abstract class Exclude {
    *
    * @param b the b
    */
-  public void setSourceDebugExtension(boolean b) {
+  public void setSourceDebugExtension( boolean b ) {
     this.debugExtension = b;
   }
 

@@ -7,59 +7,59 @@ package com.yworks.yshrink.model;
  */
 public class Invocation {
 
-  private int opcode;
-  private String type;
-  private String name;
-  private String desc;
+  private final int opcode;
+  private final String type;
+  private final String name;
+  private final String desc;
 
-    /**
-     * Instantiates a new Invocation.
-     *
-     * @param opcode the opcode
-     * @param type   the type
-     * @param name   the name
-     * @param desc   the desc
-     */
-    public Invocation( int opcode, String type, String name, String desc ) {
+  /**
+   * Instantiates a new Invocation.
+   *
+   * @param opcode the opcode
+   * @param type   the type
+   * @param name   the name
+   * @param desc   the desc
+   */
+  public Invocation( int opcode, String type, String name, String desc ) {
     this.opcode = opcode;
     this.type = type;
     this.name = name;
     this.desc = desc;
   }
 
-    /**
-     * Gets opcode.
-     *
-     * @return the opcode
-     */
-    public int getOpcode() {
+  /**
+   * Gets opcode.
+   *
+   * @return the opcode
+   */
+  public int getOpcode() {
     return opcode;
   }
 
-    /**
-     * Gets type.
-     *
-     * @return the type
-     */
-    public String getType() {
+  /**
+   * Gets type.
+   *
+   * @return the type
+   */
+  public String getType() {
     return type;
   }
 
-    /**
-     * Gets name.
-     *
-     * @return the name
-     */
-    public String getName() {
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
+  public String getName() {
     return name;
   }
 
-    /**
-     * Gets desc.
-     *
-     * @return the desc
-     */
-    public String getDesc() {
+  /**
+   * Gets desc.
+   *
+   * @return the desc
+   */
+  public String getDesc() {
     return desc;
   }
 }

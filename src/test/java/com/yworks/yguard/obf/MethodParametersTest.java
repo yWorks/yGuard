@@ -33,32 +33,32 @@ import static junit.framework.TestCase.assertTrue;
  * @author Thomas Behr
  */
 public class MethodParametersTest extends AbstractObfuscationTest {
-    /**
-     * The Name.
-     */
-    @Rule
+  /**
+   * The Name.
+   */
+  @Rule
   public TestName name = new TestName();
-    /**
-     * The Opcodes asm.
-     */
-    static final int OPCODES_ASM = Opcodes.ASM7;
+  /**
+   * The Opcodes asm.
+   */
+  static final int OPCODES_ASM = Opcodes.ASM7;
 
-    /**
-     * Test simple method parameters.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test simple method parameters.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testSimpleMethodParameters() throws Exception {
     impl(false);
   }
 
-    /**
-     * Test retain method parameters.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test retain method parameters.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testRetainMethodParameters() throws Exception {
     impl(true);
   }
@@ -113,7 +113,7 @@ public class MethodParametersTest extends AbstractObfuscationTest {
       final GuardDB db = new GuardDB(new File[]{inTmp});
       db.setDigests(new String[0]);
       db.retain(rules, pw);
-      db.remapTo(new File[] {outTmp}, null, pw, false);
+      db.remapTo(new File[]{outTmp}, null, pw, false);
       db.close();
 
       final String s = new String(errOut.toByteArray());
@@ -177,21 +177,21 @@ public class MethodParametersTest extends AbstractObfuscationTest {
 
 
   private static final class MethodParameterVisitor extends ClassVisitor {
-      /**
-       * The Prefix.
-       */
-      String prefix;
-      /**
-       * The Has method parameters attribute.
-       */
-      final Map<String, Boolean> hasMethodParametersAttribute;
+    /**
+     * The Prefix.
+     */
+    String prefix;
+    /**
+     * The Has method parameters attribute.
+     */
+    final Map<String, Boolean> hasMethodParametersAttribute;
 
-      /**
-       * Instantiates a new Method parameter visitor.
-       *
-       * @param hasMethodParametersAttribute the has method parameters attribute
-       */
-      MethodParameterVisitor( final Map<String, Boolean> hasMethodParametersAttribute ) {
+    /**
+     * Instantiates a new Method parameter visitor.
+     *
+     * @param hasMethodParametersAttribute the has method parameters attribute
+     */
+    MethodParameterVisitor( final Map<String, Boolean> hasMethodParametersAttribute ) {
       super(OPCODES_ASM);
       this.prefix = "";
       this.hasMethodParametersAttribute = hasMethodParametersAttribute;
@@ -239,13 +239,13 @@ public class MethodParametersTest extends AbstractObfuscationTest {
     private final String methodId;
     private final Map<String, Boolean> hasMethodParametersAttribute;
 
-      /**
-       * Instantiates a new Parameter visitor.
-       *
-       * @param methodId                     the method id
-       * @param hasMethodParametersAttribute the has method parameters attribute
-       */
-      ParameterVisitor(
+    /**
+     * Instantiates a new Parameter visitor.
+     *
+     * @param methodId                     the method id
+     * @param hasMethodParametersAttribute the has method parameters attribute
+     */
+    ParameterVisitor(
             final String methodId,
             final Map<String, Boolean> hasMethodParametersAttribute
     ) {
@@ -269,23 +269,23 @@ public class MethodParametersTest extends AbstractObfuscationTest {
     private boolean type;
     private String del;
 
-      /**
-       * Instantiates a new Signature builder.
-       */
-      SignatureBuilder() {
+    /**
+     * Instantiates a new Signature builder.
+     */
+    SignatureBuilder() {
       dim = 0;
       type = false;
       del = "";
     }
 
-      /**
-       * Append signature string builder.
-       *
-       * @param sb         the sb
-       * @param descriptor the descriptor
-       * @return the string builder
-       */
-      StringBuilder appendSignature(
+    /**
+     * Append signature string builder.
+     *
+     * @param sb         the sb
+     * @param descriptor the descriptor
+     * @return the string builder
+     */
+    StringBuilder appendSignature(
             final StringBuilder sb, final String descriptor
     ) {
       dim = 0;
