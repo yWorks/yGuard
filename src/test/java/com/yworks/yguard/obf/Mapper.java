@@ -26,8 +26,10 @@ class Mapper {
     /**
      * Gets type name.
      *
-     * @param tn the tn
-     * @return the type name
+     *
+		 * @param tn the tn
+     *
+		 * @return the type name
      */
     String getTypeName( final String tn ) {
     return mappings.get("c:" + tn);
@@ -36,9 +38,12 @@ class Mapper {
     /**
      * Gets method name.
      *
-     * @param tn the tn
-     * @param mn the mn
-     * @return the method name
+     *
+		 * @param tn the tn
+     *
+		 * @param mn the mn
+     *
+		 * @return the method name
      */
     String getMethodName( final String tn, final String mn ) {
     return mappings.get("m:" + tn + '#' + mn);
@@ -48,8 +53,10 @@ class Mapper {
     /**
      * New instance mapper.
      *
-     * @param log the log
-     * @return the mapper
+     *
+		 * @param log the log
+     *
+		 * @return the mapper
      * @throws Exception the exception
      */
     static Mapper newInstance( final String log ) throws Exception {
@@ -77,7 +84,8 @@ class Mapper {
       /**
        * Instantiates a new Map handler.
        *
-       * @param mappings the mappings
+       *
+		 * @param mappings the mappings
        */
       MapHandler( final Map<String, String> mappings ) {
       this.mappings = mappings;

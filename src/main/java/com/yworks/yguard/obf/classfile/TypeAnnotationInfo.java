@@ -33,8 +33,10 @@ public class TypeAnnotationInfo {
     /**
      * Create type annotation info.
      *
-     * @param din the din
-     * @return the type annotation info
+     * 
+		 * @param din the din
+     * 
+		 * @return the type annotation info
      * @throws IOException the io exception
      */
     public static TypeAnnotationInfo create(DataInput din) throws java.io.IOException {
@@ -143,7 +145,8 @@ public class TypeAnnotationInfo {
     /**
      * Write.
      *
-     * @param dout the dout
+     * 
+		 * @param dout the dout
      * @throws IOException the io exception
      */
     public void write(DataOutput dout) throws java.io.IOException {
@@ -210,7 +213,8 @@ public class TypeAnnotationInfo {
     /**
      * Mark utf 8 refs in info.
      *
-     * @param pool the pool
+     * 
+		 * @param pool the pool
      */
     protected void markUtf8RefsInInfo(ConstantPool pool) {
     pool.getCpEntry(u2TypeIndex).incRefCount();
@@ -230,7 +234,8 @@ public class TypeAnnotationInfo {
         /**
          * Read info.
          *
-         * @param din the din
+         * 
+		 * @param din the din
          * @throws IOException the io exception
          */
         protected void readInfo(DataInput din) throws IOException {
@@ -244,7 +249,8 @@ public class TypeAnnotationInfo {
         /**
          * Write info.
          *
-         * @param dout the dout
+         * 
+		 * @param dout the dout
          * @throws IOException the io exception
          */
         public void writeInfo(DataOutput dout) throws java.io.IOException {
@@ -265,8 +271,10 @@ public class TypeAnnotationInfo {
             /**
              * Create local var target variable info.
              *
-             * @param din the din
-             * @return the local var target variable info
+             * 
+		 * @param din the din
+             * 
+		 * @return the local var target variable info
              * @throws IOException the io exception
              */
             public static LocalVarTargetVariableInfo create(DataInput din) throws java.io.IOException {
@@ -284,7 +292,8 @@ public class TypeAnnotationInfo {
             /**
              * Write.
              *
-             * @param dout the dout
+             * 
+		 * @param dout the dout
              * @throws IOException the io exception
              */
             public void write(DataOutput dout) throws java.io.IOException {
@@ -307,7 +316,8 @@ public class TypeAnnotationInfo {
         /**
          * Read info.
          *
-         * @param din the din
+         * 
+		 * @param din the din
          * @throws IOException the io exception
          */
         protected void readInfo(DataInput din) throws IOException {
@@ -321,7 +331,8 @@ public class TypeAnnotationInfo {
         /**
          * Write info.
          *
-         * @param dout the dout
+         * 
+		 * @param dout the dout
          * @throws IOException the io exception
          */
         public void writeInfo(DataOutput dout) throws java.io.IOException {
@@ -341,8 +352,10 @@ public class TypeAnnotationInfo {
             /**
              * Create path entry.
              *
-             * @param din the din
-             * @return the path entry
+             * 
+		 * @param din the din
+             * 
+		 * @return the path entry
              * @throws IOException the io exception
              */
             public static PathEntry create(DataInput din) throws java.io.IOException {
@@ -359,7 +372,8 @@ public class TypeAnnotationInfo {
             /**
              * Write.
              *
-             * @param dout the dout
+             * 
+		 * @param dout the dout
              * @throws IOException the io exception
              */
             public void write(DataOutput dout) throws java.io.IOException {

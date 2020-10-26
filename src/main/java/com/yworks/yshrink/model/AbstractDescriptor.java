@@ -40,8 +40,10 @@ public abstract class AbstractDescriptor {
     /**
      * Instantiates a new Abstract descriptor.
      *
-     * @param access    the access
-     * @param sourceJar the source jar
+     *
+		 * @param access    the access
+     *
+		 * @param sourceJar the source jar
      */
     protected AbstractDescriptor( int access, File sourceJar ) {
     this.access = access;
@@ -51,8 +53,10 @@ public abstract class AbstractDescriptor {
     /**
      * Add annotation annotation usage.
      *
-     * @param annotationName the annotation name
-     * @return the annotation usage
+     *
+		 * @param annotationName the annotation name
+     * 
+		 * @return the annotation usage
      */
     public AnnotationUsage addAnnotation(String annotationName) {
     Matcher matcher = CLASS_PATTERN.matcher(annotationName);
@@ -69,7 +73,8 @@ public abstract class AbstractDescriptor {
     /**
      * Gets annotations.
      *
-     * @return the annotations
+     * 
+		 * @return the annotations
      */
     public List<AnnotationUsage> getAnnotations() {
     return annotations;
@@ -78,7 +83,8 @@ public abstract class AbstractDescriptor {
     /**
      * Gets node.
      *
-     * @return the node
+     * 
+		 * @return the node
      */
     public Node getNode() {
     return node;
@@ -87,7 +93,8 @@ public abstract class AbstractDescriptor {
     /**
      * Sets node.
      *
-     * @param node the node
+     *
+		 * @param node the node
      */
     public void setNode( final Node node ) {
     this.node = node;
@@ -96,7 +103,8 @@ public abstract class AbstractDescriptor {
     /**
      * Is entry point boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     public boolean isEntryPoint() {
     return isEntryPoint;
@@ -105,7 +113,8 @@ public abstract class AbstractDescriptor {
     /**
      * Sets entry point.
      *
-     * @param entryPoint the entry point
+     *
+		 * @param entryPoint the entry point
      */
     public void setEntryPoint( final boolean entryPoint ) {
     isEntryPoint = entryPoint;
@@ -114,7 +123,8 @@ public abstract class AbstractDescriptor {
     /**
      * Sets reachable.
      *
-     * @param reachable the reachable
+     *
+		 * @param reachable the reachable
      */
     public void setReachable( final boolean reachable ) {
     isReachable = reachable;
@@ -123,7 +133,8 @@ public abstract class AbstractDescriptor {
     /**
      * Gets access.
      *
-     * @return the access
+     * 
+		 * @return the access
      */
     public int getAccess() {
     return access;
@@ -132,7 +143,8 @@ public abstract class AbstractDescriptor {
     /**
      * Is synthetic boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     public boolean isSynthetic() {
     return ( access & Opcodes.ACC_SYNTHETIC ) == Opcodes.ACC_SYNTHETIC;
@@ -141,7 +153,8 @@ public abstract class AbstractDescriptor {
     /**
      * Is abstract boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     public boolean isAbstract() {
     return ( Opcodes.ACC_ABSTRACT & access) == Opcodes.ACC_ABSTRACT;
@@ -150,7 +163,8 @@ public abstract class AbstractDescriptor {
     /**
      * Gets source jar.
      *
-     * @return the source jar
+     * 
+		 * @return the source jar
      */
     public File getSourceJar() {
     return this.sourceJar;

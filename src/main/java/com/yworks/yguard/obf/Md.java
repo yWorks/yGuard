@@ -32,13 +32,19 @@ public class Md extends MdFd
     // Instance Methods ------------------------------------------------------
 
     /**
-     * Ctor.  @param parent the parent
+     * Ctor.
+		 * @param parent the parent
      *
-     * @param isSynthetic       the is synthetic
-     * @param name              the name
-     * @param descriptor        the descriptor
-     * @param access            the access
-     * @param obfuscationConfig the obfuscation config
+     *
+		 * @param isSynthetic       the is synthetic
+     *
+		 * @param name              the name
+     *
+		 * @param descriptor        the descriptor
+     *
+		 * @param access            the access
+     *
+		 * @param obfuscationConfig the obfuscation config
      */
     public Md(TreeItem parent, boolean isSynthetic, String name, String descriptor,
               int access, ObfuscationConfig obfuscationConfig)
@@ -68,10 +74,13 @@ public class Md extends MdFd
     }
 
     /**
-     * Are this method's name/descriptor a match to the wildcard patterns?  @param namePattern the name pattern
+     * Are this method's name/descriptor a match to the wildcard patterns?
+		 * @param namePattern the name pattern
      *
-     * @param descPattern the desc pattern
-     * @return the boolean
+     *
+		 * @param descPattern the desc pattern
+     * 
+		 * @return the boolean
      */
     public boolean isWildcardMatch(String namePattern, String descPattern) {
         return 
@@ -81,10 +90,13 @@ public class Md extends MdFd
 
     /**
      * Are this method's name/descriptor a non-recursive match
-     * to the wildcard patterns?  @param namePattern the name pattern
+     * to the wildcard patterns?
+		 * @param namePattern the name pattern
      *
-     * @param descPattern the desc pattern
-     * @return the boolean
+     *
+		 * @param descPattern the desc pattern
+     * 
+		 * @return the boolean
      */
     public boolean isNRWildcardMatch(String namePattern, String descPattern) {
         return 

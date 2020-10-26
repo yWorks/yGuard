@@ -18,7 +18,8 @@ public final class LineNumberTableSection extends PatternMatchedClassesSection i
     /**
      * Instantiates a new Line number table section.
      *
-     * @param obfuscatorTask the obfuscator task
+     *
+		 * @param obfuscatorTask the obfuscator task
      */
     public LineNumberTableSection( YGuardBaseTask obfuscatorTask ){
     super();

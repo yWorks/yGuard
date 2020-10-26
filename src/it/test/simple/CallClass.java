@@ -60,7 +60,8 @@ public class CallClass {
     /**
      * The interface Generic interface.
      *
-     * @param <E> the type parameter
+     *
+		 * @param <E> the type parameter
      */
     public static interface GenericInterface<E extends Exception>{
         /**
@@ -74,7 +75,8 @@ public class CallClass {
     /**
      * The type My exception.
      *
-     * @param <T> the type parameter
+     *
+		 * @param <T> the type parameter
      */
     public static class MyException<T> extends Object {
 
@@ -101,10 +103,14 @@ public class CallClass {
         /**
          * Method 2 blah.
          *
-         * @param <T>    the type parameter
-         * @param <K>    the type parameter
-         * @param <Blah> the type parameter
-         * @return the blah
+         *
+		 * @param <T>    the type parameter
+         *
+		 * @param <K>    the type parameter
+         *
+		 * @param <Blah> the type parameter
+         *
+		 * @return the blah
          * @throws T the t
          * @throws K the k
          */
@@ -132,7 +138,8 @@ public class CallClass {
     /**
      * The entry point of application.
      *
-     * @param args the input arguments
+     *
+		 * @param args the input arguments
      */
     @RequestForEnhancement(
      id       = 2868724,

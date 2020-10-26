@@ -12,8 +12,10 @@ public class NewNodeDescriptor extends AbstractDescriptor {
   /**
    * Instantiates a new New node descriptor.
    *
-   * @param access    the access
-   * @param sourceJar the source jar
+   * 
+		 * @param access    the access
+   * 
+		 * @param sourceJar the source jar
    */
   protected NewNodeDescriptor( int access, File sourceJar ) {
     super( access, sourceJar );

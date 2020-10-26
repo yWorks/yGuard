@@ -85,7 +85,8 @@ public class TestGenerics {
     /**
      * Main.
      *
-     * @param args the args
+     *
+		 * @param args the args
      */
     public static void main(String... args){
     new TestGenerics().run();

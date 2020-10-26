@@ -28,8 +28,10 @@ public class ResourceCpResolver implements ClassResolver {
     /**
      * Instantiates a new Resource cp resolver.
      *
-     * @param resources the resources
-     * @param target    the target
+     *
+		 * @param resources the resources
+     *
+		 * @param target    the target
      */
     public ResourceCpResolver(final Path resources, final Task target) {
     this.resource = resources;

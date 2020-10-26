@@ -19,7 +19,8 @@ public final class Property {
     /**
      * Sets name.
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public void setName(String name)
   {
@@ -29,7 +30,8 @@ public final class Property {
     /**
      * Sets value.
      *
-     * @param value the value
+     * 
+		 * @param value the value
      */
     public void setValue(String value)
   {
@@ -39,7 +41,8 @@ public final class Property {
     /**
      * Gets name.
      *
-     * @return the name
+     * 
+		 * @return the name
      */
     public String getName() {
     return name;
@@ -48,7 +51,8 @@ public final class Property {
     /**
      * Gets value.
      *
-     * @return the value
+     * 
+		 * @return the value
      */
     public String getValue() {
     return value;

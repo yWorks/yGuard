@@ -17,8 +17,10 @@ public class VerificationTypeInfo {
     /**
      * Create verification type info.
      *
-     * @param din the din
-     * @return the verification type info
+     *
+		 * @param din the din
+     * 
+		 * @return the verification type info
      * @throws IOException the io exception
      */
     public static VerificationTypeInfo create(DataInput din) throws java.io.IOException {
@@ -34,7 +36,8 @@ public class VerificationTypeInfo {
   }
 
     /**
-     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     * Check for Utf8 references to constant pool and mark them.
+		 * @param pool the pool
      */
     protected void markUtf8Refs(ConstantPool pool) {
     switch (u1_tag) {
@@ -91,7 +94,8 @@ public class VerificationTypeInfo {
   }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

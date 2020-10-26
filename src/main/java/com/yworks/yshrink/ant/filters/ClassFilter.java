@@ -26,7 +26,8 @@ public class ClassFilter extends PatternMatchedFilter {
     /**
      * Instantiates a new Class filter.
      *
-     * @param project the project
+     * 
+		 * @param project the project
      */
     public ClassFilter( Project project ) {
     super( project );
@@ -149,7 +150,8 @@ public class ClassFilter extends PatternMatchedFilter {
     /**
      * Add class section.
      *
-     * @param cs the cs
+     * 
+		 * @param cs the cs
      */
     public void addClassSection( ClassSection cs ) {
     if ( null == sections ) {

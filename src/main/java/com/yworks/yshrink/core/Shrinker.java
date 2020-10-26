@@ -28,7 +28,8 @@ public class Shrinker {
     /**
      * Shrink.
      *
-     * @param model the model
+     * 
+		 * @param model the model
      */
     public void shrink( final Model model ) {
     //this.model = model;
@@ -71,7 +72,8 @@ public class Shrinker {
       /**
        * Instantiates a new Shrink dfs.
        *
-       * @param model the model
+       * 
+		 * @param model the model
        */
       ShrinkDfs( final Model model ) {
       this.model = model;
@@ -81,7 +83,8 @@ public class Shrinker {
       /**
        * Init.
        *
-       * @param entryPointNode the entry point node
+       * 
+		 * @param entryPointNode the entry point node
        */
       public void init( final Node entryPointNode ) {
 
@@ -99,7 +102,8 @@ public class Shrinker {
       /**
        * Next round int.
        *
-       * @return the int
+       *
+		 * @return the int
        */
       protected int nextRound() {
       round++;
@@ -231,7 +235,8 @@ public class Shrinker {
       /**
        * Gets num skipped.
        *
-       * @return the num skipped
+       *
+		 * @return the num skipped
        */
       protected int getNumSkipped() {
       return numSkipped;

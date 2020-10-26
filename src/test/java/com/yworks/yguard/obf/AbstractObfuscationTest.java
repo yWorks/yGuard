@@ -26,7 +26,8 @@ public class AbstractObfuscationTest {
     /**
      * Gets major version.
      *
-     * @return the major version
+     * 
+		 * @return the major version
      */
     static int getMajorVersion() {
     final String v = System.getProperty("java.version");
@@ -46,8 +47,10 @@ public class AbstractObfuscationTest {
     /**
      * Write.
      *
-     * @param data the data
-     * @param tgt  the tgt
+     * 
+		 * @param data the data
+     * 
+		 * @param tgt  the tgt
      * @throws IOException the io exception
      */
     static void write(

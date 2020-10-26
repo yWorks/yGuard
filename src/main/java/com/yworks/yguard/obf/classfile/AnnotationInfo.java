@@ -29,8 +29,10 @@ public class AnnotationInfo
     /**
      * Create annotation info.
      *
-     * @param din the din
-     * @return the annotation info
+     *
+		 * @param din the din
+     * 
+		 * @return the annotation info
      * @throws IOException the io exception
      */
 // Class Methods ---------------------------------------------------------
@@ -45,7 +47,8 @@ public class AnnotationInfo
     /**
      * Get element value pairs element value pair info [ ].
      *
-     * @return the element value pair info [ ]
+     * 
+		 * @return the element value pair info [ ]
      */
     public ElementValuePairInfo[] getElementValuePairs(){
     return elementValuePairs;
@@ -58,7 +61,8 @@ public class AnnotationInfo
     /**
      * Mark utf 8 refs in info.
      *
-     * @param pool the pool
+     *
+		 * @param pool the pool
      */
     protected void markUtf8RefsInInfo(ConstantPool pool) {
     pool.getCpEntry(u2typeIndex).incRefCount();
@@ -79,7 +83,8 @@ public class AnnotationInfo
   }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

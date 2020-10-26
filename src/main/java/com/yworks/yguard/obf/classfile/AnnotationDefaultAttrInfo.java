@@ -19,10 +19,13 @@ public class AnnotationDefaultAttrInfo extends AttrInfo
     protected ElementValueInfo elementValue;
 
     /**
-     * Creates a new instance of AnnotationDefaultAttrInfo  @param cf the cf
+     * Creates a new instance of AnnotationDefaultAttrInfo  
+		 * @param cf the cf
      *
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     * 
+		 * @param attrNameIndex the attr name index
+     * 
+		 * @param attrLength    the attr length
      */
     public AnnotationDefaultAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
   {

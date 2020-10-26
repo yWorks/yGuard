@@ -18,7 +18,8 @@ public class EntryPointJarFilter extends AbstractEntryPointFilter {
     /**
      * Instantiates a new Entry point jar filter.
      *
-     * @param entryPointJar the entry point jar
+     *
+		 * @param entryPointJar the entry point jar
      */
     public EntryPointJarFilter( EntryPointJar entryPointJar ) {
     this.entryPointJar = entryPointJar;

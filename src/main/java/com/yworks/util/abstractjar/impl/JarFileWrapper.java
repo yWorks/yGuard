@@ -30,7 +30,8 @@ public class JarFileWrapper implements Archive {
     /**
      * Instantiates a new Jar file wrapper.
      *
-     * @param file the file
+     *
+		 * @param file the file
      * @throws IOException the io exception
      */
     public JarFileWrapper( File file ) throws IOException {

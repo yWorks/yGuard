@@ -17,10 +17,13 @@ public class RuntimeVisibleParameterAnnotationsAttrInfo extends AttrInfo
   private ParameterAnnotationInfo[] annotations;
 
     /**
-     * Creates a new instance of RuntimeVisibleParameterAnnotationsAttrInfo  @param cf the cf
+     * Creates a new instance of RuntimeVisibleParameterAnnotationsAttrInfo  
+		 * @param cf the cf
      *
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     * 
+		 * @param attrNameIndex the attr name index
+     * 
+		 * @param attrLength    the attr length
      */
     public RuntimeVisibleParameterAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
   {
@@ -30,7 +33,8 @@ public class RuntimeVisibleParameterAnnotationsAttrInfo extends AttrInfo
     /**
      * Get parameter annotations parameter annotation info [ ].
      *
-     * @return the parameter annotation info [ ]
+     *
+		 * @return the parameter annotation info [ ]
      */
     protected ParameterAnnotationInfo[] getParameterAnnotations(){
     return annotations;

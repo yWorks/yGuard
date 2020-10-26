@@ -39,7 +39,8 @@ public class MethodTypeCpInfo extends CpInfo {
     /**
      * Gets u 2 descriptor index.
      *
-     * @return the u 2 descriptor index
+     *
+		 * @return the u 2 descriptor index
      */
     public int getU2descriptorIndex() {
     return u2descriptorIndex;
@@ -52,7 +53,8 @@ public class MethodTypeCpInfo extends CpInfo {
     /**
      * Sets u 2 descriptor index.
      *
-     * @param u2descriptorIndex the u 2 descriptor index
+     *
+		 * @param u2descriptorIndex the u 2 descriptor index
      */
     public void setU2descriptorIndex(int u2descriptorIndex) {
     this.u2descriptorIndex = u2descriptorIndex;

@@ -15,7 +15,8 @@ public @interface TestInvAnnotation {
     /**
      * Inv value string.
      *
-     * @return the string
+     * 
+		 * @return the string
      */
     String invValue() default "DefaultInvisibleString";
 

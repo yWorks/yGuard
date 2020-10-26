@@ -32,8 +32,10 @@ public class InnerClassesInfo
     /**
      * Create inner classes info.
      *
-     * @param din the din
-     * @return the inner classes info
+     *
+		 * @param din the din
+     *
+		 * @return the inner classes info
      * @throws IOException the io exception
      */
 // Class Methods ---------------------------------------------------------
@@ -47,7 +49,8 @@ public class InnerClassesInfo
     /**
      * Get modifiers int.
      *
-     * @return the int
+     *
+		 * @return the int
      */
     public int getModifiers(){
       int mods = 0;
@@ -66,22 +69,26 @@ public class InnerClassesInfo
     private InnerClassesInfo() {}
 
     /**
-     * Return the inner class index.  @return the inner class index
+     * Return the inner class index.
+		 * @return the inner class index
      */
     protected int getInnerClassIndex() {return u2innerClassInfoIndex;}
 
     /**
-     * Return the name index.  @return the inner name index
+     * Return the name index.
+		 * @return the inner name index
      */
     protected int getInnerNameIndex() {return u2innerNameIndex;}
 
     /**
-     * Set the name index.  @param index the index
+     * Set the name index.
+		 * @param index the index
      */
     protected void setInnerNameIndex(int index) {u2innerNameIndex = index;}
 
     /**
-     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     * Check for Utf8 references to constant pool and mark them.
+		 * @param pool the pool
      */
     protected void markUtf8Refs(ConstantPool pool)
     {
@@ -101,7 +108,8 @@ public class InnerClassesInfo
     }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

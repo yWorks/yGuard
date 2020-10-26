@@ -30,7 +30,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Gets signature.
      *
-     * @return the signature
+     *
+		 * @return the signature
      */
     public String getSignature() {
     return signature;
@@ -39,7 +40,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Sets signature.
      *
-     * @param signature the signature
+     *
+		 * @param signature the signature
      */
     public void setSignature( String signature ) {
     this.signature = signature;
@@ -55,7 +57,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Gets args.
      *
-     * @return the args
+     *
+		 * @return the args
      */
     public String getArgs() {
     return args;
@@ -64,7 +67,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Sets args.
      *
-     * @param args the args
+     *
+		 * @param args the args
      */
     public void setArgs( String args ) {
     this.args = args;
@@ -73,7 +77,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Sets name.
      *
-     * @param name the name
+     *
+		 * @param name the name
      */
     public void setName( String name ) {
 
@@ -88,7 +93,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Sets class.
      *
-     * @param name the name
+     *
+		 * @param name the name
      */
     public void setClass( String name ) {
     this.className = Util.toInternalClass( name );
@@ -97,7 +103,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Gets name.
      *
-     * @return the name
+     *
+		 * @return the name
      */
     public String getName() {
     return name;
@@ -106,7 +113,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Gets class name.
      *
-     * @return the class name
+     *
+		 * @return the class name
      */
     public String getClassName() {
     return className;
@@ -115,7 +123,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Gets return type.
      *
-     * @return the return type
+     *
+		 * @return the return type
      */
     public String getReturnType() {
     return returnType;
@@ -124,7 +133,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Sets return type.
      *
-     * @param returnType the return type
+     *
+		 * @param returnType the return type
      */
     public void setReturnType( String returnType ) {
     this.returnType = Util.toInternalClass( returnType );
@@ -133,7 +143,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Gets throws.
      *
-     * @return the throws
+     *
+		 * @return the throws
      */
     public String getThrows() {
     return throwsClause;
@@ -142,7 +153,8 @@ public final class MethodSection extends PatternMatchedSection {
     /**
      * Sets throws.
      *
-     * @param throwsClause the throws clause
+     *
+		 * @param throwsClause the throws clause
      */
     public void setThrows( String throwsClause ) {
     this.throwsClause = throwsClause;

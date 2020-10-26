@@ -28,8 +28,10 @@ public class ParameterAnnotationInfo
     /**
      * Create parameter annotation info.
      *
-     * @param din the din
-     * @return the parameter annotation info
+     * 
+		 * @param din the din
+     * 
+		 * @return the parameter annotation info
      * @throws IOException the io exception
      */
 // Class Methods ---------------------------------------------------------
@@ -48,7 +50,8 @@ public class ParameterAnnotationInfo
     /**
      * Get annotations annotation info [ ].
      *
-     * @return the annotation info [ ]
+     * 
+		 * @return the annotation info [ ]
      */
     protected AnnotationInfo[] getAnnotations(){
     return annotations;
@@ -57,7 +60,8 @@ public class ParameterAnnotationInfo
     /**
      * Mark utf 8 refs in info.
      *
-     * @param pool the pool
+     * 
+		 * @param pool the pool
      */
     protected void markUtf8RefsInInfo(ConstantPool pool) {
     for (int i = 0; i < u2annotationCount; i++){
@@ -77,7 +81,8 @@ public class ParameterAnnotationInfo
   }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.  
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

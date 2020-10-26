@@ -15,9 +15,11 @@ package com.yworks.yguard.obf;
 public interface NameMaker
 {
     /**
-     * Return the next unique name for this namespace, differing only for identical arg-lists.  @param descriptor the descriptor
+     * Return the next unique name for this namespace, differing only for identical arg-lists.  
+		 * @param descriptor the descriptor
      *
-     * @return the string
+     * 
+		 * @return the string
      */
     public String nextName(String descriptor);
 }

@@ -32,7 +32,8 @@ public class JarStreamProvider implements StreamProvider {
     /**
      * Instantiates a new Jar stream provider.
      *
-     * @param jarFile the jar file
+     * 
+		 * @param jarFile the jar file
      * @throws IOException the io exception
      */
     public JarStreamProvider( final File jarFile ) throws IOException {

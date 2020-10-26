@@ -189,7 +189,8 @@ public class MethodParametersTest extends AbstractObfuscationTest {
       /**
        * Instantiates a new Method parameter visitor.
        *
-       * @param hasMethodParametersAttribute the has method parameters attribute
+       * 
+		 * @param hasMethodParametersAttribute the has method parameters attribute
        */
       MethodParameterVisitor( final Map<String, Boolean> hasMethodParametersAttribute ) {
       super(OPCODES_ASM);
@@ -242,8 +243,10 @@ public class MethodParametersTest extends AbstractObfuscationTest {
       /**
        * Instantiates a new Parameter visitor.
        *
-       * @param methodId                     the method id
-       * @param hasMethodParametersAttribute the has method parameters attribute
+       * 
+		 * @param methodId                     the method id
+       * 
+		 * @param hasMethodParametersAttribute the has method parameters attribute
        */
       ParameterVisitor(
             final String methodId,
@@ -281,9 +284,12 @@ public class MethodParametersTest extends AbstractObfuscationTest {
       /**
        * Append signature string builder.
        *
-       * @param sb         the sb
-       * @param descriptor the descriptor
-       * @return the string builder
+       * 
+		 * @param sb         the sb
+       * 
+		 * @param descriptor the descriptor
+       * 
+		 * @return the string builder
        */
       StringBuilder appendSignature(
             final StringBuilder sb, final String descriptor

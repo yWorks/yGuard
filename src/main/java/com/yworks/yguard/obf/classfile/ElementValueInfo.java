@@ -48,8 +48,10 @@ public class ElementValueInfo
     /**
      * Create element value info.
      *
-     * @param din the din
-     * @return the element value info
+     * 
+		 * @param din the din
+     *
+		 * @return the element value info
      * @throws IOException the io exception
      */
     public static ElementValueInfo create(DataInput din) throws IOException
@@ -62,8 +64,10 @@ public class ElementValueInfo
     /**
      * Get bool value boolean.
      *
-     * @param cp the cp
-     * @return the boolean
+     * 
+		 * @param cp the cp
+     *
+		 * @return the boolean
      */
     public boolean getBoolValue(ConstantPool cp){
     if (u1Tag == 'Z'){
@@ -76,7 +80,8 @@ public class ElementValueInfo
     /**
      * Read.
      *
-     * @param din the din
+     * 
+		 * @param din the din
      * @throws IOException the io exception
      */
     protected void read(DataInput din) throws java.io.IOException
@@ -121,7 +126,8 @@ public class ElementValueInfo
     /**
      * Mark utf 8 refs in info.
      *
-     * @param pool the pool
+     * 
+		 * @param pool the pool
      */
     protected void markUtf8RefsInInfo(ConstantPool pool) {
     switch (u1Tag)
@@ -157,7 +163,8 @@ public class ElementValueInfo
   }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.  
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

@@ -15,7 +15,8 @@ public final class AttributesSection extends PatternMatchedClassesSection implem
     /**
      * Instantiates a new Attributes section.
      *
-     * @param obfuscatorTask the obfuscator task
+     *
+		 * @param obfuscatorTask the obfuscator task
      */
     public AttributesSection( YGuardBaseTask obfuscatorTask ){
     super();
@@ -28,7 +29,8 @@ public final class AttributesSection extends PatternMatchedClassesSection implem
     /**
      * Set name.
      *
-     * @param attributes the attributes
+     *
+		 * @param attributes the attributes
      */
     public void setName(String attributes){
         this.attributes = attributes;
@@ -50,7 +52,8 @@ public final class AttributesSection extends PatternMatchedClassesSection implem
     /**
      * Gets attributes.
      *
-     * @return the attributes
+     *
+		 * @return the attributes
      */
     public String getAttributes() {
     return attributes;

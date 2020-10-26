@@ -33,9 +33,11 @@ public class ConstantPool
     // Instance Methods ------------------------------------------------------
 
     /**
-     * Ctor, which initializes Constant Pool using an array of CpInfo.  @param classFile the class file
+     * Ctor, which initializes Constant Pool using an array of CpInfo.  
+		 * @param classFile the class file
      *
-     * @param cpInfo the cp info
+     * 
+		 * @param cpInfo the cp info
      */
     public ConstantPool(ClassFile classFile, CpInfo[] cpInfo)
     {
@@ -50,7 +52,8 @@ public class ConstantPool
     }
 
     /**
-     * Return an Enumeration of all Constant Pool entries.  @return the enumeration
+     * Return an Enumeration of all Constant Pool entries.  
+		 * @return the enumeration
      */
     public Enumeration elements()
     {
@@ -58,7 +61,8 @@ public class ConstantPool
     }
 
     /**
-     * Return the Constant Pool length.  @return the int
+     * Return the Constant Pool length.  
+		 * @return the int
      */
     public int length()
     {
@@ -66,9 +70,11 @@ public class ConstantPool
     }
 
     /**
-     * Return the specified Constant Pool entry.  @param i the
+     * Return the specified Constant Pool entry.  
+		 * @param i the
      *
-     * @return the cp entry
+     * 
+		 * @return the cp entry
      */
     public CpInfo getCpEntry(int i)
     {
@@ -102,7 +108,8 @@ public class ConstantPool
     }
 
     /**
-     * Increment the reference count for the specified element.  @param i the
+     * Increment the reference count for the specified element.  
+		 * @param i the
      */
     public void incRefCount(int i)
     {
@@ -119,10 +126,13 @@ public class ConstantPool
     }
 
     /**
-     * Remap a specified Utf8 entry to the given value and return its new index.  @param newString the new string
+     * Remap a specified Utf8 entry to the given value and return its new index.  
+		 * @param newString the new string
      *
-     * @param oldIndex the old index
-     * @return the int
+     * 
+		 * @param oldIndex the old index
+     * 
+		 * @return the int
      */
     public int remapUtf8To(String newString, int oldIndex)
     {
@@ -131,7 +141,8 @@ public class ConstantPool
     }
 
     /**
-     * Decrement the reference count for the specified element, blanking if Utf and refs are zero.  @param i the
+     * Decrement the reference count for the specified element, blanking if Utf and refs are zero.  
+		 * @param i the
      */
     public void decRefCount(int i)
     {
@@ -148,9 +159,11 @@ public class ConstantPool
     }
 
     /**
-     * Add an entry to the constant pool and return its index.  @param entry the entry
+     * Add an entry to the constant pool and return its index.  
+		 * @param entry the entry
      *
-     * @return the int
+     * 
+		 * @return the int
      */
     public int addEntry(CpInfo entry)
     {
@@ -206,14 +219,16 @@ public class ConstantPool
         /**
          * Utf 8 action.
          *
-         * @param cpInfo the cp info
+         * 
+		 * @param cpInfo the cp info
          */
         public void utf8Action(Utf8CpInfo cpInfo)  {defaultAction(cpInfo);}
 
         /**
          * Default action.
          *
-         * @param cpInfo the cp info
+         * 
+		 * @param cpInfo the cp info
          */
         public void defaultAction(CpInfo cpInfo)  {}}
     private void walkPool(PoolAction pa) 

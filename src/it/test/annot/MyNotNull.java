@@ -20,6 +20,7 @@ public @interface MyNotNull {
     /**
      * Value string.
      *
-     * @return the string
+     *
+		 * @return the string
      */
     String value() default "";}

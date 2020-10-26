@@ -15,10 +15,14 @@ public class Invocation {
     /**
      * Instantiates a new Invocation.
      *
-     * @param opcode the opcode
-     * @param type   the type
-     * @param name   the name
-     * @param desc   the desc
+     *
+		 * @param opcode the opcode
+     *
+		 * @param type   the type
+     *
+		 * @param name   the name
+     *
+		 * @param desc   the desc
      */
     public Invocation( int opcode, String type, String name, String desc ) {
     this.opcode = opcode;
@@ -30,7 +34,8 @@ public class Invocation {
     /**
      * Gets opcode.
      *
-     * @return the opcode
+     *
+		 * @return the opcode
      */
     public int getOpcode() {
     return opcode;
@@ -39,7 +44,8 @@ public class Invocation {
     /**
      * Gets type.
      *
-     * @return the type
+     *
+		 * @return the type
      */
     public String getType() {
     return type;
@@ -48,7 +54,8 @@ public class Invocation {
     /**
      * Gets name.
      *
-     * @return the name
+     *
+		 * @return the name
      */
     public String getName() {
     return name;
@@ -57,7 +64,8 @@ public class Invocation {
     /**
      * Gets desc.
      *
-     * @return the desc
+     *
+		 * @return the desc
      */
     public String getDesc() {
     return desc;

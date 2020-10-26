@@ -27,8 +27,10 @@ public class ObfuscationConfig {
     /**
      * Instantiates a new Obfuscation config.
      *
-     * @param exclude        the exclude
-     * @param applyToMembers the apply to members
+     *
+		 * @param exclude        the exclude
+     *
+		 * @param applyToMembers the apply to members
      */
     public ObfuscationConfig(boolean exclude, boolean applyToMembers) {
     this.applyToMembers = applyToMembers;

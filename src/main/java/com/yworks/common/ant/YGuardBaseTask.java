@@ -65,7 +65,8 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Instantiates a new Y guard base task.
    *
-   * @param mode the mode
+   *
+		 * @param mode the mode
    */
   public YGuardBaseTask( boolean mode ) {
     this.mode = mode;
@@ -74,7 +75,8 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Create attribute attributes section.
    *
-   * @return the attributes section
+   * 
+		 * @return the attributes section
    */
   public AttributesSection createAttribute() {
     if( attributesSections == null ) attributesSections = new ArrayList<AttributesSection>();
@@ -86,7 +88,8 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Create in out pair shrink bag.
    *
-   * @return the shrink bag
+   * 
+		 * @return the shrink bag
    */
   public ShrinkBag createInOutPair() {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
@@ -98,7 +101,8 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Add configured in out pairs.
    *
-   * @param section the section
+   *
+		 * @param section the section
    */
   public void addConfiguredInOutPairs(InOutPairSection section){
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
@@ -108,7 +112,8 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Add configured in out pair.
    *
-   * @param pair the pair
+   *
+		 * @param pair the pair
    */
   public void addConfiguredInOutPair( final ShrinkBag pair ) {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
@@ -118,7 +123,8 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Create external classes path.
    *
-   * @return the path
+   * 
+		 * @return the path
    */
   public Path createExternalClasses() {
     if ( this.resourceClassPath != null ) {
@@ -131,7 +137,8 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Sets resource class path.
    *
-   * @param path the path
+   *
+		 * @param path the path
    */
   public void setResourceClassPath( Path path ) {
     this.resourceClassPath = path;
@@ -140,21 +147,24 @@ public abstract class YGuardBaseTask extends Task {
   /**
    * Create keep exclude.
    *
-   * @return the exclude
+   * 
+		 * @return the exclude
    */
   public abstract Exclude createKeep();
 
   /**
    * Add attributes sections.
    *
-   * @param attributesSections the attributes sections
+   *
+		 * @param attributesSections the attributes sections
    */
   public abstract void addAttributesSections( List<AttributesSection> attributesSections );
 
   /**
    * Add configured property.
    *
-   * @param p the p
+   *
+		 * @param p the p
    */
   public void addConfiguredProperty(Property p){
     properties.put(p.getName(), p.getValue());
@@ -171,7 +181,8 @@ public abstract class YGuardBaseTask extends Task {
     /**
      * Sets resources.
      *
-     * @param resourcesStr the resources str
+     *
+		 * @param resourcesStr the resources str
      */
     public void setResources( String resourcesStr ) {
 
@@ -191,7 +202,8 @@ public abstract class YGuardBaseTask extends Task {
     /**
      * Add configured file set.
      *
-     * @param set the set
+     *
+		 * @param set the set
      */
     public void addConfiguredFileSet(FileSet set){
       this.set = set;
@@ -200,7 +212,8 @@ public abstract class YGuardBaseTask extends Task {
     /**
      * Add.
      *
-     * @param mapper the mapper
+     *
+		 * @param mapper the mapper
      */
     public void add(Mapper mapper){
       this.mapper = mapper;
@@ -209,8 +222,10 @@ public abstract class YGuardBaseTask extends Task {
     /**
      * Create shrink bags list.
      *
-     * @param project the project
-     * @return the list
+     *
+		 * @param project the project
+     * 
+		 * @return the list
      */
     public List<ShrinkBag> createShrinkBags(Project project){
       if (mapper == null){

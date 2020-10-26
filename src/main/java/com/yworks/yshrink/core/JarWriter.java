@@ -53,8 +53,10 @@ public class JarWriter implements ArchiveWriter {
     /**
      * Instantiates a new Jar writer.
      *
-     * @param createStubs    the create stubs
-     * @param digestNamesStr the digest names str
+     * 
+		 * @param createStubs    the create stubs
+     * 
+		 * @param digestNamesStr the digest names str
      */
     public JarWriter( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
@@ -81,7 +83,8 @@ public class JarWriter implements ArchiveWriter {
     /**
      * Get digests message digest [ ].
      *
-     * @return the message digest [ ]
+     * 
+		 * @return the message digest [ ]
      */
     public MessageDigest[] getDigests() {
     return digests;

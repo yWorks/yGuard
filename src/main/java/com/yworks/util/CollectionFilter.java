@@ -18,7 +18,8 @@ public class CollectionFilter implements Filter
   private java.util.Collection collection;
 
     /**
-     * Creates a new instance of CollectionFilter  @param col the col
+     * Creates a new instance of CollectionFilter  
+		 * @param col the col
      */
     public CollectionFilter(java.util.Collection col)
   {
@@ -33,7 +34,8 @@ public class CollectionFilter implements Filter
     /**
      * Getter for property collection.
      *
-     * @return Value of property collection.
+     * 
+		 * @return Value of property collection.
      */
     public java.util.Collection getCollection()
   {
@@ -43,7 +45,8 @@ public class CollectionFilter implements Filter
     /**
      * Setter for property collection.
      *
-     * @param collection New value of property collection.
+     * 
+		 * @param collection New value of property collection.
      */
     public void setCollection(java.util.Collection collection)
   {

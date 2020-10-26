@@ -40,7 +40,8 @@ public class TypePatternSet extends PatternSet {
     /**
      * Gets type.
      *
-     * @return the type
+     *
+		 * @return the type
      */
     public Type getType() {
     return type;
@@ -49,7 +50,8 @@ public class TypePatternSet extends PatternSet {
     /**
      * Sets type.
      *
-     * @param type the type
+     *
+		 * @param type the type
      */
     public void setType( String type ) {
     this.type = Type.valueOf( type.toUpperCase() );

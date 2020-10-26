@@ -16,7 +16,8 @@ public class JarEntryWrapper implements Entry {
     /**
      * Instantiates a new Jar entry wrapper.
      *
-     * @param jarEntry the jar entry
+     * 
+		 * @param jarEntry the jar entry
      */
     public JarEntryWrapper( JarEntry jarEntry ) {
     this.jarEntry = jarEntry;
@@ -40,7 +41,8 @@ public class JarEntryWrapper implements Entry {
     /**
      * Gets jar entry.
      *
-     * @return the jar entry
+     * 
+		 * @return the jar entry
      */
     public JarEntry getJarEntry() {
     return jarEntry;

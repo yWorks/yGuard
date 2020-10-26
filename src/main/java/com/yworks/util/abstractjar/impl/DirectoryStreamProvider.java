@@ -29,7 +29,8 @@ public class DirectoryStreamProvider extends SimpleFileVisitor<Path> implements 
     /**
      * Instantiates a new Directory stream provider.
      *
-     * @param directory the directory
+     *
+		 * @param directory the directory
      * @throws IOException the io exception
      */
     public DirectoryStreamProvider( File directory ) throws IOException {

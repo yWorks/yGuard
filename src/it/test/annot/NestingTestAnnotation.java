@@ -15,7 +15,8 @@ public @interface NestingTestAnnotation {
     /**
      * Value test annotation.
      *
-     * @return the test annotation
+     * 
+		 * @return the test annotation
      */
     TestAnnotation value() default @TestAnnotation(value = "NestedTestDefault");
 

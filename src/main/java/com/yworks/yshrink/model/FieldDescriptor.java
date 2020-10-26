@@ -15,10 +15,14 @@ public class FieldDescriptor extends AbstractDescriptor {
     /**
      * Instantiates a new Field descriptor.
      *
-     * @param desc      the desc
-     * @param name      the name
-     * @param access    the access
-     * @param sourceJar the source jar
+     * 
+		 * @param desc      the desc
+     * 
+		 * @param name      the name
+     * 
+		 * @param access    the access
+     * 
+		 * @param sourceJar the source jar
      */
     protected FieldDescriptor( final String desc, final String name, final int access, File sourceJar ) {
     super( access, sourceJar );
@@ -29,7 +33,8 @@ public class FieldDescriptor extends AbstractDescriptor {
     /**
      * Gets desc.
      *
-     * @return the desc
+     * 
+		 * @return the desc
      */
     public String getDesc() {
     return desc;
@@ -38,7 +43,8 @@ public class FieldDescriptor extends AbstractDescriptor {
     /**
      * Gets name.
      *
-     * @return the name
+     * 
+		 * @return the name
      */
     public String getName() {
     return name;

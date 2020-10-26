@@ -32,9 +32,12 @@ public class Tools
     /**
      * Is the string one of the ones in the array?
      *
-     * @param s    the s
-     * @param list the list
-     * @return the boolean
+     * 
+		 * @param s    the s
+     * 
+		 * @param list the list
+     * 
+		 * @return the boolean
      */
     public static boolean isInArray(String s, String[] list)
     {
@@ -53,8 +56,10 @@ public class Tools
     /**
      * To base 64 string.
      *
-     * @param b the b
-     * @return the string
+     * 
+		 * @param b the b
+     * 
+		 * @return the string
      */
     public static String toBase64(byte[] b)
     {

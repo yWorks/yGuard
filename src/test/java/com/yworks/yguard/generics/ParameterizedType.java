@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * The type Parameterized type.
  *
- * @param <T> the type parameter
+ * 
+		 * @param <T> the type parameter
  * @author muellese
  */
 public class ParameterizedType<T extends MyType<String>> {
@@ -28,7 +29,8 @@ public class ParameterizedType<T extends MyType<String>> {
     /**
      * Get list list.
      *
-     * @return the list
+     * 
+		 * @return the list
      */
     public List<T> getList(){
     return list;
@@ -37,7 +39,8 @@ public class ParameterizedType<T extends MyType<String>> {
     /**
      * Add.
      *
-     * @param t the t
+     * 
+		 * @param t the t
      */
     public void add(T t){
     this.list.add(t);

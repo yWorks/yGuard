@@ -29,9 +29,11 @@ public class Pk extends PkCl
     // Class Methods ---------------------------------------------------------
 
     /**
-     * Create the root entry for a tree.  @param classTree the class tree
+     * Create the root entry for a tree.  
+		 * @param classTree the class tree
      *
-     * @return the pk
+     * 
+		 * @return the pk
      */
     public static Pk createRoot(ClassTree classTree) {return new Pk(classTree);}
 
@@ -39,7 +41,8 @@ public class Pk extends PkCl
     // Instance Methods ------------------------------------------------------
 
     /**
-     * Constructor for default package level.  @param classTree the class tree
+     * Constructor for default package level.  
+		 * @param classTree the class tree
      */
     public Pk(ClassTree classTree)
     {
@@ -48,9 +51,11 @@ public class Pk extends PkCl
     }
 
     /**
-     * Constructor for regular package levels.  @param parent the parent
+     * Constructor for regular package levels.  
+		 * @param parent the parent
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public Pk(TreeItem parent, String name)
     {
@@ -66,26 +71,32 @@ public class Pk extends PkCl
     }
 
     /**
-     * Get a package level by name.  @param name the name
+     * Get a package level by name.  
+		 * @param name the name
      *
-     * @return the package
+     * 
+		 * @return the package
      */
     public Pk getPackage(String name)  {return (Pk)pks.get(name);}
 
     /**
-     * Get an Enumeration of packages.  @return the package enum
+     * Get an Enumeration of packages.  
+		 * @return the package enum
      */
     public Enumeration getPackageEnum()  {return pks.elements();}
 
     /**
-     * Return number of packages.  @return the package count
+     * Return number of packages.  
+		 * @return the package count
      */
     public int getPackageCount() {return pks.size();}
 
     /**
-     * Add a sub-package level.  @param name the name
+     * Add a sub-package level.  
+		 * @param name the name
      *
-     * @return the pk
+     * 
+		 * @return the pk
      */
     public Pk addPackage(String name)
     {

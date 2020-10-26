@@ -16,7 +16,8 @@ public class AnnotationUsage {
     /**
      * Instantiates a new Annotation usage.
      *
-     * @param descriptor the descriptor
+     * 
+		 * @param descriptor the descriptor
      */
     public AnnotationUsage(String descriptor) {
     this.descriptor = descriptor;
@@ -25,7 +26,8 @@ public class AnnotationUsage {
     /**
      * Add field usage.
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public void addFieldUsage(String name) {
     if (name != null) {
@@ -36,7 +38,8 @@ public class AnnotationUsage {
     /**
      * Gets descriptor.
      *
-     * @return the descriptor
+     * 
+		 * @return the descriptor
      */
     public String getDescriptor() {
     return descriptor;
@@ -45,7 +48,8 @@ public class AnnotationUsage {
     /**
      * Gets field usages.
      *
-     * @return the field usages
+     * 
+		 * @return the field usages
      */
     public List<String> getFieldUsages() {
     return fieldUsages;

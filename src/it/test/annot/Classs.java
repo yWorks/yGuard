@@ -82,8 +82,10 @@ public class Classs {
     /**
      * Param annot test.
      *
-     * @param param1 the param 1
-     * @param param2 the param 2
+     *
+		 * @param param1 the param 1
+     *
+		 * @param param2 the param 2
      */
     public void paramAnnotTest( @ParameterAnnotation(paramAnnotFoo = "paramAnnotFooValue",paramAnnotBaz = "paramAnnotBazValue") String param1,
                               @ParameterAnnotation(paramAnnotFoo = "paramAnnotFooValue2") String param2 ) {}
@@ -91,14 +93,16 @@ public class Classs {
     /**
      * Invisible param annot test.
      *
-     * @param param the param
+     *
+		 * @param param the param
      */
     public void invisibleParamAnnotTest(@TestInvParameterAnnotation(value = "TestInvParameterAnnotationValue")String param) {}
 
     /**
      * Test type annotation.
      *
-     * @param o the o
+     *
+		 * @param o the o
      */
     public void testTypeAnnotation(@MyNotNull Object o) {
     
@@ -107,7 +111,8 @@ public class Classs {
     /**
      * The entry point of application.
      *
-     * @param args the input arguments
+     *
+		 * @param args the input arguments
      * @throws NoSuchMethodException the no such method exception
      */
     public static void main(String[] args) throws NoSuchMethodException {

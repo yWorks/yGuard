@@ -18,10 +18,13 @@ import java.io.IOException;
 public class RuntimeInvisibleAnnotationsAttrInfo extends RuntimeVisibleAnnotationsAttrInfo
 {
     /**
-     * Creates a new instance of RuntimeVisibleAnnotationsAttrInfo  @param cf the cf
+     * Creates a new instance of RuntimeVisibleAnnotationsAttrInfo
+		 * @param cf the cf
      *
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     *
+		 * @param attrNameIndex the attr name index
+     *
+		 * @param attrLength    the attr length
      */
     public RuntimeInvisibleAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
   {

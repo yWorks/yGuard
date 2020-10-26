@@ -17,8 +17,10 @@ public class AntLogger extends Logger {
     /**
      * Instantiates a new Ant logger.
      *
-     * @param project the project
-     * @param task    the task
+     *
+		 * @param project the project
+     *
+		 * @param task    the task
      */
     public AntLogger( final Project project, final Task task ) {
     this.project = project;

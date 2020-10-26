@@ -38,7 +38,8 @@ public class DirectoryWriter implements ArchiveWriter {
     /**
      * Instantiates a new Directory writer.
      *
-     * @param createStubs the create stubs
+     * 
+		 * @param createStubs the create stubs
      */
     public DirectoryWriter( boolean createStubs ) {
     this.createStubs = createStubs;

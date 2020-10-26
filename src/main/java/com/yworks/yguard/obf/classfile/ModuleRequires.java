@@ -32,8 +32,10 @@ public class ModuleRequires {
     /**
      * Read module requires.
      *
-     * @param din the din
-     * @return the module requires
+     * 
+		 * @param din the din
+     * 
+		 * @return the module requires
      * @throws IOException the io exception
      */
     static ModuleRequires read( final DataInput din ) throws IOException {
@@ -46,7 +48,8 @@ public class ModuleRequires {
     /**
      * Write.
      *
-     * @param dout the dout
+     * 
+		 * @param dout the dout
      * @throws IOException the io exception
      */
     void write( final DataOutput dout ) throws IOException {

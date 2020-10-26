@@ -30,7 +30,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Gets name.
      *
-     * @return the name
+     * 
+		 * @return the name
      */
     public String getName() {
     return name;
@@ -39,7 +40,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets name.
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public void setName( String name ) {
     this.name = Util.toInternalClass( name );
@@ -48,7 +50,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Gets extends.
      *
-     * @return the extends
+     * 
+		 * @return the extends
      */
     public String getExtends() {
     return extendsType;
@@ -57,7 +60,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets extends.
      *
-     * @param extendsType the extends type
+     * 
+		 * @param extendsType the extends type
      */
     public void setExtends( String extendsType ) {
     this.extendsType = Util.toInternalClass( extendsType );
@@ -66,7 +70,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Gets implements.
      *
-     * @return the implements
+     * 
+		 * @return the implements
      */
     public String getImplements() {
     return implementsType;
@@ -75,7 +80,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets implements.
      *
-     * @param implementsType the implements type
+     * 
+		 * @param implementsType the implements type
      */
     public void setImplements( String implementsType ) {
     this.implementsType = Util.toInternalClass( implementsType );
@@ -92,7 +98,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Gets class access.
      *
-     * @return the class access
+     * 
+		 * @return the class access
      */
     public Access getClassAccess() {
     return classAccess;
@@ -101,7 +108,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets class access.
      *
-     * @param classAccessStr the class access str
+     * 
+		 * @param classAccessStr the class access str
      */
     public void setClassAccess( String classAccessStr ) {
     Access acc = accessValue( classAccessStr );
@@ -114,7 +122,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Gets method access.
      *
-     * @return the method access
+     * 
+		 * @return the method access
      */
     public Access getMethodAccess() {
     return methodAccess;
@@ -123,7 +132,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets method access.
      *
-     * @param methodAccessStr the method access str
+     * 
+		 * @param methodAccessStr the method access str
      */
     public void setMethodAccess( String methodAccessStr ) {
     Access acc = accessValue( methodAccessStr );
@@ -136,7 +146,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets classes.
      *
-     * @param classAccess the class access
+     * 
+		 * @param classAccess the class access
      */
     public void setClasses( String classAccess ) {
     setClassAccess( classAccess );
@@ -145,7 +156,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets methods.
      *
-     * @param methodAccess the method access
+     * 
+		 * @param methodAccess the method access
      */
     public void setMethods( String methodAccess ) {
     setMethodAccess( methodAccess );
@@ -154,7 +166,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Gets field access.
      *
-     * @return the field access
+     * 
+		 * @return the field access
      */
     public Access getFieldAccess() {
     return fieldAccess;
@@ -163,7 +176,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets field access.
      *
-     * @param fieldAccessStr the field access str
+     * 
+		 * @param fieldAccessStr the field access str
      */
     public void setFieldAccess( String fieldAccessStr ) {
 
@@ -177,7 +191,8 @@ public final class ClassSection extends PatternMatchedSection {
     /**
      * Sets fields.
      *
-     * @param fieldAccess the field access
+     * 
+		 * @param fieldAccess the field access
      */
     public void setFields( String fieldAccess ) {
     setFieldAccess( fieldAccess );

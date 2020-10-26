@@ -59,10 +59,13 @@ public class TreeItem
     // Class Methods ---------------------------------------------------------
 
     /**
-     * Do a non-package-recursive wildcard String match.  @param pattern the pattern
+     * Do a non-package-recursive wildcard String match.
+		 * @param pattern the pattern
      *
-     * @param string the string
-     * @return the boolean
+     *
+		 * @param string the string
+     * 
+		 * @return the boolean
      */
     public static boolean isNRMatch(String pattern, String string) {
         Enumeration enum1, enum2;
@@ -90,10 +93,13 @@ public class TreeItem
     }
 
     /**
-     * Do a wildcard String match.  @param pattern the pattern
+     * Do a wildcard String match.
+		 * @param pattern the pattern
      *
-     * @param string the string
-     * @return the boolean
+     *
+		 * @param string the string
+     * 
+		 * @return the boolean
      */
     public static boolean isMatch(String pattern, String string) {
         // Sanity check
@@ -170,9 +176,11 @@ public class TreeItem
     // Instance Methods ------------------------------------------------------
 
     /**
-     * Ctor.  @param parent the parent
+     * Ctor.
+		 * @param parent the parent
      *
-     * @param name the name
+     *
+		 * @param name the name
      */
     public TreeItem(TreeItem parent, String name)
     {
@@ -185,17 +193,20 @@ public class TreeItem
     }
 
     /**
-     * Return the modifiers.  @return the modifiers
+     * Return the modifiers.  
+		 * @return the modifiers
      */
     public int getModifiers() {return access;}
 
     /**
-     * Return the original name of the entry.  @return the in name
+     * Return the original name of the entry.  
+		 * @return the in name
      */
     public String getInName() {return inName;}
 
     /**
-     * Set the output name of the entry.  @param outName the out name
+     * Set the output name of the entry.
+		 * @param outName the out name
      */
     public void setOutName(String outName)
     {
@@ -209,12 +220,14 @@ public class TreeItem
     }
 
     /**
-     * Return the output name of the entry, obfuscated or original.  @return the out name
+     * Return the output name of the entry, obfuscated or original.  
+		 * @return the out name
      */
     public String getOutName() {return outName != null ? outName : inName;}
 
     /**
-     * Return the obfuscated name of the entry.  @return the obf name
+     * Return the obfuscated name of the entry.  
+		 * @return the obf name
      */
     public String getObfName() {return outName;}
 
@@ -229,37 +242,44 @@ public class TreeItem
     public void setFromScriptMap() {isFromScriptMap = true;}
 
     /**
-     * Has the entry been fixed already?  @return the boolean
+     * Has the entry been fixed already?  
+		 * @return the boolean
      */
     public boolean isFixed() {return isFixed;}
 
     /**
-     * Is this constrained by a user script line?  @return the boolean
+     * Is this constrained by a user script line?  
+		 * @return the boolean
      */
     public boolean isFromScript() {return isFromScript;}
 
     /**
-     * Is this constrained by a map script line?  @return the boolean
+     * Is this constrained by a map script line?  
+		 * @return the boolean
      */
     public boolean isFromScriptMap() {return isFromScriptMap;}
 
     /**
-     * Is a method or field Synthetic?  @return the boolean
+     * Is a method or field Synthetic?  
+		 * @return the boolean
      */
     public boolean isSynthetic() {return isSynthetic;}
 
     /**
-     * Set the parent in the tree -- used when stitching in a Cl to replace a PlaceholderCl.  @param parent the parent
+     * Set the parent in the tree -- used when stitching in a Cl to replace a PlaceholderCl.
+		 * @param parent the parent
      */
     public void setParent(TreeItem parent) {this.parent = parent;}
 
     /**
-     * Get the parent in the tree.  @return the parent
+     * Get the parent in the tree.  
+		 * @return the parent
      */
     public TreeItem getParent() {return parent;}
 
     /**
-     * Construct and return the full original name of the entry.  @return the full in name
+     * Construct and return the full original name of the entry.  
+		 * @return the full in name
      */
     public String getFullInName()
     {
@@ -278,7 +298,8 @@ public class TreeItem
     }
 
     /**
-     * Construct and return the full obfuscated name of the entry.  @return the full out name
+     * Construct and return the full obfuscated name of the entry.  
+		 * @return the full out name
      */
     public String getFullOutName()
     {

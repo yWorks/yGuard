@@ -38,9 +38,12 @@ public class ZipScannerTool
     /**
      * Get matches string [ ].
      *
-     * @param fs      the fs
-     * @param scanner the scanner
-     * @return the string [ ]
+     *
+		 * @param fs      the fs
+     *
+		 * @param scanner the scanner
+     * 
+		 * @return the string [ ]
      * @throws IOException the io exception
      */
     public static String[] getMatches(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
@@ -51,9 +54,12 @@ public class ZipScannerTool
     /**
      * Gets matched collection.
      *
-     * @param fs      the fs
-     * @param scanner the scanner
-     * @return the matched collection
+     *
+		 * @param fs      the fs
+     *
+		 * @param scanner the scanner
+     * 
+		 * @return the matched collection
      * @throws IOException the io exception
      */
     public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
@@ -63,8 +69,10 @@ public class ZipScannerTool
     /**
      * Zip file set get src file.
      *
-     * @param fs the fs
-     * @return the file
+     *
+		 * @param fs the fs
+     * 
+		 * @return the file
      */
     public static File zipFileSetGetSrc(ZipFileSet fs) {
     Method ant15 = null;
@@ -98,10 +106,14 @@ public class ZipScannerTool
     /**
      * Gets matched collection.
      *
-     * @param fs      the fs
-     * @param scanner the scanner
-     * @param baseDir the base dir
-     * @return the matched collection
+     *
+		 * @param fs      the fs
+     *
+		 * @param scanner the scanner
+     *
+		 * @param baseDir the base dir
+     * 
+		 * @return the matched collection
      * @throws IOException the io exception
      */
     public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner, String baseDir) throws IOException{

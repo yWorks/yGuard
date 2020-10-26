@@ -25,8 +25,10 @@ public class Conversion
   /**
    * To java class string.
    *
-   * @param className the class name
-   * @return the string
+   *
+		 * @param className the class name
+   * 
+		 * @return the string
    */
   public static String toJavaClass(String className){
       if (className.endsWith(".class")){
@@ -39,8 +41,10 @@ public class Conversion
   /**
    * To java type string.
    *
-   * @param type the type
-   * @return the string
+   *
+		 * @param type the type
+   * 
+		 * @return the string
    */
   public static String toJavaType(String type){
       StringBuffer nat = new StringBuffer(30);
@@ -100,8 +104,10 @@ public class Conversion
   /**
    * Mapping for signatures (used for generics in 1.5).
    *
-   * @param signature the signature
-   * @return the string
+   *
+		 * @param signature the signature
+   * 
+		 * @return the string
    * @see com.yworks.yguard.obf.classfile.NameMapper#mapSignature com.yworks.yguard.obf.classfile.NameMapper#mapSignature
    */
   public static String mapSignature(String signature){
@@ -112,8 +118,10 @@ public class Conversion
   /**
    * To java parameters string.
    *
-   * @param parameters the parameters
-   * @return the string
+   *
+		 * @param parameters the parameters
+   * 
+		 * @return the string
    */
   public static String toJavaParameters(String parameters){
     StringBuffer nat = new StringBuffer(30);
@@ -180,9 +188,12 @@ public class Conversion
   /**
    * To java method string.
    *
-   * @param name      the name
-   * @param signature the signature
-   * @return the string
+   *
+		 * @param name      the name
+   *
+		 * @param signature the signature
+   * 
+		 * @return the string
    */
   public static String toJavaMethod(String name, String signature){
     String argsonly = signature.substring(signature.indexOf('(')+1);
@@ -201,8 +212,10 @@ public class Conversion
   /**
    * To java arguments string.
    *
-   * @param args the args
-   * @return the string
+   *
+		 * @param args the args
+   * 
+		 * @return the string
    */
   public static String toJavaArguments(String args){
     StringBuffer b= new StringBuffer(args.length() + 32);

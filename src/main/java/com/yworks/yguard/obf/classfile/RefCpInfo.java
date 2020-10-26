@@ -32,7 +32,8 @@ abstract public class RefCpInfo extends CpInfo
     /**
      * Instantiates a new Ref cp info.
      *
-     * @param tag the tag
+     * 
+		 * @param tag the tag
      */
 // Instance Methods ------------------------------------------------------
     protected RefCpInfo(int tag)
@@ -41,17 +42,20 @@ abstract public class RefCpInfo extends CpInfo
     }
 
     /**
-     * Return the class index.  @return the class index
+     * Return the class index.  
+		 * @return the class index
      */
     protected int getClassIndex() {return u2classIndex;}
 
     /**
-     * Return the name-and-type index.  @return the name and type index
+     * Return the name-and-type index.  
+		 * @return the name and type index
      */
     protected int getNameAndTypeIndex() {return u2nameAndTypeIndex;}
 
     /**
-     * Set the name-and-type index.  @param index the index
+     * Set the name-and-type index.  
+		 * @param index the index
      */
     protected void setNameAndTypeIndex(int index) {u2nameAndTypeIndex = index;}
 

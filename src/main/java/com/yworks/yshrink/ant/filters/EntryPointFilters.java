@@ -33,7 +33,8 @@ public class EntryPointFilters extends AbstractEntryPointFilter {
     /**
      * Sets exclude.
      *
-     * @param exclude the exclude
+     *
+		 * @param exclude the exclude
      */
     public void setExclude( Exclude exclude ) {
     this.exclude = exclude;
@@ -42,7 +43,8 @@ public class EntryPointFilters extends AbstractEntryPointFilter {
     /**
      * Add entry point filter.
      *
-     * @param entryPointFilter the entry point filter
+     *
+		 * @param entryPointFilter the entry point filter
      */
     public void addEntryPointFilter( final EntryPointFilter entryPointFilter ) {
     filters.add( entryPointFilter );

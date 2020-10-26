@@ -48,22 +48,26 @@ public class NameAndTypeCpInfo extends CpInfo implements Cloneable
     }
 
     /**
-     * Return the name index.  @return the name index
+     * Return the name index.  
+		 * @return the name index
      */
     protected int getNameIndex() {return u2nameIndex;}
 
     /**
-     * Set the name index.  @param index the index
+     * Set the name index.
+		 * @param index the index
      */
     protected void setNameIndex(int index) {u2nameIndex = index;}
 
     /**
-     * Return the descriptor index.  @return the descriptor index
+     * Return the descriptor index.  
+		 * @return the descriptor index
      */
     protected int getDescriptorIndex() {return u2descriptorIndex;}
 
     /**
-     * Set the descriptor index.  @param index the index
+     * Set the descriptor index.
+		 * @param index the index
      */
     protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
 

@@ -28,9 +28,12 @@ public class OutputVisitor extends ClassVisitor {
     /**
      * Instantiates a new Output visitor.
      *
-     * @param cv          the cv
-     * @param model       the model
-     * @param createStubs the create stubs
+     * 
+		 * @param cv          the cv
+     * 
+		 * @param model       the model
+     * 
+		 * @param createStubs the create stubs
      */
     public OutputVisitor( final ClassVisitor cv, final Model model, boolean createStubs ) {
     super(Opcodes.ASM7);
@@ -51,8 +54,10 @@ public class OutputVisitor extends ClassVisitor {
   }
 
   /**
-   * @param source source file
-   * @param debug  SourceDebugExtension
+   * 
+		 * @param source source file
+   * 
+		 * @param debug  SourceDebugExtension
    */
   public void visitSource( String source, String debug ) {
     if ( ! currentClass.getRetainAttribute( ClassConstants.ATTR_SourceFile ) ) {
@@ -164,7 +169,8 @@ public class OutputVisitor extends ClassVisitor {
     /**
      * Gets num obsolete methods.
      *
-     * @return the num obsolete methods
+     *
+		 * @return the num obsolete methods
      */
     public int getNumObsoleteMethods() {
     return numObsoleteMethods;
@@ -173,7 +179,8 @@ public class OutputVisitor extends ClassVisitor {
     /**
      * Gets num obsolete fields.
      *
-     * @return the num obsolete fields
+     *
+		 * @return the num obsolete fields
      */
     public int getNumObsoleteFields() {
     return numObsoleteFields;
@@ -190,7 +197,8 @@ public class OutputVisitor extends ClassVisitor {
         /**
          * Instantiates a new Output method visitor.
          *
-         * @param delegate the delegate
+         * 
+		 * @param delegate the delegate
          */
         public OutputMethodVisitor( MethodVisitor delegate ) {
       super(Opcodes.ASM7);
@@ -344,7 +352,8 @@ public class OutputVisitor extends ClassVisitor {
         /**
          * Instantiates a new Output field visitor.
          *
-         * @param delegate the delegate
+         * 
+		 * @param delegate the delegate
          */
         public OutputFieldVisitor(FieldVisitor delegate) {
       super(Opcodes.ASM7);
@@ -386,8 +395,10 @@ public class OutputVisitor extends ClassVisitor {
         /**
          * Instantiates a new Stub output method visitor.
          *
-         * @param delegate  the delegate
-         * @param visitStub the visit stub
+         * 
+		 * @param delegate  the delegate
+         * 
+		 * @param visitStub the visit stub
          */
         public StubOutputMethodVisitor(MethodVisitor delegate, boolean visitStub) {
       super(Opcodes.ASM7);
@@ -547,7 +558,8 @@ public class OutputVisitor extends ClassVisitor {
         /**
          * Instantiates a new Output annotation visitor.
          *
-         * @param delegate the delegate
+         * 
+		 * @param delegate the delegate
          */
         public OutputAnnotationVisitor( AnnotationVisitor delegate ) {
       super(Opcodes.ASM7);

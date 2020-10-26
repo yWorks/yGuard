@@ -29,13 +29,19 @@ public class Fd extends MdFd
     // Instance Methods ------------------------------------------------------
 
     /**
-     * Ctor.  @param parent the parent
+     * Ctor.  
+		 * @param parent the parent
      *
-     * @param isSynthetic       the is synthetic
-     * @param name              the name
-     * @param descriptor        the descriptor
-     * @param access            the access
-     * @param obfuscationConfig the obfuscation config
+     * 
+		 * @param isSynthetic       the is synthetic
+     * 
+		 * @param name              the name
+     * 
+		 * @param descriptor        the descriptor
+     * 
+		 * @param access            the access
+     * 
+		 * @param obfuscationConfig the obfuscation config
      */
     public Fd(TreeItem parent, boolean isSynthetic, String name, String descriptor,
               int access, ObfuscationConfig obfuscationConfig)
@@ -50,18 +56,22 @@ public class Fd extends MdFd
     }
 
     /**
-     * Is this field's name a match to the wildcard pattern?  @param namePattern the name pattern
+     * Is this field's name a match to the wildcard pattern?  
+		 * @param namePattern the name pattern
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     public boolean isWildcardMatch(String namePattern) {
         return isMatch(namePattern, getFullInName());
     }
 
     /**
-     * Is this field's name a non-recursive match to the wildcard pattern?  @param namePattern the name pattern
+     * Is this field's name a non-recursive match to the wildcard pattern?  
+		 * @param namePattern the name pattern
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     public boolean isNRWildcardMatch(String namePattern) {
         return isNRMatch(namePattern, getFullInName());

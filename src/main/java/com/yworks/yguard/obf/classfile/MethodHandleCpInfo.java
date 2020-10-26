@@ -42,7 +42,8 @@ public class MethodHandleCpInfo extends CpInfo {
     /**
      * Gets reference kind.
      *
-     * @return the reference kind
+     * 
+		 * @return the reference kind
      */
     protected int getReferenceKind() {
       return u1referenceKind;
@@ -51,7 +52,8 @@ public class MethodHandleCpInfo extends CpInfo {
     /**
      * Gets reference index.
      *
-     * @return the reference index
+     * 
+		 * @return the reference index
      */
     protected int getReferenceIndex() {
       return u2referenceIndex;

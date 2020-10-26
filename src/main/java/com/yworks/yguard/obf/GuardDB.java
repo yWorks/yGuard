@@ -96,7 +96,8 @@ public class GuardDB implements ClassConstants
   // Instance Methods ------------------------------------------------------
 
     /**
-     * A classfile database for obfuscation.  @param inFile the in file
+     * A classfile database for obfuscation.  
+		 * @param inFile the in file
      *
      * @throws IOException the io exception
      */
@@ -110,7 +111,8 @@ public class GuardDB implements ClassConstants
     /**
      * Sets resource handler.
      *
-     * @param handler the handler
+     * 
+		 * @param handler the handler
      */
     public void setResourceHandler(ResourceHandler handler)
   {
@@ -120,8 +122,10 @@ public class GuardDB implements ClassConstants
     /**
      * Gets out name.
      *
-     * @param inName the in name
-     * @return the out name
+     * 
+		 * @param inName the in name
+     * 
+		 * @return the out name
      */
     public String getOutName(String inName)
   {
@@ -132,8 +136,10 @@ public class GuardDB implements ClassConstants
      * Go through database marking certain entities for retention, while
      * maintaining polymorphic integrity.
      *
-     * @param rgsEntries the rgs entries
-     * @param log        the log
+     * 
+		 * @param rgsEntries the rgs entries
+     * 
+		 * @param log        the log
      * @throws IOException the io exception
      */
     public void retain(Collection rgsEntries, PrintWriter log)throws java.io.IOException
@@ -305,11 +311,15 @@ public class GuardDB implements ClassConstants
   }
 
     /**
-     * Remap each class based on the remap database, and remove attributes.  @param out the out
+     * Remap each class based on the remap database, and remove attributes.  
+		 * @param out the out
      *
-     * @param fileFilter       the file filter
-     * @param log              the log
-     * @param conserveManifest the conserve manifest
+     * 
+		 * @param fileFilter       the file filter
+     * 
+		 * @param log              the log
+     * 
+		 * @param conserveManifest the conserve manifest
      * @throws IOException            the io exception
      * @throws ClassNotFoundException the class not found exception
      */
@@ -846,7 +856,8 @@ public class GuardDB implements ClassConstants
     /**
      * Fire parsing jar.
      *
-     * @param jar the jar
+     * 
+		 * @param jar the jar
      */
     protected void fireParsingJar(String jar){
     if (listenerList == null) return;
@@ -858,7 +869,8 @@ public class GuardDB implements ClassConstants
     /**
      * Fire parsing class.
      *
-     * @param className the class name
+     * 
+		 * @param className the class name
      */
     protected void fireParsingClass(String className){
     if (listenerList == null) return;
@@ -870,8 +882,10 @@ public class GuardDB implements ClassConstants
     /**
      * Fire obfuscating jar.
      *
-     * @param inJar  the in jar
-     * @param outJar the out jar
+     * 
+		 * @param inJar  the in jar
+     * 
+		 * @param outJar the out jar
      */
     protected void fireObfuscatingJar(String inJar, String outJar){
     if (listenerList == null) return;
@@ -883,7 +897,8 @@ public class GuardDB implements ClassConstants
     /**
      * Fire obfuscating class.
      *
-     * @param className the class name
+     * 
+		 * @param className the class name
      */
     protected void fireObfuscatingClass(String className){
     if (listenerList == null) return;
@@ -895,7 +910,8 @@ public class GuardDB implements ClassConstants
     /**
      * Registers Listener to receive events.
      *
-     * @param listener The listener to register.
+     * 
+		 * @param listener The listener to register.
      */
     public synchronized void addListener(com.yworks.yguard.ObfuscationListener listener)
   {
@@ -909,7 +925,8 @@ public class GuardDB implements ClassConstants
     /**
      * Removes Listener from the list of listeners.
      *
-     * @param listener The listener to remove.
+     * 
+		 * @param listener The listener to remove.
      */
     public synchronized void removeListener(com.yworks.yguard.ObfuscationListener listener)
   {
@@ -922,7 +939,8 @@ public class GuardDB implements ClassConstants
     /**
      * Getter for property replaceClassNameStrings.
      *
-     * @return Value of property replaceClassNameStrings.
+     * 
+		 * @return Value of property replaceClassNameStrings.
      */
     public boolean isReplaceClassNameStrings()
   {
@@ -932,7 +950,8 @@ public class GuardDB implements ClassConstants
     /**
      * Setter for property replaceClassNameStrings.
      *
-     * @param replaceClassNameStrings New value of property replaceClassNameStrings.
+     * 
+		 * @param replaceClassNameStrings New value of property replaceClassNameStrings.
      */
     public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
   {
@@ -943,7 +962,8 @@ public class GuardDB implements ClassConstants
     /**
      * Getter for property pedantic.
      *
-     * @return Value of property pedantic.
+     * 
+		 * @return Value of property pedantic.
      */
     public boolean isPedantic()
   {
@@ -953,7 +973,8 @@ public class GuardDB implements ClassConstants
     /**
      * Setter for property pedantic.
      *
-     * @param pedantic New value of property pedantic.
+     * 
+		 * @param pedantic New value of property pedantic.
      */
     public void setPedantic(boolean pedantic)
   {
@@ -966,8 +987,10 @@ public class GuardDB implements ClassConstants
      * Returns the obfuscated file name of the java class.
      * The ending ".class" is omitted.
      *
-     * @param javaClass the fully qualified name of an unobfuscated class.
-     * @return the string
+     * 
+		 * @param javaClass the fully qualified name of an unobfuscated class.
+     * 
+		 * @return the string
      */
     public String translateJavaFile(String javaClass)
   {
@@ -986,8 +1009,10 @@ public class GuardDB implements ClassConstants
     /**
      * Translate java class string.
      *
-     * @param javaClass the java class
-     * @return the string
+     * 
+		 * @param javaClass the java class
+     * 
+		 * @return the string
      */
     public String translateJavaClass(String javaClass)
   {
@@ -1012,8 +1037,10 @@ public class GuardDB implements ClassConstants
      * - com
      * Depending on the number of items you can infer which parts have been remapped and which have not.
      *
-     * @param items list of unmapped items
-     * @return list of mapped items
+     * 
+		 * @param items list of unmapped items
+     * 
+		 * @return list of mapped items
      */
     public List<String> translateItem(String[] items) {
     List<String> mapped = new ArrayList<>();
@@ -1041,7 +1068,8 @@ public class GuardDB implements ClassConstants
     /**
      * Sets digests.
      *
-     * @param digestStrings the digest strings
+     * 
+		 * @param digestStrings the digest strings
      */
     public void setDigests(String[] digestStrings) {
     this.digestStrings = digestStrings;
@@ -1050,7 +1078,8 @@ public class GuardDB implements ClassConstants
     /**
      * Sets annotation class.
      *
-     * @param annotationClass the annotation class
+     * 
+		 * @param annotationClass the annotation class
      */
     public void setAnnotationClass(String annotationClass) {
     ObfuscationConfig.annotationClassName = annotationClass;

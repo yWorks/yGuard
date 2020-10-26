@@ -22,8 +22,10 @@ public class StackMapFrameInfo {
     /**
      * Create stack map frame info.
      *
-     * @param din the din
-     * @return the stack map frame info
+     * 
+		 * @param din the din
+     * 
+		 * @return the stack map frame info
      * @throws IOException the io exception
      */
 // Class Methods ---------------------------------------------------------
@@ -40,7 +42,8 @@ public class StackMapFrameInfo {
     private StackMapFrameInfo() {}
 
     /**
-     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     * Check for Utf8 references to constant pool and mark them.  
+		 * @param pool the pool
      */
     protected void markUtf8Refs(ConstantPool pool)
     {
@@ -78,7 +81,8 @@ public class StackMapFrameInfo {
     /**
      * Get verification type infos collection.
      *
-     * @return the collection
+     * 
+		 * @return the collection
      */
     public Collection getVerificationTypeInfos(){
     ArrayList result = new ArrayList();
@@ -144,7 +148,8 @@ public class StackMapFrameInfo {
     }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.  
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

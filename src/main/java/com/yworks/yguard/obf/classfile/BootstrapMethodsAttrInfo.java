@@ -22,9 +22,12 @@ public class BootstrapMethodsAttrInfo extends AttrInfo {
     /**
      * Instantiates a new Bootstrap methods attr info.
      *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     *
+		 * @param cf            the cf
+     *
+		 * @param attrNameIndex the attr name index
+     *
+		 * @param attrLength    the attr length
      */
 // Instance Methods ------------------------------------------------------
     protected BootstrapMethodsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
@@ -59,7 +62,8 @@ public class BootstrapMethodsAttrInfo extends AttrInfo {
     /**
      * Get bootstrap methods bootstrap method [ ].
      *
-     * @return the bootstrap method [ ]
+     *
+		 * @return the bootstrap method [ ]
      */
     public BootstrapMethod[] getBootstrapMethods() {
       return bootstrapMethods;

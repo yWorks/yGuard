@@ -28,7 +28,8 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
     /**
      * Instantiates a new Directory wrapper.
      *
-     * @param directory the directory
+     * 
+		 * @param directory the directory
      * @throws IOException the io exception
      */
     public DirectoryWrapper( File directory ) throws IOException {

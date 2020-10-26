@@ -38,9 +38,12 @@ public class AnnoTest4KEEP {
     /**
      * Instantiates a new Anno test 4 keep.
      *
-     * @param publicBoolField1KEEP    the public bool field 1 keep
-     * @param protectedBoolField2KEEP the protected bool field 2 keep
-     * @param privateBoolField3KEEP   the private bool field 3 keep
+     * 
+		 * @param publicBoolField1KEEP    the public bool field 1 keep
+     * 
+		 * @param protectedBoolField2KEEP the protected bool field 2 keep
+     * 
+		 * @param privateBoolField3KEEP   the private bool field 3 keep
      */
     public AnnoTest4KEEP(boolean publicBoolField1KEEP, boolean protectedBoolField2KEEP, boolean privateBoolField3KEEP) {
     this.publicBoolField1KEEP = publicBoolField1KEEP;
@@ -51,10 +54,14 @@ public class AnnoTest4KEEP {
     /**
      * Instantiates a new Anno test 4 keep.
      *
-     * @param publicBoolField1KEEP    the public bool field 1 keep
-     * @param protectedBoolField2KEEP the protected bool field 2 keep
-     * @param privateBoolField3KEEP   the private bool field 3 keep
-     * @param bla                     the bla
+     * 
+		 * @param publicBoolField1KEEP    the public bool field 1 keep
+     * 
+		 * @param protectedBoolField2KEEP the protected bool field 2 keep
+     * 
+		 * @param privateBoolField3KEEP   the private bool field 3 keep
+     * 
+		 * @param bla                     the bla
      */
     public AnnoTest4KEEP(boolean publicBoolField1KEEP, boolean protectedBoolField2KEEP, boolean privateBoolField3KEEP, int bla) {
     this.publicBoolField1KEEP = publicBoolField1KEEP;
@@ -65,7 +72,8 @@ public class AnnoTest4KEEP {
     /**
      * Is public bool field 1 keep boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     public boolean isPublicBoolField1KEEP() {
     return publicBoolField1KEEP;
@@ -74,7 +82,8 @@ public class AnnoTest4KEEP {
     /**
      * Sets public bool field 1 keep.
      *
-     * @param publicBoolField1KEEP the public bool field 1 keep
+     * 
+		 * @param publicBoolField1KEEP the public bool field 1 keep
      */
     public void setPublicBoolField1KEEP(boolean publicBoolField1KEEP) {
     this.publicBoolField1KEEP = publicBoolField1KEEP;
@@ -91,7 +100,8 @@ public class AnnoTest4KEEP {
     /**
      * Is private bool field 3 keep boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     protected boolean isPrivateBoolField3KEEP() {
     return privateBoolField3KEEP;
@@ -100,7 +110,8 @@ public class AnnoTest4KEEP {
     /**
      * Sets private bool field 3 keep.
      *
-     * @param privateBoolField3KEEP the private bool field 3 keep
+     * 
+		 * @param privateBoolField3KEEP the private bool field 3 keep
      */
     protected void setPrivateBoolField3KEEP(boolean privateBoolField3KEEP) {
     this.privateBoolField3KEEP = privateBoolField3KEEP;
@@ -109,7 +120,8 @@ public class AnnoTest4KEEP {
     /**
      * Is public bool field 1 obfuscate boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     @Obfuscation( exclude = false)
   public boolean isPublicBoolField1OBFUSCATE() {
@@ -119,7 +131,8 @@ public class AnnoTest4KEEP {
     /**
      * Sets public bool field 1 obfuscate.
      *
-     * @param publicBoolField1OBFUSCATE the public bool field 1 obfuscate
+     * 
+		 * @param publicBoolField1OBFUSCATE the public bool field 1 obfuscate
      */
     @Obfuscation( exclude = false)
   public void setPublicBoolField1OBFUSCATE(boolean publicBoolField1OBFUSCATE) {
@@ -139,7 +152,8 @@ public class AnnoTest4KEEP {
     /**
      * Is private bool field 3 obfuscate boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     @Obfuscation( exclude = false)
   protected boolean isPrivateBoolField3OBFUSCATE() {
@@ -149,7 +163,8 @@ public class AnnoTest4KEEP {
     /**
      * Sets private bool field 3 obfuscate.
      *
-     * @param privateBoolField3OBFUSCATE the private bool field 3 obfuscate
+     * 
+		 * @param privateBoolField3OBFUSCATE the private bool field 3 obfuscate
      */
     @Obfuscation( exclude = false)
   protected void setPrivateBoolField3OBFUSCATE(boolean privateBoolField3OBFUSCATE) {

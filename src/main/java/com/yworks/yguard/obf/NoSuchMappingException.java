@@ -18,7 +18,8 @@ public class NoSuchMappingException extends java.lang.IllegalArgumentException
     /**
      * Constructs an instance of <code>NoSuchMappingException</code> with the specified detail message.
      *
-     * @param key the detail message.
+     *
+		 * @param key the detail message.
      */
     public NoSuchMappingException(String key)
   {
@@ -38,7 +39,8 @@ public class NoSuchMappingException extends java.lang.IllegalArgumentException
     /**
      * Get key string.
      *
-     * @return the string
+     *
+		 * @return the string
      */
     public String getKey(){
     return key;

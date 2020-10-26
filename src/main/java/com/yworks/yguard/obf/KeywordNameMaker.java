@@ -124,7 +124,8 @@ public class KeywordNameMaker implements NameMaker
     }
 
     /**
-     * Ctor - block names not to be obfuscated from the mapping target space.  @param noObfNames the no obf names
+     * Ctor - block names not to be obfuscated from the mapping target space.  
+		 * @param noObfNames the no obf names
      */
     public KeywordNameMaker(String[] noObfNames)
     {
@@ -132,9 +133,11 @@ public class KeywordNameMaker implements NameMaker
     }
 
     /**
-     * Ctor - block names not to be obfuscated from the mapping target space.  @param noObfNames the no obf names
+     * Ctor - block names not to be obfuscated from the mapping target space.  
+		 * @param noObfNames the no obf names
      *
-     * @param useKeywords the use keywords
+     * 
+		 * @param useKeywords the use keywords
      */
     public KeywordNameMaker(String[] noObfNames, boolean useKeywords)
     {
@@ -142,10 +145,13 @@ public class KeywordNameMaker implements NameMaker
     }
 
     /**
-     * Ctor - block names not to be obfuscated from the mapping target space.  @param noObfNames the no obf names
+     * Ctor - block names not to be obfuscated from the mapping target space.  
+		 * @param noObfNames the no obf names
      *
-     * @param useKeywords   the use keywords
-     * @param lowerCaseOnly the lower case only
+     * 
+		 * @param useKeywords   the use keywords
+     * 
+		 * @param lowerCaseOnly the lower case only
      */
     public KeywordNameMaker(String[] noObfNames, boolean useKeywords, boolean lowerCaseOnly)
     {

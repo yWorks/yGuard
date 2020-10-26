@@ -14,9 +14,12 @@ public class RuntimeVisibleTypeAnnotationsAttrInfo extends AttrInfo {
     /**
      * Instantiates a new Runtime visible type annotations attr info.
      *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     *
+		 * @param cf            the cf
+     *
+		 * @param attrNameIndex the attr name index
+     *
+		 * @param attrLength    the attr length
      */
     public RuntimeVisibleTypeAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength) {
     super(cf, attrNameIndex, attrLength);
@@ -29,7 +32,8 @@ public class RuntimeVisibleTypeAnnotationsAttrInfo extends AttrInfo {
     /**
      * Get annotations type annotation info [ ].
      *
-     * @return the type annotation info [ ]
+     * 
+		 * @return the type annotation info [ ]
      */
     public TypeAnnotationInfo[] getAnnotations() {
     return annotations;
@@ -38,7 +42,8 @@ public class RuntimeVisibleTypeAnnotationsAttrInfo extends AttrInfo {
     /**
      * Gets owner.
      *
-     * @return the owner
+     * 
+		 * @return the owner
      */
     public ClassFile getOwner() {
     return owner;

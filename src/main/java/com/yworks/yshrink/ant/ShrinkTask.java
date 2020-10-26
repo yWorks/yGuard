@@ -49,7 +49,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Instantiates a new Shrink task.
      *
-     * @param mode the mode
+     *
+		 * @param mode the mode
      */
     public ShrinkTask( boolean mode ) {
     super( mode );
@@ -271,7 +272,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Gets create stubs.
      *
-     * @return the create stubs
+     *
+		 * @return the create stubs
      */
     public boolean getCreateStubs() {
     return createStubs;
@@ -280,7 +282,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Sets create stubs.
      *
-     * @param createStubs the create stubs
+     *
+		 * @param createStubs the create stubs
      */
     public void setCreateStubs( boolean createStubs ) {
     this.createStubs = createStubs;
@@ -289,7 +292,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Gets digests.
      *
-     * @return the digests
+     *
+		 * @return the digests
      */
     public String getDigests() {
     return digests;
@@ -298,7 +302,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Sets digests.
      *
-     * @param digests the digests
+     *
+		 * @param digests the digests
      */
     public void setDigests( String digests ) {
     this.digests = digests;
@@ -307,7 +312,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Sets log file.
      *
-     * @param file the file
+     *
+		 * @param file the file
      */
     public void setLogFile( File file ) {
     this.logFile = file;
@@ -316,7 +322,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Used by ant to handle the nested <code>entryPoint</code> element.
      *
-     * @return an EntryPointsSection instance
+     *
+		 * @return an EntryPointsSection instance
      */
     public EntryPointsSection createEntryPoints() {
     if ( this.entryPointsSection != null ) {
@@ -329,7 +336,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * not for ant, used if the ShrinkTask is created 'artificially'.
      *
-     * @param eps the eps
+     *
+		 * @param eps the eps
      */
     public void setEntryPointsExternally( EntryPointsSection eps ) {
     this.entryPointsSection = eps;
@@ -338,7 +346,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Create expose entry points section.
      *
-     * @return the entry points section
+     *
+		 * @return the entry points section
      */
     public EntryPointsSection createExpose() {
     return createEntryPoints();
@@ -365,7 +374,8 @@ public class ShrinkTask extends YGuardBaseTask {
     /**
      * Add configured entrypointjar.
      *
-     * @param entrypointjar the entrypointjar
+     *
+		 * @param entrypointjar the entrypointjar
      */
     public void addConfiguredEntrypointjar( final EntryPointJar entrypointjar ) {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();

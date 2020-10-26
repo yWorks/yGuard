@@ -35,7 +35,8 @@ public final class PackageSection implements Mappable {
     /**
      * Add configured pattern set.
      *
-     * @param ps the ps
+     * 
+		 * @param ps the ps
      */
     public void addConfiguredPatternSet(PatternSet ps) {
     patternSets.add(ps);
@@ -44,7 +45,8 @@ public final class PackageSection implements Mappable {
     /**
      * Sets name.
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public void setName(String name) {
     this.name = name;
@@ -53,8 +55,10 @@ public final class PackageSection implements Mappable {
     /**
      * Add entries.
      *
-     * @param entries the entries
-     * @param zf      the zf
+     * 
+		 * @param entries the entries
+     * 
+		 * @param zf      the zf
      * @throws IOException the io exception
      */
     public void addEntries(Collection entries, ZipFileSet zf) throws IOException {
@@ -103,7 +107,8 @@ public final class PackageSection implements Mappable {
     /**
      * Sets map.
      *
-     * @param mapTo the map to
+     * 
+		 * @param mapTo the map to
      */
     public void setMap(String mapTo) {
     this.mapTo = mapTo;

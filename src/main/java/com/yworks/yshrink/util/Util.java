@@ -16,8 +16,10 @@ public class Util {
   /**
    * To java class string.
    *
-   * @param className the class name
-   * @return the string
+   *
+		 * @param className the class name
+   * 
+		 * @return the string
    */
   public static final String toJavaClass( String className ) {
     if ( className.endsWith( ".class" ) ) {
@@ -29,8 +31,10 @@ public class Util {
   /**
    * To internal class string.
    *
-   * @param className the class name
-   * @return the string
+   *
+		 * @param className the class name
+   * 
+		 * @return the string
    */
   public static final String toInternalClass( String className ) {
     if ( className.endsWith( ".class" ) ) {
@@ -73,8 +77,10 @@ public class Util {
   /**
    * Verbose to native type string.
    *
-   * @param type the type
-   * @return the string
+   *
+		 * @param type the type
+   * 
+		 * @return the string
    */
   public static final String verboseToNativeType( String type ) {
 
@@ -95,8 +101,10 @@ public class Util {
    * extracts the class name or primitve identifier from any type descriptor.
    * e.g. [[Ltest/ugly/JJ {@literal ->} test/ugly/JJ
    *
-   * @param desc the desc
-   * @return the extracted class name or primitive identifier.
+   *
+		 * @param desc the desc
+   * 
+		 * @return the extracted class name or primitive identifier.
    */
   public static final String getTypeNameFromDescriptor( final String desc ) {
 
@@ -121,8 +129,10 @@ public class Util {
   /**
    * To java type string.
    *
-   * @param type the type
-   * @return the string
+   *
+		 * @param type the type
+   * 
+		 * @return the string
    */
   public static String toJavaType( String type ) {
     StringBuffer nat = new StringBuffer( 30 );
@@ -182,8 +192,10 @@ public class Util {
   /**
    * To java parameters string.
    *
-   * @param parameters the parameters
-   * @return the string
+   *
+		 * @param parameters the parameters
+   * 
+		 * @return the string
    */
   public static String toJavaParameters( String parameters ) {
     StringBuffer nat = new StringBuffer( 30 );
@@ -250,8 +262,10 @@ public class Util {
   /**
    * Gets argument string.
    *
-   * @param arguments the arguments
-   * @return the argument string
+   *
+		 * @param arguments the arguments
+   * 
+		 * @return the argument string
    */
   public static final String getArgumentString( Type[] arguments ) {
 
@@ -269,8 +283,10 @@ public class Util {
   /**
    * To native method string [ ].
    *
-   * @param javaMethod the java method
-   * @return the string [ ]
+   *
+		 * @param javaMethod the java method
+   * 
+		 * @return the string [ ]
    */
   public static final String[] toNativeMethod( String javaMethod ) {
     StringTokenizer tokenizer = new StringTokenizer( javaMethod, "(,[]) ", true );
@@ -352,8 +368,10 @@ public class Util {
   /**
    * To base 64 string.
    *
-   * @param b the b
-   * @return the string
+   *
+		 * @param b the b
+   * 
+		 * @return the string
    */
   public static String toBase64( byte[] b ) {
     StringBuffer sb = new StringBuffer();

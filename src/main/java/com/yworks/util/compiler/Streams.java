@@ -17,8 +17,10 @@ class Streams {
     /**
      * New guard output stream.
      *
-     * @param os the os
-     * @return the output stream
+     *
+		 * @param os the os
+     *
+		 * @return the output stream
      */
     static OutputStream newGuard( final OutputStream os ) {
     return new Guard(os);
@@ -27,9 +29,12 @@ class Streams {
     /**
      * New tail reader.
      *
-     * @param r    the r
-     * @param tail the tail
-     * @return the reader
+     *
+		 * @param r    the r
+     *
+		 * @param tail the tail
+     *
+		 * @return the reader
      */
     static Reader newTail( final Reader r, final int[] tail ) {
     return new Tail(r, tail);
@@ -42,7 +47,8 @@ class Streams {
       /**
        * Instantiates a new Guard.
        *
-       * @param os the os
+       *
+		 * @param os the os
        */
       Guard( final OutputStream os ) {
       this.os = os;
@@ -77,8 +83,10 @@ class Streams {
       /**
        * Instantiates a new Tail.
        *
-       * @param r    the r
-       * @param tail the tail
+       *
+		 * @param r    the r
+       *
+		 * @param tail the tail
        */
       Tail( final Reader r, final int[] tail ) {
       this.r = r;

@@ -41,7 +41,8 @@ public class Utf8CpInfo extends CpInfo
     }
 
     /**
-     * Ctor used when appending fresh Utf8 entries to the constant pool.  @param s the s
+     * Ctor used when appending fresh Utf8 entries to the constant pool.
+		 * @param s the s
      */
     public Utf8CpInfo(String s)
     {
@@ -61,7 +62,8 @@ public class Utf8CpInfo extends CpInfo
     }
 
     /**
-     * Return UTF8 data as a String.  @return the string
+     * Return UTF8 data as a String.
+		 * @return the string
      */
     public String getString()
     {
@@ -77,7 +79,8 @@ public class Utf8CpInfo extends CpInfo
     }
 
     /**
-     * Set UTF8 data as String.  @param str the str
+     * Set UTF8 data as String.
+		 * @param str the str
      */
     public void setString(String str)
     {

@@ -14,21 +14,24 @@ public interface Archive {
     /**
      * Gets name.
      *
-     * @return the name
+     * 
+		 * @return the name
      */
     String getName();
 
     /**
      * Gets entries.
      *
-     * @return the entries
+     * 
+		 * @return the entries
      */
     Enumeration<Entry> getEntries();
 
     /**
      * Gets manifest.
      *
-     * @return the manifest
+     * 
+		 * @return the manifest
      * @throws IOException the io exception
      */
     Manifest getManifest() throws IOException;
@@ -36,8 +39,10 @@ public interface Archive {
     /**
      * Gets input stream.
      *
-     * @param entry the entry
-     * @return the input stream
+     * 
+		 * @param entry the entry
+     * 
+		 * @return the input stream
      * @throws IOException the io exception
      */
     InputStream getInputStream(Entry entry) throws IOException;

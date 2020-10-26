@@ -26,7 +26,8 @@ public abstract class AbstractTypeCpInfo extends CpInfo {
     /**
      * Instantiates a new Abstract type cp info.
      *
-     * @param tag the tag
+     *
+		 * @param tag the tag
      */
 // Instance Methods ------------------------------------------------------
   protected AbstractTypeCpInfo(int tag) {
@@ -34,14 +35,16 @@ public abstract class AbstractTypeCpInfo extends CpInfo {
   }
 
     /**
-     * Return the name index.  @return the name index
+     * Return the name index.
+		 * @return the name index
      */
     protected int getNameIndex() {
     return u2nameIndex;
   }
 
     /**
-     * Set the name index.  @param index the index
+     * Set the name index.
+		 * @param index the index
      */
     protected void setNameIndex(int index) {
     u2nameIndex = index;

@@ -31,8 +31,10 @@ public class LocalVariableTypeInfo
     /**
      * Create local variable type info.
      *
-     * @param din the din
-     * @return the local variable type info
+     * 
+		 * @param din the din
+     * 
+		 * @return the local variable type info
      * @throws IOException the io exception
      */
 // Class Methods ---------------------------------------------------------
@@ -49,27 +51,32 @@ public class LocalVariableTypeInfo
     private LocalVariableTypeInfo() {}
 
     /**
-     * Return name index into Constant Pool.  @return the name index
+     * Return name index into Constant Pool.  
+		 * @return the name index
      */
     protected int getNameIndex() {return u2nameIndex;}
 
     /**
-     * Set the name index.  @param index the index
+     * Set the name index.  
+		 * @param index the index
      */
     protected void setNameIndex(int index) {u2nameIndex = index;}
 
     /**
-     * Return descriptor index into Constant Pool.  @return the signature index
+     * Return descriptor index into Constant Pool.  
+		 * @return the signature index
      */
     protected int getSignatureIndex() {return u2signatureIndex;}
 
     /**
-     * Set the descriptor index.  @param index the index
+     * Set the descriptor index.  
+		 * @param index the index
      */
     protected void setSignatureIndex(int index) {u2signatureIndex = index;}
 
     /**
-     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     * Check for Utf8 references to constant pool and mark them.  
+		 * @param pool the pool
      */
     protected void markUtf8Refs(ConstantPool pool)
     {
@@ -87,7 +94,8 @@ public class LocalVariableTypeInfo
     }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.  
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

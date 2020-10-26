@@ -26,7 +26,8 @@ public class ParseException extends java.lang.RuntimeException
     /**
      * Constructs an instance of <code>ParseException</code> with the specified detail message.
      *
-     * @param msg the detail message.
+     *
+		 * @param msg the detail message.
      */
     public ParseException(String msg)
   {
@@ -36,7 +37,8 @@ public class ParseException extends java.lang.RuntimeException
     /**
      * Instantiates a new Parse exception.
      *
-     * @param cause the cause
+     *
+		 * @param cause the cause
      */
     public ParseException( Exception cause ) {
     super(cause);

@@ -18,7 +18,8 @@ public class URLCpResolver implements ClassResolver {
     /**
      * Instantiates a new Url cp resolver.
      *
-     * @param urls the urls
+     * 
+		 * @param urls the urls
      */
     public URLCpResolver( final URL[] urls ) {
     urlClassLoader = URLClassLoader.newInstance( urls, ClassLoader.getSystemClassLoader() );

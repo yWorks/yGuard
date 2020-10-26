@@ -9,7 +9,8 @@ package com.yworks.yguard.generics;
 /**
  * The type My type.
  *
- * @param <T> the type parameter
+ * 
+		 * @param <T> the type parameter
  * @author muellese
  */
 public class MyType<T> {
@@ -17,7 +18,8 @@ public class MyType<T> {
   private T t;
 
     /**
-     * Creates a new instance of MyType  @param t the t
+     * Creates a new instance of MyType  
+		 * @param t the t
      */
     public MyType(T t) {
     this.t = t;
@@ -26,7 +28,8 @@ public class MyType<T> {
     /**
      * Get content t.
      *
-     * @return the t
+     *
+		 * @return the t
      */
     public T getContent(){
     return t;
@@ -35,7 +38,8 @@ public class MyType<T> {
     /**
      * Set content.
      *
-     * @param t the t
+     * 
+		 * @param t the t
      */
     public void setContent(T t){
     this.t = t;

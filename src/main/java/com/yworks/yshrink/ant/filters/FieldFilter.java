@@ -24,7 +24,8 @@ public class FieldFilter extends PatternMatchedFilter {
     /**
      * Instantiates a new Field filter.
      *
-     * @param project the project
+     * 
+		 * @param project the project
      */
     public FieldFilter( final Project project ) {
     super( project );
@@ -33,7 +34,8 @@ public class FieldFilter extends PatternMatchedFilter {
     /**
      * Add field section.
      *
-     * @param fieldSection the field section
+     * 
+		 * @param fieldSection the field section
      */
     public void addFieldSection( FieldSection fieldSection ) {
     if ( null == sections ) {

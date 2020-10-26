@@ -25,7 +25,8 @@ public class MethodFilter extends PatternMatchedFilter {
     /**
      * Instantiates a new Method filter.
      *
-     * @param project the project
+     *
+		 * @param project the project
      */
     public MethodFilter( Project project ) {
     super( project );
@@ -34,7 +35,8 @@ public class MethodFilter extends PatternMatchedFilter {
     /**
      * Add method section.
      *
-     * @param methodSection the method section
+     *
+		 * @param methodSection the method section
      */
     public void addMethodSection( MethodSection methodSection ) {
     if ( null == sections ) {

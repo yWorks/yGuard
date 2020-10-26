@@ -13,7 +13,8 @@ public class Java7Test {
     /**
      * The entry point of application.
      *
-     * @param args the input arguments
+     * 
+		 * @param args the input arguments
      */
     public static void main(String[] args) {
     Java7Test java7Test = new Java7Test();
@@ -46,8 +47,10 @@ public class Java7Test {
     /**
      * Test multi catch.
      *
-     * @param source the source
-     * @param target the target
+     * 
+		 * @param source the source
+     * 
+		 * @param target the target
      */
     public void testMultiCatch(File source,File target) {
     try (InputStream fis = new FileInputStream(source);

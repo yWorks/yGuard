@@ -17,7 +17,8 @@ public class MyResourceBundleClass_fr extends ListResourceBundle  {
     /**
      * Get contents object [ ] [ ].
      *
-     * @return the object [ ] [ ]
+     * 
+		 * @return the object [ ] [ ]
      */
     protected Object[][] getContents() {
     return contents;

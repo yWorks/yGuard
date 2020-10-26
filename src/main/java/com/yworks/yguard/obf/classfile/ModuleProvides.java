@@ -27,8 +27,10 @@ public class ModuleProvides {
     /**
      * Read module provides.
      *
-     * @param din the din
-     * @return the module provides
+     * 
+		 * @param din the din
+     * 
+		 * @return the module provides
      * @throws IOException the io exception
      */
     static ModuleProvides read( final DataInput din ) throws IOException {
@@ -45,7 +47,8 @@ public class ModuleProvides {
     /**
      * Write.
      *
-     * @param dout the dout
+     * 
+		 * @param dout the dout
      * @throws IOException the io exception
      */
     void write( final DataOutput dout ) throws IOException {

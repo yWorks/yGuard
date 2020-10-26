@@ -7,21 +7,24 @@ public interface Entry {
     /**
      * Is directory boolean.
      *
-     * @return the boolean
+     *
+		 * @return the boolean
      */
     boolean isDirectory();
 
     /**
      * Gets name.
      *
-     * @return the name
+     *
+		 * @return the name
      */
     String getName();
 
     /**
      * Gets size.
      *
-     * @return the size
+     *
+		 * @return the size
      */
     long getSize();
 }

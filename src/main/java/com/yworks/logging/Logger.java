@@ -52,7 +52,8 @@ public abstract class Logger {
     /**
      * Log.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public static void log( final String s ) {
     //System.out.println( "logging: "+s );
@@ -66,7 +67,8 @@ public abstract class Logger {
     /**
      * Err.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public static void err( final String s ) {
     if ( null != instances ) {
@@ -79,8 +81,10 @@ public abstract class Logger {
     /**
      * Err.
      *
-     * @param s  the s
-     * @param ex the ex
+     *
+		 * @param s  the s
+     *
+		 * @param ex the ex
      */
     public static void err( final String s, final Throwable ex ) {
     if ( null != instances ) {
@@ -94,7 +98,8 @@ public abstract class Logger {
     /**
      * Warn.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public static void warn( final String s ) {
     if ( null != instances ) {
@@ -107,7 +112,8 @@ public abstract class Logger {
     /**
      * Warn to log.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public static void warnToLog( final String s ) {
     if ( null != instances ) {
@@ -120,7 +126,8 @@ public abstract class Logger {
     /**
      * Shrink log.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public static void shrinkLog( final String s ) {
     if ( null != instances ) {
@@ -133,43 +140,50 @@ public abstract class Logger {
     /**
      * Do log.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public abstract void doLog( String s );
 
     /**
      * Do err.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public abstract void doErr( String s );
 
     /**
      * Do warn.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public abstract void doWarn( String s );
 
     /**
      * Do warn to log.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public abstract void doWarnToLog( String s );
 
     /**
      * Do shrink log.
      *
-     * @param s the s
+     *
+		 * @param s the s
      */
     public abstract void doShrinkLog( String s );
 
     /**
      * Do err.
      *
-     * @param s  the s
-     * @param ex the ex
+     *
+		 * @param s  the s
+     *
+		 * @param ex the ex
      */
     public abstract void doErr( String s, Throwable ex );
 

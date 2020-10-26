@@ -23,9 +23,12 @@ public class NestHostAttrInfo extends AttrInfo {
     /**
      * Instantiates a new Nest host attr info.
      *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     * 
+		 * @param cf            the cf
+     * 
+		 * @param attrNameIndex the attr name index
+     * 
+		 * @param attrLength    the attr length
      */
 // Instance Methods ------------------------------------------------------
   NestHostAttrInfo(

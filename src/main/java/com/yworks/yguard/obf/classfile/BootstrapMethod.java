@@ -27,8 +27,10 @@ public class BootstrapMethod {
     /**
      * Read bootstrap method.
      *
-     * @param din the din
-     * @return the bootstrap method
+     *
+		 * @param din the din
+     * 
+		 * @return the bootstrap method
      * @throws IOException the io exception
      */
     static BootstrapMethod read( final DataInput din ) throws IOException {
@@ -44,7 +46,8 @@ public class BootstrapMethod {
     /**
      * Write.
      *
-     * @param dout the dout
+     *
+		 * @param dout the dout
      * @throws IOException the io exception
      */
     void write( final DataOutput dout ) throws IOException {
@@ -59,7 +62,8 @@ public class BootstrapMethod {
     /**
      * Gets bootstrap method ref.
      *
-     * @return the bootstrap method ref
+     * 
+		 * @return the bootstrap method ref
      */
     public int getBootstrapMethodRef() {
     return u2bootstrapMethodRef;
@@ -68,7 +72,8 @@ public class BootstrapMethod {
     /**
      * Get bootstrap arguments int [ ].
      *
-     * @return the int [ ]
+     * 
+		 * @return the int [ ]
      */
     public int[] getBootstrapArguments() {
     return u2bootstrapArguments;

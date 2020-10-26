@@ -11,7 +11,8 @@ public interface Mappable {
     /**
      * Add map entries.
      *
-     * @param entries the entries
+     * 
+		 * @param entries the entries
      */
     void addMapEntries( Collection entries);
 }

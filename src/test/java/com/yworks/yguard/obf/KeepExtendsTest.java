@@ -132,8 +132,10 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
       /**
        * Instantiates a new Type struct.
        *
-       * @param fileName the file name
-       * @param typeName the type name
+       * 
+		 * @param fileName the file name
+       * 
+		 * @param typeName the type name
        */
       TypeStruct( final String fileName, final String typeName ) {
       this.fileName = fileName;

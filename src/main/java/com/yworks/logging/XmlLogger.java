@@ -18,7 +18,8 @@ public class XmlLogger extends Logger {
     /**
      * Instantiates a new Xml logger.
      *
-     * @param pw the pw
+     *
+		 * @param pw the pw
      */
     public XmlLogger( PrintWriter pw ) {
     this.pw = pw;
@@ -66,8 +67,10 @@ public class XmlLogger extends Logger {
     /**
      * Replace special chars string.
      *
-     * @param s the s
-     * @return the string
+     *
+		 * @param s the s
+     *
+		 * @return the string
      */
     public static String replaceSpecialChars( String s ) {
 

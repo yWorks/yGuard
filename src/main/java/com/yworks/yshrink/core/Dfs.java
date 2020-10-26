@@ -56,7 +56,8 @@ public class Dfs {
      * Whether or not to interpret the edges of the graph as directed.
      * By default directed mode is disabled.
      *
-     * @param directed the directed
+     *
+		 * @param directed the directed
      */
     public void setDirectedMode( final boolean directed ) {
     directedMode = directed;
@@ -66,8 +67,10 @@ public class Dfs {
      * Starts a depth first search on the given graph. The given node will be visited first. If <code>start</code> is
      * null, this method returns silently.
      *
-     * @param network the network
-     * @param start   the start
+     *
+		 * @param network the network
+     *
+		 * @param start   the start
      */
     public void start( final Network<Node, Edge> network, final Node start ) {
     if ( null == start ) return;
@@ -230,8 +233,10 @@ public class Dfs {
      * is the dfsnumber of that node.
      * By default this method does nothing
      *
-     * @param node      the node
-     * @param dfsNumber the dfs number
+     *
+		 * @param node      the node
+     *
+		 * @param dfsNumber the dfs number
      */
     protected void preVisit( final Node node, final int dfsNumber ) {
   }
@@ -240,9 +245,12 @@ public class Dfs {
      * Callback method that will be invoked whenever a node visit has been completed. The dfs number and the completion
      * number of the given node will be passed in. By default this method does nothing
      *
-     * @param node       the node
-     * @param dfsNumber  the dfs number
-     * @param compNumber the comp number
+     *
+		 * @param node       the node
+     *
+		 * @param dfsNumber  the dfs number
+     *
+		 * @param compNumber the comp number
      */
     protected void postVisit( final Node node, final int dfsNumber, final int compNumber ) {
   }
@@ -252,10 +260,14 @@ public class Dfs {
      * The given node is the node that will be visited next iff <CODE>treeEdge == true</CODE>. By default this method does
      * nothing
      *
-     * @param edge     the edge
-     * @param node     the node
-     * @param treeEdge the tree edge
-     * @return the boolean
+     *
+		 * @param edge     the edge
+     *
+		 * @param node     the node
+     *
+		 * @param treeEdge the tree edge
+     * 
+		 * @return the boolean
      */
     protected boolean preTraverse( final Edge edge, final Node node, final boolean treeEdge ) {
     return true;
@@ -265,8 +277,10 @@ public class Dfs {
      * Callback method that will be invoked after the search returns from the given node. The node has been reached via
      * the given edge. By default this method does nothing.
      *
-     * @param edge the edge
-     * @param node the node
+     *
+		 * @param edge the edge
+     *
+		 * @param node the node
      */
     protected void postTraverse( final Edge edge, final Node node ) {
   }
@@ -274,8 +288,10 @@ public class Dfs {
     /**
      * Do traverse boolean.
      *
-     * @param e the e
-     * @return the boolean
+     *
+		 * @param e the e
+     * 
+		 * @return the boolean
      */
     protected boolean doTraverse( final Edge e ) {
     return true;
@@ -309,7 +325,8 @@ public class Dfs {
         /**
          * Instantiates a new Stack.
          *
-         * @param initialSize the initial size
+         *
+		 * @param initialSize the initial size
          */
         Stack( final int initialSize ) {
       localDfsNums = new int[initialSize];
@@ -321,7 +338,8 @@ public class Dfs {
         /**
          * Is empty boolean.
          *
-         * @return the boolean
+         * 
+		 * @return the boolean
          */
         boolean isEmpty() {
       return stackIndex < 0;
@@ -337,7 +355,8 @@ public class Dfs {
         /**
          * Peek node node.
          *
-         * @return the node
+         * 
+		 * @return the node
          */
         Node peekNode() {
       return nodes[ stackIndex ];
@@ -346,7 +365,8 @@ public class Dfs {
         /**
          * Peek current edge edge.
          *
-         * @return the edge
+         * 
+		 * @return the edge
          */
         Edge peekCurrentEdge() {
       return currentEdges[ stackIndex ];
@@ -355,7 +375,8 @@ public class Dfs {
         /**
          * Peek iterator state byte.
          *
-         * @return the byte
+         * 
+		 * @return the byte
          */
         byte peekIteratorState() {
       return iteratorStates[ stackIndex ];
@@ -364,7 +385,8 @@ public class Dfs {
         /**
          * Peek local dfs num int.
          *
-         * @return the int
+         * 
+		 * @return the int
          */
         int peekLocalDfsNum() {
       return localDfsNums[ stackIndex ];
@@ -373,11 +395,16 @@ public class Dfs {
         /**
          * Push state int.
          *
-         * @param node           the node
-         * @param currentEdge    the current edge
-         * @param iterastorState the iterastor state
-         * @param localDfsNum    the local dfs num
-         * @return the int
+         *
+		 * @param node           the node
+         *
+		 * @param currentEdge    the current edge
+         *
+		 * @param iterastorState the iterastor state
+         *
+		 * @param localDfsNum    the local dfs num
+         * 
+		 * @return the int
          */
         int pushState( final Node node, final Edge currentEdge, final byte iterastorState, final int localDfsNum ) {
       stackIndex++;
@@ -405,8 +432,10 @@ public class Dfs {
         /**
          * Update top.
          *
-         * @param currentEdge   the current edge
-         * @param iteratorState the iterator state
+         *
+		 * @param currentEdge   the current edge
+         *
+		 * @param iteratorState the iterator state
          */
         void updateTop( final Edge currentEdge, final byte iteratorState ) {
       this.currentEdges[ stackIndex ] = currentEdge;

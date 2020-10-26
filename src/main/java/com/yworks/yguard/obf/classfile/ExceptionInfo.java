@@ -35,8 +35,10 @@ public class ExceptionInfo
     /**
      * Create exception info.
      *
-     * @param din the din
-     * @return the exception info
+     *
+		 * @param din the din
+     *
+		 * @return the exception info
      * @throws IOException the io exception
      */
 // Class Methods ---------------------------------------------------------
@@ -59,7 +61,8 @@ public class ExceptionInfo
     }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

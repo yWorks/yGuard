@@ -39,7 +39,8 @@ public class IntegerCpInfo extends CpInfo
     /**
      * As bool boolean.
      *
-     * @return the boolean
+     * 
+		 * @return the boolean
      */
     public boolean asBool(){
       return u4bytes != 0;

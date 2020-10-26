@@ -18,7 +18,8 @@ public class SerializationFilter extends MethodFilter {
     /**
      * Instantiates a new Serialization filter.
      *
-     * @param project the project
+     * 
+		 * @param project the project
      */
     public SerializationFilter( Project project ) {
     super( project );

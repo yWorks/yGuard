@@ -28,8 +28,10 @@ public class MethodParameter {
     /**
      * Read method parameter.
      *
-     * @param din the din
-     * @return the method parameter
+     *
+		 * @param din the din
+     *
+		 * @return the method parameter
      * @throws IOException the io exception
      */
     static MethodParameter read( final DataInput din ) throws IOException {
@@ -41,7 +43,8 @@ public class MethodParameter {
     /**
      * Write.
      *
-     * @param dout the dout
+     *
+		 * @param dout the dout
      * @throws IOException the io exception
      */
     void write( final DataOutput dout ) throws IOException {

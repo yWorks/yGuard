@@ -24,7 +24,8 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
     /**
      * Instantiates a new Abstract dynamic cp info.
      *
-     * @param tag the tag
+     * 
+		 * @param tag the tag
      */
 // Instance Methods ------------------------------------------------------
   protected AbstractDynamicCpInfo( final int tag ) {
@@ -48,7 +49,8 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
     /**
      * Gets bootstrap method attr index.
      *
-     * @return the bootstrap method attr index
+     * 
+		 * @return the bootstrap method attr index
      */
     public int getBootstrapMethodAttrIndex() {
     return u2bootstrapMethodAttrIndex;
@@ -57,7 +59,8 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
     /**
      * Gets name and type index.
      *
-     * @return the name and type index
+     * 
+		 * @return the name and type index
      */
     public int getNameAndTypeIndex() {
     return u2nameAndTypeIndex;
@@ -66,7 +69,8 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
     /**
      * Sets name and type index.
      *
-     * @param index the index
+     * 
+		 * @param index the index
      */
     public void setNameAndTypeIndex( final int index ) {
     this.u2nameAndTypeIndex = index;

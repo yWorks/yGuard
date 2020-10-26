@@ -14,7 +14,8 @@ class D extends C {
     /**
      * Instantiates a new D.
      *
-     * @param key the key
+     * 
+		 * @param key the key
      */
     public D( Object key ) {
     this.key = key;
@@ -39,7 +40,8 @@ class D extends C {
     /**
      * Gets ext aii.
      *
-     * @return the ext aii
+     *
+		 * @return the ext aii
      */
     public static ExtAII getExtAII() {
      return null;

@@ -29,9 +29,12 @@ public class MethodInfo extends ClassItemInfo
     /**
      * Create a new MethodInfo from the file format data in the DataInput stream.
      *
-     * @param din the din
-     * @param cf  the cf
-     * @return the method info
+     *
+		 * @param din the din
+     *
+		 * @param cf  the cf
+     * 
+		 * @return the method info
      * @throws IOException if class file is corrupt or incomplete
      */
     public static MethodInfo create(DataInput din, ClassFile cf) throws java.io.IOException
@@ -46,7 +49,8 @@ public class MethodInfo extends ClassItemInfo
     /**
      * Instantiates a new Method info.
      *
-     * @param cf the cf
+     *
+		 * @param cf the cf
      */
 // Instance Methods ------------------------------------------------------
     protected MethodInfo(ClassFile cf) {super(cf);}

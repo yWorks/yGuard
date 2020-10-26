@@ -14,7 +14,8 @@ public class Edge {
     /**
      * Instantiates a new Edge.
      *
-     * @param network the network
+     *
+		 * @param network the network
      */
     public Edge(Network<Node, Edge> network) {
         this.network = network;
@@ -23,7 +24,8 @@ public class Edge {
     /**
      * Returns the target node of the edge.
      *
-     * @return {Node}
+     *
+		 * @return {Node}
      */
     public Node target() {
         return this.network.incidentNodes(this).target();
@@ -32,7 +34,8 @@ public class Edge {
     /**
      * Returns the source node of the edge
      *
-     * @return {Node}
+     *
+		 * @return {Node}
      */
     public Node source() {
         return this.network.incidentNodes(this).source();
@@ -41,7 +44,8 @@ public class Edge {
     /**
      * Returns the next edge (in insertion order) connecting source and target node, if any.
      *
-     * @return {Edge|null}
+     *
+		 * @return {Edge|null}
      */
     public Edge nextInEdge() {
         Set<Edge> inEdges = this.network.inEdges(this.target());
@@ -59,7 +63,8 @@ public class Edge {
     /**
      * Returns the next edge (in insertion order) that is outgoing of target node, if any.
      *
-     * @return {Edge|null}
+     *
+		 * @return {Edge|null}
      */
     public Edge nextOutEdge() {
         Set<Edge> outEdges = this.network.outEdges(this.network.incidentNodes(this).source());
@@ -77,8 +82,10 @@ public class Edge {
     /**
      * Returns the edge going in opposite direction of this edge in insertion order, respectively to the given node, if any.
      *
-     * @param node the node
-     * @return {Node}
+     *
+		 * @param node the node
+     *
+		 * @return {Node}
      */
     public Node opposite(Node node) {
         EndpointPair<Node> endpointPair = this.network.incidentNodes(this);

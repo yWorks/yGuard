@@ -35,7 +35,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Instantiates a new Class section.
      *
-     * @param task the task
+     * 
+		 * @param task the task
      */
     public ClassSection( YGuardBaseTask task ) {
     this.task = task;
@@ -44,7 +45,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Sets name.
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public void setName( String name ) {
     this.name = name;
@@ -53,7 +55,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Sets classes.
      *
-     * @param m the m
+     * 
+		 * @param m the m
      */
     public void setClasses( ObfuscatorTask.Modifiers m ) {
     this.classMode = m.getModifierValue();
@@ -63,7 +66,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Sets methods.
      *
-     * @param m the m
+     * 
+		 * @param m the m
      */
     public void setMethods( ObfuscatorTask.Modifiers m ) {
     this.methodMode = m.getModifierValue();
@@ -72,7 +76,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Sets fields.
      *
-     * @param m the m
+     * 
+		 * @param m the m
      */
     public void setFields( ObfuscatorTask.Modifiers m ) {
     fieldMode = m.getModifierValue();
@@ -81,7 +86,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Sets map.
      *
-     * @param mapTo the map to
+     * 
+		 * @param mapTo the map to
      */
     public void setMap( String mapTo ) {
     this.mapTo = mapTo;
@@ -90,7 +96,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Sets extends.
      *
-     * @param extendsType the extends type
+     * 
+		 * @param extendsType the extends type
      */
     public void setExtends( String extendsType ) {
     this.extendsType = ObfuscatorTask.toNativeClass( extendsType );
@@ -103,7 +110,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Gets extends.
      *
-     * @return the extends
+     * 
+		 * @return the extends
      */
     public String getExtends() {
     return extendsType;
@@ -112,7 +120,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Sets implements.
      *
-     * @param implementsType the implements type
+     * 
+		 * @param implementsType the implements type
      */
     public void setImplements( String implementsType ) {
     this.implementsType = ObfuscatorTask.toNativeClass( implementsType );
@@ -124,7 +133,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Gets implements.
      *
-     * @return the implements
+     * 
+		 * @return the implements
      */
     public String getImplements() {
     return implementsType;
@@ -160,7 +170,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Gets class mode.
      *
-     * @return the class mode
+     * 
+		 * @return the class mode
      */
     public int getClassMode() {
     return classMode;
@@ -169,7 +180,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Gets field mode.
      *
-     * @return the field mode
+     * 
+		 * @return the field mode
      */
     public int getFieldMode() {
     return fieldMode;
@@ -178,7 +190,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Gets method mode.
      *
-     * @return the method mode
+     * 
+		 * @return the method mode
      */
     public int getMethodMode() {
     return methodMode;
@@ -187,7 +200,8 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     /**
      * Gets name.
      *
-     * @return the name
+     * 
+		 * @return the name
      */
     public String getName() {
     return name;

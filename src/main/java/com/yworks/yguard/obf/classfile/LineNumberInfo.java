@@ -28,8 +28,10 @@ public class LineNumberInfo
     /**
      * Instantiates a new Line number info.
      *
-     * @param startPC    the start pc
-     * @param lineNumber the line number
+     *
+		 * @param startPC    the start pc
+     *
+		 * @param lineNumber the line number
      */
     public LineNumberInfo(int startPC, int lineNumber) {
         setLineNumber(lineNumber);
@@ -40,8 +42,10 @@ public class LineNumberInfo
     /**
      * Create line number info.
      *
-     * @param din the din
-     * @return the line number info
+     *
+		 * @param din the din
+     *
+		 * @return the line number info
      * @throws IOException the io exception
      */
 // Class Methods ---------------------------------------------------------
@@ -55,7 +59,8 @@ public class LineNumberInfo
     /**
      * Set line number.
      *
-     * @param number the number
+     *
+		 * @param number the number
      */
     public void setLineNumber(int number){
       this.u2lineNumber = number;
@@ -64,7 +69,8 @@ public class LineNumberInfo
     /**
      * Get line number int.
      *
-     * @return the int
+     *
+		 * @return the int
      */
     public int getLineNumber(){
       return this.u2lineNumber;
@@ -73,7 +79,8 @@ public class LineNumberInfo
     /**
      * Get start pc int.
      *
-     * @return the int
+     *
+		 * @return the int
      */
     public int getStartPC(){
       return this.u2startpc;
@@ -82,7 +89,8 @@ public class LineNumberInfo
     /**
      * Set start pc.
      *
-     * @param startPc the start pc
+     *
+		 * @param startPc the start pc
      */
     public void setStartPC(int startPc){
       this.u2startpc = startPc;
@@ -101,7 +109,8 @@ public class LineNumberInfo
     }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */

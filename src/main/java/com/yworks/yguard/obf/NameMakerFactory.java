@@ -29,7 +29,8 @@ public abstract class NameMakerFactory
   /**
    * Getter for property instance.
    *
-   * @return Value of property instance.
+   * 
+		 * @return Value of property instance.
    */
   public static NameMakerFactory getInstance()
   {
@@ -39,7 +40,8 @@ public abstract class NameMakerFactory
   /**
    * Setter for property instance.
    *
-   * @param _instance New value of property instance.
+   * 
+		 * @param _instance New value of property instance.
    */
   protected void setInstance(NameMakerFactory _instance)
   {
@@ -49,45 +51,60 @@ public abstract class NameMakerFactory
   /**
    * Gets package name maker.
    *
-   * @param reservedNames the reserved names
-   * @param packageName   the package name
-   * @return the package name maker
+   * 
+		 * @param reservedNames the reserved names
+   * 
+		 * @param packageName   the package name
+   * 
+		 * @return the package name maker
    */
   public abstract NameMaker getPackageNameMaker(String[] reservedNames, String packageName);
 
   /**
    * Gets class name maker.
    *
-   * @param reservedNames the reserved names
-   * @param packageName   the package name
-   * @return the class name maker
+   * 
+		 * @param reservedNames the reserved names
+   * 
+		 * @param packageName   the package name
+   * 
+		 * @return the class name maker
    */
   public abstract NameMaker getClassNameMaker(String[] reservedNames, String packageName);
 
   /**
    * Gets inner class name maker.
    *
-   * @param reservedNames the reserved names
-   * @param packageName   the package name
-   * @return the inner class name maker
+   * 
+		 * @param reservedNames the reserved names
+   * 
+		 * @param packageName   the package name
+   * 
+		 * @return the inner class name maker
    */
   public abstract NameMaker getInnerClassNameMaker(String[] reservedNames, String packageName);
 
   /**
    * Gets method name maker.
    *
-   * @param reservedNames the reserved names
-   * @param fqClassName   the fq class name
-   * @return the method name maker
+   * 
+		 * @param reservedNames the reserved names
+   * 
+		 * @param fqClassName   the fq class name
+   * 
+		 * @return the method name maker
    */
   public abstract NameMaker getMethodNameMaker(String[] reservedNames, String fqClassName);
 
   /**
    * Gets field name maker.
    *
-   * @param reservedNames the reserved names
-   * @param fqClassName   the fq class name
-   * @return the field name maker
+   * 
+		 * @param reservedNames the reserved names
+   * 
+		 * @param fqClassName   the fq class name
+   * 
+		 * @return the field name maker
    */
   public abstract NameMaker getFieldNameMaker(String[] reservedNames, String fqClassName);
 
@@ -115,9 +132,12 @@ public abstract class NameMakerFactory
     /**
      * Create class name maker name maker.
      *
-     * @param reservedNames the reserved names
-     * @param fqClassName   the fq class name
-     * @return the name maker
+     * 
+		 * @param reservedNames the reserved names
+     * 
+		 * @param fqClassName   the fq class name
+     * 
+		 * @return the name maker
      */
     protected NameMaker createClassNameMaker(String[] reservedNames, String fqClassName){
       return new KeywordNameMaker(reservedNames); 
@@ -136,9 +156,12 @@ public abstract class NameMakerFactory
     /**
      * Create field name maker name maker.
      *
-     * @param reservedNames the reserved names
-     * @param fqClassName   the fq class name
-     * @return the name maker
+     * 
+		 * @param reservedNames the reserved names
+     * 
+		 * @param fqClassName   the fq class name
+     * 
+		 * @return the name maker
      */
     protected NameMaker createFieldNameMaker(String[] reservedNames, String fqClassName){
       return new KeywordNameMaker(reservedNames, false, true); 
@@ -157,9 +180,12 @@ public abstract class NameMakerFactory
     /**
      * Create inner class name maker name maker.
      *
-     * @param reservedNames    the reserved names
-     * @param fqInnerClassName the fq inner class name
-     * @return the name maker
+     * 
+		 * @param reservedNames    the reserved names
+     * 
+		 * @param fqInnerClassName the fq inner class name
+     * 
+		 * @return the name maker
      */
     protected NameMaker createInnerClassNameMaker(final String[] reservedNames, String fqInnerClassName){
       final NameMaker inner = new KeywordNameMaker(null);
@@ -189,9 +215,12 @@ public abstract class NameMakerFactory
     /**
      * Create method name maker name maker.
      *
-     * @param reservedNames the reserved names
-     * @param fqClassName   the fq class name
-     * @return the name maker
+     * 
+		 * @param reservedNames the reserved names
+     * 
+		 * @param fqClassName   the fq class name
+     * 
+		 * @return the name maker
      */
     protected NameMaker createMethodNameMaker(String[] reservedNames, String fqClassName){
       return new KeywordNameMaker(reservedNames, false, true); 
@@ -210,9 +239,12 @@ public abstract class NameMakerFactory
     /**
      * Create package name maker name maker.
      *
-     * @param reservedNames the reserved names
-     * @param packageName   the package name
-     * @return the name maker
+     * 
+		 * @param reservedNames the reserved names
+     * 
+		 * @param packageName   the package name
+     * 
+		 * @return the name maker
      */
     protected NameMaker createPackageNameMaker(String[] reservedNames, String packageName){
       return new KeywordNameMaker(reservedNames); 

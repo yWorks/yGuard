@@ -31,8 +31,10 @@ public class ElementValuePairInfo
     /**
      * Create element value pair info.
      *
-     * @param din the din
-     * @return the element value pair info
+     * 
+		 * @param din the din
+     * 
+		 * @return the element value pair info
      * @throws IOException the io exception
      */
     public static ElementValuePairInfo create(DataInput din) throws IOException
@@ -45,7 +47,8 @@ public class ElementValuePairInfo
     /**
      * Read.
      *
-     * @param din the din
+     * 
+		 * @param din the din
      * @throws IOException the io exception
      */
     protected void read(DataInput din) throws java.io.IOException
@@ -57,7 +60,8 @@ public class ElementValuePairInfo
     /**
      * Mark utf 8 refs in info.
      *
-     * @param pool the pool
+     * 
+		 * @param pool the pool
      */
     protected void markUtf8RefsInInfo(ConstantPool pool) {
     pool.getCpEntry(u2ElementNameIndex).incRefCount();
@@ -65,7 +69,8 @@ public class ElementValuePairInfo
   }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.  
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */
@@ -78,7 +83,8 @@ public class ElementValuePairInfo
     /**
      * Gets u 2 element name index.
      *
-     * @return the u 2 element name index
+     * 
+		 * @return the u 2 element name index
      */
     public int getU2ElementNameIndex() {
     return u2ElementNameIndex;
@@ -87,7 +93,8 @@ public class ElementValuePairInfo
     /**
      * Gets element value.
      *
-     * @return the element value
+     * 
+		 * @return the element value
      */
     public ElementValueInfo getElementValue() {
     return elementValue;

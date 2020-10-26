@@ -34,13 +34,19 @@ abstract public class MdFd extends TreeItem
     // Instance Methods ------------------------------------------------------
 
     /**
-     * Ctor.  @param parent the parent
+     * Ctor.  
+		 * @param parent the parent
      *
-     * @param isSynthetic       the is synthetic
-     * @param name              the name
-     * @param descriptor        the descriptor
-     * @param access            the access
-     * @param obfuscationConfig the obfuscation config
+     * 
+		 * @param isSynthetic       the is synthetic
+     * 
+		 * @param name              the name
+     * 
+		 * @param descriptor        the descriptor
+     * 
+		 * @param access            the access
+     * 
+		 * @param obfuscationConfig the obfuscation config
      */
     public MdFd(TreeItem parent, boolean isSynthetic, String name, String descriptor, int access, ObfuscationConfig obfuscationConfig)
     {
@@ -65,14 +71,16 @@ abstract public class MdFd extends TreeItem
     /**
      * Gets obfuscation config.
      *
-     * @return the obfuscation config
+     *
+		 * @return the obfuscation config
      */
     public ObfuscationConfig getObfuscationConfig() {
     return obfuscationConfig;
   }
 
     /**
-     * Return the method or field descriptor String.  @return the descriptor
+     * Return the method or field descriptor String.
+		 * @return the descriptor
      */
     public String getDescriptor() {return descriptor;}
 
@@ -128,7 +136,8 @@ abstract public class MdFd extends TreeItem
     }
 
     /**
-     * Return the display name of the return type.  @return the return type name
+     * Return the display name of the return type.
+		 * @return the return type name
      */
     protected String getReturnTypeName()
     {
@@ -137,7 +146,8 @@ abstract public class MdFd extends TreeItem
     }
 
     /**
-     * Return the display name of the descriptor types.  @return the descriptor name
+     * Return the display name of the descriptor types.
+		 * @return the descriptor name
      */
     abstract protected String getDescriptorName();
 
@@ -147,7 +157,8 @@ abstract public class MdFd extends TreeItem
     /**
      * Parse types string [ ].
      *
-     * @return the string [ ]
+     *
+		 * @return the string [ ]
      */
     protected String[] parseTypes()
     {

@@ -31,9 +31,12 @@ public class SourceFileAttrInfo extends AttrInfo
     /**
      * Instantiates a new Source file attr info.
      *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     *
+		 * @param cf            the cf
+     *
+		 * @param attrNameIndex the attr name index
+     *
+		 * @param attrLength    the attr length
      */
 // Instance Methods ------------------------------------------------------
     protected SourceFileAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
@@ -62,7 +65,8 @@ public class SourceFileAttrInfo extends AttrInfo
     /**
      * Set source file index.
      *
-     * @param index the index
+     *
+		 * @param index the index
      */
     protected void setSourceFileIndex(int index){
       this.u2sourceFileIndex = index;
@@ -71,7 +75,8 @@ public class SourceFileAttrInfo extends AttrInfo
     /**
      * Get source file index int.
      *
-     * @return the int
+     *
+		 * @return the int
      */
     protected int getSourceFileIndex(){
       return this.u2sourceFileIndex;

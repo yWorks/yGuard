@@ -37,9 +37,11 @@ public class ClassCpInfo extends AbstractTypeCpInfo
     }
 
     /**
-     * Dump the content of the class file to the specified file (used for debugging).  @param pw the pw
+     * Dump the content of the class file to the specified file (used for debugging).
+		 * @param pw the pw
      *
-     * @param cf the cf
+     *
+		 * @param cf the cf
      */
     public void dump(PrintWriter pw, ClassFile cf)
     {

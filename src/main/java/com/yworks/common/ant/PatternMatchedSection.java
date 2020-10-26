@@ -44,8 +44,10 @@ public abstract class PatternMatchedSection {
     /**
      * Is access level boolean.
      *
-     * @param level the level
-     * @return the boolean
+     * 
+		 * @param level the level
+     *
+		 * @return the boolean
      */
     public boolean isAccessLevel( Access level ) {
 //      System.out.println( "compare: " + this.compareTo( level ) );
@@ -56,8 +58,10 @@ public abstract class PatternMatchedSection {
     /**
      * Is access level boolean.
      *
-     * @param asmAccess the asm access
-     * @return the boolean
+     * 
+		 * @param asmAccess the asm access
+     *
+		 * @return the boolean
      */
     public boolean isAccessLevel( int asmAccess ) {
       return isAccessLevel( Access.valueOf( asmAccess ) );
@@ -66,8 +70,10 @@ public abstract class PatternMatchedSection {
     /**
      * Value of access.
      *
-     * @param asmAccess the asm access
-     * @return the access
+     * 
+		 * @param asmAccess the asm access
+     *
+		 * @return the access
      */
     public static Access valueOf( int asmAccess ) {
 
@@ -99,7 +105,8 @@ public abstract class PatternMatchedSection {
   /**
    * Create pattern set type pattern set.
    *
-   * @return the type pattern set
+   *
+		 * @return the type pattern set
    */
   public TypePatternSet createPatternSet() {
     TypePatternSet typePatternSet = new TypePatternSet();
@@ -115,8 +122,10 @@ public abstract class PatternMatchedSection {
   /**
    * Add pattern set.
    *
-   * @param ps   the ps
-   * @param type the type
+   * 
+		 * @param ps   the ps
+   * 
+		 * @param type the type
    */
   public void addPatternSet( final PatternSet ps, TypePatternSet.Type type ) {
     if ( null == patternSets ) {
@@ -134,8 +143,10 @@ public abstract class PatternMatchedSection {
   /**
    * Gets pattern set.
    *
-   * @param type the type
-   * @return the pattern set
+   * 
+		 * @param type the type
+   *
+		 * @return the pattern set
    */
   public PatternSet getPatternSet( TypePatternSet.Type type ) {
     if ( null != patternSets ) {
@@ -148,7 +159,8 @@ public abstract class PatternMatchedSection {
   /**
    * Sets access.
    *
-   * @param access the access
+   * 
+		 * @param access the access
    */
   public void setAccess( String access ) {
     this.access = Access.valueOf( access.toUpperCase() );
@@ -157,7 +169,8 @@ public abstract class PatternMatchedSection {
   /**
    * Gets access.
    *
-   * @return the access
+   *
+		 * @return the access
    */
   public Access getAccess() {
     return access;
@@ -166,8 +179,10 @@ public abstract class PatternMatchedSection {
   /**
    * Access value access.
    *
-   * @param accessString the access string
-   * @return the access
+   * 
+		 * @param accessString the access string
+   *
+		 * @return the access
    */
   protected Access accessValue( String accessString ) {
     Access access = null;

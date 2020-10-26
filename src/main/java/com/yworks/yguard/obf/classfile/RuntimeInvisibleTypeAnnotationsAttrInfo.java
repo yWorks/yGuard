@@ -10,9 +10,12 @@ public class RuntimeInvisibleTypeAnnotationsAttrInfo extends RuntimeVisibleTypeA
     /**
      * Instantiates a new Runtime invisible type annotations attr info.
      *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     * 
+		 * @param cf            the cf
+     * 
+		 * @param attrNameIndex the attr name index
+     * 
+		 * @param attrLength    the attr length
      */
     public RuntimeInvisibleTypeAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength) {
     super(cf, attrNameIndex, attrLength);

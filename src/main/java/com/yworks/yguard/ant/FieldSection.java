@@ -23,7 +23,8 @@ public final class FieldSection extends PatternMatchedClassesSection implements 
     /**
      * Set name.
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public void setName(String name){
       this.name = name;
@@ -32,7 +33,8 @@ public final class FieldSection extends PatternMatchedClassesSection implements 
     /**
      * Set class.
      *
-     * @param name the name
+     * 
+		 * @param name the name
      */
     public void setClass(String name){
       this.className = name;
@@ -47,7 +49,8 @@ public final class FieldSection extends PatternMatchedClassesSection implements 
     /**
      * Set map.
      *
-     * @param map the map
+     * 
+		 * @param map the map
      */
     public void setMap(String map){
       this.mapTo = map;
@@ -64,7 +67,8 @@ public final class FieldSection extends PatternMatchedClassesSection implements 
     /**
      * Gets name.
      *
-     * @return the name
+     *
+		 * @return the name
      */
     public String getName() {
       return name;
@@ -73,7 +77,8 @@ public final class FieldSection extends PatternMatchedClassesSection implements 
     /**
      * Gets class name.
      *
-     * @return the class name
+     *
+		 * @return the class name
      */
     public String getClassName() {
       return className;

@@ -15,14 +15,16 @@ public @interface ParameterAnnotation {
     /**
      * Param annot foo string.
      *
-     * @return the string
+     * 
+		 * @return the string
      */
     String paramAnnotFoo();
 
     /**
      * Param annot baz string.
      *
-     * @return the string
+     * 
+		 * @return the string
      */
     String paramAnnotBaz() default "[param annot default]";
 

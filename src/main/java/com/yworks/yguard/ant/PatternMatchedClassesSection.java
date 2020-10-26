@@ -39,7 +39,8 @@ public abstract class PatternMatchedClassesSection {
     /**
      * Add configured pattern set.
      *
-     * @param ps the ps
+     * 
+		 * @param ps the ps
      */
     public void addConfiguredPatternSet( PatternSet ps){
     patternSets.add(ps);
@@ -48,7 +49,8 @@ public abstract class PatternMatchedClassesSection {
     /**
      * Add configured property.
      *
-     * @param p the p
+     * 
+		 * @param p the p
      */
     public void addConfiguredProperty( Property p){
     this.properties.put(p.getName(), p.getValue());
@@ -57,7 +59,8 @@ public abstract class PatternMatchedClassesSection {
     /**
      * Gets pattern sets.
      *
-     * @return the pattern sets
+     * 
+		 * @return the pattern sets
      */
     public List getPatternSets() {
     return patternSets;
@@ -66,8 +69,10 @@ public abstract class PatternMatchedClassesSection {
     /**
      * Add entries.
      *
-     * @param entries the entries
-     * @param zf      the zf
+     * 
+		 * @param entries the entries
+     * 
+		 * @param zf      the zf
      * @throws IOException the io exception
      */
     public void addEntries( Collection entries, ZipFileSet zf)throws IOException {
@@ -105,8 +110,10 @@ public abstract class PatternMatchedClassesSection {
     /**
      * Add entries.
      *
-     * @param entries      the entries
-     * @param matchedClass the matched class
+     * 
+		 * @param entries      the entries
+     * 
+		 * @param matchedClass the matched class
      */
     public abstract void addEntries(Collection entries, String matchedClass);
 }

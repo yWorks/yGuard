@@ -32,7 +32,8 @@ public class ModuleExports {
     /**
      * Gets exports index.
      *
-     * @return the exports index
+     * 
+		 * @return the exports index
      */
     int getExportsIndex() {
     return u2exportsIndex;
@@ -41,8 +42,10 @@ public class ModuleExports {
     /**
      * Read module exports.
      *
-     * @param din the din
-     * @return the module exports
+     *
+		 * @param din the din
+     * 
+		 * @return the module exports
      * @throws IOException the io exception
      */
     static ModuleExports read( final DataInput din ) throws IOException {
@@ -60,7 +63,8 @@ public class ModuleExports {
     /**
      * Write.
      *
-     * @param dout the dout
+     *
+		 * @param dout the dout
      * @throws IOException the io exception
      */
     void write( final DataOutput dout ) throws IOException {

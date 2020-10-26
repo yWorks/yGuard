@@ -37,8 +37,10 @@ abstract public class CpInfo implements ClassConstants
     /**
      * Create a new CpInfo from the data passed.
      *
-     * @param din the din
-     * @return the cp info
+     * 
+		 * @param din the din
+     * 
+		 * @return the cp info
      * @throws IOException if class file is corrupt or incomplete
      */
     public static CpInfo create(DataInput din) throws java.io.IOException
@@ -76,7 +78,8 @@ abstract public class CpInfo implements ClassConstants
     /**
      * Instantiates a new Cp info.
      *
-     * @param tag the tag
+     * 
+		 * @param tag the tag
      */
 // Instance Methods ------------------------------------------------------
     protected CpInfo(int tag)
@@ -85,24 +88,28 @@ abstract public class CpInfo implements ClassConstants
     }
 
     /**
-     * Read the 'info' data following the u1tag byte; over-ride this in sub-classes.  @param din the din
+     * Read the 'info' data following the u1tag byte; over-ride this in sub-classes.  
+		 * @param din the din
      *
      * @throws IOException the io exception
      */
     abstract protected void readInfo(DataInput din) throws java.io.IOException;
 
     /**
-     * Check for Utf8 references to constant pool and mark them; over-ride this in sub-classes.  @param pool the pool
+     * Check for Utf8 references to constant pool and mark them; over-ride this in sub-classes.  
+		 * @param pool the pool
      */
     protected void markUtf8Refs(ConstantPool pool)  {}
 
     /**
-     * Check for NameAndType references to constant pool and mark them; over-ride this in sub-classes.  @param pool the pool
+     * Check for NameAndType references to constant pool and mark them; over-ride this in sub-classes.  
+		 * @param pool the pool
      */
     protected void markNTRefs(ConstantPool pool)  {}
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.  
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */
@@ -114,14 +121,16 @@ abstract public class CpInfo implements ClassConstants
     }
 
     /**
-     * Write the 'info' data following the u1tag byte; over-ride this in sub-classes.  @param dout the dout
+     * Write the 'info' data following the u1tag byte; over-ride this in sub-classes.  
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */
     abstract protected void writeInfo(DataOutput dout) throws java.io.IOException;
 
     /**
-     * Return the reference count.  @return the ref count
+     * Return the reference count.  
+		 * @return the ref count
      */
     public int getRefCount() {return refCount;}
 
@@ -147,10 +156,13 @@ abstract public class CpInfo implements ClassConstants
     public void resetRefCount() {refCount = 0;}
 
     /**
-     * Dump the content of the class file to the specified file (used for debugging).  @param pw the pw
+     * Dump the content of the class file to the specified file (used for debugging).  
+		 * @param pw the pw
      *
-     * @param cf    the cf
-     * @param index the index
+     * 
+		 * @param cf    the cf
+     * 
+		 * @param index the index
      */
     public void dump(PrintWriter pw, ClassFile cf, int index)  {
       pw.println(this.getClass().getName());

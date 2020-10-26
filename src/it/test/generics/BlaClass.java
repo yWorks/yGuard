@@ -8,7 +8,8 @@ public class BlaClass {
     /**
      * The type Inner.
      *
-     * @param <T> the type parameter
+     * 
+		 * @param <T> the type parameter
      */
     public class Inner<T> {
   }

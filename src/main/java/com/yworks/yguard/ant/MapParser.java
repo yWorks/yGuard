@@ -30,7 +30,8 @@ public final class MapParser implements ContentHandler {
     /**
      * Instantiates a new Map parser.
      *
-     * @param obfuscatorTask the obfuscator task
+     * 
+		 * @param obfuscatorTask the obfuscator task
      */
     public MapParser( ObfuscatorTask obfuscatorTask ) {
     this.obfuscatorTask = obfuscatorTask;
@@ -39,7 +40,8 @@ public final class MapParser implements ContentHandler {
     /**
      * Get entries collection.
      *
-     * @return the collection
+     * 
+		 * @return the collection
      */
     public Collection getEntries(){
     return entries;
@@ -48,7 +50,8 @@ public final class MapParser implements ContentHandler {
     /**
      * Get owner properties map.
      *
-     * @return the map
+     * 
+		 * @return the map
      */
     Map getOwnerProperties(){
     return ownerProperties;

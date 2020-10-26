@@ -51,7 +51,9 @@ abstract public class ClassItemInfo implements ClassConstants
     /**
      * Instantiates a new Class item info.
      *
-     * @param cf the cf
+     * 
+		 * 
+		 * @param cf the cf
      */
 // Instance Methods ------------------------------------------------------
     protected ClassItemInfo(ClassFile cf) {this.cf = cf;}
@@ -59,9 +61,15 @@ abstract public class ClassItemInfo implements ClassConstants
     /**
      * Gets obfuscation config.
      *
-     * @param name       the name
-     * @param attributes the attributes
-     * @return the obfuscation config
+     * 
+		 * 
+		 * @param name       the name
+     * 
+		 * 
+		 * @param attributes the attributes
+     * 
+		 * 
+		 * @return the obfuscation config
      */
     public static ObfuscationConfig getObfuscationConfig(String name, AttrInfo[] attributes) {
     if (attributes == null) return null;
@@ -125,32 +133,44 @@ abstract public class ClassItemInfo implements ClassConstants
   }
 
     /**
-     * Is the field or method 'Synthetic'?  @return the boolean
+     * Is the field or method 'Synthetic'?  
+		 * 
+		 * @return the boolean
      */
     public boolean isSynthetic() {return isSynthetic;}
 
     /**
-     * Return method/field name index into Constant Pool.  @return the name index
+     * Return method/field name index into Constant Pool.  
+		 * 
+		 * @return the name index
      */
     protected int getNameIndex() {return u2nameIndex;}
 
     /**
-     * Set the method/field name index.  @param index the index
+     * Set the method/field name index.  
+		 * 
+		 * @param index the index
      */
     protected void setNameIndex(int index) {u2nameIndex = index;}
 
     /**
-     * Return method/field descriptor index into Constant Pool.  @return the descriptor index
+     * Return method/field descriptor index into Constant Pool.  
+		 * 
+		 * @return the descriptor index
      */
     protected int getDescriptorIndex() {return u2descriptorIndex;}
 
     /**
-     * Set the method/field descriptor index.  @param index the index
+     * Set the method/field descriptor index.  
+		 * 
+		 * @param index the index
      */
     protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
 
     /**
-     * Return method/field string name.  @return the name
+     * Return method/field string name.  
+		 * 
+		 * @return the name
      */
     public String getName()
     {
@@ -158,7 +178,9 @@ abstract public class ClassItemInfo implements ClassConstants
     }
 
     /**
-     * Return descriptor string.  @return the descriptor
+     * Return descriptor string.  
+		 * 
+		 * @return the descriptor
      */
     public String getDescriptor()
     {
@@ -166,7 +188,9 @@ abstract public class ClassItemInfo implements ClassConstants
     }
 
     /**
-     * Return access flags.  @return the access flags
+     * Return access flags.  
+		 * 
+		 * @return the access flags
      */
     public int getAccessFlags()
     {
@@ -177,7 +201,9 @@ abstract public class ClassItemInfo implements ClassConstants
      * Trim attributes from the classfile ('Code', 'Exceptions', 'ConstantValue'
      * are preserved, all others except the list in the String[] are killed).
      *
-     * @param keepAttrs the keep attrs
+     * 
+		 * 
+		 * @param keepAttrs the keep attrs
      */
     protected void trimAttrsExcept(String[] keepAttrs)
     {
@@ -210,7 +236,9 @@ abstract public class ClassItemInfo implements ClassConstants
     }
 
     /**
-     * Check for Utf8 references to constant pool and mark them.  @param pool the pool
+     * Check for Utf8 references to constant pool and mark them.  
+		 * 
+		 * @param pool the pool
      */
     protected void markUtf8Refs(ConstantPool pool)
     {
@@ -223,7 +251,9 @@ abstract public class ClassItemInfo implements ClassConstants
     }
 
     /**
-     * Import the field or method data to internal representation.  @param din the din
+     * Import the field or method data to internal representation.  
+		 * 
+		 * @param din the din
      *
      * @throws IOException the io exception
      */
@@ -245,7 +275,9 @@ abstract public class ClassItemInfo implements ClassConstants
     }
 
     /**
-     * Export the representation to a DataOutput stream.  @param dout the dout
+     * Export the representation to a DataOutput stream.  
+		 * 
+		 * @param dout the dout
      *
      * @throws IOException the io exception
      */
@@ -265,7 +297,9 @@ abstract public class ClassItemInfo implements ClassConstants
     /**
      * Gets obfuscation config.
      *
-     * @return the obfuscation config
+     * 
+		 * 
+		 * @return the obfuscation config
      */
     public ObfuscationConfig getObfuscationConfig() {
     if (obfuscationConfig == DUMMY){

@@ -13,7 +13,8 @@ public class FileEntryWrapper implements Entry {
     /**
      * Instantiates a new File entry wrapper.
      *
-     * @param file the file
+     * 
+		 * @param file the file
      */
     FileEntryWrapper( File file ) {
     this.file = file;
@@ -37,7 +38,8 @@ public class FileEntryWrapper implements Entry {
     /**
      * Gets file.
      *
-     * @return the file
+     * 
+		 * @return the file
      */
     public File getFile() {
     return file;

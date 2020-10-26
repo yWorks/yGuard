@@ -32,9 +32,12 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
     /**
      * Instantiates a new Local variable type table attr info.
      *
-     * @param cf            the cf
-     * @param attrNameIndex the attr name index
-     * @param attrLength    the attr length
+     * 
+		 * @param cf            the cf
+     * 
+		 * @param attrNameIndex the attr name index
+     * 
+		 * @param attrLength    the attr length
      */
 // Instance Methods ------------------------------------------------------
     protected LocalVariableTypeTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
@@ -49,7 +52,8 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
     }
 
     /**
-     * Return the array of local variable table entries.  @return the local variable type info [ ]
+     * Return the array of local variable table entries.  
+		 * @return the local variable type info [ ]
      */
     protected LocalVariableTypeInfo[] getLocalVariableTypeTable()
     {
@@ -59,7 +63,8 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
     /**
      * Sets local variable type table.
      *
-     * @param lvts the lvts
+     * 
+		 * @param lvts the lvts
      */
     public void setLocalVariableTypeTable(LocalVariableTypeInfo[] lvts) {
       this.localVariableTypeTable = lvts;

@@ -39,9 +39,11 @@ abstract public class PkCl extends TreeItem
     // Instance Methods ------------------------------------------------------
 
     /**
-     * Ctor.  @param parent the parent
+     * Ctor.
+		 * @param parent the parent
      *
-     * @param name the name
+     *
+		 * @param name the name
      */
     public PkCl(TreeItem parent, String name)
     {
@@ -49,19 +51,23 @@ abstract public class PkCl extends TreeItem
     }
 
     /**
-     * Get a class by name.  @param name the name
+     * Get a class by name.
+		 * @param name the name
      *
-     * @return the class
+     * 
+		 * @return the class
      */
     public Cl getClass(String name)  {return (Cl)cls.get(name);}
 
     /**
-     * Get an Enumeration of classes directly beneath this PkCl.  @return the class enum
+     * Get an Enumeration of classes directly beneath this PkCl.  
+		 * @return the class enum
      */
     public Enumeration getClassEnum() {return cls.elements();}
 
     /**
-     * Get an Enumeration of all classes (outer and inner) in the tree beneath this PkCl.  @return the all class enum
+     * Get an Enumeration of all classes (outer and inner) in the tree beneath this PkCl.  
+		 * @return the all class enum
      */
     public Enumeration getAllClassEnum()
     {
@@ -71,7 +77,8 @@ abstract public class PkCl extends TreeItem
     }
 
     /**
-     * List classes and recursively compose a list of all inner classes.  @param allClasses the all classes
+     * List classes and recursively compose a list of all inner classes.
+		 * @param allClasses the all classes
      */
     protected void addAllClasses(Vector allClasses)
     {
@@ -84,23 +91,29 @@ abstract public class PkCl extends TreeItem
     }
 
     /**
-     * Return number of classes.  @return the class count
+     * Return number of classes.  
+		 * @return the class count
      */
     public int getClassCount() {return cls.size();}
 
     /**
-     * Add a class to the list of owned classes.  @param classInfo the class info
+     * Add a class to the list of owned classes.
+		 * @param classInfo the class info
      *
-     * @return the cl
+     * 
+		 * @return the cl
      */
     abstract public Cl addClass(Object[] classInfo) ;
 
 
     /**
-     * Add a class to the list of owned classes.  @param isInnerClass the is inner class
+     * Add a class to the list of owned classes.
+		 * @param isInnerClass the is inner class
      *
-     * @param classInfo the class info
-     * @return the cl
+     *
+		 * @param classInfo the class info
+     * 
+		 * @return the cl
      */
     public Cl addClass(boolean isInnerClass, Object[] classInfo)
     {
@@ -141,17 +154,22 @@ abstract public class PkCl extends TreeItem
     }
 
     /**
-     * Add a placeholder class to our list of owned classes, to be replaced later by the full class.  @param name the name
+     * Add a placeholder class to our list of owned classes, to be replaced later by the full class.
+		 * @param name the name
      *
-     * @return the cl
+     * 
+		 * @return the cl
      */
     abstract public Cl addPlaceholderClass(String name) ;
 
     /**
-     * Add a placeholder class to our list of owned classes, to be replaced later by the full class.  @param isInnerClass the is inner class
+     * Add a placeholder class to our list of owned classes, to be replaced later by the full class.
+		 * @param isInnerClass the is inner class
      *
-     * @param name the name
-     * @return the cl
+     *
+		 * @param name the name
+     * 
+		 * @return the cl
      */
     public Cl addPlaceholderClass(boolean isInnerClass, String name)
     {
@@ -173,7 +191,8 @@ abstract public class PkCl extends TreeItem
     }
 
     /**
-     * Generate unique obfuscated names for a given namespace.  @param hash the hash
+     * Generate unique obfuscated names for a given namespace.
+		 * @param hash the hash
      */
     protected void generateNames(Hashtable hash)
     {

@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * The type Generic outer.
  *
- * @param <T> the type parameter
+ *
+		 * @param <T> the type parameter
  */
 public class GenericOuter<T extends List<BlaClass.Inner<String>>> {
 
@@ -16,7 +17,8 @@ public class GenericOuter<T extends List<BlaClass.Inner<String>>> {
     /**
      * Foo.
      *
-     * @param b the b
+     *
+		 * @param b the b
      */
     public void foo( Inner<Inner.InnerInner> b ) {
     System.out.println("bla: "+b);
@@ -37,7 +39,8 @@ public class GenericOuter<T extends List<BlaClass.Inner<String>>> {
     /**
      * The type Inner.
      *
-     * @param <K> the type parameter
+     *
+		 * @param <K> the type parameter
      */
     public class Inner<K> {
 
@@ -51,7 +54,8 @@ public class GenericOuter<T extends List<BlaClass.Inner<String>>> {
         /**
          * The type Inner inner.
          *
-         * @param <K> the type parameter
+         *
+		 * @param <K> the type parameter
          */
         public class InnerInner<K> {
 

@@ -32,8 +32,10 @@ public class ModuleOpens {
     /**
      * Read module opens.
      *
-     * @param din the din
-     * @return the module opens
+     * 
+		 * @param din the din
+     * 
+		 * @return the module opens
      * @throws IOException the io exception
      */
     static ModuleOpens read( final DataInput din ) throws IOException {
@@ -51,7 +53,8 @@ public class ModuleOpens {
     /**
      * Write.
      *
-     * @param dout the dout
+     * 
+		 * @param dout the dout
      * @throws IOException the io exception
      */
     void write( final DataOutput dout ) throws IOException {

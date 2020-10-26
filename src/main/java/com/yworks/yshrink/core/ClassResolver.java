@@ -10,8 +10,10 @@ public interface ClassResolver extends AutoCloseable {
     /**
      * Resolve class.
      *
-     * @param className the class name
-     * @return the class
+     * 
+		 * @param className the class name
+     * 
+		 * @return the class
      * @throws ClassNotFoundException the class not found exception
      */
     Class resolve(String className) throws ClassNotFoundException;

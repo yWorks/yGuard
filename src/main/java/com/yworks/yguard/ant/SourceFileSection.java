@@ -15,7 +15,8 @@ public final class SourceFileSection extends PatternMatchedClassesSection implem
     /**
      * Instantiates a new Source file section.
      *
-     * @param obfuscatorTask the obfuscator task
+     * 
+		 * @param obfuscatorTask the obfuscator task
      */
     public SourceFileSection( YGuardBaseTask obfuscatorTask ){
     super();

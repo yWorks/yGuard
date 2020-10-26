@@ -22,9 +22,12 @@ class FileObjects {
     /**
      * New in memory file object java file object.
      *
-     * @param typeName the type name
-     * @param code     the code
-     * @return the java file object
+     *
+		 * @param typeName the type name
+     *
+		 * @param code     the code
+     * 
+		 * @return the java file object
      */
     static JavaFileObject newInMemoryFileObject(
           final String typeName, final String code
@@ -35,9 +38,12 @@ class FileObjects {
     /**
      * New url file object java file object.
      *
-     * @param typeName the type name
-     * @param url      the url
-     * @return the java file object
+     *
+		 * @param typeName the type name
+     *
+		 * @param url      the url
+     * 
+		 * @return the java file object
      */
     static JavaFileObject newUrlFileObject(
           final String typeName, final URL url
@@ -51,7 +57,8 @@ class FileObjects {
       /**
        * Instantiates a new Abstract source object.
        *
-       * @param typname the typname
+       *
+		 * @param typname the typname
        */
       AbstractSourceObject( final String typname) {
       super(asUri(typname), Kind.SOURCE);
@@ -60,8 +67,10 @@ class FileObjects {
       /**
        * As uri uri.
        *
-       * @param typeName the type name
-       * @return the uri
+       *
+		 * @param typeName the type name
+       * 
+		 * @return the uri
        */
       static URI asUri( final String typeName ) {
       return URI.create("string:///" + typeName.replace('.', '/') + Kind.SOURCE.extension);
@@ -74,8 +83,10 @@ class FileObjects {
       /**
        * Instantiates a new In memory file object.
        *
-       * @param typeName the type name
-       * @param code     the code
+       *
+		 * @param typeName the type name
+       *
+		 * @param code     the code
        */
       InMemoryFileObject( final String typeName, final String code ) {
       super(typeName);
@@ -95,8 +106,10 @@ class FileObjects {
       /**
        * Instantiates a new Url file object.
        *
-       * @param typname the typname
-       * @param url     the url
+       *
+		 * @param typname the typname
+       *
+		 * @param url     the url
        */
       UrlFileObject( final String typname, final URL url ) {
       super(typname);
