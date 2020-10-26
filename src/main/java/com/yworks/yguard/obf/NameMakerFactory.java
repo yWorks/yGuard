@@ -33,7 +33,7 @@ public abstract class NameMakerFactory
   }
   
   /** Setter for property instance.
-   * @param _instance New value of property instance.
+   * @param _instance  New value of property instance.
    *
    */
   protected void setInstance(NameMakerFactory _instance)
