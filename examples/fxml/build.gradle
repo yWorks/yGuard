@@ -1,0 +1,58 @@
+plugins {
+  // Apply the java and library plugin to add support for Java
+  id 'application'
+  id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+application {
+  version = '11'
+  mainClassName = 'animations.Animations'
+}
+
+jar {
+  manifest {
+    attributes(
+      'Main-Class': application.mainClassName
+    )
+  }
+}
+
+javafx {
+  modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  compile 'com.yworks:yguard:3.0.0-SNAPSHOT'
+  compile 'com.yworks:annotation:3.0.0-SNAPSHOT'
+}
+
+task obfuscate {
+  dependsOn jar
+  group 'yGuard'
+  description 'Obfuscates and shrinks the java archive.'
+
+  doLast {
+    ant.taskdef(
+            name: 'yguard',
+            classname: 'com.yworks.yguard.YGuardTask',
+            classpath: sourceSets.main.runtimeClasspath.asPath
+    )
+
+    def archivePath = jar.archiveFile.get().asFile.path
+    ant.yguard {
+      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
+      rename(mainclass: application.mainClassName, logfile: "${buildDir}/yguard.log.xml") {
+        property(name: "error-checking", value: "pedantic")
+        keep {
+          method(name: "void handleButtonAction(javafx.event.ActionEvent)", 'class': "animations.SpinnerController")
+        }
+        adjust(replaceContent: true, replaceContentSeparator: ".", includes: "**/*.fxml")
+      }
+    }
+  }
+}

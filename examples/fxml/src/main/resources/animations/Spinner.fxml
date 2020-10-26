@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.text.TextAlignment?>
+
+<AnchorPane id="AnchorPane" prefHeight="320" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="animations.SpinnerController">
+	<children>
+		<Label layoutX="0" layoutY="5" minWidth="400" style="-fx-alignment: center;">
+			<font>
+				<Font size="15" />
+			</font>
+			<text>Hello World</text>
+		</Label>
+		<Button fx:id="button" contentDisplay="CENTER" defaultButton="true" layoutX="161.0" layoutY="272.0" onAction="#handleButtonAction" text="Click Me!" />
+		<Label fx:id="label" layoutX="10" layoutY="30" minHeight="20" minWidth="70">
+			<text>You haven't spun yet!</text>
+		</Label>
+		<Polygon fill="#009918" layoutX="200" layoutY="35" stroke="BLACK" strokeType="OUTSIDE">
+			<points>
+                <Double fx:value="-5.0" />
+                <Double fx:value="4.0" />
+                <Double fx:value="5.0" />
+                <Double fx:value="4.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="10.0" />
+            </points>
+        </Polygon>
+		<Group fx:id="spinnerPolygon" layoutX="200.0" layoutY="145.0" rotate="0">
+			<children>
+				<Circle fill="DODGERBLUE" layoutX="0" layoutY="5" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+				<Line endX="100.0" layoutX="0" layoutY="5" />
+				<Line endX="100.0" layoutX="-100.0" layoutY="5" />
+				<Line endX="100.0" layoutX="-50.0" layoutY="-45.0" rotate="90.0" />
+				<Line endX="50.0" layoutX="0" layoutY="55.0" rotate="90.0" startX="-50.0" />
+				<!-- This is a comment -->
+				<Label layoutX="20" layoutY="-20" minHeight="20" minWidth="20" text="0" />
+				<Label layoutX="20" layoutY="20" minHeight="20" minWidth="20" text="1" />
+				<Label layoutX="-20" layoutY="20" minHeight="20" minWidth="20" text="2" />
+				<Label layoutX="-20" layoutY="-20" minHeight="20" minWidth="20" text="3" />
+			</children>
+		</Group>
+	</children>
+</AnchorPane>
+

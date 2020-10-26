@@ -75,11 +75,11 @@ public class StringReplacer
        result.setLength(0);
        Matcher matcher = pattern.matcher(line);
        String match;
-       String replacement = "";
-       
+
        boolean found = matcher.find();
        while (found)
        {
+         String replacement = "";
          match = line.substring(matcher.start(), matcher.end());
          String[] parts = match.split(Pattern.quote(separator));
          List<String> mapped = db.translateItem(parts);
