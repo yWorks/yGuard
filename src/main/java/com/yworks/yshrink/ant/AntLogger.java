@@ -14,15 +14,13 @@ public class AntLogger extends Logger {
   private final Task task;
   private final Project project;
 
-    /**
-     * Instantiates a new Ant logger.
-     *
-     *
-		 * @param project the project
-     *
-		 * @param task    the task
-     */
-    public AntLogger( final Project project, final Task task ) {
+  /**
+   * Instantiates a new Ant logger.
+   *
+   * @param project the project
+   * @param task    the task
+   */
+  public AntLogger( final Project project, final Task task ) {
     this.project = project;
     this.task = task;
     register();

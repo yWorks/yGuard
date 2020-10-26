@@ -25,29 +25,25 @@ public class LineNumberInfo
     private int u2startpc;
     private int u2lineNumber;
 
-    /**
-     * Instantiates a new Line number info.
-     *
-     *
-		 * @param startPC    the start pc
-     *
-		 * @param lineNumber the line number
-     */
-    public LineNumberInfo(int startPC, int lineNumber) {
+  /**
+   * Instantiates a new Line number info.
+   *
+   * @param startPC    the start pc
+   * @param lineNumber the line number
+   */
+  public LineNumberInfo(int startPC, int lineNumber) {
         setLineNumber(lineNumber);
         setStartPC(startPC);
     }
 
 
-    /**
-     * Create line number info.
-     *
-     *
-		 * @param din the din
-     *
-		 * @return the line number info
-     * @throws IOException the io exception
-     */
+  /**
+   * Create line number info.
+   *
+   * @param din the din
+   * @return the line number info
+   * @throws IOException the io exception
+   */
 // Class Methods ---------------------------------------------------------
     public static LineNumberInfo create(DataInput din) throws java.io.IOException
     {
@@ -56,50 +52,46 @@ public class LineNumberInfo
         return lni;
     }
 
-    /**
-     * Set line number.
-     *
-     *
-		 * @param number the number
-     */
-    public void setLineNumber(int number){
+  /**
+   * Set line number.
+   *
+   * @param number the number
+   */
+  public void setLineNumber(int number){
       this.u2lineNumber = number;
     }
 
-    /**
-     * Get line number int.
-     *
-     *
-		 * @return the int
-     */
-    public int getLineNumber(){
+  /**
+   * Get line number int.
+   *
+   * @return the int
+   */
+  public int getLineNumber(){
       return this.u2lineNumber;
     }
 
-    /**
-     * Get start pc int.
-     *
-     *
-		 * @return the int
-     */
-    public int getStartPC(){
+  /**
+   * Get start pc int.
+   *
+   * @return the int
+   */
+  public int getStartPC(){
       return this.u2startpc;
     }
 
-    /**
-     * Set start pc.
-     *
-     *
-		 * @param startPc the start pc
-     */
-    public void setStartPC(int startPc){
+  /**
+   * Set start pc.
+   *
+   * @param startPc the start pc
+   */
+  public void setStartPC(int startPc){
       this.u2startpc = startPc;
     }
 
 
-    /**
-     * Instantiates a new Line number info.
-     */
+  /**
+   * Instantiates a new Line number info.
+   */
 // Instance Methods ------------------------------------------------------
     public LineNumberInfo() {}
     private void read(DataInput din) throws java.io.IOException
@@ -108,13 +100,13 @@ public class LineNumberInfo
         u2lineNumber = din.readUnsignedShort();
     }
 
-    /**
-     * Export the representation to a DataOutput stream.
-		 * @param dout the dout
-     *
-     * @throws IOException the io exception
-     */
-    public void write(DataOutput dout) throws java.io.IOException
+  /**
+   * Export the representation to a DataOutput stream.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException
     {
         dout.writeShort(u2startpc);
         dout.writeShort(u2lineNumber);

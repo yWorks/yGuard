@@ -28,16 +28,11 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Instantiates a new Method descriptor.
    *
-   * 
-		 * @param name       the name
-   * 
-		 * @param access     the access
-   * 
-		 * @param desc       the desc
-   * 
-		 * @param exceptions the exceptions
-   * 
-		 * @param sourceJar  the source jar
+   * @param name       the name
+   * @param access     the access
+   * @param desc       the desc
+   * @param exceptions the exceptions
+   * @param sourceJar  the source jar
    */
   protected MethodDescriptor( final String name, final int access, final String desc, final String[] exceptions, File sourceJar ) {
 
@@ -54,8 +49,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets name.
    *
-   * 
-		 * @return the name
+   * @return the name
    */
   public String getName() {
     return name;
@@ -64,8 +58,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets desc.
    *
-   * 
-		 * @return the desc
+   * @return the desc
    */
   public String getDesc() {
     return desc;
@@ -74,8 +67,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Get argument types type [ ].
    *
-   * 
-		 * @return the type [ ]
+   * @return the type [ ]
    */
   public Type[] getArgumentTypes() {
     return Type.getArgumentTypes( desc );
@@ -84,8 +76,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets arguments string.
    *
-   * 
-		 * @return the arguments string
+   * @return the arguments string
    */
   public String getArgumentsString() {
     StringBuilder buf = new StringBuilder();
@@ -99,8 +90,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets return type.
    *
-   * 
-		 * @return the return type
+   * @return the return type
    */
   public Type getReturnType() {
     return Type.getReturnType( desc );
@@ -109,8 +99,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets invocations.
    *
-   * 
-		 * @return the invocations
+   * @return the invocations
    */
   public List<Invocation> getInvocations() {
     return invocations;
@@ -119,14 +108,10 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Add invocation.
    *
-   * 
-		 * @param opcode the opcode
-   * 
-		 * @param type   the type
-   * 
-		 * @param name   the name
-   * 
-		 * @param desc   the desc
+   * @param opcode the opcode
+   * @param type   the type
+   * @param name   the name
+   * @param desc   the desc
    */
   public void addInvocation( final int opcode, final String type, final String name, final String desc ) {
 
@@ -137,8 +122,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets field refs.
    *
-   * 
-		 * @return the field refs
+   * @return the field refs
    */
   public List<String[]> getFieldRefs() {
     return fieldRefs;
@@ -147,10 +131,8 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Add field ref.
    *
-   * 
-		 * @param type the type
-   * 
-		 * @param name the name
+   * @param type the type
+   * @param name the name
    */
   public void addFieldRef( final String type, final String name ) {
     fieldRefs.add( new String[]{ type, name } );
@@ -159,10 +141,8 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Add type instruction.
    *
-   * 
-		 * @param opcode the opcode
-   * 
-		 * @param desc   the desc
+   * @param opcode the opcode
+   * @param desc   the desc
    */
   public void addTypeInstruction( final int opcode, final String desc ) {
     typeInstructions.add( new AbstractMap.SimpleEntry<Object, Object>( opcode, desc ));
@@ -171,8 +151,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Add local var.
    *
-   * 
-		 * @param desc the desc
+   * @param desc the desc
    */
   public void addLocalVar( final String desc ) {
     localVars.add( desc );
@@ -181,8 +160,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets type instructions.
    *
-   * 
-		 * @return the type instructions
+   * @return the type instructions
    */
   public List<AbstractMap.SimpleEntry<Object, Object>> getTypeInstructions() {
     return typeInstructions;
@@ -191,8 +169,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Get exceptions string [ ].
    *
-   * 
-		 * @return the string [ ]
+   * @return the string [ ]
    */
   public String[] getExceptions() {
     return exceptions;
@@ -201,10 +178,8 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Has flag boolean.
    *
-   * 
-		 * @param code the code
-   * 
-		 * @return the boolean
+   * @param code the code
+   * @return the boolean
    */
   public boolean hasFlag(int code) {
     return (access & code) == code;
@@ -213,8 +188,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Is static boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
 // TODO: Refactor usages of isStatic and isPrivate with hasFlag
   public boolean isStatic() {
@@ -224,8 +198,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Is private boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isPrivate() {
     return ( access & Opcodes.ACC_PRIVATE ) == Opcodes.ACC_PRIVATE;
@@ -241,10 +214,8 @@ public class MethodDescriptor extends AbstractDescriptor {
    * arguments</li> <li>md throws only the same or subclasses of Exceptions listed in the throws clause of this
    * method</li> <li>access: same or more</li> </ul>
    *
-   * 
-		 * @param md the MethodDescriptor
-   * 
-		 * @return true iff all constraints given above are true
+   * @param md the MethodDescriptor
+   * @return true iff all constraints given above are true
    */
   public boolean overrides( final MethodDescriptor md ) {
 
@@ -254,10 +225,8 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Overrides boolean.
    *
-   * 
-		 * @param m the m
-   * 
-		 * @return the boolean
+   * @param m the m
+   * @return the boolean
    */
   public boolean overrides( final Method m ) {
     return overrides( m.getName(), Type.getReturnType( m ), Type.getArgumentTypes( m ) );
@@ -296,8 +265,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Is constructor boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isConstructor() {
     return getName().equals( Model.CONSTRUCTOR_NAME );
@@ -306,8 +274,7 @@ public class MethodDescriptor extends AbstractDescriptor {
   /**
    * Gets signature.
    *
-   * 
-		 * @return the signature
+   * @return the signature
    */
   public String getSignature() {
 

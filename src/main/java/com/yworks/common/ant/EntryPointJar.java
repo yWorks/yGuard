@@ -22,8 +22,7 @@ public class EntryPointJar implements ShrinkBag {
   /**
    * Sets name.
    *
-   *
-		 * @param fileName the file name
+   * @param fileName the file name
    */
   public void setName(File fileName) {
     inFile = fileName;

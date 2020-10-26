@@ -16,60 +16,56 @@ import java.io.IOException;
  */
 public class ElementValueInfo
 {
-    /**
-     * The U 1 tag.
-     */
-    protected int u1Tag;
-    /**
-     * The U 2 cp index.
-     */
-    protected int u2cpIndex;
+  /**
+   * The U 1 tag.
+   */
+  protected int u1Tag;
+  /**
+   * The U 2 cp index.
+   */
+  protected int u2cpIndex;
 
-    /**
-     * The U 2 type name index.
-     */
-    protected int u2typeNameIndex;
-    /**
-     * The U 2 const name index.
-     */
-    protected int u2constNameIndex;
-    /**
-     * The Nested annotation.
-     */
-    protected AnnotationInfo nestedAnnotation;
-    /**
-     * The Array values.
-     */
-    protected ElementValueInfo[] arrayValues;
+  /**
+   * The U 2 type name index.
+   */
+  protected int u2typeNameIndex;
+  /**
+   * The U 2 const name index.
+   */
+  protected int u2constNameIndex;
+  /**
+   * The Nested annotation.
+   */
+  protected AnnotationInfo nestedAnnotation;
+  /**
+   * The Array values.
+   */
+  protected ElementValueInfo[] arrayValues;
   
   private ElementValueInfo()
   {}
 
-    /**
-     * Create element value info.
-     *
-     * 
-		 * @param din the din
-     *
-		 * @return the element value info
-     * @throws IOException the io exception
-     */
-    public static ElementValueInfo create(DataInput din) throws IOException
+  /**
+   * Create element value info.
+   *
+   * @param din the din
+   * @return the element value info
+   * @throws IOException the io exception
+   */
+  public static ElementValueInfo create(DataInput din) throws IOException
   {
     ElementValueInfo evp = new ElementValueInfo();
     evp.read(din);
     return evp;
   }
 
-    /**
-     * Get bool value boolean.
-     *
-     * 
-		 * @param cp the cp
-     *
-		 * @return the boolean
-     */
-    public boolean getBoolValue(ConstantPool cp){
+  /**
+   * Get bool value boolean.
+   *
+   * @param cp the cp
+   * @return the boolean
+   */
+  public boolean getBoolValue(ConstantPool cp){
     if (u1Tag == 'Z'){
       CpInfo cpEntry = cp.getCpEntry(this.u2cpIndex);
       return cpEntry instanceof IntegerCpInfo && ((IntegerCpInfo) cpEntry).asBool();
@@ -77,14 +73,13 @@ public class ElementValueInfo
     throw new RuntimeException("cannot get bool value of "+u1Tag);
   }
 
-    /**
-     * Read.
-     *
-     * 
-		 * @param din the din
-     * @throws IOException the io exception
-     */
-    protected void read(DataInput din) throws java.io.IOException
+  /**
+   * Read.
+   *
+   * @param din the din
+   * @throws IOException the io exception
+   */
+  protected void read(DataInput din) throws java.io.IOException
   {
     u1Tag = din.readUnsignedByte();
     switch (u1Tag)
@@ -123,13 +118,12 @@ public class ElementValueInfo
     }
   }
 
-    /**
-     * Mark utf 8 refs in info.
-     *
-     * 
-		 * @param pool the pool
-     */
-    protected void markUtf8RefsInInfo(ConstantPool pool) {
+  /**
+   * Mark utf 8 refs in info.
+   *
+   * @param pool the pool
+   */
+  protected void markUtf8RefsInInfo(ConstantPool pool) {
     switch (u1Tag)
     {
       case 'B':
@@ -162,13 +156,13 @@ public class ElementValueInfo
     }
   }
 
-    /**
-     * Export the representation to a DataOutput stream.  
-		 * @param dout the dout
-     *
-     * @throws IOException the io exception
-     */
-    public void write(DataOutput dout) throws java.io.IOException
+  /**
+   * Export the representation to a DataOutput stream.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException
   {
     dout.writeByte(u1Tag);
     switch (u1Tag)

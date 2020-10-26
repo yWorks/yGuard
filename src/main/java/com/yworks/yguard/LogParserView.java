@@ -58,8 +58,7 @@ class LogParserView {
   /**
    * Show.
    *
-   * 
-		 * @param initialPath the initial path
+   * @param initialPath the initial path
    */
   void show( final File initialPath ) {
     final JTree tree = new JTree(new DefaultTreeModel(new DefaultMutableTreeNode()));
@@ -195,10 +194,8 @@ class LogParserView {
   /**
    * Add recent.
    *
-   * 
-		 * @param context the context
-   * 
-		 * @param path    the path
+   * @param context the context
+   * @param path    the path
    */
   static void addRecent( final UiContext context, final File path ) {
     final JMenu menu = context.recentMenu;
@@ -219,10 +216,8 @@ class LogParserView {
   /**
    * Show error message.
    *
-   * 
-		 * @param text   the text
-   * 
-		 * @param parent the parent
+   * @param text   the text
+   * @param parent the parent
    */
   static void showErrorMessage( final String text, final JComponent parent ) {
     final JTextArea jta = new JTextArea(text);
@@ -235,12 +230,9 @@ class LogParserView {
   /**
    * To error message string.
    *
-   * 
-		 * @param file the file
-   * 
-		 * @param ex   the ex
-   *
-		 * @return the string
+   * @param file the file
+   * @param ex   the ex
+   * @return the string
    */
   static String toErrorMessage( final File file, final Exception ex ) {
     final StringWriter sw = new StringWriter();
@@ -254,10 +246,8 @@ class LogParserView {
   /**
    * Gets parser.
    *
-   * 
-		 * @param tree the tree
-   *
-		 * @return the parser
+   * @param tree the tree
+   * @return the parser
    */
   static YGuardLogParser getParser( final JTree tree ) {
     return (YGuardLogParser) tree.getClientProperty("PARSER");
@@ -266,10 +256,8 @@ class LogParserView {
   /**
    * Sets parser.
    *
-   * 
-		 * @param tree   the tree
-   * 
-		 * @param parser the parser
+   * @param tree   the tree
+   * @param parser the parser
    */
   static void setParser( final JTree tree, final YGuardLogParser parser ) {
     tree.setModel(parser.getTreeModel());
@@ -279,10 +267,8 @@ class LogParserView {
   /**
    * New parser y guard log parser.
    *
-   * 
-		 * @param file the file
-   *
-		 * @return the y guard log parser
+   * @param file the file
+   * @return the y guard log parser
    * @throws Exception the exception
    */
   static YGuardLogParser newParser( final File file ) throws Exception {
@@ -294,10 +280,8 @@ class LogParserView {
   /**
    * New title string.
    *
-   * 
-		 * @param path the path
-   *
-		 * @return the string
+   * @param path the path
+   * @return the string
    */
   static String newTitle( final String path ) {
     final String t = path == null ? "" : path.trim();
@@ -311,10 +295,8 @@ class LogParserView {
   /**
    * New title suffix string.
    *
-   * 
-		 * @param path the path
-   *
-		 * @return the string
+   * @param path the path
+   * @return the string
    */
   static String newTitleSuffix( final String path ) {
     int idx = path.lastIndexOf(File.separatorChar);
@@ -331,10 +313,8 @@ class LogParserView {
   /**
    * Deobfuscate.
    *
-   * 
-		 * @param parser   the parser
-   * 
-		 * @param textArea the text area
+   * @param parser   the parser
+   * @param textArea the text area
    */
   static void deobfuscate(
           final YGuardLogParser parser, final JTextArea textArea
@@ -352,10 +332,8 @@ class LogParserView {
   /**
    * Sort.
    *
-   * 
-		 * @param model the model
-   * 
-		 * @param c     the c
+   * @param model the model
+   * @param c     the c
    */
   static void sort( final DefaultTreeModel model, final Comparator c ) {
     sortRecursively((DefaultMutableTreeNode) model.getRoot(), c);
@@ -451,10 +429,8 @@ class LogParserView {
     /**
      * Instantiates a new File filter.
      *
-     * 
-		 * @param suffix      the suffix
-     * 
-		 * @param description the description
+     * @param suffix      the suffix
+     * @param description the description
      */
     FileFilterImpl( final String suffix, final String description ) {
       this.suffix = suffix == null ? "" : suffix.toLowerCase();
@@ -496,16 +472,11 @@ class LogParserView {
     /**
      * Instantiates a new Ui context.
      *
-     * 
-		 * @param frame       the frame
-     * 
-		 * @param mappingTree the mapping tree
-     * 
-		 * @param textArea    the text area
-     * 
-		 * @param recentMenu  the recent menu
-     * 
-		 * @param fileChooser the file chooser
+     * @param frame       the frame
+     * @param mappingTree the mapping tree
+     * @param textArea    the text area
+     * @param recentMenu  the recent menu
+     * @param fileChooser the file chooser
      */
     UiContext(
             final JFrame frame,
@@ -531,10 +502,8 @@ class LogParserView {
     /**
      * Instantiates a new Abstract open action.
      *
-     * 
-		 * @param context the context
-     * 
-		 * @param name    the name
+     * @param context the context
+     * @param name    the name
      */
     AbstractOpenAction( final UiContext context, final String name ) {
       super(name);
@@ -544,8 +513,7 @@ class LogParserView {
     /**
      * Open.
      *
-     * 
-		 * @param path the path
+     * @param path the path
      */
     void open( final File path ) {
       final JTree tree = context.mappingTree;
@@ -560,10 +528,8 @@ class LogParserView {
     /**
      * On opened.
      *
-     * 
-		 * @param context the context
-     * 
-		 * @param path    the path
+     * @param context the context
+     * @param path    the path
      */
     void onOpened( final UiContext context, final File path ) {
       context.textArea.setText("");
@@ -584,10 +550,8 @@ class LogParserView {
     /**
      * Instantiates a new Recent action.
      *
-     * 
-		 * @param context the context
-     * 
-		 * @param path    the path
+     * @param context the context
+     * @param path    the path
      */
     RecentAction( final UiContext context, final File path ) {
       super(context, LogParserView.newTitleSuffix(path.getAbsolutePath()));
@@ -631,8 +595,7 @@ class LogParserView {
     /**
      * Gets item.
      *
-     *
-		 * @return the item
+     * @return the item
      */
     JMenuItem getItem() {
       return item;
@@ -641,8 +604,7 @@ class LogParserView {
     /**
      * Sets item.
      *
-     * 
-		 * @param jc the jc
+     * @param jc the jc
      */
     void setItem( final JMenuItem jc ) {
       this.item = jc;

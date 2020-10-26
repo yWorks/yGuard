@@ -55,10 +55,8 @@ public class NodeType {
   /**
    * Is obsolete boolean.
    *
-   *
-		 * @param nodeType the node type
-   * 
-		 * @return the boolean
+   * @param nodeType the node type
+   * @return the boolean
    */
   public static boolean isObsolete( final int nodeType ) {
     return ( nodeType & OBSOLETE ) == OBSOLETE;
@@ -67,10 +65,8 @@ public class NodeType {
   /**
    * Is static boolean.
    *
-   *
-		 * @param nodeType the node type
-   * 
-		 * @return the boolean
+   * @param nodeType the node type
+   * @return the boolean
    */
   public static boolean isStatic( final int nodeType ) {
     return ( nodeType & STATIC ) == STATIC;
@@ -79,10 +75,8 @@ public class NodeType {
   /**
    * Is stub needed boolean.
    *
-   *
-		 * @param nodeType the node type
-   * 
-		 * @return the boolean
+   * @param nodeType the node type
+   * @return the boolean
    */
   public static boolean isStubNeeded( final int nodeType ) {
     return ( nodeType & STUB ) == STUB;
@@ -91,10 +85,8 @@ public class NodeType {
   /**
    * Is method node boolean.
    *
-   *
-		 * @param nodeType the node type
-   * 
-		 * @return the boolean
+   * @param nodeType the node type
+   * @return the boolean
    */
   public static boolean isMethodNode( final int nodeType ) {
     return ( nodeType & METHOD ) == METHOD;
@@ -103,10 +95,8 @@ public class NodeType {
   /**
    * Is interface node boolean.
    *
-   *
-		 * @param nodeType the node type
-   * 
-		 * @return the boolean
+   * @param nodeType the node type
+   * @return the boolean
    */
   public static boolean isInterfaceNode( final int nodeType ) {
     return ( nodeType & INTERFACE ) == INTERFACE;
@@ -115,10 +105,8 @@ public class NodeType {
   /**
    * Is new node boolean.
    *
-   *
-		 * @param nodeType the node type
-   * 
-		 * @return the boolean
+   * @param nodeType the node type
+   * @return the boolean
    */
   public static boolean isNewNode( int nodeType ) {
     return ( nodeType & NEW ) == NEW;

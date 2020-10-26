@@ -25,14 +25,13 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
   private File directory;
   private Map<Entry, File> entries = new HashMap<>();
 
-    /**
-     * Instantiates a new Directory wrapper.
-     *
-     * 
-		 * @param directory the directory
-     * @throws IOException the io exception
-     */
-    public DirectoryWrapper( File directory ) throws IOException {
+  /**
+   * Instantiates a new Directory wrapper.
+   *
+   * @param directory the directory
+   * @throws IOException the io exception
+   */
+  public DirectoryWrapper( File directory ) throws IOException {
     this.directory = directory;
     Files.walkFileTree(directory.toPath(), this);
   }

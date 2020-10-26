@@ -14,32 +14,28 @@ public @interface RequestForEnhancement {
     /**
      * Id int.
      *
-     *
-		 * @return the int
+     * @return the int
      */
     int    id();
 
     /**
      * Synopsis string.
      *
-     *
-		 * @return the string
+     * @return the string
      */
     String synopsis();
 
     /**
      * Engineer string.
      *
-     *
-		 * @return the string
+     * @return the string
      */
     String engineer() default "[unassigned]";
 
     /**
      * Date string.
      *
-     *
-		 * @return the string
+     * @return the string
      */
     String date() default "[unimplemented]";
 }

@@ -21,12 +21,11 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
   // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Abstract dynamic cp info.
-     *
-     * 
-		 * @param tag the tag
-     */
+  /**
+   * Instantiates a new Abstract dynamic cp info.
+   *
+   * @param tag the tag
+   */
 // Instance Methods ------------------------------------------------------
   protected AbstractDynamicCpInfo( final int tag ) {
     super(tag);
@@ -46,33 +45,30 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
     pool.incRefCount(u2nameAndTypeIndex);
   }
 
-    /**
-     * Gets bootstrap method attr index.
-     *
-     * 
-		 * @return the bootstrap method attr index
-     */
-    public int getBootstrapMethodAttrIndex() {
+  /**
+   * Gets bootstrap method attr index.
+   *
+   * @return the bootstrap method attr index
+   */
+  public int getBootstrapMethodAttrIndex() {
     return u2bootstrapMethodAttrIndex;
   }
 
-    /**
-     * Gets name and type index.
-     *
-     * 
-		 * @return the name and type index
-     */
-    public int getNameAndTypeIndex() {
+  /**
+   * Gets name and type index.
+   *
+   * @return the name and type index
+   */
+  public int getNameAndTypeIndex() {
     return u2nameAndTypeIndex;
   }
 
-    /**
-     * Sets name and type index.
-     *
-     * 
-		 * @param index the index
-     */
-    public void setNameAndTypeIndex( final int index ) {
+  /**
+   * Sets name and type index.
+   *
+   * @param index the index
+   */
+  public void setNameAndTypeIndex( final int index ) {
     this.u2nameAndTypeIndex = index;
   }
 }

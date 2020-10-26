@@ -22,46 +22,42 @@ import java.io.IOException;
 public final class PackageSection implements Mappable {
   private String name;
   private String mapTo;
-    /**
-     * The Pattern sets.
-     */
-    protected List patternSets = new ArrayList(5);
+  /**
+   * The Pattern sets.
+   */
+  protected List patternSets = new ArrayList(5);
 
-    /**
-     * The Allow match all pattern set.
-     */
-    protected boolean allowMatchAllPatternSet = false;
+  /**
+   * The Allow match all pattern set.
+   */
+  protected boolean allowMatchAllPatternSet = false;
 
-    /**
-     * Add configured pattern set.
-     *
-     * 
-		 * @param ps the ps
-     */
-    public void addConfiguredPatternSet(PatternSet ps) {
+  /**
+   * Add configured pattern set.
+   *
+   * @param ps the ps
+   */
+  public void addConfiguredPatternSet(PatternSet ps) {
     patternSets.add(ps);
   }
 
-    /**
-     * Sets name.
-     *
-     * 
-		 * @param name the name
-     */
-    public void setName(String name) {
+  /**
+   * Sets name.
+   *
+   * @param name the name
+   */
+  public void setName(String name) {
     this.name = name;
   }
 
-    /**
-     * Add entries.
-     *
-     * 
-		 * @param entries the entries
-     * 
-		 * @param zf      the zf
-     * @throws IOException the io exception
-     */
-    public void addEntries(Collection entries, ZipFileSet zf) throws IOException {
+  /**
+   * Add entries.
+   *
+   * @param entries the entries
+   * @param zf      the zf
+   * @throws IOException the io exception
+   */
+  public void addEntries(Collection entries, ZipFileSet zf) throws IOException {
     Project project = zf.getProject();
     Set packages = new HashSet();
     if (name != null) {
@@ -104,13 +100,12 @@ public final class PackageSection implements Mappable {
     }
   }
 
-    /**
-     * Sets map.
-     *
-     * 
-		 * @param mapTo the map to
-     */
-    public void setMap(String mapTo) {
+  /**
+   * Sets map.
+   *
+   * @param mapTo the map to
+   */
+  public void setMap(String mapTo) {
     this.mapTo = mapTo;
   }
 

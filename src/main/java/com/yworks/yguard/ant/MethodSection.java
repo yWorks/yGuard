@@ -19,34 +19,31 @@ public final class MethodSection extends PatternMatchedClassesSection implements
 //    this.task = task;
 //  }
 
-    /**
-     * Set name.
-     *
-     * 
-		 * @param name the name
-     */
-    public void setName(String name){
+  /**
+   * Set name.
+   *
+   * @param name the name
+   */
+  public void setName(String name){
         this.name = name;
     }
 
-    /**
-     * Set class.
-     *
-     * 
-		 * @param name the name
-     */
-    public void setClass(String name){
+  /**
+   * Set class.
+   *
+   * @param name the name
+   */
+  public void setClass(String name){
 
       this.className = name;
     }
 
-    /**
-     * Set map.
-     *
-     * 
-		 * @param mapTo the map to
-     */
-    public void setMap(String mapTo){
+  /**
+   * Set map.
+   *
+   * @param mapTo the map to
+   */
+  public void setMap(String mapTo){
       this.mapTo = mapTo;
     }
 
@@ -68,23 +65,21 @@ public final class MethodSection extends PatternMatchedClassesSection implements
       entries.add(entry);
     }
 
-    /**
-     * Gets name.
-     *
-     * 
-		 * @return the name
-     */
-    public String getName() {
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
+  public String getName() {
     return name;
   }
 
-    /**
-     * Gets class name.
-     *
-     * 
-		 * @return the class name
-     */
-    public String getClassName() {
+  /**
+   * Gets class name.
+   *
+   * @return the class name
+   */
+  public String getClassName() {
     return className;
   }
 }

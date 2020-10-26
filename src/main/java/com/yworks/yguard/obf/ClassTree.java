@@ -57,10 +57,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Return a fully qualified name broken into package/class segments.
-		 * @param name the name
    *
-   * 
-		 * @return the name enum
+   * @param name the name
+   * @return the name enum
    */
   public static Enumeration getNameEnum(String name)
     {
@@ -133,18 +132,17 @@ public class ClassTree implements NameMapper
     }
 
   /**
-   * Return the root node.  
-		 * @return the root
+   * Return the root node.
+   *
+   * @return the root
    */
   public Pk getRoot() {return root;}
 
   /**
    * finds tree items by looking for name components only...
    *
-   *
-		 * @param nameParts the name parts
-   * 
-		 * @return the tree item
+   * @param nameParts the name parts
+   * @return the tree item
    */
   public TreeItem findTreeItem(String[] nameParts){
       TreeItem tmp = root;
@@ -158,10 +156,8 @@ public class ClassTree implements NameMapper
   /**
    * walks the tree of TreeItems in order to find a class forName
    *
-   *
-		 * @param name the name
-   * 
-		 * @return the cl
+   * @param name the name
+   * @return the cl
    */
   public Cl findClassForName(String name){
       int dindex = name.indexOf('$');
@@ -246,10 +242,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Update the path of the passed filename, if that path corresponds to a package.
-		 * @param inName the in name
    *
-   * 
-		 * @return the out name
+   * @param inName the in name
+   * @return the out name
    */
   public String getOutName(String inName)
     {
@@ -302,7 +297,8 @@ public class ClassTree implements NameMapper
 
   /**
    * Add a classfile's package, class, method and field entries to database.
-		 * @param cf the cf
+   *
+   * @param cf the cf
    */
   public void addClassFile(ClassFile cf)
     {
@@ -370,7 +366,8 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark an attribute type for retention.
-		 * @param name the name
+   *
+   * @param name the name
    */
   public void retainAttribute(String name)
     {
@@ -394,16 +391,12 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark a class/interface type (and possibly methods and fields defined in class) for retention.
-		 * @param name the name
    *
-   *
-		 * @param classLevel      the class level
-   *
-		 * @param methodLevel     the method level
-   *
-		 * @param fieldLevel      the field level
-   *
-		 * @param retainHierarchy the retain hierarchy
+   * @param name            the name
+   * @param classLevel      the class level
+   * @param methodLevel     the method level
+   * @param fieldLevel      the field level
+   * @param retainHierarchy the retain hierarchy
    */
   public void retainClass(String name, int classLevel, int methodLevel, int fieldLevel, boolean retainHierarchy)
     {
@@ -471,10 +464,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark a method type for retention.
-		 * @param name the name
    *
-   *
-		 * @param descriptor the descriptor
+   * @param name       the name
+   * @param descriptor the descriptor
    */
   public void retainMethod(String name, String descriptor)
     {
@@ -488,7 +480,8 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark a field type for retention.
-		 * @param name the name
+   *
+   * @param name the name
    */
   public void retainField(String name)
     {
@@ -501,10 +494,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark a package for retention, and specify its new name.
-		 * @param name the name
    *
-   *
-		 * @param obfName the obf name
+   * @param name    the name
+   * @param obfName the obf name
    */
   public void retainPackageMap(String name, String obfName)
     {
@@ -513,10 +505,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark a class/interface type for retention, and specify its new name.
-		 * @param name the name
    *
-   *
-		 * @param obfName the obf name
+   * @param name    the name
+   * @param obfName the obf name
    */
   public void retainClassMap(String name, String obfName)
     {
@@ -525,12 +516,10 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark a method type for retention, and specify its new name.
-		 * @param name the name
    *
-   *
-		 * @param descriptor the descriptor
-   *
-		 * @param obfName    the obf name
+   * @param name       the name
+   * @param descriptor the descriptor
+   * @param obfName    the obf name
    */
   public void retainMethodMap(String name, String descriptor,
                                 String obfName)
@@ -540,10 +529,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Mark a field type for retention, and specify its new name.
-		 * @param name the name
    *
-   *
-		 * @param obfName the obf name
+   * @param name    the name
+   * @param obfName the obf name
    */
   public void retainFieldMap(String name, String obfName)
     {
@@ -585,6 +573,8 @@ public class ClassTree implements NameMapper
 
   /**
    * Resolve the polymorphic dependencies of each class.  @throws ClassNotFoundException the class not found exception
+   *
+   * @throws ClassNotFoundException the class not found exception
    */
   public void resolveClasses() throws ClassNotFoundException
     {
@@ -617,8 +607,9 @@ public class ClassTree implements NameMapper
     }
 
   /**
-   * Return a list of attributes marked to keep.  
-		 * @return the string [ ]
+   * Return a list of attributes marked to keep.
+   *
+   * @return the string [ ]
    */
   public String[] getAttrsToKeep()
     {
@@ -633,10 +624,9 @@ public class ClassTree implements NameMapper
   /**
    * Get classes in tree from the fully qualified name
    * (can be wildcarded).
-		 * @param fullName the full name
    *
-   * 
-		 * @return the cl enum
+   * @param fullName the full name
+   * @return the cl enum
    */
   public Enumeration getClEnum(String fullName)
     {
@@ -646,12 +636,10 @@ public class ClassTree implements NameMapper
   /**
    * Get classes in tree from the fully qualified name
    * (can be wildcarded).
-		 * @param fullName the full name
    *
-   *
-		 * @param classMode the class mode
-   * 
-		 * @return the cl enum
+   * @param fullName  the full name
+   * @param classMode the class mode
+   * @return the cl enum
    */
   public Enumeration getClEnum(String fullName, final int classMode)
     {
@@ -706,12 +694,10 @@ public class ClassTree implements NameMapper
   /**
    * Get methods in tree from the fully qualified, and possibly
    * wildcarded, name.
-		 * @param fullName the full name
    *
-   *
-		 * @param descriptor the descriptor
-   * 
-		 * @return the md enum
+   * @param fullName   the full name
+   * @param descriptor the descriptor
+   * @return the md enum
    */
   public Enumeration getMdEnum(String fullName,
                                  String descriptor)
@@ -756,10 +742,9 @@ public class ClassTree implements NameMapper
   /**
    * Get fields in tree from the fully qualified, and possibly
    * wildcarded, name.
-		 * @param fullName the full name
    *
-   * 
-		 * @return the fd enum
+   * @param fullName the full name
+   * @return the fd enum
    */
   public Enumeration getFdEnum(String fullName)
     {
@@ -800,10 +785,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Get class in tree from the fully qualified name, returning null if name not found.
-		 * @param fullName the full name
    *
-   * 
-		 * @return the cl
+   * @param fullName the full name
+   * @return the cl
    */
   public Cl getCl(String fullName)
     {
@@ -844,10 +828,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Get package in tree from the fully qualified name, returning null if name not found.
-		 * @param fullName the full name
    *
-   * 
-		 * @return the pk
+   * @param fullName the full name
+   * @return the pk
    */
   public Pk getPk(String fullName)
     {
@@ -874,12 +857,10 @@ public class ClassTree implements NameMapper
 
   /**
    * Get method in tree from the fully qualified name.
-		 * @param fullName the full name
    *
-   *
-		 * @param descriptor the descriptor
-   * 
-		 * @return the md
+   * @param fullName   the full name
+   * @param descriptor the descriptor
+   * @return the md
    */
   public Md getMd(String fullName, String descriptor)
     {
@@ -891,10 +872,9 @@ public class ClassTree implements NameMapper
 
   /**
    * Get field in tree from the fully qualified name.
-		 * @param fullName the full name
    *
-   * 
-		 * @return the fd
+   * @param fullName the full name
+   * @return the fd
    */
   public Fd getFd(String fullName)
     {
@@ -1489,7 +1469,8 @@ public class ClassTree implements NameMapper
 
   /**
    * Dump the content of the class tree to the specified file (used for logging).
-		 * @param log the log
+   *
+   * @param log the log
    */
   public void dump(final PrintWriter log)
     {
@@ -1555,10 +1536,8 @@ public class ClassTree implements NameMapper
   /**
    * To utf 8 xml string string.
    *
-   *
-		 * @param s the s
-   * 
-		 * @return the string
+   * @param s the s
+   * @return the string
    */
   public static final String toUtf8XmlString(String s){
       boolean bad = false;
@@ -1650,7 +1629,8 @@ public class ClassTree implements NameMapper
 
   /**
    * Walk the whole tree taking action once only on each package level, class, method and field.
-		 * @param ta the ta
+   *
+   * @param ta the ta
    */
   public void walkTree(TreeAction ta)
     {
@@ -1697,8 +1677,7 @@ public class ClassTree implements NameMapper
   /**
    * Getter for property replaceClassNameStrings.
    *
-   * 
-		 * @return Value of property replaceClassNameStrings.
+   * @return Value of property replaceClassNameStrings.
    */
   public boolean isReplaceClassNameStrings()
     {
@@ -1708,8 +1687,7 @@ public class ClassTree implements NameMapper
   /**
    * Setter for property replaceClassNameStrings.
    *
-   *
-		 * @param replaceClassNameStrings New value of property replaceClassNameStrings.
+   * @param replaceClassNameStrings New value of property replaceClassNameStrings.
    */
   public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
     {
@@ -1719,8 +1697,7 @@ public class ClassTree implements NameMapper
   /**
    * Getter for property pedantic.
    *
-   * 
-		 * @return Value of property pedantic.
+   * @return Value of property pedantic.
    */
   public boolean isPedantic()
     {
@@ -1730,8 +1707,7 @@ public class ClassTree implements NameMapper
   /**
    * Setter for property pedantic.
    *
-   *
-		 * @param pedantic New value of property pedantic.
+   * @param pedantic New value of property pedantic.
    */
   public void setPedantic(boolean pedantic)
     {
@@ -1741,10 +1717,8 @@ public class ClassTree implements NameMapper
   /**
    * Retain source file attribute map.
    *
-   *
-		 * @param name    the name
-   *
-		 * @param obfName the obf name
+   * @param name    the name
+   * @param obfName the obf name
    */
   public void retainSourceFileAttributeMap(String name, String obfName) {
     for (Enumeration clEnum = getClEnum(name); clEnum.hasMoreElements(); )
@@ -1758,10 +1732,8 @@ public class ClassTree implements NameMapper
   /**
    * Retain line number table.
    *
-   *
-		 * @param name                  the name
-   *
-		 * @param lineNumberTableMapper the line number table mapper
+   * @param name                  the name
+   * @param lineNumberTableMapper the line number table mapper
    */
   public void retainLineNumberTable(String name, final LineNumberTableMapper lineNumberTableMapper) {
     for (Enumeration clEnum = getClEnum(name); clEnum.hasMoreElements(); )
@@ -1775,10 +1747,8 @@ public class ClassTree implements NameMapper
   /**
    * Retain attribute for class.
    *
-   *
-		 * @param className           the class name
-   *
-		 * @param attributeDescriptor the attribute descriptor
+   * @param className           the class name
+   * @param attributeDescriptor the attribute descriptor
    */
   public void retainAttributeForClass(String className, String attributeDescriptor) {
     for (Enumeration clEnum = getClEnum(className); clEnum.hasMoreElements(); )
@@ -1792,8 +1762,7 @@ public class ClassTree implements NameMapper
   /**
    * Retain package.
    *
-   *
-		 * @param packageName the package name
+   * @param packageName the package name
    */
   public void retainPackage(String packageName) {
     retainHierarchy(getPk(packageName));

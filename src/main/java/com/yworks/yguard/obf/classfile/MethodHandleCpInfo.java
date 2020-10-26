@@ -20,9 +20,9 @@ public class MethodHandleCpInfo extends CpInfo {
     // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Method handle cp info.
-     */
+  /**
+   * Instantiates a new Method handle cp info.
+   */
 // Instance Methods ------------------------------------------------------
     protected MethodHandleCpInfo()
     {
@@ -39,23 +39,21 @@ public class MethodHandleCpInfo extends CpInfo {
       dout.writeShort(u2referenceIndex);
     }
 
-    /**
-     * Gets reference kind.
-     *
-     * 
-		 * @return the reference kind
-     */
-    protected int getReferenceKind() {
+  /**
+   * Gets reference kind.
+   *
+   * @return the reference kind
+   */
+  protected int getReferenceKind() {
       return u1referenceKind;
     }
 
-    /**
-     * Gets reference index.
-     *
-     * 
-		 * @return the reference index
-     */
-    protected int getReferenceIndex() {
+  /**
+   * Gets reference index.
+   *
+   * @return the reference index
+   */
+  protected int getReferenceIndex() {
       return u2referenceIndex;
     }
 }

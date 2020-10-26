@@ -22,23 +22,21 @@ public class MethodFilter extends PatternMatchedFilter {
 
   private List<MethodSection> sections;
 
-    /**
-     * Instantiates a new Method filter.
-     *
-     *
-		 * @param project the project
-     */
-    public MethodFilter( Project project ) {
+  /**
+   * Instantiates a new Method filter.
+   *
+   * @param project the project
+   */
+  public MethodFilter( Project project ) {
     super( project );
   }
 
-    /**
-     * Add method section.
-     *
-     *
-		 * @param methodSection the method section
-     */
-    public void addMethodSection( MethodSection methodSection ) {
+  /**
+   * Add method section.
+   *
+   * @param methodSection the method section
+   */
+  public void addMethodSection( MethodSection methodSection ) {
     if ( null == sections ) {
       sections = new ArrayList<MethodSection>( 5 );
     }

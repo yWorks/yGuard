@@ -24,63 +24,57 @@ public final class FieldSection extends PatternMatchedSection {
     );
   }
 
-    /**
-     * Gets name.
-     *
-     * 
-		 * @return the name
-     */
-    public String getName() {
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
+  public String getName() {
     return name;
   }
 
-    /**
-     * Sets name.
-     *
-     * 
-		 * @param name the name
-     */
-    public void setName( String name ) {
+  /**
+   * Sets name.
+   *
+   * @param name the name
+   */
+  public void setName( String name ) {
     this.name = name;
   }
 
-    /**
-     * Gets class name.
-     *
-     * 
-		 * @return the class name
-     */
-    public String getClassName() {
+  /**
+   * Gets class name.
+   *
+   * @return the class name
+   */
+  public String getClassName() {
     return className;
   }
 
-    /**
-     * Sets class.
-     *
-     * 
-		 * @param className the class name
-     */
-    public void setClass( String className ) {
+  /**
+   * Sets class.
+   *
+   * @param className the class name
+   */
+  public void setClass( String className ) {
     this.className = Util.toInternalClass( className );
   }
 
-    /**
-     * Gets type.
-     *
-     * 
-		 * @return the type
-     */
-    public String getType() {
+  /**
+   * Gets type.
+   *
+   * @return the type
+   */
+  public String getType() {
     return type;
   }
 
-    /**
-     * Sets type.
-     *
-     * 
-		 * @param type the type
-     */
-    public void setType( String type ) {
+  /**
+   * Sets type.
+   *
+   * @param type the type
+   */
+  public void setType( String type ) {
     this.type = Util.toInternalClass( type );
   }
 

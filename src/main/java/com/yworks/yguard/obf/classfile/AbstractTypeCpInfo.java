@@ -13,9 +13,9 @@ public abstract class AbstractTypeCpInfo extends CpInfo {
   // Constants -------------------------------------------------------------
 
 
-    /**
-     * The U 2 name index.
-     */
+  /**
+   * The U 2 name index.
+   */
 // Fields ----------------------------------------------------------------
   int u2nameIndex;
 
@@ -23,30 +23,31 @@ public abstract class AbstractTypeCpInfo extends CpInfo {
   // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Abstract type cp info.
-     *
-     *
-		 * @param tag the tag
-     */
+  /**
+   * Instantiates a new Abstract type cp info.
+   *
+   * @param tag the tag
+   */
 // Instance Methods ------------------------------------------------------
   protected AbstractTypeCpInfo(int tag) {
     super(tag);
   }
 
-    /**
-     * Return the name index.
-		 * @return the name index
-     */
-    protected int getNameIndex() {
+  /**
+   * Return the name index.
+   *
+   * @return the name index
+   */
+  protected int getNameIndex() {
     return u2nameIndex;
   }
 
-    /**
-     * Set the name index.
-		 * @param index the index
-     */
-    protected void setNameIndex(int index) {
+  /**
+   * Set the name index.
+   *
+   * @param index the index
+   */
+  protected void setNameIndex(int index) {
     u2nameIndex = index;
   }
 

@@ -60,8 +60,7 @@ public abstract class Exclude {
   /**
    * Instantiates a new Exclude.
    *
-   * 
-		 * @param task the task
+   * @param task the task
    */
   public Exclude(YGuardBaseTask task) {
     this.task = task;
@@ -70,8 +69,7 @@ public abstract class Exclude {
   /**
    * Sets sourcefile.
    *
-   * 
-		 * @param sf the sf
+   * @param sf the sf
    */
   public void setSourcefile(boolean sf) {
     this.source = sf;
@@ -80,8 +78,7 @@ public abstract class Exclude {
   /**
    * Sets localvariabletable.
    *
-   * 
-		 * @param vt the vt
+   * @param vt the vt
    */
   public void setLocalvariabletable(boolean vt) {
     this.vtable = vt;
@@ -90,8 +87,7 @@ public abstract class Exclude {
   /**
    * Sets linenumbertable.
    *
-   * 
-		 * @param lt the lt
+   * @param lt the lt
    */
   public void setLinenumbertable(boolean lt) {
     this.ltable = lt;
@@ -100,8 +96,7 @@ public abstract class Exclude {
   /**
    * Sets runtime visible annotations.
    *
-   * 
-		 * @param v the v
+   * @param v the v
    */
   public void setRuntimeVisibleAnnotations(boolean v) {
     this.rvAnn = v;
@@ -110,8 +105,7 @@ public abstract class Exclude {
   /**
    * Sets runtime visible type annotations.
    *
-   * 
-		 * @param v the v
+   * @param v the v
    */
   public void setRuntimeVisibleTypeAnnotations(boolean v) {
     this.rvTypeAnn = v;
@@ -120,8 +114,7 @@ public abstract class Exclude {
   /**
    * Sets runtime invisible annotations.
    *
-   * 
-		 * @param v the v
+   * @param v the v
    */
   public void setRuntimeInvisibleAnnotations(boolean v) {
       this.riAnn = v;
@@ -130,8 +123,7 @@ public abstract class Exclude {
   /**
    * Sets runtime invisible type annotations.
    *
-   * 
-		 * @param v the v
+   * @param v the v
    */
   public void setRuntimeInvisibleTypeAnnotations(boolean v) {
     this.riTypeAnn = v;
@@ -140,8 +132,7 @@ public abstract class Exclude {
   /**
    * Sets runtime visible parameter annotations.
    *
-   * 
-		 * @param v the v
+   * @param v the v
    */
   public void setRuntimeVisibleParameterAnnotations(boolean v) {
     this.rvPann = v;
@@ -150,8 +141,7 @@ public abstract class Exclude {
   /**
    * Sets runtime invisible parameter annotations.
    *
-   * 
-		 * @param v the v
+   * @param v the v
    */
   public void setRuntimeInvisibleParameterAnnotations(boolean v) {
     this.riPann = v;
@@ -160,8 +150,7 @@ public abstract class Exclude {
   /**
    * Sets local variable type table.
    *
-   * 
-		 * @param lt the lt
+   * @param lt the lt
    */
   public void setLocalVariableTypeTable(boolean lt) {
     this.lttable = lt;
@@ -170,8 +159,7 @@ public abstract class Exclude {
   /**
    * Sets source debug extension.
    *
-   * 
-		 * @param b the b
+   * @param b the b
    */
   public void setSourceDebugExtension(boolean b) {
     this.debugExtension = b;
@@ -180,8 +168,7 @@ public abstract class Exclude {
   /**
    * Is source boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isSource() {
     return source;
@@ -190,8 +177,7 @@ public abstract class Exclude {
   /**
    * Is vtable boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isVtable() {
     return vtable;
@@ -200,8 +186,7 @@ public abstract class Exclude {
   /**
    * Is ltable boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isLtable() {
     return ltable;
@@ -210,8 +195,7 @@ public abstract class Exclude {
   /**
    * Is lttable boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isLttable() {
     return lttable;
@@ -220,8 +204,7 @@ public abstract class Exclude {
   /**
    * Is rv ann boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isRvAnn() {
     return rvAnn;
@@ -230,8 +213,7 @@ public abstract class Exclude {
   /**
    * Is ri ann boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isRiAnn() {
     return riAnn;
@@ -240,8 +222,7 @@ public abstract class Exclude {
   /**
    * Is rv pann boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isRvPann() {
     return rvPann;
@@ -250,8 +231,7 @@ public abstract class Exclude {
   /**
    * Is ri pann boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isRiPann() {
     return riPann;
@@ -260,8 +240,7 @@ public abstract class Exclude {
   /**
    * Is debug extension boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isDebugExtension() {
     return debugExtension;

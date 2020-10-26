@@ -151,8 +151,7 @@ public class YGuardTask extends YGuardBaseTask {
   /**
    * Create shrink shrink task.
    *
-   * 
-		 * @return the shrink task
+   * @return the shrink task
    */
   public ShrinkTask createShrink() {
     ShrinkTask shrinkTask = new ShrinkTask( YGuardBaseTask.MODE_NESTED );
@@ -164,8 +163,7 @@ public class YGuardTask extends YGuardBaseTask {
   /**
    * Create rename obfuscator task.
    *
-   * 
-		 * @return the obfuscator task
+   * @return the obfuscator task
    */
   public ObfuscatorTask createRename() {
     ObfuscatorTask obfuscatorTask = new ObfuscatorTask( YGuardBaseTask.MODE_NESTED );
@@ -186,8 +184,7 @@ public class YGuardTask extends YGuardBaseTask {
   /**
    * Create obfuscate obfuscator task.
    *
-   * 
-		 * @return the obfuscator task
+   * @return the obfuscator task
    */
   public ObfuscatorTask createObfuscate() {
     return createRename();

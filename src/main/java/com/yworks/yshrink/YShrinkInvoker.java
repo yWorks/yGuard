@@ -25,64 +25,56 @@ public interface YShrinkInvoker {
   /**
    * Add pair.
    *
-   *
-		 * @param pair the pair
+   * @param pair the pair
    */
   public void addPair( ShrinkBag pair );
 
   /**
    * Sets resource class path.
    *
-   *
-		 * @param path the path
+   * @param path the path
    */
   public void setResourceClassPath( Path path );
 
   /**
    * Add class section.
    *
-   *
-		 * @param cs the cs
+   * @param cs the cs
    */
   public void addClassSection( ClassSection cs );
 
   /**
    * Add method section.
    *
-   *
-		 * @param ms the ms
+   * @param ms the ms
    */
   void addMethodSection( MethodSection ms );
 
   /**
    * Add field section.
    *
-   *
-		 * @param fs the fs
+   * @param fs the fs
    */
   void addFieldSection( FieldSection fs );
 
   /**
    * Sets enty points.
    *
-   *
-		 * @param eps the eps
+   * @param eps the eps
    */
   void setEntyPoints( EntryPointsSection eps );
 
   /**
    * Sets log file.
    *
-   *
-		 * @param shrinkLog the shrink log
+   * @param shrinkLog the shrink log
    */
   void setLogFile( File shrinkLog );
 
   /**
    * Sets context.
    *
-   *
-		 * @param task the task
+   * @param task the task
    */
   void setContext(Task task);
 }

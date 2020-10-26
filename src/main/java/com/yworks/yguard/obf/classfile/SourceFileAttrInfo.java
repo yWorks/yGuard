@@ -28,16 +28,13 @@ public class SourceFileAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Source file attr info.
-     *
-     *
-		 * @param cf            the cf
-     *
-		 * @param attrNameIndex the attr name index
-     *
-		 * @param attrLength    the attr length
-     */
+  /**
+   * Instantiates a new Source file attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
 // Instance Methods ------------------------------------------------------
     protected SourceFileAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
@@ -62,23 +59,21 @@ public class SourceFileAttrInfo extends AttrInfo
         u2sourceFileIndex = din.readUnsignedShort();
     }
 
-    /**
-     * Set source file index.
-     *
-     *
-		 * @param index the index
-     */
-    protected void setSourceFileIndex(int index){
+  /**
+   * Set source file index.
+   *
+   * @param index the index
+   */
+  protected void setSourceFileIndex(int index){
       this.u2sourceFileIndex = index;
     }
 
-    /**
-     * Get source file index int.
-     *
-     *
-		 * @return the int
-     */
-    protected int getSourceFileIndex(){
+  /**
+   * Get source file index int.
+   *
+   * @return the int
+   */
+  protected int getSourceFileIndex(){
       return this.u2sourceFileIndex;
     }
 

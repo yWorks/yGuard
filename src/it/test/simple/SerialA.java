@@ -12,10 +12,10 @@ import java.io.ObjectInputStream;
  */
 class SerialA implements Serializable {
 
-    /**
-     * Instantiates a new Serial a.
-     */
-    public SerialA() {}
+  /**
+   * Instantiates a new Serial a.
+   */
+  public SerialA() {}
 
   private void writeObject( ObjectOutputStream s ) throws IOException {
     s.defaultWriteObject();

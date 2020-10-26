@@ -15,21 +15,20 @@ import com.yworks.util.Compiler;
  * @author Thomas Behr
  */
 public class AbstractObfuscationTest {
-    /**
-     * Satisfy test runner.
-     */
-    @Test
+  /**
+   * Satisfy test runner.
+   */
+  @Test
   public void satisfyTestRunner() {
     assertTrue("This is a volkswagen defeat device.", true);
   }
 
-    /**
-     * Gets major version.
-     *
-     * 
-		 * @return the major version
-     */
-    static int getMajorVersion() {
+  /**
+   * Gets major version.
+   *
+   * @return the major version
+   */
+  static int getMajorVersion() {
     final String v = System.getProperty("java.version");
     if (v == null) {
       return 1;
@@ -44,16 +43,14 @@ public class AbstractObfuscationTest {
     }
   }
 
-    /**
-     * Write.
-     *
-     * 
-		 * @param data the data
-     * 
-		 * @param tgt  the tgt
-     * @throws IOException the io exception
-     */
-    static void write(
+  /**
+   * Write.
+   *
+   * @param data the data
+   * @param tgt  the tgt
+   * @throws IOException the io exception
+   */
+  static void write(
           final byte[] data, final File tgt
   ) throws IOException {
     try (FileOutputStream fos = new FileOutputStream(tgt)) {

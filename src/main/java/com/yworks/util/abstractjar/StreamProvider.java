@@ -13,8 +13,7 @@ public interface StreamProvider {
     /**
      * Gets next class entry stream.
      *
-     *
-		 * @return the next class entry stream
+     * @return the next class entry stream
      * @throws IOException the io exception
      */
     DataInputStream getNextClassEntryStream() throws IOException;
@@ -22,8 +21,7 @@ public interface StreamProvider {
     /**
      * Gets next resource entry stream.
      *
-     *
-		 * @return the next resource entry stream
+     * @return the next resource entry stream
      * @throws IOException the io exception
      */
     DataInputStream getNextResourceEntryStream() throws IOException;
@@ -31,32 +29,28 @@ public interface StreamProvider {
     /**
      * Gets current entry.
      *
-     *
-		 * @return the current entry
+     * @return the current entry
      */
     Entry getCurrentEntry();
 
     /**
      * Gets current entry name.
      *
-     *
-		 * @return the current entry name
+     * @return the current entry name
      */
     String getCurrentEntryName();
 
     /**
      * Gets current dir.
      *
-     *
-		 * @return the current dir
+     * @return the current dir
      */
     String getCurrentDir();
 
     /**
      * Gets current filename.
      *
-     *
-		 * @return the current filename
+     * @return the current filename
      */
     String getCurrentFilename();
 

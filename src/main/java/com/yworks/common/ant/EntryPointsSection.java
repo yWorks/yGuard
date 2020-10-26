@@ -20,8 +20,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Instantiates a new Entry points section.
    *
-   *
-		 * @param task the task
+   * @param task the task
    */
   public EntryPointsSection( YGuardBaseTask task ) {
     super( task );
@@ -30,8 +29,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Add configured method.
    *
-   *
-		 * @param ms the ms
+   * @param ms the ms
    */
   public void addConfiguredMethod( MethodSection ms ) {
     this.methodSections.add( ms );
@@ -40,8 +38,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Add configured class.
    *
-   *
-		 * @param cs the cs
+   * @param cs the cs
    */
   public void addConfiguredClass( ClassSection cs ) {
     this.classSections.add( cs );
@@ -50,8 +47,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Add configured field.
    *
-   *
-		 * @param fs the fs
+   * @param fs the fs
    */
   public void addConfiguredField( FieldSection fs ) {
     this.fieldSections.add( fs );
@@ -60,8 +56,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Add configured attribute.
    *
-   *
-		 * @param as the as
+   * @param as the as
    */
   public void addConfiguredAttribute( AttributesSection as ) {
     this.attributesSections.add( as );
@@ -70,8 +65,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Gets method sections.
    *
-   *
-		 * @return the method sections
+   * @return the method sections
    */
   public List<MethodSection> getMethodSections() {
     return methodSections;
@@ -80,8 +74,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Gets class sections.
    *
-   *
-		 * @return the class sections
+   * @return the class sections
    */
   public List<ClassSection> getClassSections() {
     return classSections;
@@ -90,8 +83,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Gets field sections.
    *
-   *
-		 * @return the field sections
+   * @return the field sections
    */
   public List<FieldSection> getFieldSections() {
     return fieldSections;
@@ -100,8 +92,7 @@ public class EntryPointsSection extends Exclude {
   /**
    * Gets attributes sections.
    *
-   *
-		 * @return the attributes sections
+   * @return the attributes sections
    */
   public List<AttributesSection> getAttributesSections() {
     return attributesSections;

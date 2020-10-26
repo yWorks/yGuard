@@ -17,11 +17,10 @@ package com.yworks.yguard.annotations;
  */
 public @interface YATAnnotation
 {
-    /**
-     * Blah string.
-     *
-     * 
-		 * @return the string
-     */
-    String blah() default "blub";
+  /**
+   * Blah string.
+   *
+   * @return the string
+   */
+  String blah() default "blub";
 }

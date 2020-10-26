@@ -17,8 +17,7 @@ public class AttributesSection extends PatternMatchedSection {
   /**
    * Gets attributes.
    *
-   *
-		 * @return the attributes
+   * @return the attributes
    */
   public Set<String> getAttributes() {
     return attributes;
@@ -27,8 +26,7 @@ public class AttributesSection extends PatternMatchedSection {
   /**
    * Gets attributes str.
    *
-   *
-		 * @return the attributes str
+   * @return the attributes str
    */
   public String getAttributesStr() {
     return this.attributesStr;
@@ -37,8 +35,7 @@ public class AttributesSection extends PatternMatchedSection {
   /**
    * Sets name.
    *
-   *
-		 * @param attributeStr the attribute str
+   * @param attributeStr the attribute str
    */
   public void setName( String attributeStr ) {
 

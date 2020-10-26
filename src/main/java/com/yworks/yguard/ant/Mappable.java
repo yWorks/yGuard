@@ -8,11 +8,10 @@ import java.util.Collection;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public interface Mappable {
-    /**
-     * Add map entries.
-     *
-     * 
-		 * @param entries the entries
-     */
-    void addMapEntries( Collection entries);
+  /**
+   * Add map entries.
+   *
+   * @param entries the entries
+   */
+  void addMapEntries( Collection entries);
 }

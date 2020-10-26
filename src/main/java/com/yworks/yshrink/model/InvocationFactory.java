@@ -15,8 +15,7 @@ public class InvocationFactory {
   /**
    * Gets instance.
    *
-   * 
-		 * @return the instance
+   * @return the instance
    */
   protected static InvocationFactory getInstance() {
     return instance;
@@ -27,16 +26,11 @@ public class InvocationFactory {
   /**
    * Gets invocation.
    *
-   * 
-		 * @param opcode the opcode
-   * 
-		 * @param type   the type
-   * 
-		 * @param name   the name
-   * 
-		 * @param desc   the desc
-   * 
-		 * @return the invocation
+   * @param opcode the opcode
+   * @param type   the type
+   * @param name   the name
+   * @param desc   the desc
+   * @return the invocation
    */
   protected Invocation getInvocation( final int opcode, final String type, final String name, final String desc ) {
     String key = new StringBuilder( type ).append( name ).append( desc ).append( opcode ).toString();

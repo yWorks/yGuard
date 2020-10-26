@@ -9,10 +9,10 @@ public class B extends A {
 
   private final Object privateField = "privateField";
 
-    /**
-     * G.
-     */
-    @Override
+  /**
+   * G.
+   */
+  @Override
   public void g() {
     System.out.println( "B.g" );
   }

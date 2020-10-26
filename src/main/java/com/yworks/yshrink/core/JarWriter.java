@@ -50,15 +50,13 @@ public class JarWriter implements ArchiveWriter {
   private final boolean createStubs;
   private final MessageDigest[] digests;
 
-    /**
-     * Instantiates a new Jar writer.
-     *
-     * 
-		 * @param createStubs    the create stubs
-     * 
-		 * @param digestNamesStr the digest names str
-     */
-    public JarWriter( boolean createStubs, String digestNamesStr ) {
+  /**
+   * Instantiates a new Jar writer.
+   *
+   * @param createStubs    the create stubs
+   * @param digestNamesStr the digest names str
+   */
+  public JarWriter( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
 
     String[] digestNames = ( digestNamesStr.trim().equalsIgnoreCase(
@@ -80,13 +78,12 @@ public class JarWriter implements ArchiveWriter {
     }
   }
 
-    /**
-     * Get digests message digest [ ].
-     *
-     * 
-		 * @return the message digest [ ]
-     */
-    public MessageDigest[] getDigests() {
+  /**
+   * Get digests message digest [ ].
+   *
+   * @return the message digest [ ]
+   */
+  public MessageDigest[] getDigests() {
     return digests;
   }
 

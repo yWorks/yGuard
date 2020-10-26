@@ -7,10 +7,10 @@ package com.yworks.logging;
  */
 public class ConsoleLogger extends Logger {
 
-    /**
-     * Instantiates a new Console logger.
-     */
-    public ConsoleLogger() {
+  /**
+   * Instantiates a new Console logger.
+   */
+  public ConsoleLogger() {
     register();
   }
 

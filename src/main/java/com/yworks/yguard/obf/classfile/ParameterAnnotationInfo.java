@@ -25,15 +25,13 @@ public class ParameterAnnotationInfo
   private AnnotationInfo[] annotations;
 
 
-    /**
-     * Create parameter annotation info.
-     *
-     * 
-		 * @param din the din
-     * 
-		 * @return the parameter annotation info
-     * @throws IOException the io exception
-     */
+  /**
+   * Create parameter annotation info.
+   *
+   * @param din the din
+   * @return the parameter annotation info
+   * @throws IOException the io exception
+   */
 // Class Methods ---------------------------------------------------------
   public static ParameterAnnotationInfo create(DataInput din) throws java.io.IOException
   {
@@ -47,23 +45,21 @@ public class ParameterAnnotationInfo
   private ParameterAnnotationInfo()
   {}
 
-    /**
-     * Get annotations annotation info [ ].
-     *
-     * 
-		 * @return the annotation info [ ]
-     */
-    protected AnnotationInfo[] getAnnotations(){
+  /**
+   * Get annotations annotation info [ ].
+   *
+   * @return the annotation info [ ]
+   */
+  protected AnnotationInfo[] getAnnotations(){
     return annotations;
   }
 
-    /**
-     * Mark utf 8 refs in info.
-     *
-     * 
-		 * @param pool the pool
-     */
-    protected void markUtf8RefsInInfo(ConstantPool pool) {
+  /**
+   * Mark utf 8 refs in info.
+   *
+   * @param pool the pool
+   */
+  protected void markUtf8RefsInInfo(ConstantPool pool) {
     for (int i = 0; i < u2annotationCount; i++){
       annotations[i].markUtf8RefsInInfo(pool);
     }
@@ -80,13 +76,13 @@ public class ParameterAnnotationInfo
     }
   }
 
-    /**
-     * Export the representation to a DataOutput stream.  
-		 * @param dout the dout
-     *
-     * @throws IOException the io exception
-     */
-    public void write(DataOutput dout) throws java.io.IOException
+  /**
+   * Export the representation to a DataOutput stream.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException
   {
     dout.writeShort(u2annotationCount);
     for (int i = 0; i < u2annotationCount; i++)

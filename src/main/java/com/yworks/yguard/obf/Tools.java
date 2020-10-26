@@ -29,17 +29,14 @@ public class Tools
 
     // Class Methods ---------------------------------------------------------
 
-    /**
-     * Is the string one of the ones in the array?
-     *
-     * 
-		 * @param s    the s
-     * 
-		 * @param list the list
-     * 
-		 * @return the boolean
-     */
-    public static boolean isInArray(String s, String[] list)
+  /**
+   * Is the string one of the ones in the array?
+   *
+   * @param s    the s
+   * @param list the list
+   * @return the boolean
+   */
+  public static boolean isInArray(String s, String[] list)
     {
         for (int i = 0; i < list.length; i++) if (s.equals(list[i])) return true;
         return false;
@@ -53,15 +50,13 @@ public class Tools
         'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'};
     private static final char pad = '=';
 
-    /**
-     * To base 64 string.
-     *
-     * 
-		 * @param b the b
-     * 
-		 * @return the string
-     */
-    public static String toBase64(byte[] b)
+  /**
+   * To base 64 string.
+   *
+   * @param b the b
+   * @return the string
+   */
+  public static String toBase64(byte[] b)
     {
         StringBuffer sb = new StringBuffer();
         for (int ptr = 0; ptr < b.length; ptr += 3)

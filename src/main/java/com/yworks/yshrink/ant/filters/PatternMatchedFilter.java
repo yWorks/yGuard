@@ -15,29 +15,24 @@ public class PatternMatchedFilter extends AbstractEntryPointFilter {
 
   private Project project;
 
-    /**
-     * Instantiates a new Pattern matched filter.
-     *
-     *
-		 * @param p the p
-     */
-    public PatternMatchedFilter( final Project p ) {
+  /**
+   * Instantiates a new Pattern matched filter.
+   *
+   * @param p the p
+   */
+  public PatternMatchedFilter( final Project p ) {
     project = p;
   }
 
-    /**
-     * Match boolean.
-     *
-     *
-		 * @param type    the type
-     *
-		 * @param str     the str
-     *
-		 * @param section the section
-     *
-		 * @return the boolean
-     */
-    protected boolean match( TypePatternSet.Type type, String str, PatternMatchedSection section ) {
+  /**
+   * Match boolean.
+   *
+   * @param type    the type
+   * @param str     the str
+   * @param section the section
+   * @return the boolean
+   */
+  protected boolean match( TypePatternSet.Type type, String str, PatternMatchedSection section ) {
 
     PatternSet patternSet = section.getPatternSet( type );
 

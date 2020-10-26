@@ -7,20 +7,19 @@ import java.util.ListResourceBundle;
  */
 public class MyResourceBundleClass_fr extends ListResourceBundle  {
 
-    /**
-     * The Contents.
-     */
-    static final Object[][] contents = {
+  /**
+   * The Contents.
+   */
+  static final Object[][] contents = {
               {"MESSAGE", "BONJOUR"},
       };
 
-    /**
-     * Get contents object [ ] [ ].
-     *
-     * 
-		 * @return the object [ ] [ ]
-     */
-    protected Object[][] getContents() {
+  /**
+   * Get contents object [ ] [ ].
+   *
+   * @return the object [ ] [ ]
+   */
+  protected Object[][] getContents() {
     return contents;
   }
 

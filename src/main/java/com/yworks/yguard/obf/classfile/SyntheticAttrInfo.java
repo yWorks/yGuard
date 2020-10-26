@@ -25,16 +25,13 @@ public class SyntheticAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Synthetic attr info.
-     *
-     * 
-		 * @param cf            the cf
-     * 
-		 * @param attrNameIndex the attr name index
-     * 
-		 * @param attrLength    the attr length
-     */
+  /**
+   * Instantiates a new Synthetic attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
 // Instance Methods ------------------------------------------------------
     protected SyntheticAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {

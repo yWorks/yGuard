@@ -27,22 +27,21 @@ public class IntegerCpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Integer cp info.
-     */
+  /**
+   * Instantiates a new Integer cp info.
+   */
 // Instance Methods ------------------------------------------------------
     protected IntegerCpInfo()
     {
         super(CONSTANT_Integer);
     }
 
-    /**
-     * As bool boolean.
-     *
-     * 
-		 * @return the boolean
-     */
-    public boolean asBool(){
+  /**
+   * As bool boolean.
+   *
+   * @return the boolean
+   */
+  public boolean asBool(){
       return u4bytes != 0;
     }
 

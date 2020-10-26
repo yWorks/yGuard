@@ -17,44 +17,39 @@ import java.util.*;
  */
 public class TreeAction
 {
-    /**
-     * Package action.
-     *
-     * 
-		 * @param pk the pk
-     */
-    public void packageAction(Pk pk)  {defaultAction(pk);}
+  /**
+   * Package action.
+   *
+   * @param pk the pk
+   */
+  public void packageAction(Pk pk)  {defaultAction(pk);}
 
-    /**
-     * Class action.
-     *
-     * 
-		 * @param cl the cl
-     */
-    public void classAction(Cl cl)  {defaultAction(cl);}
+  /**
+   * Class action.
+   *
+   * @param cl the cl
+   */
+  public void classAction(Cl cl)  {defaultAction(cl);}
 
-    /**
-     * Method action.
-     *
-     * 
-		 * @param md the md
-     */
-    public void methodAction(Md md)  {defaultAction(md);}
+  /**
+   * Method action.
+   *
+   * @param md the md
+   */
+  public void methodAction(Md md)  {defaultAction(md);}
 
-    /**
-     * Field action.
-     *
-     * 
-		 * @param fd the fd
-     */
-    public void fieldAction(Fd fd)  {defaultAction(fd);}
+  /**
+   * Field action.
+   *
+   * @param fd the fd
+   */
+  public void fieldAction(Fd fd)  {defaultAction(fd);}
 
-    /**
-     * Default action.
-     *
-     * 
-		 * @param ti the ti
-     */
-    public void defaultAction(TreeItem ti)  {}
+  /**
+   * Default action.
+   *
+   * @param ti the ti
+   */
+  public void defaultAction(TreeItem ti)  {}
 }
 

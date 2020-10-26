@@ -30,8 +30,9 @@ public class StringReplacer
   Pattern pattern;
 
   /**
-   * Creates a new instance of StringReplacer  
-		 * @param patternString the pattern string
+   * Creates a new instance of StringReplacer
+   *
+   * @param patternString the pattern string
    */
   public StringReplacer(String patternString)
   {
@@ -41,8 +42,7 @@ public class StringReplacer
   /**
    * Sets pattern.
    *
-   * 
-		 * @param patternString the pattern string
+   * @param patternString the pattern string
    */
   public void setPattern(String patternString)
   {
@@ -52,12 +52,9 @@ public class StringReplacer
   /**
    * Replace.
    *
-   * 
-		 * @param in     the in
-   * 
-		 * @param result the result
-   * 
-		 * @param map    the map
+   * @param in     the in
+   * @param result the result
+   * @param map    the map
    */
   public void replace(String in, StringBuffer result, Map map)
   {
@@ -90,14 +87,10 @@ public class StringReplacer
   /**
    * Replace.
    *
-   * 
-		 * @param in        the in
-   * 
-		 * @param out       the out
-   * 
-		 * @param db        the db
-   * 
-		 * @param separator the separator
+   * @param in        the in
+   * @param out       the out
+   * @param db        the db
+   * @param separator the separator
    * @throws IOException the io exception
    */
   public void replace( Reader in, Writer out, GuardDB db, String separator ) throws IOException

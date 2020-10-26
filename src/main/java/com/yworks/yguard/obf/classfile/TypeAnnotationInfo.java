@@ -30,16 +30,14 @@ public class TypeAnnotationInfo {
   private int u2NumElementValuePairs;
   private ElementValuePairInfo[] elementValuePairs;
 
-    /**
-     * Create type annotation info.
-     *
-     * 
-		 * @param din the din
-     * 
-		 * @return the type annotation info
-     * @throws IOException the io exception
-     */
-    public static TypeAnnotationInfo create(DataInput din) throws java.io.IOException {
+  /**
+   * Create type annotation info.
+   *
+   * @param din the din
+   * @return the type annotation info
+   * @throws IOException the io exception
+   */
+  public static TypeAnnotationInfo create(DataInput din) throws java.io.IOException {
     TypeAnnotationInfo an = new TypeAnnotationInfo();
     an.read(din);
     return an;
@@ -142,14 +140,13 @@ public class TypeAnnotationInfo {
     }
   }
 
-    /**
-     * Write.
-     *
-     * 
-		 * @param dout the dout
-     * @throws IOException the io exception
-     */
-    public void write(DataOutput dout) throws java.io.IOException {
+  /**
+   * Write.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException {
 
     dout.writeByte(u1TargetType);
     
@@ -210,35 +207,33 @@ public class TypeAnnotationInfo {
     }
   }
 
-    /**
-     * Mark utf 8 refs in info.
-     *
-     * 
-		 * @param pool the pool
-     */
-    protected void markUtf8RefsInInfo(ConstantPool pool) {
+  /**
+   * Mark utf 8 refs in info.
+   *
+   * @param pool the pool
+   */
+  protected void markUtf8RefsInInfo(ConstantPool pool) {
     pool.getCpEntry(u2TypeIndex).incRefCount();
     for (int i = 0; i < u2NumElementValuePairs; i++) {
       elementValuePairs[i].markUtf8RefsInInfo(pool);
     }
   }
 
-    /**
-     * The type Localvar target.
-     */
-    static class LocalvarTarget {
+  /**
+   * The type Localvar target.
+   */
+  static class LocalvarTarget {
 
     private int u2TableLength;
     private LocalVarTargetVariableInfo[] table;
 
-        /**
-         * Read info.
-         *
-         * 
-		 * @param din the din
-         * @throws IOException the io exception
-         */
-        protected void readInfo(DataInput din) throws IOException {
+    /**
+     * Read info.
+     *
+     * @param din the din
+     * @throws IOException the io exception
+     */
+    protected void readInfo(DataInput din) throws IOException {
       u2TableLength = din.readUnsignedShort();
       table = new LocalVarTargetVariableInfo[u2TableLength];
       for (int i = 0; i < u2TableLength; i++) {
@@ -246,38 +241,35 @@ public class TypeAnnotationInfo {
       }
     }
 
-        /**
-         * Write info.
-         *
-         * 
-		 * @param dout the dout
-         * @throws IOException the io exception
-         */
-        public void writeInfo(DataOutput dout) throws java.io.IOException {
+    /**
+     * Write info.
+     *
+     * @param dout the dout
+     * @throws IOException the io exception
+     */
+    public void writeInfo(DataOutput dout) throws java.io.IOException {
       dout.writeShort(u2TableLength);
       for (int i = 0; i < u2TableLength; i++) {
         table[i].write(dout);
       }
     }
 
-        /**
-         * The type Local var target variable info.
-         */
-        static class LocalVarTargetVariableInfo {
+    /**
+     * The type Local var target variable info.
+     */
+    static class LocalVarTargetVariableInfo {
       private int u2startPc;
       private int u2length;
       private int u2index;
 
-            /**
-             * Create local var target variable info.
-             *
-             * 
-		 * @param din the din
-             * 
-		 * @return the local var target variable info
-             * @throws IOException the io exception
-             */
-            public static LocalVarTargetVariableInfo create(DataInput din) throws java.io.IOException {
+      /**
+       * Create local var target variable info.
+       *
+       * @param din the din
+       * @return the local var target variable info
+       * @throws IOException the io exception
+       */
+      public static LocalVarTargetVariableInfo create(DataInput din) throws java.io.IOException {
         LocalVarTargetVariableInfo lvi = new LocalVarTargetVariableInfo();
         lvi.read(din);
         return lvi;
@@ -289,14 +281,13 @@ public class TypeAnnotationInfo {
         u2index = din.readUnsignedShort();
       }
 
-            /**
-             * Write.
-             *
-             * 
-		 * @param dout the dout
-             * @throws IOException the io exception
-             */
-            public void write(DataOutput dout) throws java.io.IOException {
+      /**
+       * Write.
+       *
+       * @param dout the dout
+       * @throws IOException the io exception
+       */
+      public void write(DataOutput dout) throws java.io.IOException {
         dout.writeShort(u2startPc);
         dout.writeShort(u2length);
         dout.writeShort(u2index);
@@ -306,21 +297,20 @@ public class TypeAnnotationInfo {
   }
 
 
-    /**
-     * The type Type path.
-     */
-    static class TypePath {
+  /**
+   * The type Type path.
+   */
+  static class TypePath {
     private int u1PathLength;
     private PathEntry[] entries;
 
-        /**
-         * Read info.
-         *
-         * 
-		 * @param din the din
-         * @throws IOException the io exception
-         */
-        protected void readInfo(DataInput din) throws IOException {
+    /**
+     * Read info.
+     *
+     * @param din the din
+     * @throws IOException the io exception
+     */
+    protected void readInfo(DataInput din) throws IOException {
       u1PathLength = din.readUnsignedByte();
       entries = new PathEntry[u1PathLength];
       for (int i = 0; i < u1PathLength; i++) {
@@ -328,37 +318,34 @@ public class TypeAnnotationInfo {
       }
     }
 
-        /**
-         * Write info.
-         *
-         * 
-		 * @param dout the dout
-         * @throws IOException the io exception
-         */
-        public void writeInfo(DataOutput dout) throws java.io.IOException {
+    /**
+     * Write info.
+     *
+     * @param dout the dout
+     * @throws IOException the io exception
+     */
+    public void writeInfo(DataOutput dout) throws java.io.IOException {
       dout.writeByte(u1PathLength);
       for (int i = 0; i < entries.length; i++) {
         entries[i].write(dout);
       }
     }
 
-        /**
-         * The type Path entry.
-         */
-        static class PathEntry {
+    /**
+     * The type Path entry.
+     */
+    static class PathEntry {
       private int u1PathKind;
       private int u1TypeArgumentIndex;
 
-            /**
-             * Create path entry.
-             *
-             * 
-		 * @param din the din
-             * 
-		 * @return the path entry
-             * @throws IOException the io exception
-             */
-            public static PathEntry create(DataInput din) throws java.io.IOException {
+      /**
+       * Create path entry.
+       *
+       * @param din the din
+       * @return the path entry
+       * @throws IOException the io exception
+       */
+      public static PathEntry create(DataInput din) throws java.io.IOException {
         PathEntry lvi = new PathEntry();
         lvi.read(din);
         return lvi;
@@ -369,14 +356,13 @@ public class TypeAnnotationInfo {
         u1TypeArgumentIndex = din.readUnsignedByte();
       }
 
-            /**
-             * Write.
-             *
-             * 
-		 * @param dout the dout
-             * @throws IOException the io exception
-             */
-            public void write(DataOutput dout) throws java.io.IOException {
+      /**
+       * Write.
+       *
+       * @param dout the dout
+       * @throws IOException the io exception
+       */
+      public void write(DataOutput dout) throws java.io.IOException {
         dout.writeByte(u1PathKind);
         dout.writeByte(u1TypeArgumentIndex);
       }

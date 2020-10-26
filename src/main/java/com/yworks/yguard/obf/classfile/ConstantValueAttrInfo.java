@@ -28,16 +28,13 @@ public class ConstantValueAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Constant value attr info.
-     *
-     *
-		 * @param cf            the cf
-     *
-		 * @param attrNameIndex the attr name index
-     *
-		 * @param attrLength    the attr length
-     */
+  /**
+   * Instantiates a new Constant value attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
 // Instance Methods ------------------------------------------------------
     protected ConstantValueAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {

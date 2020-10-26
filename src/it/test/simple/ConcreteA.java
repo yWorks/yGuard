@@ -6,10 +6,10 @@ package test.simple;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ConcreteA extends AbstractB {
-    /**
-     * G.
-     */
-    public void g() {
+  /**
+   * G.
+   */
+  public void g() {
     System.out.println( "ConcreteA.g" );
   }
 }

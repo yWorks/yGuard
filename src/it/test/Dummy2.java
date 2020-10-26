@@ -7,10 +7,10 @@ package test;
  */
 public class Dummy2 {
 
-    /**
-     * Throw something.
-     */
-    public static void throwSomething() {
+  /**
+   * Throw something.
+   */
+  public static void throwSomething() {
     throw new RuntimeException("throwing something");
   }
 

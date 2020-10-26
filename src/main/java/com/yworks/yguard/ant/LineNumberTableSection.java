@@ -15,13 +15,12 @@ import java.io.PrintWriter;
 public final class LineNumberTableSection extends PatternMatchedClassesSection implements Mappable {
   private YGuardBaseTask obfuscatorTask;
 
-    /**
-     * Instantiates a new Line number table section.
-     *
-     *
-		 * @param obfuscatorTask the obfuscator task
-     */
-    public LineNumberTableSection( YGuardBaseTask obfuscatorTask ){
+  /**
+   * Instantiates a new Line number table section.
+   *
+   * @param obfuscatorTask the obfuscator task
+   */
+  public LineNumberTableSection( YGuardBaseTask obfuscatorTask ){
     super();
     this.obfuscatorTask = obfuscatorTask;
     this.allowMatchAllPatternSet = true;

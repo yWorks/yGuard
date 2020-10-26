@@ -67,10 +67,8 @@ public class YShrink {
   /**
    * Instantiates a new Y shrink.
    *
-   * 
-		 * @param createStubs the create stubs
-   * 
-		 * @param digests     the digests
+   * @param createStubs the create stubs
+   * @param digests     the digests
    */
   public YShrink( boolean createStubs, String digests ) {
     this.createStubs = createStubs;
@@ -86,12 +84,9 @@ public class YShrink {
    * - Mark all obsolete classes, methods and fields using the com.yworks.yshrink.core.Shrinker.
    * - Write out all non-obsolete classes using the com.yworks.yshrink.core.Writer.
    *
-   * 
-		 * @param pairs    the pairs
-   * 
-		 * @param epf      the epf
-   * 
-		 * @param resolver the resolver
+   * @param pairs    the pairs
+   * @param epf      the epf
+   * @param resolver the resolver
    * @throws IOException the io exception
    */
   public void doShrinkPairs( List<ShrinkBag> pairs, EntryPointFilter epf, ClassResolver resolver ) throws
@@ -206,8 +201,7 @@ public class YShrink {
   /**
    * Main.
    *
-   * 
-		 * @param args the args
+   * @param args the args
    */
   public static void main( final String[] args ) {
 

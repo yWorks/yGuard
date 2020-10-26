@@ -29,16 +29,13 @@ public class InnerClassesAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Inner classes attr info.
-     *
-     *
-		 * @param cf            the cf
-     *
-		 * @param attrNameIndex the attr name index
-     *
-		 * @param attrLength    the attr length
-     */
+  /**
+   * Instantiates a new Inner classes attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
 // Instance Methods ------------------------------------------------------
     protected InnerClassesAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
@@ -51,11 +48,12 @@ public class InnerClassesAttrInfo extends AttrInfo
         return ATTR_InnerClasses;
     }
 
-    /**
-     * Return the array of inner classes data.  
-		 * @return the inner classes info [ ]
-     */
-    protected InnerClassesInfo[] getInfo()
+  /**
+   * Return the array of inner classes data.
+   *
+   * @return the inner classes info [ ]
+   */
+  protected InnerClassesInfo[] getInfo()
     {
         return classes;
     }

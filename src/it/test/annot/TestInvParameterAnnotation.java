@@ -15,8 +15,7 @@ public @interface TestInvParameterAnnotation {
     /**
      * Value string.
      *
-     * 
-		 * @return the string
+     * @return the string
      */
     String value() default "DefaultInvisibleParameterAnnotString";
 

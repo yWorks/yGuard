@@ -10,13 +10,12 @@ import java.io.File;
 public class FileEntryWrapper implements Entry {
   private File file;
 
-    /**
-     * Instantiates a new File entry wrapper.
-     *
-     * 
-		 * @param file the file
-     */
-    FileEntryWrapper( File file ) {
+  /**
+   * Instantiates a new File entry wrapper.
+   *
+   * @param file the file
+   */
+  FileEntryWrapper( File file ) {
     this.file = file;
   }
 
@@ -35,13 +34,12 @@ public class FileEntryWrapper implements Entry {
     return file.length();
   }
 
-    /**
-     * Gets file.
-     *
-     * 
-		 * @return the file
-     */
-    public File getFile() {
+  /**
+   * Gets file.
+   *
+   * @return the file
+   */
+  public File getFile() {
     return file;
   }
 }

@@ -23,20 +23,20 @@ import java.io.File;
  */
 public class YShrinkInvokerImpl implements YShrinkInvoker {
 
-  /**
-   * The Shrink task.
-   */
-  final ShrinkTask shrinkTask;
+    /**
+     * The Shrink task.
+     */
+    final ShrinkTask shrinkTask;
 
-  /**
-   * The Eps.
-   */
-  EntryPointsSection eps;
+    /**
+     * The Eps.
+     */
+    EntryPointsSection eps;
 
-  /**
-   * Instantiates a new Y shrink invoker.
-   */
-  public YShrinkInvokerImpl() {
+    /**
+     * Instantiates a new Y shrink invoker.
+     */
+    public YShrinkInvokerImpl() {
     shrinkTask = new ShrinkTask();
     eps = new EntryPointsSection( shrinkTask );
   }

@@ -19,8 +19,7 @@ public interface YShrinkModel {
   /**
    * Create simple model.
    *
-   * 
-		 * @param bags the bags
+   * @param bags the bags
    * @throws IOException the io exception
    */
   public void createSimpleModel( List<ShrinkBag> bags ) throws IOException;
@@ -28,38 +27,31 @@ public interface YShrinkModel {
   /**
    * Gets all ancestor classes.
    *
-   * 
-		 * @param className the class name
-   *
-		 * @return the all ancestor classes
+   * @param className the class name
+   * @return the all ancestor classes
    */
   Set<String> getAllAncestorClasses( String className );
 
   /**
    * Gets all implemented interfaces.
    *
-   * 
-		 * @param className the class name
-   *
-		 * @return the all implemented interfaces
+   * @param className the class name
+   * @return the all implemented interfaces
    */
   Set<String> getAllImplementedInterfaces( String className );
 
   /**
    * Gets all class names.
    *
-   *
-		 * @return the all class names
+   * @return the all class names
    */
   Collection<String> getAllClassNames();
 
   /**
    * Sets resource class path.
    *
-   * 
-		 * @param resourceClassPath the resource class path
-   * 
-		 * @param target            the target
+   * @param resourceClassPath the resource class path
+   * @param target            the target
    */
   void setResourceClassPath(Path resourceClassPath, Task target);
 }

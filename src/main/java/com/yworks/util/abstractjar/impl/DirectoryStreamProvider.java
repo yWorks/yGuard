@@ -26,14 +26,13 @@ public class DirectoryStreamProvider extends SimpleFileVisitor<Path> implements 
   private Iterator<Entry> entryIterator;
   private Entry currentEntry;
 
-    /**
-     * Instantiates a new Directory stream provider.
-     *
-     *
-		 * @param directory the directory
-     * @throws IOException the io exception
-     */
-    public DirectoryStreamProvider( File directory ) throws IOException {
+  /**
+   * Instantiates a new Directory stream provider.
+   *
+   * @param directory the directory
+   * @throws IOException the io exception
+   */
+  public DirectoryStreamProvider( File directory ) throws IOException {
     this.directory = directory;
     Files.walkFileTree(directory.toPath(), this);
     entryIterator = entries.iterator();

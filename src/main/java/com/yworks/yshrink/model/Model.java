@@ -70,8 +70,7 @@ public class Model {
   /**
    * Sets class resolver.
    *
-   *
-		 * @param res the res
+   * @param res the res
    */
   public void setClassResolver( final ClassResolver res ) {
     if ( res != null ) {
@@ -100,8 +99,7 @@ public class Model {
   /**
    * Is simple model set boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isSimpleModelSet() {
     return simpleModelSet;
@@ -117,8 +115,7 @@ public class Model {
   /**
    * Instantiates a new Model.
    *
-   *
-		 * @param network the network
+   * @param network the network
    */
   public Model( MutableNetwork<Node, Edge> network ) {
     if ( network != null ) {
@@ -145,8 +142,7 @@ public class Model {
   /**
    * Gets entry point node.
    *
-   * 
-		 * @return the entry point node
+   * @return the entry point node
    */
   public Node getEntryPointNode() {
     return entryPointNode;
@@ -155,10 +151,8 @@ public class Model {
   /**
    * Is class modeled boolean.
    *
-   *
-		 * @param className the class name
-   * 
-		 * @return the boolean
+   * @param className the class name
+   * @return the boolean
    */
   public boolean isClassModeled( final String className ) {
     return model.containsKey( className );
@@ -168,14 +162,10 @@ public class Model {
    * creates a dependency of type <code>type</code> iff no edge of the same type exists between <code>source</code> and
    * <code>target</code>.
    *
-   *
-		 * @param source the edge source
-   *
-		 * @param target the edge target
-   *
-		 * @param type   the edge type
-   * 
-		 * @return the created edge, or null if no edge was created
+   * @param source the edge source
+   * @param target the edge target
+   * @param type   the edge type
+   * @return the created edge, or null if no edge was created
    */
   public Edge createDependencyEdge( final AbstractDescriptor source, final AbstractDescriptor target,
                                     final EdgeType type ) {
@@ -190,14 +180,10 @@ public class Model {
   /**
    * Create dependency edge edge.
    *
-   *
-		 * @param sourceNode the source node
-   *
-		 * @param targetNode the target node
-   *
-		 * @param edgeType   the edge type
-   * 
-		 * @return the edge
+   * @param sourceNode the source node
+   * @param targetNode the target node
+   * @param edgeType   the edge type
+   * @return the edge
    */
   public Edge createDependencyEdge( final Node sourceNode, final Node targetNode, final EdgeType edgeType ) {
     if ( hasEdge( sourceNode, targetNode, edgeType ) ) {
@@ -222,18 +208,12 @@ public class Model {
   /**
    * New class descriptor class descriptor.
    *
-   *
-		 * @param name       the name
-   *
-		 * @param superName  the super name
-   *
-		 * @param interfaces the interfaces
-   *
-		 * @param access     the access
-   *
-		 * @param sourceJar  the source jar
-   * 
-		 * @return the class descriptor
+   * @param name       the name
+   * @param superName  the super name
+   * @param interfaces the interfaces
+   * @param access     the access
+   * @param sourceJar  the source jar
+   * @return the class descriptor
    */
   public ClassDescriptor newClassDescriptor( final String name, final String superName, final String[] interfaces,
                                              final int access, final File sourceJar ) {
@@ -260,20 +240,13 @@ public class Model {
   /**
    * New method descriptor method descriptor.
    *
-   *
-		 * @param cd         the cd
-   *
-		 * @param access     the access
-   *
-		 * @param name       the name
-   *
-		 * @param desc       the desc
-   *
-		 * @param exceptions the exceptions
-   *
-		 * @param sourceJar  the source jar
-   * 
-		 * @return the method descriptor
+   * @param cd         the cd
+   * @param access     the access
+   * @param name       the name
+   * @param desc       the desc
+   * @param exceptions the exceptions
+   * @param sourceJar  the source jar
+   * @return the method descriptor
    */
   public MethodDescriptor newMethodDescriptor( final ClassDescriptor cd, final int access, final String name,
                                                final String desc,
@@ -292,18 +265,12 @@ public class Model {
   /**
    * New field descriptor field descriptor.
    *
-   *
-		 * @param cd        the cd
-   *
-		 * @param desc      the desc
-   *
-		 * @param name      the name
-   *
-		 * @param access    the access
-   *
-		 * @param sourceJar the source jar
-   * 
-		 * @return the field descriptor
+   * @param cd        the cd
+   * @param desc      the desc
+   * @param name      the name
+   * @param access    the access
+   * @param sourceJar the source jar
+   * @return the field descriptor
    */
   public FieldDescriptor newFieldDescriptor( final ClassDescriptor cd, final String desc, final String name,
                                              final int access, final File sourceJar ) {
@@ -321,8 +288,7 @@ public class Model {
   /**
    * Gets all class descriptors.
    *
-   * 
-		 * @return the all class descriptors
+   * @return the all class descriptors
    */
   public Collection<ClassDescriptor> getAllClassDescriptors() {
     return model.values();
@@ -331,8 +297,7 @@ public class Model {
   /**
    * Gets all class names.
    *
-   * 
-		 * @return the all class names
+   * @return the all class names
    */
   public Collection<String> getAllClassNames() {
     return model.keySet();
@@ -341,10 +306,8 @@ public class Model {
   /**
    * Gets class descriptor.
    *
-   *
-		 * @param className the class name
-   * 
-		 * @return the class descriptor
+   * @param className the class name
+   * @return the class descriptor
    */
   public ClassDescriptor getClassDescriptor( final String className ) {
     if ( isClassModeled( className ) ) {
@@ -357,10 +320,8 @@ public class Model {
   /**
    * Gets descriptor.
    *
-   *
-		 * @param n the n
-   * 
-		 * @return the descriptor
+   * @param n the n
+   * @return the descriptor
    */
   public AbstractDescriptor getDescriptor( final Node n ) {
     return (AbstractDescriptor) node2Descriptor.get( n );
@@ -369,10 +330,8 @@ public class Model {
   /**
    * Gets class node.
    *
-   *
-		 * @param memberNode the member node
-   * 
-		 * @return the class node
+   * @param memberNode the member node
+   * @return the class node
    */
   public Node getClassNode( final Node memberNode ) {
 
@@ -392,10 +351,8 @@ public class Model {
   /**
    * Gets dependency type.
    *
-   *
-		 * @param e the e
-   * 
-		 * @return the dependency type
+   * @param e the e
+   * @return the dependency type
    */
   public EdgeType getDependencyType( final Edge e ) {
     return (EdgeType) dependencyTypes.get( e );
@@ -404,10 +361,8 @@ public class Model {
   /**
    * retrieve all implementing classes of <code>cd</code>.
    *
-   *
-		 * @param cd the cd
-   * 
-		 * @return List of ClassDescriptors containing all classes that implement cd
+   * @param cd the cd
+   * @return List of ClassDescriptors containing all classes that implement cd
    */
   public Set<ClassDescriptor> getAllImplementingClasses( final ClassDescriptor cd ) {
     Set<ClassDescriptor> ret = null;
@@ -426,10 +381,8 @@ public class Model {
   /**
    * Gets all implemented interfaces.
    *
-   *
-		 * @param className  the class name
-   *
-		 * @param interfaces the interfaces
+   * @param className  the class name
+   * @param interfaces the interfaces
    */
   public void getAllImplementedInterfaces( final String className, final Set<String> interfaces ) {
 
@@ -466,10 +419,8 @@ public class Model {
   /**
    * Gets all ancestor classes.
    *
-   *
-		 * @param className the class name
-   *
-		 * @param parents   the parents
+   * @param className the class name
+   * @param parents   the parents
    */
   public void getAllAncestorClasses( final String className,
                                      final Set<String> parents ) {
@@ -498,10 +449,8 @@ public class Model {
   /**
    * Gets all internal ancestor entrypoint methods.
    *
-   *
-		 * @param className the class name
-   *
-		 * @param methods   the methods
+   * @param className the class name
+   * @param methods   the methods
    */
   public void getAllInternalAncestorEntrypointMethods( final String className,
                                                        final List<MethodDescriptor> methods ) {
@@ -532,12 +481,9 @@ public class Model {
   /**
    * Gets all external ancestor methods.
    *
-   *
-		 * @param className the class name
-   *
-		 * @param methods   the methods
-   * 
-		 * @return the all external ancestor methods
+   * @param className the class name
+   * @param methods   the methods
+   * @return the all external ancestor methods
    */
   public boolean getAllExternalAncestorMethods( final String className, final List<Method> methods ) {
 
@@ -592,10 +538,8 @@ public class Model {
   /**
    * collects all subclasses of <code>cd</code>
    *
-   *
-		 * @param cd          the cd
-   *
-		 * @param descendants the descendants
+   * @param cd          the cd
+   * @param descendants the descendants
    */
   public void getInternalDescendants( final ClassDescriptor cd, final List<ClassDescriptor> descendants ) {
     for ( final Edge e: cd.getNode().inEdges() ) {
@@ -644,12 +588,9 @@ public class Model {
    * if <code>md</code> is declared in any interface that class <code>className</code> or any superclass of class
    * <code>className</code> implements.
    *
-   *
-		 * @param origClass the orig class
-   *
-		 * @param md        the md
-   * 
-		 * @return true iff an implementation or declaration of <code>md</code> is found in any ancestor class/interface of         class <code>className</code>
+   * @param origClass the orig class
+   * @param md        the md
+   * @return true iff an implementation or declaration of <code>md</code> is found in any ancestor class/interface of         class <code>className</code>
    */
   public boolean isMethodExternallyDefined( final ClassDescriptor origClass,
                                             final MethodDescriptor md ) {
@@ -757,8 +698,7 @@ public class Model {
   /**
    * Create entry point edges.
    *
-   *
-		 * @param entryPoints the entry points
+   * @param entryPoints the entry points
    */
   public void createEntryPointEdges( List<AbstractDescriptor> entryPoints ) {
 
@@ -795,8 +735,7 @@ public class Model {
   /**
    * Is all resolved boolean.
    *
-   * 
-		 * @return the boolean
+   * @return the boolean
    */
   public boolean isAllResolved() {
     return allResolved;
@@ -826,10 +765,8 @@ public class Model {
   /**
    * Gets node type.
    *
-   *
-		 * @param n the n
-   * 
-		 * @return the node type
+   * @param n the n
+   * @return the node type
    */
   public int getNodeType( final Node n ) {
     return (int) node2Type.get( n );
@@ -838,8 +775,7 @@ public class Model {
   /**
    * Mark obsolete.
    *
-   *
-		 * @param n the n
+   * @param n the n
    */
   public void markObsolete( final Node n ) {
 
@@ -853,8 +789,7 @@ public class Model {
   /**
    * Mark not obsolete.
    *
-   *
-		 * @param n the n
+   * @param n the n
    */
   public void markNotObsolete( final Node n ) {
 
@@ -869,8 +804,7 @@ public class Model {
   /**
    * Mark stub needed.
    *
-   *
-		 * @param n the n
+   * @param n the n
    */
   public void markStubNeeded( final Node n ) {
     int type = getNodeType( n );
@@ -883,10 +817,8 @@ public class Model {
   /**
    * Is obsolete boolean.
    *
-   *
-		 * @param n the n
-   * 
-		 * @return the boolean
+   * @param n the n
+   * @return the boolean
    */
   public boolean isObsolete( final Node n ) {
     return NodeType.isObsolete( (int) node2Type.get( n ) );
@@ -895,10 +827,8 @@ public class Model {
   /**
    * Is stub needed boolean.
    *
-   *
-		 * @param n the n
-   * 
-		 * @return the boolean
+   * @param n the n
+   * @return the boolean
    */
   public boolean isStubNeeded( final Node n ) {
     return NodeType.isStubNeeded( (int) node2Type.get( n ) );
@@ -907,8 +837,7 @@ public class Model {
   /**
    * Gets network.
    *
-   * 
-		 * @return the network
+   * @return the network
    */
   public Network<Node, Edge> getNetwork() {
     return network;

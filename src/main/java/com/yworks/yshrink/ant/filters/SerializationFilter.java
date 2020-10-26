@@ -15,13 +15,12 @@ import java.util.Collection;
  */
 public class SerializationFilter extends MethodFilter {
 
-    /**
-     * Instantiates a new Serialization filter.
-     *
-     * 
-		 * @param project the project
-     */
-    public SerializationFilter( Project project ) {
+  /**
+   * Instantiates a new Serialization filter.
+   *
+   * @param project the project
+   */
+  public SerializationFilter( Project project ) {
     super( project );
 
     MethodSection msWrite = new MethodSection();

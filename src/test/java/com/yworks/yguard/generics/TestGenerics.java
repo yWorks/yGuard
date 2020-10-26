@@ -27,16 +27,16 @@ public class TestGenerics {
   @Deprecated
   private ParameterizedType<MyStringType> localVar;
 
-    /**
-     * Creates a new instance of TestGenerics
-     */
-    public TestGenerics() {
+  /**
+   * Creates a new instance of TestGenerics
+   */
+  public TestGenerics() {
   }
 
-    /**
-     * Run.
-     */
-    @Test
+  /**
+   * Run.
+   */
+  @Test
   public void run(){
     new GenericSignatureFormatError();
     ParameterizedType<MyStringType> pt = new ParameterizedType<MyStringType>();
@@ -66,14 +66,14 @@ public class TestGenerics {
     }
   }
 
+  /**
+   * The type My string type.
+   */
+  public static class MyStringType extends MyType<String> {
     /**
-     * The type My string type.
+     * Instantiates a new My string type.
      */
-    public static class MyStringType extends MyType<String> {
-        /**
-         * Instantiates a new My string type.
-         */
-        public MyStringType(){
+    public MyStringType(){
       super("Hallo!");
     }
     
@@ -82,13 +82,12 @@ public class TestGenerics {
     }
   }
 
-    /**
-     * Main.
-     *
-     *
-		 * @param args the args
-     */
-    public static void main(String... args){
+  /**
+   * Main.
+   *
+   * @param args the args
+   */
+  public static void main(String... args){
     new TestGenerics().run();
   }
 }

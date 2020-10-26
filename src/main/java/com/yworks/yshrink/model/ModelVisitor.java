@@ -31,10 +31,8 @@ public class ModelVisitor extends ClassVisitor {
   /**
    * Instantiates a new Model visitor.
    *
-   * 
-		 * @param model     the model
-   * 
-		 * @param sourceJar the source jar
+   * @param model     the model
+   * @param sourceJar the source jar
    */
   public ModelVisitor( final Model model, final File sourceJar ) {
     super(OPCODES_ASM);
@@ -110,8 +108,7 @@ public class ModelVisitor extends ClassVisitor {
     /**
      * Instantiates a new Model method visitor.
      *
-     * 
-		 * @param currentMethod the current method
+     * @param currentMethod the current method
      */
     public ModelMethodVisitor( MethodDescriptor currentMethod ) {
       // increasing ASM opcodes level from 5 to 7 forces ASM to accept
@@ -240,10 +237,8 @@ public class ModelVisitor extends ClassVisitor {
     /**
      * Instantiates a new Model annotation visitor.
      *
-     * 
-		 * @param currentItem     the current item
-     * 
-		 * @param annotationUsage the annotation usage
+     * @param currentItem     the current item
+     * @param annotationUsage the annotation usage
      */
     public ModelAnnotationVisitor(
         AbstractDescriptor currentItem, AnnotationUsage annotationUsage) {

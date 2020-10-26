@@ -12,13 +12,12 @@ import java.util.StringTokenizer;
 public final class AttributesSection extends PatternMatchedClassesSection implements Mappable {
   private YGuardBaseTask obfuscatorTask;
 
-    /**
-     * Instantiates a new Attributes section.
-     *
-     *
-		 * @param obfuscatorTask the obfuscator task
-     */
-    public AttributesSection( YGuardBaseTask obfuscatorTask ){
+  /**
+   * Instantiates a new Attributes section.
+   *
+   * @param obfuscatorTask the obfuscator task
+   */
+  public AttributesSection( YGuardBaseTask obfuscatorTask ){
     super();
     this.obfuscatorTask = obfuscatorTask;
     this.allowMatchAllPatternSet = true;
@@ -26,13 +25,12 @@ public final class AttributesSection extends PatternMatchedClassesSection implem
 
     private String attributes;
 
-    /**
-     * Set name.
-     *
-     *
-		 * @param attributes the attributes
-     */
-    public void setName(String attributes){
+  /**
+   * Set name.
+   *
+   * @param attributes the attributes
+   */
+  public void setName(String attributes){
         this.attributes = attributes;
     }
 
@@ -49,13 +47,12 @@ public final class AttributesSection extends PatternMatchedClassesSection implem
     {
     }
 
-    /**
-     * Gets attributes.
-     *
-     *
-		 * @return the attributes
-     */
-    public String getAttributes() {
+  /**
+   * Gets attributes.
+   *
+   * @return the attributes
+   */
+  public String getAttributes() {
     return attributes;
   }
 }

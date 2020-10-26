@@ -14,16 +14,14 @@ public class VerificationTypeInfo {
 
   // Class Methods ---------------------------------------------------------
 
-    /**
-     * Create verification type info.
-     *
-     *
-		 * @param din the din
-     * 
-		 * @return the verification type info
-     * @throws IOException the io exception
-     */
-    public static VerificationTypeInfo create(DataInput din) throws java.io.IOException {
+  /**
+   * Create verification type info.
+   *
+   * @param din the din
+   * @return the verification type info
+   * @throws IOException the io exception
+   */
+  public static VerificationTypeInfo create(DataInput din) throws java.io.IOException {
     if (din == null) throw new NullPointerException("DataInput cannot be null!");
     VerificationTypeInfo vti = new VerificationTypeInfo();
     vti.read(din);
@@ -35,11 +33,12 @@ public class VerificationTypeInfo {
   private VerificationTypeInfo() {
   }
 
-    /**
-     * Check for Utf8 references to constant pool and mark them.
-		 * @param pool the pool
-     */
-    protected void markUtf8Refs(ConstantPool pool) {
+  /**
+   * Check for Utf8 references to constant pool and mark them.
+   *
+   * @param pool the pool
+   */
+  protected void markUtf8Refs(ConstantPool pool) {
     switch (u1_tag) {
       case 0: //ITEM_Top;
         break;
@@ -93,13 +92,13 @@ public class VerificationTypeInfo {
     }
   }
 
-    /**
-     * Export the representation to a DataOutput stream.
-		 * @param dout the dout
-     *
-     * @throws IOException the io exception
-     */
-    public void write(DataOutput dout) throws java.io.IOException {
+  /**
+   * Export the representation to a DataOutput stream.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException {
     dout.writeByte(u1_tag);
     switch (u1_tag) {
       case 0: //ITEM_Top;

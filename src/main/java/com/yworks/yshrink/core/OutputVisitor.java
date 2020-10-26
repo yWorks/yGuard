@@ -25,17 +25,14 @@ public class OutputVisitor extends ClassVisitor {
 
   private final DoNothingAnnotationVisitor ignoreAnnotation = new DoNothingAnnotationVisitor();
 
-    /**
-     * Instantiates a new Output visitor.
-     *
-     * 
-		 * @param cv          the cv
-     * 
-		 * @param model       the model
-     * 
-		 * @param createStubs the create stubs
-     */
-    public OutputVisitor( final ClassVisitor cv, final Model model, boolean createStubs ) {
+  /**
+   * Instantiates a new Output visitor.
+   *
+   * @param cv          the cv
+   * @param model       the model
+   * @param createStubs the create stubs
+   */
+  public OutputVisitor( final ClassVisitor cv, final Model model, boolean createStubs ) {
     super(Opcodes.ASM7);
     this.createStubs = createStubs;
     this.cv = cv;
@@ -166,41 +163,38 @@ public class OutputVisitor extends ClassVisitor {
     cv.visitEnd();
   }
 
-    /**
-     * Gets num obsolete methods.
-     *
-     *
-		 * @return the num obsolete methods
-     */
-    public int getNumObsoleteMethods() {
+  /**
+   * Gets num obsolete methods.
+   *
+   * @return the num obsolete methods
+   */
+  public int getNumObsoleteMethods() {
     return numObsoleteMethods;
   }
 
-    /**
-     * Gets num obsolete fields.
-     *
-     *
-		 * @return the num obsolete fields
-     */
-    public int getNumObsoleteFields() {
+  /**
+   * Gets num obsolete fields.
+   *
+   * @return the num obsolete fields
+   */
+  public int getNumObsoleteFields() {
     return numObsoleteFields;
   }
 
 
-    /**
-     * The type Output method visitor.
-     */
-    class OutputMethodVisitor extends MethodVisitor {
+  /**
+   * The type Output method visitor.
+   */
+  class OutputMethodVisitor extends MethodVisitor {
 
     private MethodVisitor delegate;
 
-        /**
-         * Instantiates a new Output method visitor.
-         *
-         * 
-		 * @param delegate the delegate
-         */
-        public OutputMethodVisitor( MethodVisitor delegate ) {
+    /**
+     * Instantiates a new Output method visitor.
+     *
+     * @param delegate the delegate
+     */
+    public OutputMethodVisitor( MethodVisitor delegate ) {
       super(Opcodes.ASM7);
       this.delegate = delegate;
     }
@@ -342,20 +336,19 @@ public class OutputVisitor extends ClassVisitor {
     }
   }
 
-    /**
-     * The type Output field visitor.
-     */
-    class OutputFieldVisitor extends FieldVisitor {
+  /**
+   * The type Output field visitor.
+   */
+  class OutputFieldVisitor extends FieldVisitor {
 
     private final FieldVisitor delegate;
 
-        /**
-         * Instantiates a new Output field visitor.
-         *
-         * 
-		 * @param delegate the delegate
-         */
-        public OutputFieldVisitor(FieldVisitor delegate) {
+    /**
+     * Instantiates a new Output field visitor.
+     *
+     * @param delegate the delegate
+     */
+    public OutputFieldVisitor(FieldVisitor delegate) {
       super(Opcodes.ASM7);
       this.delegate = delegate;
     }
@@ -384,23 +377,21 @@ public class OutputVisitor extends ClassVisitor {
     }
   }
 
-    /**
-     * The type Stub output method visitor.
-     */
-    class StubOutputMethodVisitor extends MethodVisitor {
+  /**
+   * The type Stub output method visitor.
+   */
+  class StubOutputMethodVisitor extends MethodVisitor {
 
     private MethodVisitor delegate;
     private final boolean visitStub;
 
-        /**
-         * Instantiates a new Stub output method visitor.
-         *
-         * 
-		 * @param delegate  the delegate
-         * 
-		 * @param visitStub the visit stub
-         */
-        public StubOutputMethodVisitor(MethodVisitor delegate, boolean visitStub) {
+    /**
+     * Instantiates a new Stub output method visitor.
+     *
+     * @param delegate  the delegate
+     * @param visitStub the visit stub
+     */
+    public StubOutputMethodVisitor(MethodVisitor delegate, boolean visitStub) {
       super(Opcodes.ASM7);
       this.delegate = delegate;
       this.visitStub = visitStub;
@@ -513,15 +504,15 @@ public class OutputVisitor extends ClassVisitor {
     }
   }
 
-    /**
-     * can't return null where returntype is AnnotationVisitor..
-     */
-    static class DoNothingAnnotationVisitor extends AnnotationVisitor {
+  /**
+   * can't return null where returntype is AnnotationVisitor..
+   */
+  static class DoNothingAnnotationVisitor extends AnnotationVisitor {
 
-        /**
-         * Instantiates a new Do nothing annotation visitor.
-         */
-        public DoNothingAnnotationVisitor() {
+    /**
+     * Instantiates a new Do nothing annotation visitor.
+     */
+    public DoNothingAnnotationVisitor() {
       super(Opcodes.ASM7);
     }
 
@@ -544,24 +535,23 @@ public class OutputVisitor extends ClassVisitor {
   }
 
 
+  /**
+   * currently just delegates all methods to <code>delegate</code>.
+   */
+  class OutputAnnotationVisitor extends AnnotationVisitor {
+
+
     /**
-     * currently just delegates all methods to <code>delegate</code>.
+     * The Delegate.
      */
-    class OutputAnnotationVisitor extends AnnotationVisitor {
+    AnnotationVisitor delegate;
 
-
-        /**
-         * The Delegate.
-         */
-        AnnotationVisitor delegate;
-
-        /**
-         * Instantiates a new Output annotation visitor.
-         *
-         * 
-		 * @param delegate the delegate
-         */
-        public OutputAnnotationVisitor( AnnotationVisitor delegate ) {
+    /**
+     * Instantiates a new Output annotation visitor.
+     *
+     * @param delegate the delegate
+     */
+    public OutputAnnotationVisitor( AnnotationVisitor delegate ) {
       super(Opcodes.ASM7);
       this.delegate = delegate;
     }

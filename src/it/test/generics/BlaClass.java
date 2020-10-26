@@ -5,12 +5,11 @@ package test.generics;
  */
 public class BlaClass {
 
-    /**
-     * The type Inner.
-     *
-     * 
-		 * @param <T> the type parameter
-     */
-    public class Inner<T> {
+  /**
+   * The type Inner.
+   *
+   * @param <T> the type parameter
+   */
+  public class Inner<T> {
   }
 }

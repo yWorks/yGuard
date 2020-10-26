@@ -5,10 +5,10 @@ package test.internalclasses;
  */
 class InternalClassInA {
 
-    /**
-     * Internal class method in a.
-     */
-    public void internalClassMethodInA() {
+  /**
+   * Internal class method in a.
+   */
+  public void internalClassMethodInA() {
         System.out.println("internalClassMethodInA");
     }
 

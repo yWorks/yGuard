@@ -35,13 +35,12 @@ public class DirectoryWriter implements ArchiveWriter {
   private Set<String> directoriesWritten = new HashSet<String>();
   private boolean createStubs;
 
-    /**
-     * Instantiates a new Directory writer.
-     *
-     * 
-		 * @param createStubs the create stubs
-     */
-    public DirectoryWriter( boolean createStubs ) {
+  /**
+   * Instantiates a new Directory writer.
+   *
+   * @param createStubs the create stubs
+   */
+  public DirectoryWriter( boolean createStubs ) {
     this.createStubs = createStubs;
   }
 

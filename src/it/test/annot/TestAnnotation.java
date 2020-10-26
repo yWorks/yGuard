@@ -15,16 +15,14 @@ public @interface TestAnnotation {
     /**
      * Value string.
      *
-     *
-		 * @return the string
+     * @return the string
      */
     String value() default "DefaultString";
 
     /**
      * Unused value string.
      *
-     *
-		 * @return the string
+     * @return the string
      */
     String unusedValue() default "FindMe!";
 }

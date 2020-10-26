@@ -7,10 +7,10 @@ package test;
  */
 public class Dummy1 {
 
-    /**
-     * The type Dummy 1 inner 1.
-     */
-    public class Dummy1Inner1 {
+  /**
+   * The type Dummy 1 inner 1.
+   */
+  public class Dummy1Inner1 {
     
   }
 

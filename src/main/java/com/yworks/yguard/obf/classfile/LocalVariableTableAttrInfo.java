@@ -28,16 +28,13 @@ public class LocalVariableTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    /**
-     * Instantiates a new Local variable table attr info.
-     *
-     * 
-		 * @param cf            the cf
-     * 
-		 * @param attrNameIndex the attr name index
-     * 
-		 * @param attrLength    the attr length
-     */
+  /**
+   * Instantiates a new Local variable table attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
 // Instance Methods ------------------------------------------------------
     protected LocalVariableTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
@@ -50,22 +47,22 @@ public class LocalVariableTableAttrInfo extends AttrInfo
         return ATTR_LocalVariableTable;
     }
 
-    /**
-     * Return the array of local variable table entries.  
-		 * @return the local variable info [ ]
-     */
-    protected LocalVariableInfo[] getLocalVariableTable()
+  /**
+   * Return the array of local variable table entries.
+   *
+   * @return the local variable info [ ]
+   */
+  protected LocalVariableInfo[] getLocalVariableTable()
     {
         return localVariableTable;
     }
 
-    /**
-     * Sets local variable table.
-     *
-     * 
-		 * @param lvts the lvts
-     */
-    public void setLocalVariableTable(LocalVariableInfo[] lvts) {
+  /**
+   * Sets local variable table.
+   *
+   * @param lvts the lvts
+   */
+  public void setLocalVariableTable(LocalVariableInfo[] lvts) {
       this.localVariableTable = lvts;
       this.u2localVariableTableLength = lvts.length;
       this.u4attrLength = 2 + 10 * u2localVariableTableLength;

@@ -12,10 +12,8 @@ public interface ArchiveWriter {
     /**
      * Write.
      *
-     * 
-		 * @param model the model
-     * 
-		 * @param bag   the bag
+     * @param model the model
+     * @param bag   the bag
      * @throws IOException the io exception
      */
     void write( Model model, ShrinkBag bag ) throws IOException;

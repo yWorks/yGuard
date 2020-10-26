@@ -17,10 +17,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({TYPE_USE})
 public @interface MyNotNull {
-    /**
-     * Value string.
-     *
-     *
-		 * @return the string
-     */
-    String value() default "";}
+  /**
+   * Value string.
+   *
+   * @return the string
+   */
+  String value() default "";}

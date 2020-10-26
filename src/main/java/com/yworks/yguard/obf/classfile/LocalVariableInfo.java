@@ -28,15 +28,13 @@ public class LocalVariableInfo
     private int u2index;
 
 
-    /**
-     * Create local variable info.
-     *
-     *
-		 * @param din the din
-     *
-		 * @return the local variable info
-     * @throws IOException the io exception
-     */
+  /**
+   * Create local variable info.
+   *
+   * @param din the din
+   * @return the local variable info
+   * @throws IOException the io exception
+   */
 // Class Methods ---------------------------------------------------------
     public static LocalVariableInfo create(DataInput din) throws java.io.IOException
     {
@@ -50,35 +48,40 @@ public class LocalVariableInfo
     // Instance Methods ------------------------------------------------------
     private LocalVariableInfo() {}
 
-    /**
-     * Return name index into Constant Pool.
-		 * @return the name index
-     */
-    protected int getNameIndex() {return u2nameIndex;}
+  /**
+   * Return name index into Constant Pool.
+   *
+   * @return the name index
+   */
+  protected int getNameIndex() {return u2nameIndex;}
 
-    /**
-     * Set the name index.
-		 * @param index the index
-     */
-    protected void setNameIndex(int index) {u2nameIndex = index;}
+  /**
+   * Set the name index.
+   *
+   * @param index the index
+   */
+  protected void setNameIndex(int index) {u2nameIndex = index;}
 
-    /**
-     * Return descriptor index into Constant Pool.
-		 * @return the descriptor index
-     */
-    protected int getDescriptorIndex() {return u2descriptorIndex;}
+  /**
+   * Return descriptor index into Constant Pool.
+   *
+   * @return the descriptor index
+   */
+  protected int getDescriptorIndex() {return u2descriptorIndex;}
 
-    /**
-     * Set the descriptor index.
-		 * @param index the index
-     */
-    protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
+  /**
+   * Set the descriptor index.
+   *
+   * @param index the index
+   */
+  protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
 
-    /**
-     * Check for Utf8 references to constant pool and mark them.
-		 * @param pool the pool
-     */
-    protected void markUtf8Refs(ConstantPool pool)
+  /**
+   * Check for Utf8 references to constant pool and mark them.
+   *
+   * @param pool the pool
+   */
+  protected void markUtf8Refs(ConstantPool pool)
     {
         pool.incRefCount(u2nameIndex);
         pool.incRefCount(u2descriptorIndex);
@@ -93,13 +96,13 @@ public class LocalVariableInfo
         u2index = din.readUnsignedShort();
     }
 
-    /**
-     * Export the representation to a DataOutput stream.
-		 * @param dout the dout
-     *
-     * @throws IOException the io exception
-     */
-    public void write(DataOutput dout) throws java.io.IOException
+  /**
+   * Export the representation to a DataOutput stream.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException
     {
         dout.writeShort(u2startpc);
         dout.writeShort(u2length);

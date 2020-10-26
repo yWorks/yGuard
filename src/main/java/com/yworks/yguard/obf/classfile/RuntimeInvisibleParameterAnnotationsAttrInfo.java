@@ -14,16 +14,14 @@ package com.yworks.yguard.obf.classfile;
 public class RuntimeInvisibleParameterAnnotationsAttrInfo extends RuntimeVisibleParameterAnnotationsAttrInfo
 {
 
-    /**
-     * Creates a new instance of RuntimeInvisibleParameterAnnotationsAttrInfo
-		 * @param cf the cf
-     *
-     *
-		 * @param attrNameIndex the attr name index
-     *
-		 * @param attrLength    the attr length
-     */
-    public RuntimeInvisibleParameterAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
+  /**
+   * Creates a new instance of RuntimeInvisibleParameterAnnotationsAttrInfo
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+  public RuntimeInvisibleParameterAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
   {
     super(cf, attrNameIndex, attrLength);
   }
