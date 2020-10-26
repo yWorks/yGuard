@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 /**
+ * The type Shrink task.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ShrinkTask extends YGuardBaseTask {
@@ -36,11 +38,20 @@ public class ShrinkTask extends YGuardBaseTask {
   private String digests = "SHA-1,MD5";
 
   private EntryPointsSection entryPointsSection;
-  public ShrinkTask() {
+
+    /**
+     * Instantiates a new Shrink task.
+     */
+    public ShrinkTask() {
     super();
   }
 
-  public ShrinkTask( boolean mode ) {
+    /**
+     * Instantiates a new Shrink task.
+     *
+     * @param mode the mode
+     */
+    public ShrinkTask( boolean mode ) {
     super( mode );
   }
 
@@ -257,32 +268,57 @@ public class ShrinkTask extends YGuardBaseTask {
     return log;
   }
 
-  public boolean getCreateStubs() {
+    /**
+     * Gets create stubs.
+     *
+     * @return the create stubs
+     */
+    public boolean getCreateStubs() {
     return createStubs;
   }
 
-  public void setCreateStubs( boolean createStubs ) {
+    /**
+     * Sets create stubs.
+     *
+     * @param createStubs the create stubs
+     */
+    public void setCreateStubs( boolean createStubs ) {
     this.createStubs = createStubs;
   }
 
-  public String getDigests() {
+    /**
+     * Gets digests.
+     *
+     * @return the digests
+     */
+    public String getDigests() {
     return digests;
   }
 
-  public void setDigests( String digests ) {
+    /**
+     * Sets digests.
+     *
+     * @param digests the digests
+     */
+    public void setDigests( String digests ) {
     this.digests = digests;
   }
 
-  public void setLogFile( File file ) {
+    /**
+     * Sets log file.
+     *
+     * @param file the file
+     */
+    public void setLogFile( File file ) {
     this.logFile = file;
   }
 
-  /**
-   * Used by ant to handle the nested <code>entryPoint</code> element.
-   *
-   * @return an EntryPointsSection instance
-   */
-  public EntryPointsSection createEntryPoints() {
+    /**
+     * Used by ant to handle the nested <code>entryPoint</code> element.
+     *
+     * @return an EntryPointsSection instance
+     */
+    public EntryPointsSection createEntryPoints() {
     if ( this.entryPointsSection != null ) {
       throw new IllegalArgumentException( "Only one entrypoints or expose element allowed!" );
     }
@@ -290,16 +326,21 @@ public class ShrinkTask extends YGuardBaseTask {
     return entryPointsSection;
   }
 
-  /**
-   * not for ant, used if the ShrinkTask is created 'artificially'.
-   *
-   * @param eps
-   */
-  public void setEntryPointsExternally( EntryPointsSection eps ) {
+    /**
+     * not for ant, used if the ShrinkTask is created 'artificially'.
+     *
+     * @param eps the eps
+     */
+    public void setEntryPointsExternally( EntryPointsSection eps ) {
     this.entryPointsSection = eps;
   }
 
-  public EntryPointsSection createExpose() {
+    /**
+     * Create expose entry points section.
+     *
+     * @return the entry points section
+     */
+    public EntryPointsSection createExpose() {
     return createEntryPoints();
   }
 
@@ -321,7 +362,12 @@ public class ShrinkTask extends YGuardBaseTask {
     }
   }
 
-  public void addConfiguredEntrypointjar( final EntryPointJar entrypointjar ) {
+    /**
+     * Add configured entrypointjar.
+     *
+     * @param entrypointjar the entrypointjar
+     */
+    public void addConfiguredEntrypointjar( final EntryPointJar entrypointjar ) {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
     pairs.add( entrypointjar );
   }

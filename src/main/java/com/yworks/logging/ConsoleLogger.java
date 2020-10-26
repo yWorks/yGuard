@@ -1,11 +1,16 @@
 package com.yworks.logging;
 
 /**
+ * The type Console logger.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ConsoleLogger extends Logger {
 
-  public ConsoleLogger() {
+    /**
+     * Instantiates a new Console logger.
+     */
+    public ConsoleLogger() {
     register();
   }
 

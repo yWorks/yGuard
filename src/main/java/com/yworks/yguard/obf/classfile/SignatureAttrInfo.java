@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Representation of an attribute.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class SignatureAttrInfo extends AttrInfo
 {
@@ -28,7 +28,14 @@ public class SignatureAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Signature attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
+// Instance Methods ------------------------------------------------------
     protected SignatureAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
@@ -39,11 +46,21 @@ public class SignatureAttrInfo extends AttrInfo
     {
         return ATTR_Signature;
     }
-    
+
+    /**
+     * Get signature index int.
+     *
+     * @return the int
+     */
     protected int getSignatureIndex(){
       return this.u2signatureIndex;
     }
-    
+
+    /**
+     * Set signature index.
+     *
+     * @param index the index
+     */
     protected void setSignatureIndex(int index){
       this.u2signatureIndex = index;
     }

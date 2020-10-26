@@ -7,6 +7,8 @@ import com.yworks.yshrink.util.Util;
 import java.util.EnumSet;
 
 /**
+ * The type Class section.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public final class ClassSection extends PatternMatchedSection {
@@ -25,27 +27,57 @@ public final class ClassSection extends PatternMatchedSection {
     );
   }
 
-  public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
     return name;
   }
 
-  public void setName( String name ) {
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
+    public void setName( String name ) {
     this.name = Util.toInternalClass( name );
   }
 
-  public String getExtends() {
+    /**
+     * Gets extends.
+     *
+     * @return the extends
+     */
+    public String getExtends() {
     return extendsType;
   }
 
-  public void setExtends( String extendsType ) {
+    /**
+     * Sets extends.
+     *
+     * @param extendsType the extends type
+     */
+    public void setExtends( String extendsType ) {
     this.extendsType = Util.toInternalClass( extendsType );
   }
 
-  public String getImplements() {
+    /**
+     * Gets implements.
+     *
+     * @return the implements
+     */
+    public String getImplements() {
     return implementsType;
   }
 
-  public void setImplements( String implementsType ) {
+    /**
+     * Sets implements.
+     *
+     * @param implementsType the implements type
+     */
+    public void setImplements( String implementsType ) {
     this.implementsType = Util.toInternalClass( implementsType );
   }
 
@@ -57,11 +89,21 @@ public final class ClassSection extends PatternMatchedSection {
     setFieldAccess( access );
   }
 
-  public Access getClassAccess() {
+    /**
+     * Gets class access.
+     *
+     * @return the class access
+     */
+    public Access getClassAccess() {
     return classAccess;
   }
 
-  public void setClassAccess( String classAccessStr ) {
+    /**
+     * Sets class access.
+     *
+     * @param classAccessStr the class access str
+     */
+    public void setClassAccess( String classAccessStr ) {
     Access acc = accessValue( classAccessStr );
 
     if ( null != acc ) {
@@ -69,11 +111,21 @@ public final class ClassSection extends PatternMatchedSection {
     }
   }
 
-  public Access getMethodAccess() {
+    /**
+     * Gets method access.
+     *
+     * @return the method access
+     */
+    public Access getMethodAccess() {
     return methodAccess;
   }
 
-  public void setMethodAccess( String methodAccessStr ) {
+    /**
+     * Sets method access.
+     *
+     * @param methodAccessStr the method access str
+     */
+    public void setMethodAccess( String methodAccessStr ) {
     Access acc = accessValue( methodAccessStr );
 
     if ( null != acc ) {
@@ -81,19 +133,39 @@ public final class ClassSection extends PatternMatchedSection {
     }
   }
 
-  public void setClasses( String classAccess ) {
+    /**
+     * Sets classes.
+     *
+     * @param classAccess the class access
+     */
+    public void setClasses( String classAccess ) {
     setClassAccess( classAccess );
   }
 
-  public void setMethods( String methodAccess ) {
+    /**
+     * Sets methods.
+     *
+     * @param methodAccess the method access
+     */
+    public void setMethods( String methodAccess ) {
     setMethodAccess( methodAccess );
   }
 
-  public Access getFieldAccess() {
+    /**
+     * Gets field access.
+     *
+     * @return the field access
+     */
+    public Access getFieldAccess() {
     return fieldAccess;
   }
 
-  public void setFieldAccess( String fieldAccessStr ) {
+    /**
+     * Sets field access.
+     *
+     * @param fieldAccessStr the field access str
+     */
+    public void setFieldAccess( String fieldAccessStr ) {
 
     Access acc = accessValue( fieldAccessStr );
 
@@ -102,7 +174,12 @@ public final class ClassSection extends PatternMatchedSection {
     }
   }
 
-  public void setFields( String fieldAccess ) {
+    /**
+     * Sets fields.
+     *
+     * @param fieldAccess the field access
+     */
+    public void setFields( String fieldAccess ) {
     setFieldAccess( fieldAccess );
   }
 }

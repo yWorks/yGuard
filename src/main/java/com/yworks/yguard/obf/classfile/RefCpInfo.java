@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Representation of a 'ref'-type entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 abstract public class RefCpInfo extends CpInfo
 {
@@ -29,19 +29,30 @@ abstract public class RefCpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Ref cp info.
+     *
+     * @param tag the tag
+     */
+// Instance Methods ------------------------------------------------------
     protected RefCpInfo(int tag)
     {
         super(tag);
     }
 
-    /** Return the class index. */
+    /**
+     * Return the class index.  @return the class index
+     */
     protected int getClassIndex() {return u2classIndex;}
 
-    /** Return the name-and-type index. */
+    /**
+     * Return the name-and-type index.  @return the name and type index
+     */
     protected int getNameAndTypeIndex() {return u2nameAndTypeIndex;}
 
-    /** Set the name-and-type index. */
+    /**
+     * Set the name-and-type index.  @param index the index
+     */
     protected void setNameAndTypeIndex(int index) {u2nameAndTypeIndex = index;}
 
     /** Check for N+T references to constant pool and mark them. */

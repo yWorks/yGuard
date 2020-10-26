@@ -5,15 +5,24 @@ import com.google.common.graph.Network;
 
 import java.util.Set;
 
+/**
+ * The type Edge.
+ */
 public class Edge {
     private Network<Node, Edge> network;
 
+    /**
+     * Instantiates a new Edge.
+     *
+     * @param network the network
+     */
     public Edge(Network<Node, Edge> network) {
         this.network = network;
     }
 
     /**
      * Returns the target node of the edge.
+     *
      * @return {Node}
      */
     public Node target() {
@@ -22,6 +31,7 @@ public class Edge {
 
     /**
      * Returns the source node of the edge
+     *
      * @return {Node}
      */
     public Node source() {
@@ -30,6 +40,7 @@ public class Edge {
 
     /**
      * Returns the next edge (in insertion order) connecting source and target node, if any.
+     *
      * @return {Edge|null}
      */
     public Edge nextInEdge() {
@@ -47,6 +58,7 @@ public class Edge {
 
     /**
      * Returns the next edge (in insertion order) that is outgoing of target node, if any.
+     *
      * @return {Edge|null}
      */
     public Edge nextOutEdge() {
@@ -64,7 +76,8 @@ public class Edge {
 
     /**
      * Returns the edge going in opposite direction of this edge in insertion order, respectively to the given node, if any.
-     * @param node
+     *
+     * @param node the node
      * @return {Node}
      */
     public Node opposite(Node node) {

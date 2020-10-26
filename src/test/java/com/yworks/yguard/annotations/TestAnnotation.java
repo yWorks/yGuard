@@ -16,6 +16,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * The interface Test annotation.
  *
  * @author muellese
  */
@@ -23,13 +24,66 @@ import java.lang.annotation.Target;
 @Retention(value=RetentionPolicy.RUNTIME)
 public @interface TestAnnotation
 {
-  int    id();
-  String test1();
-  String test2() default "test"; 
-  byte   test3() default (byte) 3; 
-  Class  classType() default String.class;
-  int[]  intArray() default {1,2,3,4};
-  Class[] classArray() default {String.class, Object.class, int.class};
-  YATAnnotation recursive() default @YATAnnotation(blah = "blub");
-  TestEnum enumTest() default TestEnum.V2;
+    /**
+     * Id int.
+     *
+     * @return the int
+     */
+    int    id();
+
+    /**
+     * Test 1 string.
+     *
+     * @return the string
+     */
+    String test1();
+
+    /**
+     * Test 2 string.
+     *
+     * @return the string
+     */
+    String test2() default "test";
+
+    /**
+     * Test 3 byte.
+     *
+     * @return the byte
+     */
+    byte   test3() default (byte) 3;
+
+    /**
+     * Class type class.
+     *
+     * @return the class
+     */
+    Class  classType() default String.class;
+
+    /**
+     * Int array int [ ].
+     *
+     * @return the int [ ]
+     */
+    int[]  intArray() default {1,2,3,4};
+
+    /**
+     * Class array class [ ].
+     *
+     * @return the class [ ]
+     */
+    Class[] classArray() default {String.class, Object.class, int.class};
+
+    /**
+     * Recursive yat annotation.
+     *
+     * @return the yat annotation
+     */
+    YATAnnotation recursive() default @YATAnnotation(blah = "blub");
+
+    /**
+     * Enum test test enum.
+     *
+     * @return the test enum
+     */
+    TestEnum enumTest() default TestEnum.V2;
 }

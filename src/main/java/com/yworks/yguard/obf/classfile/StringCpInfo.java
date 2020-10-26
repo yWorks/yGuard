@@ -14,7 +14,7 @@ import java.io.DataOutput;
 /**
  * Representation of a 'string' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class StringCpInfo extends CpInfo
 {
@@ -28,7 +28,10 @@ public class StringCpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new String cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected StringCpInfo()
     {
         super(CONSTANT_String);

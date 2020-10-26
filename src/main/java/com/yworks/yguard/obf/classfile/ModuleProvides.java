@@ -6,20 +6,32 @@ import java.io.IOException;
 
 /**
  * Representation of a module provides struct in the module attribute section.
+ *
  * @author Thomas Behr
  */
 public class ModuleProvides {
-  /** Reference to {@link ClassCpInfo} */
-  final int u2providesIndex;
-  /** References to {@link ClassCpInfo} */
-  final int[] u2providesWithIndex;
+    /**
+     * Reference to {@link ClassCpInfo}
+     */
+    final int u2providesIndex;
+    /**
+     * References to {@link ClassCpInfo}
+     */
+    final int[] u2providesWithIndex;
 
   private ModuleProvides( final int index, final int[] withIndex ) {
     this.u2providesIndex = index;
     this.u2providesWithIndex = withIndex;
   }
 
-  static ModuleProvides read( final DataInput din ) throws IOException {
+    /**
+     * Read module provides.
+     *
+     * @param din the din
+     * @return the module provides
+     * @throws IOException the io exception
+     */
+    static ModuleProvides read( final DataInput din ) throws IOException {
     final int index = din.readUnsignedShort();
     final int withCount = din.readUnsignedShort();
     final int[] withIndex = new int[withCount];
@@ -30,7 +42,13 @@ public class ModuleProvides {
     return new ModuleProvides(index, withIndex);
   }
 
-  void write( final DataOutput dout ) throws IOException {
+    /**
+     * Write.
+     *
+     * @param dout the dout
+     * @throws IOException the io exception
+     */
+    void write( final DataOutput dout ) throws IOException {
     dout.writeShort(u2providesIndex);
     final int u2providesWithCount = u2providesWithIndex.length;
     dout.writeShort(u2providesWithCount);

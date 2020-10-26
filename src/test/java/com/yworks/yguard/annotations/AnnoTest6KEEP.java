@@ -8,55 +8,112 @@ import com.yworks.util.annotation.Obfuscation;
 @Obfuscation(applyToMembers = false, exclude = true)
 public class AnnoTest6KEEP {
 
-  @Obfuscation( exclude = true)
+    /**
+     * The Public bool field 1 keep.
+     */
+    @Obfuscation( exclude = true)
   public boolean publicBoolField1KEEP;
 
-  public boolean publicBoolField1OBFUSCATE;
+    /**
+     * The Public bool field 1 obfuscate.
+     */
+    public boolean publicBoolField1OBFUSCATE;
 
-  @Obfuscation(applyToMembers = false, exclude = true)
+    /**
+     * The type Test 6 inner keep.
+     */
+    @Obfuscation(applyToMembers = false, exclude = true)
   public static class Test6InnerKEEP {
 
-    @Obfuscation( exclude = true)
+        /**
+         * The Inner bool field 1 keep.
+         */
+        @Obfuscation( exclude = true)
     public boolean innerBoolField1KEEP;
 
-    public boolean innerBoolField1OBFUSCATE;
+        /**
+         * The Inner bool field 1 obfuscate.
+         */
+        public boolean innerBoolField1OBFUSCATE;
 
-    @Obfuscation(applyToMembers = false, exclude = true)
+        /**
+         * The type Test 6 inner inner keep.
+         */
+        @Obfuscation(applyToMembers = false, exclude = true)
     public static class Test6InnerInnerKEEP {
 
-      public boolean innerinnerBoolField1OBFUSCATE;
+            /**
+             * The Innerinner bool field 1 obfuscate.
+             */
+            public boolean innerinnerBoolField1OBFUSCATE;
 
-      @Obfuscation( exclude = true)
+            /**
+             * The Innerinner bool field 1 keep.
+             */
+            @Obfuscation( exclude = true)
       public boolean innerinnerBoolField1KEEP;
     }
   }
 
-  public static class Test6InnerOBFUSCATE {
+    /**
+     * The type Test 6 inner obfuscate.
+     */
+    public static class Test6InnerOBFUSCATE {
 
-    @Obfuscation( exclude = true)
+        /**
+         * The Inner bool field 1 keep.
+         */
+        @Obfuscation( exclude = true)
     public boolean innerBoolField1KEEP;
 
-    public boolean innerBoolField1OBFUSCATE;
+        /**
+         * The Inner bool field 1 obfuscate.
+         */
+        public boolean innerBoolField1OBFUSCATE;
 
-    public static class Test6InnerInnerOBFUSCATE {
+        /**
+         * The type Test 6 inner inner obfuscate.
+         */
+        public static class Test6InnerInnerOBFUSCATE {
 
-      public boolean innerinnerBoolField1OBFUSCATE;
+            /**
+             * The Innerinner bool field 1 obfuscate.
+             */
+            public boolean innerinnerBoolField1OBFUSCATE;
     }
   }
 
-  @Obfuscation(applyToMembers = false, exclude = false)
+    /**
+     * The type Test 6 inner 2 obfuscate.
+     */
+    @Obfuscation(applyToMembers = false, exclude = false)
   public static class Test6Inner2OBFUSCATE {
 
-    @Obfuscation( exclude = true)
+        /**
+         * The Inner bool field 1 keep.
+         */
+        @Obfuscation( exclude = true)
     public boolean innerBoolField1KEEP;
 
-    public boolean innerBoolField1OBFUSCATE;
+        /**
+         * The Inner bool field 1 obfuscate.
+         */
+        public boolean innerBoolField1OBFUSCATE;
 
-    public static class Test6InnerInner2OBFUSCATE {
+        /**
+         * The type Test 6 inner inner 2 obfuscate.
+         */
+        public static class Test6InnerInner2OBFUSCATE {
 
-      public boolean innerinnerBoolField1OBFUSCATE;
+            /**
+             * The Innerinner bool field 1 obfuscate.
+             */
+            public boolean innerinnerBoolField1OBFUSCATE;
 
-      @Obfuscation( exclude = true)
+            /**
+             * The Innerinner bool field 1 keep.
+             */
+            @Obfuscation( exclude = true)
       public boolean innerinnerBoolField1KEEP;
     }
   }

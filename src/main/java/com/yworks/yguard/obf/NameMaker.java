@@ -10,10 +10,14 @@ package com.yworks.yguard.obf;
 /**
  * Base interface for name generators for a given namespace.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public interface NameMaker
 {
-    /** Return the next unique name for this namespace, differing only for identical arg-lists. */
+    /**
+     * Return the next unique name for this namespace, differing only for identical arg-lists.  @param descriptor the descriptor
+     *
+     * @return the string
+     */
     public String nextName(String descriptor);
 }

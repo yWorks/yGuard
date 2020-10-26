@@ -9,11 +9,18 @@ import com.yworks.yshrink.model.MethodDescriptor;
 import java.util.Collection;
 
 /**
+ * The type Serialization filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class SerializationFilter extends MethodFilter {
 
-  public SerializationFilter( Project project ) {
+    /**
+     * Instantiates a new Serialization filter.
+     *
+     * @param project the project
+     */
+    public SerializationFilter( Project project ) {
     super( project );
 
     MethodSection msWrite = new MethodSection();

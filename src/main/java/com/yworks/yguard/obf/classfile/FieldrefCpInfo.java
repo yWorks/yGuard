@@ -31,7 +31,7 @@ package com.yworks.yguard.obf.classfile;
 /**
  * Representation of a 'fieldref' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class FieldrefCpInfo extends RefCpInfo
 {
@@ -44,7 +44,10 @@ public class FieldrefCpInfo extends RefCpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Fieldref cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected FieldrefCpInfo()
     {
         super(CONSTANT_Fieldref);

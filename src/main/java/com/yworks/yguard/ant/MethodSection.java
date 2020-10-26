@@ -5,7 +5,8 @@ import com.yworks.yguard.ObfuscatorTask;
 
 import java.util.Collection;
 
-/** Used by ant to handle the <code>method</code> element.
+/**
+ * Used by ant to handle the <code>method</code> element.
  */
 public final class MethodSection extends PatternMatchedClassesSection implements Mappable {
     private String name;
@@ -18,14 +19,30 @@ public final class MethodSection extends PatternMatchedClassesSection implements
 //    this.task = task;
 //  }
 
-  public void setName(String name){
+    /**
+     * Set name.
+     *
+     * @param name the name
+     */
+    public void setName(String name){
         this.name = name;
     }
+
+    /**
+     * Set class.
+     *
+     * @param name the name
+     */
     public void setClass(String name){
 
       this.className = name;
     }
 
+    /**
+     * Set map.
+     *
+     * @param mapTo the map to
+     */
     public void setMap(String mapTo){
       this.mapTo = mapTo;
     }
@@ -48,11 +65,21 @@ public final class MethodSection extends PatternMatchedClassesSection implements
       entries.add(entry);
     }
 
-  public String getName() {
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
+    public String getName() {
     return name;
   }
 
-  public String getClassName() {
+    /**
+     * Gets class name.
+     *
+     * @return the class name
+     */
+    public String getClassName() {
     return className;
   }
 }

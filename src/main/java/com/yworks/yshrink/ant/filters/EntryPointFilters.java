@@ -10,23 +10,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The type Entry point filters.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class EntryPointFilters extends AbstractEntryPointFilter {
 
-  List<EntryPointFilter> filters;
+    /**
+     * The Filters.
+     */
+    List<EntryPointFilter> filters;
 
   private Exclude exclude;
 
-  public EntryPointFilters() {
+    /**
+     * Instantiates a new Entry point filters.
+     */
+    public EntryPointFilters() {
     this.filters = new ArrayList<EntryPointFilter>();
   }
 
-  public void setExclude( Exclude exclude ) {
+    /**
+     * Sets exclude.
+     *
+     * @param exclude the exclude
+     */
+    public void setExclude( Exclude exclude ) {
     this.exclude = exclude;
   }
 
-  public void addEntryPointFilter( final EntryPointFilter entryPointFilter ) {
+    /**
+     * Add entry point filter.
+     *
+     * @param entryPointFilter the entry point filter
+     */
+    public void addEntryPointFilter( final EntryPointFilter entryPointFilter ) {
     filters.add( entryPointFilter );
   }
 

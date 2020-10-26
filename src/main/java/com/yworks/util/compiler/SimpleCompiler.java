@@ -20,43 +20,56 @@ import javax.tools.ToolProvider;
 
 /**
  * Compiles Java source code directly to a JAR stream.
+ *
  * @author Thomas Behr
  */
 public class SimpleCompiler {
   private List options;
 
-  /**
-   * Adds a compiler option.
-   */
-  public void addOption( final String option ) {
+    /**
+     * Adds a compiler option.
+     *
+     * @param option the option
+     */
+    public void addOption( final String option ) {
     if (options == null) {
       options = new ArrayList();
     }
     options.add(option);
   }
 
-  /**
-   * Creates source objects that can be compiled using method
-   * {@link #compile(Iterable, OutputStream)}.
-   */
-  public Object newInMemorySource( final String typeName, final String code ) {
+    /**
+     * Creates source objects that can be compiled using method
+     * {@link #compile(Iterable, OutputStream)}.
+     *
+     * @param typeName the type name
+     * @param code     the code
+     * @return the object
+     */
+    public Object newInMemorySource( final String typeName, final String code ) {
     return FileObjects.newInMemoryFileObject(typeName, code);
   }
 
-  /**
-   * Creates source objects that can be compiled using method
-   * {@link #compile(Iterable, OutputStream)}.
-   */
-  public Object newUrlSource( final String typeName, final URL url ) {
+    /**
+     * Creates source objects that can be compiled using method
+     * {@link #compile(Iterable, OutputStream)}.
+     *
+     * @param typeName the type name
+     * @param url      the url
+     * @return the object
+     */
+    public Object newUrlSource( final String typeName, final URL url ) {
     return FileObjects.newUrlFileObject(typeName, url);
   }
 
-  /**
-   * @param sources iterable of source objects created using method
-   * @param result a simple output stream. The compiled sources will
-   * be written as java archive to this stream.
-   */
-  public boolean compile( final Iterable sources, final OutputStream result ) {
+    /**
+     * Compile boolean.
+     *
+     * @param sources iterable of source objects created using method
+     * @param result  a simple output stream. The compiled sources will be written as java archive to this stream.
+     * @return the boolean
+     */
+    public boolean compile( final Iterable sources, final OutputStream result ) {
     try {
       return compileImpl(sources, result);
     } catch (IOException ioe) {
@@ -98,7 +111,14 @@ public class SimpleCompiler {
     private JarOutputStream jos;
     private boolean hasEntry;
 
-    InMemoryFileManager(
+      /**
+       * Instantiates a new In memory file manager.
+       *
+       * @param jos      the jos
+       * @param compiler the compiler
+       * @param dc       the dc
+       */
+      InMemoryFileManager(
             final JarOutputStream jos,
             final JavaCompiler compiler,
             final DiagnosticCollector dc
@@ -132,7 +152,13 @@ public class SimpleCompiler {
   private static class StreamFileObject extends ForwardingJavaFileObject {
     private final JarOutputStream jos;
 
-    StreamFileObject( final JarOutputStream jos, final JavaFileObject jfo ) {
+      /**
+       * Instantiates a new Stream file object.
+       *
+       * @param jos the jos
+       * @param jfo the jfo
+       */
+      StreamFileObject( final JarOutputStream jos, final JavaFileObject jfo ) {
       super(jfo);
       this.jos = jos;
     }

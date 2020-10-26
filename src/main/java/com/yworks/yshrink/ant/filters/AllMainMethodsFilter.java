@@ -12,7 +12,10 @@ import com.yworks.logging.Logger;
  */
 public class AllMainMethodsFilter extends AbstractEntryPointFilter {
 
-  static String MAIN_DESC = "([Ljava/lang/String;)V";
+    /**
+     * The Main desc.
+     */
+    static String MAIN_DESC = "([Ljava/lang/String;)V";
 
   @Override
   public boolean isEntryPointMethod( final Model model, final ClassDescriptor cd, final MethodDescriptor md ) {

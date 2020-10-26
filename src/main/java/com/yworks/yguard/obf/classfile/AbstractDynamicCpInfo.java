@@ -6,6 +6,7 @@ import java.io.IOException;
 
 /**
  * Representation of a 'invokedynamic' or 'dynamic' entry in the ConstantPool.
+ *
  * @author Thomas Behr
  */
 public abstract class AbstractDynamicCpInfo extends CpInfo {
@@ -20,7 +21,12 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
   // Class Methods ---------------------------------------------------------
 
 
-  // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Abstract dynamic cp info.
+     *
+     * @param tag the tag
+     */
+// Instance Methods ------------------------------------------------------
   protected AbstractDynamicCpInfo( final int tag ) {
     super(tag);
   }
@@ -39,15 +45,30 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
     pool.incRefCount(u2nameAndTypeIndex);
   }
 
-  public int getBootstrapMethodAttrIndex() {
+    /**
+     * Gets bootstrap method attr index.
+     *
+     * @return the bootstrap method attr index
+     */
+    public int getBootstrapMethodAttrIndex() {
     return u2bootstrapMethodAttrIndex;
   }
 
-  public int getNameAndTypeIndex() {
+    /**
+     * Gets name and type index.
+     *
+     * @return the name and type index
+     */
+    public int getNameAndTypeIndex() {
     return u2nameAndTypeIndex;
   }
 
-  public void setNameAndTypeIndex( final int index ) {
+    /**
+     * Sets name and type index.
+     *
+     * @param index the index
+     */
+    public void setNameAndTypeIndex( final int index ) {
     this.u2nameAndTypeIndex = index;
   }
 }

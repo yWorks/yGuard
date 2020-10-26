@@ -16,7 +16,7 @@ import com.yworks.yguard.obf.classfile.*;
  * Placeholder class -- used to represent a class which has inner classes, before the
  * class itself has been encountered.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class PlaceholderCl extends Cl
 {
@@ -30,8 +30,14 @@ public class PlaceholderCl extends Cl
 
 
     // Instance Methods ------------------------------------------------------
-    /** Ctor. */
-    public PlaceholderCl(TreeItem parent, boolean isInnerClass, String name) 
+
+    /**
+     * Ctor.  @param parent the parent
+     *
+     * @param isInnerClass the is inner class
+     * @param name         the name
+     */
+    public PlaceholderCl(TreeItem parent, boolean isInnerClass, String name)
     {
         super(parent, isInnerClass, name, null, null, 0, null);
     }

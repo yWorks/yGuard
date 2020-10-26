@@ -4,13 +4,23 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
+ * The type Url cp resolver.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class URLCpResolver implements ClassResolver {
 
-  URLClassLoader urlClassLoader;
+    /**
+     * The Url class loader.
+     */
+    URLClassLoader urlClassLoader;
 
-  public URLCpResolver( final URL[] urls ) {
+    /**
+     * Instantiates a new Url cp resolver.
+     *
+     * @param urls the urls
+     */
+    public URLCpResolver( final URL[] urls ) {
     urlClassLoader = URLClassLoader.newInstance( urls, ClassLoader.getSystemClassLoader() );
   }
 

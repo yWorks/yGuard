@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Representation of an attribute.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class EnclosingMethodAttrInfo extends AttrInfo
 {
@@ -29,7 +29,14 @@ public class EnclosingMethodAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Enclosing method attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
+// Instance Methods ------------------------------------------------------
     protected EnclosingMethodAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
@@ -41,16 +48,24 @@ public class EnclosingMethodAttrInfo extends AttrInfo
         return ATTR_EnclosingMethod;
     }
 
-    /** Return the class index. */
+    /**
+     * Return the class index.  @return the class index
+     */
     protected int getClassIndex() {return u2classIndex;}
 
-    /** Return the class index. */
+    /**
+     * Return the class index.  @param index the index
+     */
     protected void setClassIndex(int index) { this.u2classIndex = index; }
 
-    /** Return the name-and-type index. */
+    /**
+     * Return the name-and-type index.  @return the name and type index
+     */
     protected int getNameAndTypeIndex() {return u2nameAndTypeIndex;}
 
-    /** Set the name-and-type index. */
+    /**
+     * Set the name-and-type index.  @param index the index
+     */
     protected void setNameAndTypeIndex(int index) {u2nameAndTypeIndex = index;}
 
     /**
@@ -89,8 +104,13 @@ public class EnclosingMethodAttrInfo extends AttrInfo
         dout.writeShort(u2nameAndTypeIndex);
     }
 
-    /** Dump the content of the class file to the specified file (used for debugging). */
-    public void dump(PrintWriter pw, ClassFile cf, int index) 
+    /**
+     * Dump the content of the class file to the specified file (used for debugging).  @param pw the pw
+     *
+     * @param cf    the cf
+     * @param index the index
+     */
+    public void dump(PrintWriter pw, ClassFile cf, int index)
     {
         pw.println("  EnclosingMethod " );
 //        + Integer.toString(index) + ": " + ((Utf8CpInfo)cf.getCpEntry(((ClassCpInfo)cf.getCpEntry(u2classIndex)).getNameIndex())).getString() +

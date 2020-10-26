@@ -7,6 +7,8 @@ import org.apache.tools.ant.BuildException;
 import java.io.File;
 
 /**
+ * The type Entry point jar.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class EntryPointJar implements ShrinkBag {
@@ -17,6 +19,11 @@ public class EntryPointJar implements ShrinkBag {
     inFile = file;
   }
 
+  /**
+   * Sets name.
+   *
+   * @param fileName the file name
+   */
   public void setName(File fileName) {
     inFile = fileName;
   }

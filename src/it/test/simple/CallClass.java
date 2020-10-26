@@ -10,21 +10,20 @@ import java.net.MalformedURLException;
 
 
 /**
+ * The type Call class.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class CallClass {
 
   private native void nativeMethod();
 
-  /**
-   * @RequestForEnhancement(
-   *   id       = 2868724,
-   *   synopsis = "Enable time-travel",
-   *   engineer = "Mr. Peabody",
-   *   date     = "4/1/3007"
-   * )
-   */
-  public static void callMethod() {
+    /**
+     * Call method.
+     *
+     * @RequestForEnhancement( id    = 2868724,   synopsis = "Enable time-travel",   engineer = "Mr. Peabody",   date     = "4/1/3007" )
+     */
+    public static void callMethod() {
     //new CallClass().nativeMethod();
     C c = new C();
     c.g();
@@ -58,17 +57,38 @@ public class CallClass {
 //    System.out.println( "CallClass.testGenericInner" );
 //  }
 
-  public static interface GenericInterface<E extends Exception>{
-    void method() throws E;
+    /**
+     * The interface Generic interface.
+     *
+     * @param <E> the type parameter
+     */
+    public static interface GenericInterface<E extends Exception>{
+        /**
+         * Method.
+         *
+         * @throws E the e
+         */
+        void method() throws E;
   }
 
-  public static class MyException<T> extends Object {
+    /**
+     * The type My exception.
+     *
+     * @param <T> the type parameter
+     */
+    public static class MyException<T> extends Object {
 
   }
 
-  public static interface Einfacher {}
+    /**
+     * The interface Einfacher.
+     */
+    public static interface Einfacher {}
 
-  public static class MyClass implements GenericInterface<RuntimeException>{
+    /**
+     * The type My class.
+     */
+    public static class MyClass implements GenericInterface<RuntimeException>{
 
     public void method() throws RuntimeException {
       throw new RuntimeException("Haha");
@@ -78,19 +98,43 @@ public class CallClass {
 //    public <T extends MyException<Object>> void method3(T t) {
 //    }
 
-    public <T extends Exception, K extends Throwable, Blah extends GenericInterface<Exception> & Runnable & Einfacher> Blah method2() throws T, K{
+        /**
+         * Method 2 blah.
+         *
+         * @param <T>    the type parameter
+         * @param <K>    the type parameter
+         * @param <Blah> the type parameter
+         * @return the blah
+         * @throws T the t
+         * @throws K the k
+         */
+        public <T extends Exception, K extends Throwable, Blah extends GenericInterface<Exception> & Runnable & Einfacher> Blah method2() throws T, K{
       throw (T) new MalformedURLException();
     }
   }
 
   private enum MyEnum {
+      /**
+       * Enum 1 my enum.
+       */
       ENUM_1,
+      /**
+       * Enum 2 my enum.
+       */
       ENUM_2,
+      /**
+       * Enum 3 my enum.
+       */
       ENUM_3;
   }
 
 
-   @RequestForEnhancement(
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
+    @RequestForEnhancement(
      id       = 2868724,
      synopsis = "Enable time-travel",
      engineer = "Mr. Peabody",

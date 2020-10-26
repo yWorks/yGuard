@@ -4,10 +4,21 @@ import com.yworks.util.abstractjar.Entry;
 
 import java.util.jar.JarEntry;
 
+/**
+ * The type Jar entry wrapper.
+ */
 public class JarEntryWrapper implements Entry {
-  JarEntry jarEntry;
+    /**
+     * The Jar entry.
+     */
+    JarEntry jarEntry;
 
-  public JarEntryWrapper( JarEntry jarEntry ) {
+    /**
+     * Instantiates a new Jar entry wrapper.
+     *
+     * @param jarEntry the jar entry
+     */
+    public JarEntryWrapper( JarEntry jarEntry ) {
     this.jarEntry = jarEntry;
   }
 
@@ -26,7 +37,12 @@ public class JarEntryWrapper implements Entry {
     return jarEntry.getSize();
   }
 
-  public JarEntry getJarEntry() {
+    /**
+     * Gets jar entry.
+     *
+     * @return the jar entry
+     */
+    public JarEntry getJarEntry() {
     return jarEntry;
   }
 }

@@ -13,7 +13,7 @@ import java.io.DataOutput;
 /**
  * Representation of a 'integer' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class IntegerCpInfo extends CpInfo
 {
@@ -27,12 +27,20 @@ public class IntegerCpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Integer cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected IntegerCpInfo()
     {
         super(CONSTANT_Integer);
     }
 
+    /**
+     * As bool boolean.
+     *
+     * @return the boolean
+     */
     public boolean asBool(){
       return u4bytes != 0;
     }

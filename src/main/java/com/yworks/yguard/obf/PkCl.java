@@ -19,7 +19,7 @@ import java.util.*;
 /**
  * Base to package and class tree item.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 abstract public class PkCl extends TreeItem
 {
@@ -27,7 +27,9 @@ abstract public class PkCl extends TreeItem
 
 
     // Fields ----------------------------------------------------------------
-    /** Owns a list of classes. */
+    /**
+     * Owns a list of classes.
+     */
     protected Hashtable cls = new Hashtable();
 
 
@@ -35,26 +37,42 @@ abstract public class PkCl extends TreeItem
 
 
     // Instance Methods ------------------------------------------------------
-    /** Ctor. */
+
+    /**
+     * Ctor.  @param parent the parent
+     *
+     * @param name the name
+     */
     public PkCl(TreeItem parent, String name)
     {
         super(parent, name);
     }
 
-    /** Get a class by name. */
+    /**
+     * Get a class by name.  @param name the name
+     *
+     * @return the class
+     */
     public Cl getClass(String name)  {return (Cl)cls.get(name);}
 
-    /** Get an Enumeration of classes directly beneath this PkCl. */
+    /**
+     * Get an Enumeration of classes directly beneath this PkCl.  @return the class enum
+     */
     public Enumeration getClassEnum() {return cls.elements();}
 
-    /** Get an Enumeration of all classes (outer and inner) in the tree beneath this PkCl. */
-    public Enumeration getAllClassEnum() 
+    /**
+     * Get an Enumeration of all classes (outer and inner) in the tree beneath this PkCl.  @return the all class enum
+     */
+    public Enumeration getAllClassEnum()
     {
         Vector allClasses = new Vector();
         addAllClasses(allClasses);
         return allClasses.elements();
     }
-    /** List classes and recursively compose a list of all inner classes. */
+
+    /**
+     * List classes and recursively compose a list of all inner classes.  @param allClasses the all classes
+     */
     protected void addAllClasses(Vector allClasses)
     {
         for (Enumeration enumeration = cls.elements(); enumeration.hasMoreElements(); )
@@ -65,14 +83,25 @@ abstract public class PkCl extends TreeItem
         }
     }
 
-    /** Return number of classes. */
+    /**
+     * Return number of classes.  @return the class count
+     */
     public int getClassCount() {return cls.size();}
 
-    /** Add a class to the list of owned classes. */
+    /**
+     * Add a class to the list of owned classes.  @param classInfo the class info
+     *
+     * @return the cl
+     */
     abstract public Cl addClass(Object[] classInfo) ;
 
-    
-    /** Add a class to the list of owned classes. */
+
+    /**
+     * Add a class to the list of owned classes.  @param isInnerClass the is inner class
+     *
+     * @param classInfo the class info
+     * @return the cl
+     */
     public Cl addClass(boolean isInnerClass, Object[] classInfo)
     {
       String name = (String) classInfo[0];
@@ -111,11 +140,20 @@ abstract public class PkCl extends TreeItem
         return cl;
     }
 
-    /** Add a placeholder class to our list of owned classes, to be replaced later by the full class. */
+    /**
+     * Add a placeholder class to our list of owned classes, to be replaced later by the full class.  @param name the name
+     *
+     * @return the cl
+     */
     abstract public Cl addPlaceholderClass(String name) ;
 
-    /** Add a placeholder class to our list of owned classes, to be replaced later by the full class. */
-    public Cl addPlaceholderClass(boolean isInnerClass, String name) 
+    /**
+     * Add a placeholder class to our list of owned classes, to be replaced later by the full class.  @param isInnerClass the is inner class
+     *
+     * @param name the name
+     * @return the cl
+     */
+    public Cl addPlaceholderClass(boolean isInnerClass, String name)
     {
         Cl cl = getClass(name);
         if (cl == null)
@@ -126,14 +164,18 @@ abstract public class PkCl extends TreeItem
         return cl;
     }
 
-    /** Generate unique obfuscated names for this namespace. */
-    public void generateNames() 
+    /**
+     * Generate unique obfuscated names for this namespace.
+     */
+    public void generateNames()
     {
         generateNames(cls);
     }
 
-    /** Generate unique obfuscated names for a given namespace. */
-    protected void generateNames(Hashtable hash) 
+    /**
+     * Generate unique obfuscated names for a given namespace.  @param hash the hash
+     */
+    protected void generateNames(Hashtable hash)
     {
         Vector vec = new Vector();
         for (Enumeration enumeration = hash.elements(); enumeration.hasMoreElements(); )

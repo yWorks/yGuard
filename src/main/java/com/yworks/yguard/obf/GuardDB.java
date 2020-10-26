@@ -52,7 +52,7 @@ import java.util.jar.Manifest;
 /**
  * Classfile database for obfuscation.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class GuardDB implements ClassConstants
 {
@@ -94,29 +94,49 @@ public class GuardDB implements ClassConstants
   // Class Methods ---------------------------------------------------------
 
   // Instance Methods ------------------------------------------------------
-  /** A classfile database for obfuscation. */
-  public GuardDB(File[] inFile) throws java.io.IOException
+
+    /**
+     * A classfile database for obfuscation.  @param inFile the in file
+     *
+     * @throws IOException the io exception
+     */
+    public GuardDB(File[] inFile) throws java.io.IOException
   {
     inJar = new Archive[inFile.length];
     for(int i = 0; i < inFile.length; i++)
       inJar[i] = (inFile[i].isDirectory()) ? new DirectoryWrapper(inFile[i]) : new JarFileWrapper(inFile[i]);
   }
 
-  public void setResourceHandler(ResourceHandler handler)
+    /**
+     * Sets resource handler.
+     *
+     * @param handler the handler
+     */
+    public void setResourceHandler(ResourceHandler handler)
   {
     resourceHandler = handler;
   }
 
-  public String getOutName(String inName)
+    /**
+     * Gets out name.
+     *
+     * @param inName the in name
+     * @return the out name
+     */
+    public String getOutName(String inName)
   {
     return classTree.getOutName(inName);
   }
 
-  /**
-   * Go through database marking certain entities for retention, while
-   * maintaining polymorphic integrity.
-   */
-  public void retain(Collection rgsEntries, PrintWriter log)throws java.io.IOException
+    /**
+     * Go through database marking certain entities for retention, while
+     * maintaining polymorphic integrity.
+     *
+     * @param rgsEntries the rgs entries
+     * @param log        the log
+     * @throws IOException the io exception
+     */
+    public void retain(Collection rgsEntries, PrintWriter log)throws java.io.IOException
   {
 
     // Build database if not already done, or if a mapping has already been generated
@@ -284,8 +304,16 @@ public class GuardDB implements ClassConstants
     }
   }
 
-  /** Remap each class based on the remap database, and remove attributes. */
-  public void remapTo(File[] out,
+    /**
+     * Remap each class based on the remap database, and remove attributes.  @param out the out
+     *
+     * @param fileFilter       the file filter
+     * @param log              the log
+     * @param conserveManifest the conserve manifest
+     * @throws IOException            the io exception
+     * @throws ClassNotFoundException the class not found exception
+     */
+    public void remapTo(File[] out,
     Filter fileFilter,
     PrintWriter log,
     boolean conserveManifest
@@ -581,8 +609,10 @@ public class GuardDB implements ClassConstants
 
   }
 
-  /** Close input JAR file. */
-  public void close() throws java.io.IOException
+    /**
+     * Close input JAR file.  @throws IOException the io exception
+     */
+    public void close() throws java.io.IOException
   {
     for(int i = 0; i < inJar.length; i++)
     {
@@ -813,35 +843,61 @@ public class GuardDB implements ClassConstants
 
   }
 
-  protected void fireParsingJar(String jar){
+    /**
+     * Fire parsing jar.
+     *
+     * @param jar the jar
+     */
+    protected void fireParsingJar(String jar){
     if (listenerList == null) return;
     for (int i = 0, j = listenerList.size(); i < j; i++){
       ((ObfuscationListener)listenerList.get(i)).parsingJar(jar);
     }
   }
-  protected void fireParsingClass(String className){
+
+    /**
+     * Fire parsing class.
+     *
+     * @param className the class name
+     */
+    protected void fireParsingClass(String className){
     if (listenerList == null) return;
     for (int i = 0, j = listenerList.size(); i < j; i++){
       ((ObfuscationListener)listenerList.get(i)).parsingClass(className);
     }
   }
-  protected void fireObfuscatingJar(String inJar, String outJar){
+
+    /**
+     * Fire obfuscating jar.
+     *
+     * @param inJar  the in jar
+     * @param outJar the out jar
+     */
+    protected void fireObfuscatingJar(String inJar, String outJar){
     if (listenerList == null) return;
     for (int i = 0, j = listenerList.size(); i < j; i++){
       ((ObfuscationListener)listenerList.get(i)).obfuscatingJar(inJar, outJar);
     }
   }
-  protected void fireObfuscatingClass(String className){
+
+    /**
+     * Fire obfuscating class.
+     *
+     * @param className the class name
+     */
+    protected void fireObfuscatingClass(String className){
     if (listenerList == null) return;
     for (int i = 0, j = listenerList.size(); i < j; i++){
       ((ObfuscationListener)listenerList.get(i)).obfuscatingClass(className);
     }
   }
 
-  /** Registers Listener to receive events.
-   * @param listener The listener to register.
-   */
-  public synchronized void addListener(com.yworks.yguard.ObfuscationListener listener)
+    /**
+     * Registers Listener to receive events.
+     *
+     * @param listener The listener to register.
+     */
+    public synchronized void addListener(com.yworks.yguard.ObfuscationListener listener)
   {
     if (listenerList == null )
     {
@@ -850,10 +906,12 @@ public class GuardDB implements ClassConstants
     listenerList.add(listener);
   }
 
-  /** Removes Listener from the list of listeners.
-   * @param listener The listener to remove.
-   */
-  public synchronized void removeListener(com.yworks.yguard.ObfuscationListener listener)
+    /**
+     * Removes Listener from the list of listeners.
+     *
+     * @param listener The listener to remove.
+     */
+    public synchronized void removeListener(com.yworks.yguard.ObfuscationListener listener)
   {
     if (listenerList != null )
     {
@@ -861,51 +919,57 @@ public class GuardDB implements ClassConstants
     }
   }
 
-  /** Getter for property replaceClassNameStrings.
-   * @return Value of property replaceClassNameStrings.
-   *
-   */
-  public boolean isReplaceClassNameStrings()
+    /**
+     * Getter for property replaceClassNameStrings.
+     *
+     * @return Value of property replaceClassNameStrings.
+     */
+    public boolean isReplaceClassNameStrings()
   {
     return this.replaceClassNameStrings;
   }
 
-  /** Setter for property replaceClassNameStrings.
-   * @param replaceClassNameStrings New value of property replaceClassNameStrings.
-   *
-   */
-  public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
+    /**
+     * Setter for property replaceClassNameStrings.
+     *
+     * @param replaceClassNameStrings New value of property replaceClassNameStrings.
+     */
+    public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
   {
     this.replaceClassNameStrings = replaceClassNameStrings;
   }
 
 
-  /** Getter for property pedantic.
-   * @return Value of property pedantic.
-   *
-   */
-  public boolean isPedantic()
+    /**
+     * Getter for property pedantic.
+     *
+     * @return Value of property pedantic.
+     */
+    public boolean isPedantic()
   {
     return this.pedantic;
   }
 
-  /** Setter for property pedantic.
-   * @param pedantic New value of property pedantic.
-   *
-   */
-  public void setPedantic(boolean pedantic)
+    /**
+     * Setter for property pedantic.
+     *
+     * @param pedantic New value of property pedantic.
+     */
+    public void setPedantic(boolean pedantic)
   {
     this.pedantic = pedantic;
     Cl.setPedantic(pedantic);
   }
 
 
-  /**
-   * Returns the obfuscated file name of the java class.
-   * The ending ".class" is omitted.
-   * @param javaClass the fully qualified name of an unobfuscated class.
-   */
-  public String translateJavaFile(String javaClass)
+    /**
+     * Returns the obfuscated file name of the java class.
+     * The ending ".class" is omitted.
+     *
+     * @param javaClass the fully qualified name of an unobfuscated class.
+     * @return the string
+     */
+    public String translateJavaFile(String javaClass)
   {
     Cl cl = classTree.findClassForName(javaClass.replace('/','.'));
     if(cl != null)
@@ -919,7 +983,13 @@ public class GuardDB implements ClassConstants
   }
 
 
-  public String translateJavaClass(String javaClass)
+    /**
+     * Translate java class string.
+     *
+     * @param javaClass the java class
+     * @return the string
+     */
+    public String translateJavaClass(String javaClass)
   {
     Cl cl = classTree.findClassForName(javaClass);
     if(cl != null)
@@ -932,19 +1002,20 @@ public class GuardDB implements ClassConstants
     }
   }
 
-  /**
-   * Tries to translate as many parts of items as possible.
-   * E.g if com.yworks.example.test.Invalid cannot be resolved it will resolve in order
-   * - com.yworks.example.test.Invalid
-   * - com.yworks.example.test
-   * - com.yworks.example
-   * - com.yworks
-   * - com
-   * Depending on the number of items you can infer which parts have been remapped and which have not.
-   * @param items list of unmapped items
-   * @return list of mapped items
-   */
-  public List<String> translateItem(String[] items) {
+    /**
+     * Tries to translate as many parts of items as possible.
+     * E.g if com.yworks.example.test.Invalid cannot be resolved it will resolve in order
+     * - com.yworks.example.test.Invalid
+     * - com.yworks.example.test
+     * - com.yworks.example
+     * - com.yworks
+     * - com
+     * Depending on the number of items you can infer which parts have been remapped and which have not.
+     *
+     * @param items list of unmapped items
+     * @return list of mapped items
+     */
+    public List<String> translateItem(String[] items) {
     List<String> mapped = new ArrayList<>();
     List<String> partialItems = Arrays.asList(items);
     TreeItem item = classTree.findTreeItem(items);
@@ -967,11 +1038,21 @@ public class GuardDB implements ClassConstants
     return mapped;
   }
 
-  public void setDigests(String[] digestStrings) {
+    /**
+     * Sets digests.
+     *
+     * @param digestStrings the digest strings
+     */
+    public void setDigests(String[] digestStrings) {
     this.digestStrings = digestStrings;
   }
 
-  public void setAnnotationClass(String annotationClass) {
+    /**
+     * Sets annotation class.
+     *
+     * @param annotationClass the annotation class
+     */
+    public void setAnnotationClass(String annotationClass) {
     ObfuscationConfig.annotationClassName = annotationClass;
   }
 }

@@ -13,9 +13,14 @@ import org.objectweb.asm.Type;
 import java.io.File;
 
 /**
+ * The type Model visitor.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ModelVisitor extends ClassVisitor {
+  /**
+   * The Opcodes asm.
+   */
   static final int OPCODES_ASM = Opcodes.ASM7;
 
   private Model model;
@@ -23,6 +28,12 @@ public class ModelVisitor extends ClassVisitor {
   private ClassDescriptor currentClass;
   private final File sourceJar;
 
+  /**
+   * Instantiates a new Model visitor.
+   *
+   * @param model     the model
+   * @param sourceJar the source jar
+   */
   public ModelVisitor( final Model model, final File sourceJar ) {
     super(OPCODES_ASM);
     this.model = model;
@@ -87,10 +98,18 @@ public class ModelVisitor extends ClassVisitor {
   public void visitEnd() {
   }
 
+  /**
+   * The type Model method visitor.
+   */
   class ModelMethodVisitor extends MethodVisitor {
 
     private MethodDescriptor currentMethod;
 
+    /**
+     * Instantiates a new Model method visitor.
+     *
+     * @param currentMethod the current method
+     */
     public ModelMethodVisitor( MethodDescriptor currentMethod ) {
       // increasing ASM opcodes level from 5 to 7 forces ASM to accept
       // CONSTANT_Dynamic_info byte code instructions
@@ -208,10 +227,19 @@ public class ModelVisitor extends ClassVisitor {
   // AnnotationVisitor
   //
 
+  /**
+   * The type Model annotation visitor.
+   */
   class ModelAnnotationVisitor extends AnnotationVisitor {
     private final AbstractDescriptor currentItem;
     private final AnnotationUsage annotationUsage;
 
+    /**
+     * Instantiates a new Model annotation visitor.
+     *
+     * @param currentItem     the current item
+     * @param annotationUsage the annotation usage
+     */
     public ModelAnnotationVisitor(
         AbstractDescriptor currentItem, AnnotationUsage annotationUsage) {
       super(OPCODES_ASM);

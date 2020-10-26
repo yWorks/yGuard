@@ -32,6 +32,8 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
 /**
+ * The type Jar writer.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class JarWriter implements ArchiveWriter {
@@ -48,7 +50,13 @@ public class JarWriter implements ArchiveWriter {
   private final boolean createStubs;
   private final MessageDigest[] digests;
 
-  public JarWriter( boolean createStubs, String digestNamesStr ) {
+    /**
+     * Instantiates a new Jar writer.
+     *
+     * @param createStubs    the create stubs
+     * @param digestNamesStr the digest names str
+     */
+    public JarWriter( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
 
     String[] digestNames = ( digestNamesStr.trim().equalsIgnoreCase(
@@ -70,7 +78,12 @@ public class JarWriter implements ArchiveWriter {
     }
   }
 
-  public MessageDigest[] getDigests() {
+    /**
+     * Get digests message digest [ ].
+     *
+     * @return the message digest [ ]
+     */
+    public MessageDigest[] getDigests() {
     return digests;
   }
 

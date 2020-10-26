@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * and chooses to put some of the keyword names (legal in JVM, illegal in
  * Java language) out front in sequence.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class KeywordNameMaker implements NameMaker
 {
@@ -70,12 +70,12 @@ public class KeywordNameMaker implements NameMaker
                                     "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
                                     "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
-  /**
-   * Shuffle the mapping strings in random order, thus making the generator
-   * produce a different mapping. Can be called once (and only once) in each
-   * obfuscation run; calling this method repeatedly would produce overlapping names.
-   */
-  public static void scramble() {
+    /**
+     * Shuffle the mapping strings in random order, thus making the generator
+     * produce a different mapping. Can be called once (and only once) in each
+     * obfuscation run; calling this method repeatedly would produce overlapping names.
+     */
+    public static void scramble() {
     if (scrambled.compareAndSet(false, true)) {
       firstLetterLower = scramble(firstLetterLower);
       nextLetterLower = scramble(nextLetterLower);
@@ -114,25 +114,39 @@ public class KeywordNameMaker implements NameMaker
 */
 
     // Instance Methods ------------------------------------------------------
-    /** Ctor. */
+
+    /**
+     * Ctor.
+     */
     public KeywordNameMaker()
     {
         this(null);
     }
 
-    /** Ctor - block names not to be obfuscated from the mapping target space. */
+    /**
+     * Ctor - block names not to be obfuscated from the mapping target space.  @param noObfNames the no obf names
+     */
     public KeywordNameMaker(String[] noObfNames)
     {
         this(noObfNames, true);
     }
 
-    /** Ctor - block names not to be obfuscated from the mapping target space. */
+    /**
+     * Ctor - block names not to be obfuscated from the mapping target space.  @param noObfNames the no obf names
+     *
+     * @param useKeywords the use keywords
+     */
     public KeywordNameMaker(String[] noObfNames, boolean useKeywords)
     {
         this(noObfNames, true, false);
     }
 
-    /** Ctor - block names not to be obfuscated from the mapping target space. */
+    /**
+     * Ctor - block names not to be obfuscated from the mapping target space.  @param noObfNames the no obf names
+     *
+     * @param useKeywords   the use keywords
+     * @param lowerCaseOnly the lower case only
+     */
     public KeywordNameMaker(String[] noObfNames, boolean useKeywords, boolean lowerCaseOnly)
     {
         this.noObfNames = noObfNames == null ? new String[0] : noObfNames;

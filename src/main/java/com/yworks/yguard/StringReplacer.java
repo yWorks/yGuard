@@ -18,24 +18,42 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * The type String replacer.
  *
- * @author  wiese
+ * @author wiese
  */
 public class StringReplacer
 {
+  /**
+   * The Pattern.
+   */
   Pattern pattern;
-  
-  /** Creates a new instance of StringReplacer */
+
+  /**
+   * Creates a new instance of StringReplacer  @param patternString the pattern string
+   */
   public StringReplacer(String patternString)
   {
     setPattern(patternString);
   }
-  
+
+  /**
+   * Sets pattern.
+   *
+   * @param patternString the pattern string
+   */
   public void setPattern(String patternString)
   {
     pattern = Pattern.compile(patternString);
   }
-  
+
+  /**
+   * Replace.
+   *
+   * @param in     the in
+   * @param result the result
+   * @param map    the map
+   */
   public void replace(String in, StringBuffer result, Map map)
   {
     String line = in;
@@ -63,7 +81,16 @@ public class StringReplacer
      }
      matcher.appendTail(result);
   }
-  
+
+  /**
+   * Replace.
+   *
+   * @param in        the in
+   * @param out       the out
+   * @param db        the db
+   * @param separator the separator
+   * @throws IOException the io exception
+   */
   public void replace( Reader in, Writer out, GuardDB db, String separator ) throws IOException
   {
     BufferedReader bin = new BufferedReader(in);

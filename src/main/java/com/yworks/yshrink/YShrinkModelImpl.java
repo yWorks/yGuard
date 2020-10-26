@@ -14,12 +14,20 @@ import java.util.List;
 import java.io.IOException;
 
 /**
+ * The type Y shrink model.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class YShrinkModelImpl implements YShrinkModel {
 
+  /**
+   * The Model.
+   */
   Model model;
 
+  /**
+   * Instantiates a new Y shrink model.
+   */
   public YShrinkModelImpl() {
     model = new Model();
   }

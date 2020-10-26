@@ -11,17 +11,29 @@ import java.util.ArrayList;
 import org.apache.tools.ant.Project;
 
 /**
+ * The type Attribute filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class AttributeFilter extends PatternMatchedFilter {
 
   private List<AttributesSection> sections = new ArrayList<AttributesSection>( );
 
-  public AttributeFilter( Project p ) {
+    /**
+     * Instantiates a new Attribute filter.
+     *
+     * @param p the p
+     */
+    public AttributeFilter( Project p ) {
     super( p );
   }
 
-  public void addAttributesSection( AttributesSection as ) {
+    /**
+     * Add attributes section.
+     *
+     * @param as the as
+     */
+    public void addAttributesSection( AttributesSection as ) {
     sections.add( as );
   }
 

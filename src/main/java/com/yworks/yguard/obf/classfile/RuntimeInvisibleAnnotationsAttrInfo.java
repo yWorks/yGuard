@@ -11,13 +11,19 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 /**
+ * The type Runtime invisible annotations attr info.
  *
  * @author muellese
  */
 public class RuntimeInvisibleAnnotationsAttrInfo extends RuntimeVisibleAnnotationsAttrInfo
 {
-  /** Creates a new instance of RuntimeVisibleAnnotationsAttrInfo */
-  public RuntimeInvisibleAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
+    /**
+     * Creates a new instance of RuntimeVisibleAnnotationsAttrInfo  @param cf the cf
+     *
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
+    public RuntimeInvisibleAnnotationsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
   {
     super(cf, attrNameIndex, attrLength);
   }

@@ -23,8 +23,9 @@ import java.util.Collection;
 import java.util.zip.ZipInputStream;
 
 /**
+ * The type Zip scanner tool.
  *
- * @author  muellese
+ * @author muellese
  */
 public class ZipScannerTool
 {
@@ -34,16 +35,38 @@ public class ZipScannerTool
   {
   }
 
-  public static String[] getMatches(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
+    /**
+     * Get matches string [ ].
+     *
+     * @param fs      the fs
+     * @param scanner the scanner
+     * @return the string [ ]
+     * @throws IOException the io exception
+     */
+    public static String[] getMatches(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
     Collection result = getMatchedCollection(fs, scanner);
     return (String[])(result.toArray(new String[result.size()]));
   }
 
-  public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
+    /**
+     * Gets matched collection.
+     *
+     * @param fs      the fs
+     * @param scanner the scanner
+     * @return the matched collection
+     * @throws IOException the io exception
+     */
+    public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner) throws IOException{
     return getMatchedCollection(fs,scanner,"");
   }
-  
-  public static File zipFileSetGetSrc(ZipFileSet fs) {
+
+    /**
+     * Zip file set get src file.
+     *
+     * @param fs the fs
+     * @return the file
+     */
+    public static File zipFileSetGetSrc(ZipFileSet fs) {
     Method ant15 = null;
     Method ant16 = null;
     try {
@@ -71,8 +94,17 @@ public class ZipScannerTool
       }
     }
   }
-  
-  public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner, String baseDir) throws IOException{
+
+    /**
+     * Gets matched collection.
+     *
+     * @param fs      the fs
+     * @param scanner the scanner
+     * @param baseDir the base dir
+     * @return the matched collection
+     * @throws IOException the io exception
+     */
+    public static Collection getMatchedCollection(ZipFileSet fs, DirectoryScanner scanner, String baseDir) throws IOException{
     Collection result = new ArrayList(20);
     File zipSrc = zipFileSetGetSrc(fs);
     ZipScanner zipScanner = (ZipScanner) scanner;

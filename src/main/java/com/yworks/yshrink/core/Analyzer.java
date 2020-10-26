@@ -34,6 +34,8 @@ import java.util.ListIterator;
 import java.util.Set;
 
 /**
+ * The type Analyzer.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class Analyzer {
@@ -41,20 +43,25 @@ public class Analyzer {
   private static final String SYNTHETIC_DOT_CLASS_FIELD_START = "class$";
   private static final String CLASS_DESC = "Ljava/lang/Class;";
 
-  public void createEdges( Model model ) {
+    /**
+     * Create edges.
+     *
+     * @param model the model
+     */
+    public void createEdges( Model model ) {
     createInheritanceEdges( model );
     createDependencyEdges( model );
   }
 
-  /**
-   * Create all nodes needed for dependency analysis using a <code>ModelVisitor</code>. Also creates artificial
-   * &lt;clinit&gt; nodes for each (non-inner) class if not already present.
-   *
-   * @param model
-   * @param bags
-   * @throws IOException
-   */
-  public void initModel( Model model, List<ShrinkBag> bags ) throws IOException {
+    /**
+     * Create all nodes needed for dependency analysis using a <code>ModelVisitor</code>. Also creates artificial
+     * &lt;clinit&gt; nodes for each (non-inner) class if not already present.
+     *
+     * @param model the model
+     * @param bags  the bags
+     * @throws IOException the io exception
+     */
+    public void initModel( Model model, List<ShrinkBag> bags ) throws IOException {
 
     for ( ShrinkBag bag : bags ) {
       ModelVisitor mv = new ModelVisitor( model, bag.getIn() );
@@ -111,12 +118,12 @@ public class Analyzer {
     }
   }
 
-  /**
-   * create EXTENDS / IMPLEMENTS edges.
-   *
-   * @param model
-   */
-  public void createInheritanceEdges( final Model model ) {
+    /**
+     * create EXTENDS / IMPLEMENTS edges.
+     *
+     * @param model the model
+     */
+    public void createInheritanceEdges( final Model model ) {
 
     for ( ClassDescriptor cm : model.getAllClassDescriptors() ) {
 
@@ -138,12 +145,12 @@ public class Analyzer {
     model.setSimpleModelSet();
   }
 
-  /**
-   * Create all kinds of dependency edges for the whole <code>model</code>.
-   *
-   * @param model
-   */
-  public void createDependencyEdges( final Model model ) {
+    /**
+     * Create all kinds of dependency edges for the whole <code>model</code>.
+     *
+     * @param model the model
+     */
+    public void createDependencyEdges( final Model model ) {
 
     for ( ClassDescriptor cd : model.getAllClassDescriptors() ) {
 
