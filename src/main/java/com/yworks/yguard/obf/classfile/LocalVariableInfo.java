@@ -9,6 +9,7 @@ package com.yworks.yguard.obf.classfile;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 
 /**
  * Representation of an Local Variable table entry.
