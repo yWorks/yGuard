@@ -446,7 +446,7 @@ Please see the <a href="troubleshooting">troubleshooting section</a> to learn ab
 <li>optionally a <a href="http://ant.apache.org/manual/Types/mapper.html">mapper</a> that determines the name mapping between the unobfuscated and obfuscated versions of the jar files. Note that <code>identitymapper</code> and <code>mergemapper</code> are not supported. All matched jar file names need to be mapped to exactly one jar file name that differs from the original jar file.</li>
 </ul>
 <h4 id="examples">Examples</h4>
-<pre><code class="xml">&lt;!-- use all jars in the input-lib-dir directory and obfuscate them to *_obf.jar --&gt;
+<pre><code class="language-xml">&lt;!-- use all jars in the input-lib-dir directory and obfuscate them to *_obf.jar --&gt;
 &lt;inoutpairs resources=&quot;auto&quot;&gt;
   &lt;fileset dir=&quot;${input-lib-dir}&quot;&gt;
     &lt;include name=&quot;myapp*.jar&quot;/&gt;
@@ -463,7 +463,6 @@ Please see the <a href="troubleshooting">troubleshooting section</a> to learn ab
   &lt;/fileset&gt;
 &lt;/inoutpairs&gt;
 </code></pre>
-
 <h2 id="the-externalclasses-element">The <code>externalclasses</code> Element</h2>
 <p>If the jar to be processed by <code>yGuard</code> depends on external classes or libraries, this element can be used to specify classpaths to these entities. These libraries will neither be shrinked nor obfuscated. Use the <code>inoutpair</code> element for this purpose! See the <code>external_library</code> example for an example of when to use this element.
 In order to achieve a maximum shrinking effect by the <code>shrink</code> task, all external dependencies should be declared in the <code>externalclasses</code> element. Otherwise, all non-private methods of classes that inherit from unresolvable classes will not be shrinked.</p>
@@ -472,7 +471,7 @@ In order to achieve a maximum shrinking effect by the <code>shrink</code> task, 
 <p>Using the <code>attribute</code> element, you can specify which attributes present in the input classes should be kept in the obfuscated output classes.</p>
 <p>See the <code>linked_example</code> for an example of when to use this element.</p>
 <h4 id="attributes_3">Attributes</h4>
-<p><table class="listing">
+<table class="listing">
     <thead>
         <tr>
             <th width="12%"><b>Attribute</b></th>
@@ -489,19 +488,19 @@ In order to achieve a maximum shrinking effect by the <code>shrink</code> task, 
     </td>
     <td>Yes</td>
 </tr>
-</table></p>
+</table>
+
 <h4 id="child-elements_3">Child Elements</h4>
 <ul>
 <li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
 </ul>
 <h4 id="example">Example</h4>
-<pre><code class="xml">&lt;attribute name=&quot;SourceFile, LineNumberTable, LocalVariableTable&quot;&gt;
+<pre><code class="language-xml">&lt;attribute name=&quot;SourceFile, LineNumberTable, LocalVariableTable&quot;&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.mylibrary.**&quot;/&gt;
   &lt;/patternset&gt;
 &lt;/attribute&gt;
 </code></pre>
-
 <p>This will retain the attributes named <em>"SourceFile"</em>, <em>"LineNumberTable"</em>, and <em>"LocalVariableTable"</em> effectively enabling debugging information for all classes in the <code>com.mycompany.mylibrary</code> package and subpackages.</p>
 <h2 id="the-shrink-element">The <code>shrink</code> Element</h2>
 <p>The <code>shrink</code> task removes all classes, fields and methods that are not reachable from a number of entrypoints given by a nested <a href="">keep</a> element.
@@ -579,14 +578,13 @@ See the <a href="">examples</a> explenation of some common use cases. If your co
 <h4 id="child-elements_5">Child Elements</h4>
 <p>The <code>entrypointjar</code> element has no child elements.</p>
 <h4 id="example_1">Example</h4>
-<pre><code class="xml">&lt;yguard&gt;
+<pre><code class="language-xml">&lt;yguard&gt;
   &lt;inoutpair in=&quot;lib-in.jar&quot; out=&quot;lib-out.jar&quot; /&gt;
   &lt;shrink&gt;
     &lt;entrypointjar name=&quot;myApp.jar&quot;/&gt;
   &lt;/shrink&gt;
 &lt;/yguard&gt;
 </code></pre>
-
 <h2 id="the-rename-element">The <code>rename</code> Element</h2>
 <p>The basic idea is, that all elements will be renamed by this task. There are different use cases, where you sometimes want to exclude or simply just have to exclude some elements from name obfuscation, i.e. <strong>not</strong> rename them but keep in the API as is. See the <a href="">examples</a> for explanation of some common use cases. If your code uses reflection, please read the <a href="troubleshooting">troubleshooting</a> section for information on this topic. Excluding elements can be achieved by using the <a href="#the-keep-element">keep</a> element, the <code>mainclass</code> attribute of the <code>rename</code> element and by annotating elements in the source code with the annotation that is specified in the <code>annotationClass</code> attribute of the <code>rename</code> element. Using the nested <code>keep</code> element, you have to specify all classes, methods, fields, and attributes that should be excluded from name obfuscation. Another way is to <a href="#annotate">annotate the elements directly in the source code</a> that should be obfuscated or excluded. You can use the yFiles obfuscation annotation <code>com.yworks.util.annotation.Obfuscation</code> for that or specify your own annotation in the <code>annotationClass</code> attribute of this element.</p>
 <table class="listing">
@@ -741,14 +739,15 @@ See the <a href="">examples</a> explenation of some common use cases. If your co
 </table>
 
 <h4 id="supported-properties">Supported properties</h4>
-<p><table class="listing">
+<table class="listing">
 <thead>
 <tr>
     <th width="10%"><b>Name</b></th>
     <th width="80%"><b>Description</b></th>
     <th width="10%"><b>Default</b></th>
 </tr>
-</thead></p>
+</thead>
+
 <tbody>
 <tr>
     <td><code class="property">error-checking</code></td>
@@ -887,7 +886,6 @@ See the <a href="">examples</a> explenation of some common use cases. If your co
     <td>-</td>
 </tr>
 </tbody>
-
 </table>
 
 <h4 id="child-elements_7">Child Elements</h4>
@@ -1044,14 +1042,15 @@ If no <code>name</code>, <code>extends</code> or <code>implements</code> attribu
 </table>
 
 <h4 id="attributes_8">Attributes</h4>
-<p><table class="listing">
+<table class="listing">
 <thead>
 <tr>
     <th width="12%">Attribute</th>
     <th width="78%">Description</th>
     <th width="10%">Required</th>
 </tr>
-</thead></p>
+</thead>
+
 <tbody>
 <tr>
     <td><code>name</code></td>
@@ -1101,7 +1100,6 @@ If no <code>name</code>, <code>extends</code> or <code>implements</code> attribu
     <td>No</td>
 </tr>
 </tbody>
-
 </table>
 
 <h4 id="child-elements_8">Child elements</h4>
@@ -1111,11 +1109,10 @@ If no <code>name</code>, <code>extends</code> or <code>implements</code> attribu
 <h4 id="explanation">Explanation</h4>
 <p>There are three possible ways of specifying which classes will be excluded from the shrinking and obfuscation process:</p>
 <p><em>1)</em> One can specify a single java class using the fully qualified name in java syntax with the name attribute. For example:</p>
-<pre><code class="xml">&lt;class name=&quot;mypackage.MyClass&quot;/&gt;
+<pre><code class="language-xml">&lt;class name=&quot;mypackage.MyClass&quot;/&gt;
 </code></pre>
-
 <p><em>2)</em> One can specify multiple java classes using a modified version of a patternset. The patternset's includes and excludes element should use java syntax, but the usual wildcards are allowed. Some examples:</p>
-<pre><code class="xml">&lt;class&gt;
+<pre><code class="language-xml">&lt;class&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.**.*Bean&quot;/&gt;
     &lt;exclude name=&quot;com.mycompany.secretpackage.*&quot;/&gt;
@@ -1123,9 +1120,8 @@ If no <code>name</code>, <code>extends</code> or <code>implements</code> attribu
   &lt;/patternset&gt;
 &lt;/class&gt;
 </code></pre>
-
 <p><em>3)</em> This will expose all classes which reside in the package subtree of <code>com.mycompany</code> and whose name ends with <code>Bean</code> except for those, that reside in the <code>com.mycompany.secretpackage</code> package and the single <code>SecretBean</code> in <code>com.mycompany.myapp</code>.</p>
-<pre><code class="xml">&lt;class&gt;
+<pre><code class="language-xml">&lt;class&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.myapp.MainClass&quot;/&gt;
     &lt;include name=&quot;org.w3c.sax?.&quot;/&gt;
@@ -1133,7 +1129,6 @@ If no <code>name</code>, <code>extends</code> or <code>implements</code> attribu
   &lt;/patternset&gt;
 &lt;/class&gt;
 </code></pre>
-
 <p>This will expose the <code>MainClass</code> class and all classes, which reside in packages like <code>org.w3c.sax1</code>, <code>org.w3c.sax2</code>, <code>org.w3c.saxb</code> except for inner classes. <code>'$'</code> is used as a separator between outer class names and inner class names. Since Ant uses <code>'$'</code> as an escape character, you have to use two consecutive <code>'$'s</code> (<code>'$$'</code>) if you want to pass one as an argument to the task.</p>
 <p><em>4)</em> Finally one can specify classes depending on their visibility, i.e. depending whether they have been declared <code>public</code>, <code>protected</code>, <code>package-private</code> or <code>private</code> (inner classes). This can be achieved by additionally specifying the classes attribute in the class element.</p>
 <p>```xml
@@ -1154,27 +1149,26 @@ This will keep all class names, that are either `public` or `protected` and whic
   &lt;/patternset&gt;
 &lt;/class&gt;
 </code></pre>
-
 <p>This example shows the very common use case of excluding a complete public API from the shrinking and obfuscation process. There is an abbreviation for this use case: you can omit the <code>patternset</code> element, since in the case where the <code>classes</code> attribute is specified and there is no <code>patternset</code> child element used, the task will automatically apply this rule. In this example all classes will be exposed, that are either <code>public</code> or <code>protected</code>. Their methods and fields will be exposed as long as they are declared <code>public</code> or <code>protected</code>. If a class is <code>package-private</code> or <code>private</code> (inner classes), neither itself nor its methods or fields will be exposed.</p>
 <p>The last example shows how to keep the <code>public</code> methods of certain classes only, but neither field names nor the class names themselves.</p>
-<pre><code class="xml">&lt;class classes=&quot;none&quot; methods=&quot;public&quot; fields=&quot;none&quot;&gt;
+<pre><code class="language-xml">&lt;class classes=&quot;none&quot; methods=&quot;public&quot; fields=&quot;none&quot;&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.myapi.&quot;/&gt;
   &lt;/patternset&gt;
 &lt;/class&gt;
 </code></pre>
-
 <h2 id="the-method-element">The <code>method</code> Element</h2>
 <p>Using the <code>method</code> element you can specify methods by signature which should be excluded from shrinking or name obfuscation.</p>
 <h4 id="attributes_9">Attributes</h4>
-<p><table class="listing">
+<table class="listing">
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
     <th width="78%"><b>Description</b></th>
     <th width="10%"><b>Required</b></th>
 </tr>
-</thead></p>
+</thead>
+
 <tr>
     <td><code>name</code></td>
     <td>
@@ -1183,7 +1177,6 @@ This will keep all class names, that are either `public` or `protected` and whic
     </td>
     <td>Yes</td>
 </tr>
-
 <tr>
     <td><code>class</code></td>
     <td>
@@ -1195,7 +1188,6 @@ This will keep all class names, that are either `public` or `protected` and whic
     </td>
     <td>No</td>
 </tr>
-
 </table>
 
 <h4 id="child-elements_9">Child Elements</h4>
@@ -1203,7 +1195,7 @@ This will keep all class names, that are either `public` or `protected` and whic
 <li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
 </ul>
 <h4 id="examples_1">Examples</h4>
-<pre><code class="xml">&lt;method class=&quot;com.mycompany.myapp.MyClass&quot;
+<pre><code class="language-xml">&lt;method class=&quot;com.mycompany.myapp.MyClass&quot;
   name=&quot;void main(java.lang.String[])&quot;/&gt;
 &lt;method class=&quot;com.mycompany.myapp.MyClass&quot;
   name=&quot;int foo(double[][], java.lang.Object)&quot;/&gt;
@@ -1218,7 +1210,6 @@ This will keep all class names, that are either `public` or `protected` and whic
   &lt;/patternset&gt;
 &lt;/method&gt;
 </code></pre>
-
 <p>This will keep the main method of the <code>MyClass</code> class and the <code>foo</code> method. Additionally all <code>readObject</code> and <code>writeObject</code> methods (used for serialization) will be kept in all classes of the <code>com.mycompany.myapp.data</code> package. Note that you have to specify the return argument's type, even if it is void and that you have to use the fully qualified name for all classes, even those, that are in the <code>java.lang package</code>.</p>
 <h2 id="the-field-element">The <code>field</code> Element</h2>
 <p>Using the <code>field</code> element you can specify fields by name which should be excluded from shrinking or name obfuscation.</p>
@@ -1260,14 +1251,13 @@ This will keep all class names, that are either `public` or `protected` and whic
 <li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
 </ul>
 <h4 id="examples_2">Examples</h4>
-<pre><code class="xml">&lt;field class=&quot;com.mycompany.myapp.MyClass&quot; name=&quot;field&quot;/&gt;
+<pre><code class="language-xml">&lt;field class=&quot;com.mycompany.myapp.MyClass&quot; name=&quot;field&quot;/&gt;
 &lt;field name=&quot;serialVersionUID&quot;&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.myapp.data.*&quot;/&gt;
   &lt;/patternset&gt;
 &lt;/field&gt;
 </code></pre>
-
 <p>This will keep the field named <code>field</code> of the <code>MyClass</code> class. Additionally all the <code>serialVersionUID</code> fields (used for serialization) will be kept in all classes of the <code>com.mycompany.myapp.data</code> package.</p>
 <h2 id="the-package-element">The <code>package</code> Element</h2>
 <p>The <code>package</code> element can be used for excluding certain package's names from the renaming process. It cannot be used for the shrinking process.</p>
@@ -1277,13 +1267,12 @@ This will keep all class names, that are either `public` or `protected` and whic
 <li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
 </ul>
 <h4 id="example_2">Example</h4>
-<pre><code class="xml">&lt;package&gt;
+<pre><code class="language-xml">&lt;package&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.myapp.*&quot;/&gt;
   &lt;/patternset&gt;
 &lt;/package&gt;
 </code></pre>
-
 <p>This will keep the names of all packages that are direct descendants of <code>com.mycompany.myapp</code>. This will not influence the names of the classes contained in these packages.</p>
 <h2 id="the-sourcefile-element">The <code>sourcefile</code> Element</h2>
 <p>The <code>sourcefile</code> element allows for a special treatment of the sourceFile attribute by the rename element.
@@ -1314,26 +1303,26 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 <li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
 </ul>
 <h4 id="example_3">Example</h4>
-<pre><code class="xml">&lt;sourcefile&gt;
+<pre><code class="language-xml">&lt;sourcefile&gt;
   &lt;property name=&quot;mapping&quot; value=&quot;y&quot;/&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.myapp.**&quot;/&gt;
   &lt;/patternset&gt;
 &lt;/sourcefile&gt;
 </code></pre>
-
 <p>This will map all of the <code>sourceFile</code> attributes in the packages below <code>com.mycompany.myapp</code> to <em>"y"</em>, which is small and generally a nice letter.</p>
 <h2 id="the-linenumbertable-element">The <code>linenumbertable</code> Element</h2>
 <p>The <code>linenumbertable</code> element allows for a special treatment of the linenumbertable attribute by the <a href="#the-rename-element">rename</a> element.</p>
 <p>Using nested <code>property</code> elements, the mapping of <code>linenumbertable</code> attributes in obfuscated class files can be adjusted.</p>
 <h4 id="attributes_12">Attributes</h4>
-<p><table class="listing">
+<table class="listing">
 <thead>
 <tr>
     <th width="12%"><b>Name</b></th>
     <th width="88%"><b>Description</b></th>
 </tr>
-</thead></p>
+</thead>
+
 <tbody>
 <tr>
     <td><code class="property">mapping-scheme</code></td>
@@ -1376,7 +1365,6 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
     </td>
 </tr>
 </tbody>
-
 </table>
 
 <h4 id="child-elements_13">Child Elements</h4>
@@ -1385,15 +1373,14 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 <li><a href="http://ant.apache.org/manual/Types/patternset.html">patternset</a></li>
 </ul>
 <h4 id="examples_3">Examples</h4>
-<pre><code class="xml">&lt;linenumbertable&gt;
+<pre><code class="language-xml">&lt;linenumbertable&gt;
   &lt;patternset&gt;
     &lt;include name=&quot;com.mycompany.myapp.**&quot;/&gt;
   &lt;/patternset&gt;
 &lt;/linenumbertable&gt;
 </code></pre>
-
 <p>This will keep the line numbers of all the classes in the <code>com.mycompany.myapp</code> packages and subpackages. Note that in order to see the line numbers in stacktraces, the sourcefile attribute has to be retained for those files, too, since otherwise the JDK will display <em>"Unknown source"</em> for the stack elements.</p>
-<pre><code class="xml">&lt;linenumbertable&gt;
+<pre><code class="language-xml">&lt;linenumbertable&gt;
   &lt;property name=&quot;mapping-scheme&quot; value=&quot;scramble&quot;/&gt;
   &lt;property name=&quot;scrambling-salt&quot; value=&quot;1234&quot;/&gt;
   &lt;patternset id=&quot;CompanyPatternSet&quot;&gt;
@@ -1405,7 +1392,6 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
   &lt;patternset refid=&quot;CompanyPatternSet&quot;/&gt;
 &lt;/sourcefile&gt;
 </code></pre>
-
 <p>This will keep scrambled line numbers for all classes found in and below the <code>com.mycompany.myapp</code> packages. The scrambling algorithm will use the given <em>"salt"</em> value to use a predefined scrambling scheme. In order to see the scrambled line numbers, a <a href="#the-sourcefile-element">sourcefile</a> element is used on the same patternset, which is referenced by its previously declared reference id, to rename the source files to <em>"y"</em>.</p>
 <h2 id="the-adjust-element">The <code>adjust</code> Element</h2>
 <p>Using the <code>adjust</code> element one can specify resource files whose names and/or contents should be adjusted by the rename engine to reflect the obfuscated class names.</p>
@@ -1459,7 +1445,7 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 <h4 id="child-elements_14">Child Elements</h4>
 <p>The adjust element can be used just like the standard Ant <a href="http://ant.apache.org/manual/Types/zipfileset.html"><code>ZipFileSet</code></a> element.</p>
 <h4 id="examples_4">Examples</h4>
-<pre><code class="xml">&lt;!-- adjust the names of all java property files in the jars --&gt;
+<pre><code class="language-xml">&lt;!-- adjust the names of all java property files in the jars --&gt;
 &lt;adjust replaceName=&quot;true&quot;&gt;
   &lt;include name=&quot;**/*.properties&quot;/&gt;
 &lt;/adjust&gt;
@@ -1474,7 +1460,6 @@ com/mycompany/myapp/resource in the jar. --&gt;
   &lt;include name=&quot;com/mycompany/myapp/resource/*&quot;/&gt;
 &lt;/adjust&gt;
 </code></pre>
-
 <h2 id="the-map-element">The <code>map</code> Element</h2>
 <p>The <code>map</code> element is an immediate optional child of the <a href="#the-rename-element">rename element</a>. It can be used to specify the mapping for the renaming process directly. This is an advanced topic.</p>
 <h4 id="child-elements_15">Child Elements</h4>
@@ -1486,7 +1471,7 @@ com/mycompany/myapp/resource in the jar. --&gt;
 </ul>
 <p>All of these elements use the <code>name</code> attribute to specify the specific element. The <code>method</code> and <code>field</code> elements need the <code>class</code> attribute in order to function properly. Neither wildcards nor nested <code>patternset</code> elements are allowed. Use the <code>map</code> attribute to specify the new name (subpackage, classname, methodname and fieldname respectively).</p>
 <h4 id="examples_5">Examples</h4>
-<pre><code class="xml">&lt;map&gt;
+<pre><code class="language-xml">&lt;map&gt;
   &lt;package name=&quot;com&quot; map=&quot;etc&quot;/&gt;
   &lt;package name=&quot;com.mycompany&quot; map=&quot;nocompany&quot;/&gt;
   &lt;package name=&quot;com.mycompany.myapp&quot; map=&quot;asdf&quot;/&gt;
@@ -1496,13 +1481,12 @@ com/mycompany/myapp/resource in the jar. --&gt;
   &lt;field class=&quot;com.mycompany.myapp.MainApp&quot; name=&quot;field&quot; map=&quot;a&quot;/&gt;
 &lt;/map&gt;
 </code></pre>
-
 <p>In this example the package structure <code>com.mycompany.myapp</code> will be obfuscated to <code>etc.nocompany.asdf</code>. The <code>MainApp</code> class will be called <code>foo</code> and its <code>main</code> method will be remapped to <code>bar</code> (and can therefor not be executed from commandline anymore). The field called <code>field</code> will be renamed to <code>a</code>.</p>
 <h2 id="controlling-obfuscation-exclusion-with-annotations">Controlling obfuscation exclusion with annotations</h2>
 <p>In order to exclude certain elements from obfuscation, it is possible to use annotations in the source code instead of listing those elements in the <a href="#the-keep-element">keep element</a>.</p>
 <p>Any annotation class can be used for this, but it must be specified in the <code>annotationClass</code> attribute of the <a href="#the-rename-element">rename element</a> and follow the convention as explained below to work. yGuard contains such an annotation in the distribution package ready for use. The annotation class is <code>com.yworks.util.annotation.Obfuscation</code> and can be found in the yGuard distribution in <code>ObfuscationAnnotation.jar</code>. Feel free add this attribute definition to your own codebase and possibly adjust the package name to your needs. Here is the source code for it:</p>
 <h3 id="obfuscationjava"><code>Obfuscation.java</code></h3>
-<pre><code class="java">package com.yworks.util.annotation;
+<pre><code class="language-java">package com.yworks.util.annotation;
 
 public @interface Obfuscation {
 
@@ -1511,7 +1495,6 @@ public @interface Obfuscation {
   boolean applyToMembers() default true;
 }
 </code></pre>
-
 <p>This class is also the default annotation yGuard is looking for when obfuscating. By default the <code>Obfuscation</code> annotation is inherited using the <code>@Inherited</code> trait. If this behaviour is undesirable, consider creating a custom obfuscation annotation.</p>
 <p>The convention for annotation classes that yGuard understands as obfuscation controlling annotations requires two attributes:</p>
 <table class="listing">
@@ -1559,7 +1542,7 @@ public @interface Obfuscation {
 </ul>
 <h4 id="examples_6">Examples</h4>
 <p>Using the <code>patch</code> element one can generate jars, that can be used to serve as patches for versions of an application that have already been deployed in obfuscated form. During the main obfuscation run, yGuard produces an xml-logfile, in which the mapping between the unobfuscated and obfuscated names is contained. The patch element is used to declare a set of classes, that need to be patched. During the obfuscation, yGuard will include those files in the obfuscated jars only, that are declared inside this element.</p>
-<pre><code class="xml">&lt;patch&gt;
+<pre><code class="language-xml">&lt;patch&gt;
   &lt;class name=&quot;com.mycompany.myapp.MainClass&quot;/&gt;
   &lt;class&gt;
     &lt;patternset&gt;
@@ -1569,21 +1552,19 @@ public @interface Obfuscation {
 &lt;/patch&gt;
 &lt;map logfile=&quot;yguardlog.xml&quot;/&gt;
 </code></pre>
-
 <p>This will only include the MainClass class and all classes that belong to the bugs package in a patch jar. In order to work with the previously delivered obfuscated version, it is important to use the map element to specify the mapping of the elements from the previous run. This can most conveniently be achieved by specifying the log file from the corresponding run in the map element's logfile attribute.</p>
 <h2 id="deobfuscating-stacktraces">Deobfuscating stacktraces</h2>
 <p>yGuard provides a simple tool that makes it easy for the obfuscating party to deobfuscate stacktraces which have been obfuscated using yGuard. During the obfuscation yGuard produces an xml logfile which can automatically be gzipped for convenient storage. You should always keep those logfiles in order to be able to deobfuscate fully qualified classnames or methods or fields for debugging purposes e.g.
 In order to run the yGuard deobfuscation tool do the following:</p>
 <pre><code>Console&gt; java -jar yguard.jar mylogfile.xml
 </code></pre>
-
 <p>A tiny GUI will popup that will enable you to easily deobfuscate stacktraces and fully qualified classnames as well as provide a convenient way to browse the mapping generated by yGuard.
 In the main window a tree view displays the package, class, and classmember hierarchy using the unobfuscated names. For each entry that has been obfuscated (classes, packages, methods, and fields that have not been obfuscated at all may not always be shown in the tree) the corresponding mapped/obfuscated name is displayed.
 The two buttons at the top of the window allow to change the sorting of the items in the tree structure, so that they are either sorted according to their names before or after the obfuscation. Items will always be sorted by type first: packages, classes, innerclasses, methods, and fields. Small icons provide a convenient way to quickly find the corresponding items.</p>
 <p>The lower part of the window contains an editable text area that can be used to enter text or paste stacktraces in. Pressing the button at the bottom of the window labelled "Deobfuscate" will trigger the deobfuscation of the contents in the text area. The tool will try to identify fully qualified class names (separated by dots) and use the mapping information to reconstruct the original names. If the tool identifies a stack trace element, it will try to deobfuscate scrambled line numbers, too, if they have been scrambled during the obfuscation process.</p>
 <h1 id="dtd-used-for-ant-yguard">DTD used for Ant <code>&lt;yguard&gt;</code></h1>
 <p>The obfuscation and shrinking process can be completely configured inside your Ant script. The yguard task and nested elements should be used according to the following DTD. Note that this is for information purposes only, i.e. you do not have to include the following lines anywhere. This DTD should just provide a quick overview of the yGuard syntax. Due to restrictions of the DTD specification, the given DTD does not describe all available yGuard options. Please browse through the documentation above for complete documentation of the yGuard Ant task elements.</p>
-<pre><code class="xml">&lt;!ELEMENT yguard (inoutpair+,externalclasses?,attribute*,(shrink|rename)+)&gt;
+<pre><code class="language-xml">&lt;!ELEMENT yguard (inoutpair+,externalclasses?,attribute*,(shrink|rename)+)&gt;
 
 &lt;!ELEMENT inoutpair EMPTY&gt;
 &lt;!ATTLIST inoutpair
@@ -1689,7 +1670,6 @@ NOTE: the field attribute is only supported
 if the &lt;method&gt; element is nested inside an &lt;rename&gt; element.
 --&gt;
 </code></pre>
-
 <p><strong>Attention</strong> users of IDEs that "support" the creation of Ant files (e.g. IDEA's IntelliJ): Your IDE may indicate some errors inside your ANT file when you use yGuard specific elements. This is because the IDE does not know about the DTD used by yGuard. However this is not a real problem, since the Ant file should nevertheless work as expected.</p>
               
             </div>
