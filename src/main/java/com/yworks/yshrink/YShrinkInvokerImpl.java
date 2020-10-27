@@ -17,15 +17,26 @@ import org.apache.tools.ant.types.PatternSet;
 import java.io.File;
 
 /**
+ * The type Y shrink invoker.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class YShrinkInvokerImpl implements YShrinkInvoker {
 
-  final ShrinkTask shrinkTask;
+    /**
+     * The Shrink task.
+     */
+    final ShrinkTask shrinkTask;
 
-  EntryPointsSection eps;
+    /**
+     * The Eps.
+     */
+    EntryPointsSection eps;
 
-  public YShrinkInvokerImpl() {
+    /**
+     * Instantiates a new Y shrink invoker.
+     */
+    public YShrinkInvokerImpl() {
     shrinkTask = new ShrinkTask();
     eps = new EntryPointsSection( shrinkTask );
   }

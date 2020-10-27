@@ -1,9 +1,15 @@
 package test.internalclasses;
 
 
+/**
+ * The type Internal class in b.
+ */
 class InternalClassInB {
 
-    public void internalClassMethodInB() {
+  /**
+   * Internal class method in b.
+   */
+  public void internalClassMethodInB() {
         System.out.println("internalClassMethodInB");
         new InternalClassInA().internalClassMethodInA();
     }

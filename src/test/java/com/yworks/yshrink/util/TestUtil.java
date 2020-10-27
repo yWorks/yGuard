@@ -5,10 +5,15 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 /**
+ * The type Test util.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class TestUtil {
-  @Test
+    /**
+     * Test verbose to native type.
+     */
+    @Test
   public void testVerboseToNativeType() {
 
     String query = "double[][][]";

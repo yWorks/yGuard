@@ -4,9 +4,17 @@ import com.yworks.util.abstractjar.Entry;
 
 import java.io.File;
 
+/**
+ * The type File entry wrapper.
+ */
 public class FileEntryWrapper implements Entry {
   private File file;
 
+  /**
+   * Instantiates a new File entry wrapper.
+   *
+   * @param file the file
+   */
   FileEntryWrapper( File file ) {
     this.file = file;
   }
@@ -26,6 +34,11 @@ public class FileEntryWrapper implements Entry {
     return file.length();
   }
 
+  /**
+   * Gets file.
+   *
+   * @return the file
+   */
   public File getFile() {
     return file;
   }

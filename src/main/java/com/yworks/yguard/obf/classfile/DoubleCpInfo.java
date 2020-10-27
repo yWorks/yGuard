@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Representation of a 'double' entry in the ConstantPool (takes up two indices).
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class DoubleCpInfo extends CpInfo
 {
@@ -29,7 +29,10 @@ public class DoubleCpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Double cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected DoubleCpInfo()
     {
         super(CONSTANT_Double);

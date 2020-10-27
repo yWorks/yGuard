@@ -14,11 +14,14 @@ import java.util.*;
 /**
  * Representation of an Exception table entry.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class ExceptionInfo
 {
-    // Constants -------------------------------------------------------------
+  /**
+   * The constant CONSTANT_FIELD_SIZE.
+   */
+// Constants -------------------------------------------------------------
     public static final int CONSTANT_FIELD_SIZE = 8;
 
 
@@ -29,7 +32,14 @@ public class ExceptionInfo
     private int u2catchType;
 
 
-    // Class Methods ---------------------------------------------------------
+  /**
+   * Create exception info.
+   *
+   * @param din the din
+   * @return the exception info
+   * @throws IOException the io exception
+   */
+// Class Methods ---------------------------------------------------------
     public static ExceptionInfo create(DataInput din) throws java.io.IOException
     {
         ExceptionInfo ei = new ExceptionInfo();
@@ -48,8 +58,13 @@ public class ExceptionInfo
         u2catchType = din.readUnsignedShort();
     }
 
-    /** Export the representation to a DataOutput stream. */
-    public void write(DataOutput dout) throws java.io.IOException
+  /**
+   * Export the representation to a DataOutput stream.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException
     {
         dout.writeShort(u2startpc);
         dout.writeShort(u2endpc);

@@ -13,16 +13,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The type Field filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class FieldFilter extends PatternMatchedFilter {
 
   private List<FieldSection> sections;
 
+  /**
+   * Instantiates a new Field filter.
+   *
+   * @param project the project
+   */
   public FieldFilter( final Project project ) {
     super( project );
   }
 
+  /**
+   * Add field section.
+   *
+   * @param fieldSection the field section
+   */
   public void addFieldSection( FieldSection fieldSection ) {
     if ( null == sections ) {
       sections = new ArrayList<FieldSection>( 5 );

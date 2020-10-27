@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The type Test generics.
  *
  * @author muellese
  */
@@ -25,11 +26,16 @@ public class TestGenerics {
 
   @Deprecated
   private ParameterizedType<MyStringType> localVar;
-  
-  /** Creates a new instance of TestGenerics */
+
+  /**
+   * Creates a new instance of TestGenerics
+   */
   public TestGenerics() {
   }
 
+  /**
+   * Run.
+   */
   @Test
   public void run(){
     new GenericSignatureFormatError();
@@ -59,8 +65,14 @@ public class TestGenerics {
       }
     }
   }
-  
+
+  /**
+   * The type My string type.
+   */
   public static class MyStringType extends MyType<String> {
+    /**
+     * Instantiates a new My string type.
+     */
     public MyStringType(){
       super("Hallo!");
     }
@@ -69,7 +81,12 @@ public class TestGenerics {
       return super.getContent();
     }
   }
-  
+
+  /**
+   * Main.
+   *
+   * @param args the args
+   */
   public static void main(String... args){
     new TestGenerics().run();
   }

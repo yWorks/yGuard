@@ -34,6 +34,8 @@ import java.util.ListIterator;
 import java.util.Set;
 
 /**
+ * The type Analyzer.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class Analyzer {
@@ -41,6 +43,11 @@ public class Analyzer {
   private static final String SYNTHETIC_DOT_CLASS_FIELD_START = "class$";
   private static final String CLASS_DESC = "Ljava/lang/Class;";
 
+  /**
+   * Create edges.
+   *
+   * @param model the model
+   */
   public void createEdges( Model model ) {
     createInheritanceEdges( model );
     createDependencyEdges( model );
@@ -50,9 +57,9 @@ public class Analyzer {
    * Create all nodes needed for dependency analysis using a <code>ModelVisitor</code>. Also creates artificial
    * &lt;clinit&gt; nodes for each (non-inner) class if not already present.
    *
-   * @param model
-   * @param bags
-   * @throws IOException
+   * @param model the model
+   * @param bags  the bags
+   * @throws IOException the io exception
    */
   public void initModel( Model model, List<ShrinkBag> bags ) throws IOException {
 
@@ -89,8 +96,10 @@ public class Analyzer {
   /**
    * Let <code>v</code> visit all classes contained in <code>jarFile</code>
    *
-   * @param v
-   * @param jarFile
+   * 
+		 * @param v
+   * 
+		 * @param jarFile
    * @throws IOException
    */
   private void visitAllClasses( final ClassVisitor v, final File jarFile ) throws IOException {
@@ -114,7 +123,7 @@ public class Analyzer {
   /**
    * create EXTENDS / IMPLEMENTS edges.
    *
-   * @param model
+   * @param model the model
    */
   public void createInheritanceEdges( final Model model ) {
 
@@ -141,7 +150,7 @@ public class Analyzer {
   /**
    * Create all kinds of dependency edges for the whole <code>model</code>.
    *
-   * @param model
+   * @param model the model
    */
   public void createDependencyEdges( final Model model ) {
 
@@ -204,8 +213,10 @@ public class Analyzer {
    * INSTANCEOF, CHECKCAST and LDC (if class version &gt= 49.0). Create CREATES edges for NEW instructions from
    * <code>md</code> to the NEW-node of the given runtime type.
    *
-   * @param model
-   * @param md
+   * 
+		 * @param model
+   * 
+		 * @param md
    */
   private void createTypeInstructionEdges( final Model model, final MethodDescriptor md ) {
     for ( AbstractMap.SimpleEntry<Object, Object> typeInstruction : md.getTypeInstructions() ) {
@@ -281,8 +292,10 @@ public class Analyzer {
    * <code>cd</code> to all non-static, non-constructor methods that are marked as entrypoints and that are implemented
    * in <code>cd</code> or an ancestor class of <code>cd</code>.
    *
-   * @param model
-   * @param cd
+   * 
+		 * @param model
+   * 
+		 * @param cd
    */
   private void createAssumeEdges( final Model model, final ClassDescriptor cd ) {
 
@@ -365,9 +378,12 @@ public class Analyzer {
    *    </li> <li>else: see documentation of createEdgeToImplementingMethod,
    * createSubtreeEdges </ul>
    *
-   * @param model
-   * @param cd
-   * @param md
+   * 
+		 * @param model
+   * 
+		 * @param cd
+   * 
+		 * @param md
    */
   private void createInvokeEdges( final Model model, final ClassDescriptor cd, final MethodDescriptor md ) {
 
@@ -442,11 +458,16 @@ public class Analyzer {
    * interfaces or abstract classes as <code>targetClass</code>, since its purpose is to find a method declaration in
    * case the runtime type a method is called on is an abstract class or interface.
    *
-   * @param model
-   * @param targetClass
-   * @param targetMethod
-   * @param targetDesc
-   * @param source
+   * 
+		 * @param model
+   * 
+		 * @param targetClass
+   * 
+		 * @param targetMethod
+   * 
+		 * @param targetDesc
+   * 
+		 * @param source
    */
   private void createEdgeToDeclaration( final Model model, ClassDescriptor targetClass,
                                         final String targetMethod,
@@ -488,11 +509,16 @@ public class Analyzer {
    * <p/>
    * TODO think (interfaces)
    *
-   * @param model
-   * @param owner
-   * @param md
-   * @param targetMethod
-   * @param targetDesc
+   * 
+		 * @param model
+   * 
+		 * @param owner
+   * 
+		 * @param md
+   * 
+		 * @param targetMethod
+   * 
+		 * @param targetDesc
    */
   private void createEdgesToAncestorMethods( final Model model, ClassDescriptor owner, final MethodDescriptor md,
                                              final String targetMethod, final String targetDesc ) {
@@ -521,9 +547,12 @@ public class Analyzer {
 
   /**
    * Finds all preceding interfaces relative to start.
-   * @param start - the interface to start with
-   * @param path - a initial path, should include the start element
-   * @param paths - a empty list of paths that all paths will be appended to
+   * 
+		 * @param start - the interface to start with
+   * 
+		 * @param path - a initial path, should include the start element
+   * 
+		 * @param paths - a empty list of paths that all paths will be appended to
    */
   private void findSuperInterfaces( Model model, ClassDescriptor start, List<ClassDescriptor> path, List<List<ClassDescriptor>> paths ) {
     path.add(start);
@@ -550,13 +579,20 @@ public class Analyzer {
    * create a dependency edge to a concrete implementation of <code>targetMethod</code> in <code>owner</code> or any
    * concrete superclass of <code>owner</code>.
    *
-   * @param owner             the class which <code>targetMethod</code> was called on.
-   * @param targetMethod
-   * @param targetDesc
-   * @param model
-   * @param node              the source node of the dependency.
-   * @param type              the EdgeType to use for the dependency edge.
-   * @param createResolveEdge wether to create an additional RESOLVE edge.
+   * 
+		 * @param owner             the class which <code>targetMethod</code> was called on.
+   * 
+		 * @param targetMethod
+   * 
+		 * @param targetDesc
+   * 
+		 * @param model
+   * 
+		 * @param node              the source node of the dependency.
+   * 
+		 * @param type              the EdgeType to use for the dependency edge.
+   * 
+		 * @param createResolveEdge wether to create an additional RESOLVE edge.
    */
   private void createEdgeToImplementingMethod( ClassDescriptor owner, final String targetMethod, final String targetDesc,
                                                Model model, Node node,
@@ -642,7 +678,8 @@ public class Analyzer {
    * Determines the index of the first class descriptor in the given list that
    * {@link ClassDescriptor#implementsMethod(String, String) implements} the
    * method identified by the given method name and method descriptor.
-   * @return the index of the first class descriptor that implements the given
+   * 
+		 * @return the index of the first class descriptor that implements the given
    * method or {@code -1} if there is no such descriptor in the given list.
    */
   private static int indexOf(
@@ -663,7 +700,8 @@ public class Analyzer {
    * Determines the index of the last class descriptor in the given list that
    * {@link ClassDescriptor#implementsMethod(String, String) implements} the
    * method identified by the given method name and method descriptor.
-   * @return the index of the last class descriptor that implements the given
+   * 
+		 * @return the index of the last class descriptor that implements the given
    * method or {@code -1} if there is no such descriptor in the given list.
    */
   private static int lastIndexOf(
@@ -684,12 +722,18 @@ public class Analyzer {
   /**
    * create INVOKES edges to all subclasses of class <code>cd</code> that override method <code>targetMethod</code>.
    *
-   * @param model
-   * @param cd
-   * @param target
-   * @param mm
-   * @param targetMethod
-   * @param targetDesc
+   * 
+		 * @param model
+   * 
+		 * @param cd
+   * 
+		 * @param target
+   * 
+		 * @param mm
+   * 
+		 * @param targetMethod
+   * 
+		 * @param targetDesc
    */
   private void createSubtreeEdges( final Model model, final ClassDescriptor cd, final ClassDescriptor target,
                                    final MethodDescriptor mm,
@@ -711,8 +755,10 @@ public class Analyzer {
    * add RESOLVE dependency from <code>source</code> to the return type and all declared parameters and exceptions of
    * <code>source</code>.
    *
-   * @param model
-   * @param source
+   * 
+		 * @param model
+   * 
+		 * @param source
    */
   private void createMethodSignatureEdges( final Model model, final MethodDescriptor source ) {
 
@@ -745,8 +791,10 @@ public class Analyzer {
   /**
    * if <code>cd</code> is an inner class, add ENCLOSE dependency to enclosing class or enclosing method.
    *
-   * @param model
-   * @param cd
+   * 
+		 * @param model
+   * 
+		 * @param cd
    */
   private void createInnerClassEdges( final Model model, final ClassDescriptor cd ) {
 
@@ -770,8 +818,10 @@ public class Analyzer {
    * the owner class/interface of <i>f</i> or any ancestor interface/class of the owner class. while searching for the
    * declaration of <i>f</i>, add RESOLVE dependency to all visited classes/interfaces.
    *
-   * @param model
-   * @param md
+   * 
+		 * @param model
+   * 
+		 * @param md
    */
   private void createReferenceEdges( final Model model, final MethodDescriptor md ) {
 
@@ -837,7 +887,8 @@ public class Analyzer {
    * class$test$simple$F$FI</code> which is inserted in the bytecode of classes if the class version is &lt; 0.49 and
    * the <code>.class</code>-construct is used in the class.
    *
-   * @param fieldName name of the synthetic field
+   * 
+		 * @param fieldName name of the synthetic field
    */
   private StringBuilder[] getPossibleClassNames( String fieldName ) {
 

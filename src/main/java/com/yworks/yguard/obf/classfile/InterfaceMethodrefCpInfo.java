@@ -20,7 +20,7 @@ import java.util.*;
 /**
  * Representation of a 'interfacemethodref' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class InterfaceMethodrefCpInfo extends RefCpInfo
 {
@@ -33,7 +33,10 @@ public class InterfaceMethodrefCpInfo extends RefCpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Interface methodref cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected InterfaceMethodrefCpInfo()
     {
         super(CONSTANT_InterfaceMethodref);

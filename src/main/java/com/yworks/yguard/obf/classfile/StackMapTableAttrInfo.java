@@ -5,7 +5,6 @@ import java.io.DataOutput;
 
 /**
  * Representation of an attribute.
- *
  */
 public class StackMapTableAttrInfo extends AttrInfo
 {
@@ -20,7 +19,14 @@ public class StackMapTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Stack map table attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+// Instance Methods ------------------------------------------------------
     protected StackMapTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
@@ -32,8 +38,12 @@ public class StackMapTableAttrInfo extends AttrInfo
         return ATTR_StackMapTable;
     }
 
-    /** Return the array of local variable table entries. */
-    protected StackMapFrameInfo[] getEntries()
+  /**
+   * Return the array of local variable table entries.
+   *
+   * @return the stack map frame info [ ]
+   */
+  protected StackMapFrameInfo[] getEntries()
     {
         return entries;
     }

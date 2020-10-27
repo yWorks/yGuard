@@ -25,35 +25,73 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
 
   private final YGuardBaseTask task;
 
+  /**
+   * Instantiates a new Class section.
+   */
   public ClassSection() {
     task = null;
   }
 
+  /**
+   * Instantiates a new Class section.
+   *
+   * @param task the task
+   */
   public ClassSection( YGuardBaseTask task ) {
     this.task = task;
   }
 
+  /**
+   * Sets name.
+   *
+   * @param name the name
+   */
   public void setName( String name ) {
     this.name = name;
   }
 
+  /**
+   * Sets classes.
+   *
+   * @param m the m
+   */
   public void setClasses( ObfuscatorTask.Modifiers m ) {
     this.classMode = m.getModifierValue();
     this.classesSet = true;
   }
 
+  /**
+   * Sets methods.
+   *
+   * @param m the m
+   */
   public void setMethods( ObfuscatorTask.Modifiers m ) {
     this.methodMode = m.getModifierValue();
   }
 
+  /**
+   * Sets fields.
+   *
+   * @param m the m
+   */
   public void setFields( ObfuscatorTask.Modifiers m ) {
     fieldMode = m.getModifierValue();
   }
 
+  /**
+   * Sets map.
+   *
+   * @param mapTo the map to
+   */
   public void setMap( String mapTo ) {
     this.mapTo = mapTo;
   }
 
+  /**
+   * Sets extends.
+   *
+   * @param extendsType the extends type
+   */
   public void setExtends( String extendsType ) {
     this.extendsType = ObfuscatorTask.toNativeClass( extendsType );
     if ( task instanceof ObfuscatorTask ) {
@@ -62,10 +100,20 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
 
   }
 
+  /**
+   * Gets extends.
+   *
+   * @return the extends
+   */
   public String getExtends() {
     return extendsType;
   }
 
+  /**
+   * Sets implements.
+   *
+   * @param implementsType the implements type
+   */
   public void setImplements( String implementsType ) {
     this.implementsType = ObfuscatorTask.toNativeClass( implementsType );
     if ( task instanceof ObfuscatorTask ) {
@@ -73,6 +121,11 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     }
   }
 
+  /**
+   * Gets implements.
+   *
+   * @return the implements
+   */
   public String getImplements() {
     return implementsType;
   }
@@ -104,18 +157,38 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
     entries.add( entry );
   }
 
+  /**
+   * Gets class mode.
+   *
+   * @return the class mode
+   */
   public int getClassMode() {
     return classMode;
   }
 
+  /**
+   * Gets field mode.
+   *
+   * @return the field mode
+   */
   public int getFieldMode() {
     return fieldMode;
   }
 
+  /**
+   * Gets method mode.
+   *
+   * @return the method mode
+   */
   public int getMethodMode() {
     return methodMode;
   }
 
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
   public String getName() {
     return name;
   }

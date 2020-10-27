@@ -20,6 +20,7 @@ import javax.tools.ToolProvider;
 
 /**
  * Compiles Java source code directly to a JAR stream.
+ *
  * @author Thomas Behr
  */
 public class SimpleCompiler {
@@ -27,6 +28,8 @@ public class SimpleCompiler {
 
   /**
    * Adds a compiler option.
+   *
+   * @param option the option
    */
   public void addOption( final String option ) {
     if (options == null) {
@@ -38,6 +41,10 @@ public class SimpleCompiler {
   /**
    * Creates source objects that can be compiled using method
    * {@link #compile(Iterable, OutputStream)}.
+   *
+   * @param typeName the type name
+   * @param code     the code
+   * @return the object
    */
   public Object newInMemorySource( final String typeName, final String code ) {
     return FileObjects.newInMemoryFileObject(typeName, code);
@@ -46,15 +53,21 @@ public class SimpleCompiler {
   /**
    * Creates source objects that can be compiled using method
    * {@link #compile(Iterable, OutputStream)}.
+   *
+   * @param typeName the type name
+   * @param url      the url
+   * @return the object
    */
   public Object newUrlSource( final String typeName, final URL url ) {
     return FileObjects.newUrlFileObject(typeName, url);
   }
 
   /**
+   * Compile boolean.
+   *
    * @param sources iterable of source objects created using method
-   * @param result a simple output stream. The compiled sources will
-   * be written as java archive to this stream.
+   * @param result  a simple output stream. The compiled sources will be written as java archive to this stream.
+   * @return the boolean
    */
   public boolean compile( final Iterable sources, final OutputStream result ) {
     try {
@@ -98,6 +111,13 @@ public class SimpleCompiler {
     private JarOutputStream jos;
     private boolean hasEntry;
 
+    /**
+     * Instantiates a new In memory file manager.
+     *
+     * @param jos      the jos
+     * @param compiler the compiler
+     * @param dc       the dc
+     */
     InMemoryFileManager(
             final JarOutputStream jos,
             final JavaCompiler compiler,
@@ -132,6 +152,12 @@ public class SimpleCompiler {
   private static class StreamFileObject extends ForwardingJavaFileObject {
     private final JarOutputStream jos;
 
+    /**
+     * Instantiates a new Stream file object.
+     *
+     * @param jos the jos
+     * @param jfo the jfo
+     */
     StreamFileObject( final JarOutputStream jos, final JavaFileObject jfo ) {
       super(jfo);
       this.jos = jos;

@@ -6,6 +6,7 @@ import java.io.IOException;
 
 /**
  * Representation of a method parameters attribute.
+ *
  * @author Thomas Behr
  */
 public class MethodParametersAttrInfo extends AttrInfo {
@@ -19,7 +20,14 @@ public class MethodParametersAttrInfo extends AttrInfo {
   // Class Methods ---------------------------------------------------------
 
 
-  // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Method parameters attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+// Instance Methods ------------------------------------------------------
   MethodParametersAttrInfo( final ClassFile cf, final int attrNameIndex, final int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }

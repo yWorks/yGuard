@@ -13,14 +13,43 @@ import java.util.*;
 /**
  * Set of actions to be performed by a tree walker
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class TreeAction
 {
-    public void packageAction(Pk pk)  {defaultAction(pk);}
-    public void classAction(Cl cl)  {defaultAction(cl);}
-    public void methodAction(Md md)  {defaultAction(md);}
-    public void fieldAction(Fd fd)  {defaultAction(fd);}
-    public void defaultAction(TreeItem ti)  {}
+  /**
+   * Package action.
+   *
+   * @param pk the pk
+   */
+  public void packageAction(Pk pk)  {defaultAction(pk);}
+
+  /**
+   * Class action.
+   *
+   * @param cl the cl
+   */
+  public void classAction(Cl cl)  {defaultAction(cl);}
+
+  /**
+   * Method action.
+   *
+   * @param md the md
+   */
+  public void methodAction(Md md)  {defaultAction(md);}
+
+  /**
+   * Field action.
+   *
+   * @param fd the fd
+   */
+  public void fieldAction(Fd fd)  {defaultAction(fd);}
+
+  /**
+   * Default action.
+   *
+   * @param ti the ti
+   */
+  public void defaultAction(TreeItem ti)  {}
 }
 

@@ -7,9 +7,12 @@ import java.io.IOException;
 /**
  * Representation of a 'invokedynamic' entry in the ConstantPool.
  *
- * @author      Sebastian Rheinnecker, yworks
+ * @author Sebastian Rheinnecker, yworks
  */
 public class InvokeDynamicCpInfo extends AbstractDynamicCpInfo {
+  /**
+   * Instantiates a new Invoke dynamic cp info.
+   */
   protected InvokeDynamicCpInfo() {
     super(CONSTANT_InvokeDynamic);
   }

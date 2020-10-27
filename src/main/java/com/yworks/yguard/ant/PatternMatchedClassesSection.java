@@ -16,28 +16,60 @@ import java.io.IOException;
 import com.yworks.yguard.ObfuscatorTask;
 import com.yworks.common.ant.ZipScannerTool;
 
-/** Used as a super class for ant's handling of the
+/**
+ * Used as a super class for ant's handling of the
  * elements which can contain a <code>patternset</code> child element.
  */
 public abstract class PatternMatchedClassesSection {
+  /**
+   * The Pattern sets.
+   */
   protected List patternSets = new ArrayList(5);
 
+  /**
+   * The Properties.
+   */
   protected final Map properties = new HashMap();
 
+  /**
+   * The Allow match all pattern set.
+   */
   protected boolean allowMatchAllPatternSet = false;
 
+  /**
+   * Add configured pattern set.
+   *
+   * @param ps the ps
+   */
   public void addConfiguredPatternSet( PatternSet ps){
     patternSets.add(ps);
   }
 
+  /**
+   * Add configured property.
+   *
+   * @param p the p
+   */
   public void addConfiguredProperty( Property p){
     this.properties.put(p.getName(), p.getValue());
   }
 
+  /**
+   * Gets pattern sets.
+   *
+   * @return the pattern sets
+   */
   public List getPatternSets() {
     return patternSets;
   }
 
+  /**
+   * Add entries.
+   *
+   * @param entries the entries
+   * @param zf      the zf
+   * @throws IOException the io exception
+   */
   public void addEntries( Collection entries, ZipFileSet zf)throws IOException {
     Project project = zf.getProject();
     for ( Iterator it = patternSets.iterator(); it.hasNext();)
@@ -69,5 +101,12 @@ public abstract class PatternMatchedClassesSection {
       }
     }
   }
+
+  /**
+   * Add entries.
+   *
+   * @param entries      the entries
+   * @param matchedClass the matched class
+   */
   public abstract void addEntries(Collection entries, String matchedClass);
 }

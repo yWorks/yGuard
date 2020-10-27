@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.AbstractMap;
 
 /**
+ * The type Method descriptor.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class MethodDescriptor extends AbstractDescriptor {
@@ -23,6 +25,15 @@ public class MethodDescriptor extends AbstractDescriptor {
   private String[] exceptions;
   private List<String> localVars;
 
+  /**
+   * Instantiates a new Method descriptor.
+   *
+   * @param name       the name
+   * @param access     the access
+   * @param desc       the desc
+   * @param exceptions the exceptions
+   * @param sourceJar  the source jar
+   */
   protected MethodDescriptor( final String name, final int access, final String desc, final String[] exceptions, File sourceJar ) {
 
     super( access, sourceJar );
@@ -35,18 +46,38 @@ public class MethodDescriptor extends AbstractDescriptor {
     this.exceptions = exceptions;
   }
 
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Gets desc.
+   *
+   * @return the desc
+   */
   public String getDesc() {
     return desc;
   }
 
+  /**
+   * Get argument types type [ ].
+   *
+   * @return the type [ ]
+   */
   public Type[] getArgumentTypes() {
     return Type.getArgumentTypes( desc );
   }
 
+  /**
+   * Gets arguments string.
+   *
+   * @return the arguments string
+   */
   public String getArgumentsString() {
     StringBuilder buf = new StringBuilder();
     Type[] argumentTypes = getArgumentTypes();
@@ -56,53 +87,119 @@ public class MethodDescriptor extends AbstractDescriptor {
     return buf.toString();
   }
 
+  /**
+   * Gets return type.
+   *
+   * @return the return type
+   */
   public Type getReturnType() {
     return Type.getReturnType( desc );
   }
 
+  /**
+   * Gets invocations.
+   *
+   * @return the invocations
+   */
   public List<Invocation> getInvocations() {
     return invocations;
   }
 
+  /**
+   * Add invocation.
+   *
+   * @param opcode the opcode
+   * @param type   the type
+   * @param name   the name
+   * @param desc   the desc
+   */
   public void addInvocation( final int opcode, final String type, final String name, final String desc ) {
 
     invocations.add( InvocationFactory.getInstance().getInvocation( opcode, type, name, desc ) );
     //invocations.add( new Invocation( opcode, type, name, desc ) );
   }
 
+  /**
+   * Gets field refs.
+   *
+   * @return the field refs
+   */
   public List<String[]> getFieldRefs() {
     return fieldRefs;
   }
 
+  /**
+   * Add field ref.
+   *
+   * @param type the type
+   * @param name the name
+   */
   public void addFieldRef( final String type, final String name ) {
     fieldRefs.add( new String[]{ type, name } );
   }
 
+  /**
+   * Add type instruction.
+   *
+   * @param opcode the opcode
+   * @param desc   the desc
+   */
   public void addTypeInstruction( final int opcode, final String desc ) {
     typeInstructions.add( new AbstractMap.SimpleEntry<Object, Object>( opcode, desc ));
   }
 
+  /**
+   * Add local var.
+   *
+   * @param desc the desc
+   */
   public void addLocalVar( final String desc ) {
     localVars.add( desc );
   }
 
+  /**
+   * Gets type instructions.
+   *
+   * @return the type instructions
+   */
   public List<AbstractMap.SimpleEntry<Object, Object>> getTypeInstructions() {
     return typeInstructions;
   }
 
+  /**
+   * Get exceptions string [ ].
+   *
+   * @return the string [ ]
+   */
   public String[] getExceptions() {
     return exceptions;
   }
 
+  /**
+   * Has flag boolean.
+   *
+   * @param code the code
+   * @return the boolean
+   */
   public boolean hasFlag(int code) {
     return (access & code) == code;
   }
 
-  // TODO: Refactor usages of isStatic and isPrivate with hasFlag
+  /**
+   * Is static boolean.
+   *
+   * @return the boolean
+   */
+// TODO: Refactor usages of isStatic and isPrivate with hasFlag
   public boolean isStatic() {
     return ( access & Opcodes.ACC_STATIC ) == Opcodes.ACC_STATIC;
   }
 
+  /**
+   * Is private boolean.
+   *
+   * @return the boolean
+   */
   public boolean isPrivate() {
     return ( access & Opcodes.ACC_PRIVATE ) == Opcodes.ACC_PRIVATE;
   }
@@ -125,6 +222,12 @@ public class MethodDescriptor extends AbstractDescriptor {
     return overrides( md.getName(), md.getReturnType(), md.getArgumentTypes() );
   }
 
+  /**
+   * Overrides boolean.
+   *
+   * @param m the m
+   * @return the boolean
+   */
   public boolean overrides( final Method m ) {
     return overrides( m.getName(), Type.getReturnType( m ), Type.getArgumentTypes( m ) );
   }
@@ -159,10 +262,20 @@ public class MethodDescriptor extends AbstractDescriptor {
         '}';
   }
 
+  /**
+   * Is constructor boolean.
+   *
+   * @return the boolean
+   */
   public boolean isConstructor() {
     return getName().equals( Model.CONSTRUCTOR_NAME );
   }
 
+  /**
+   * Gets signature.
+   *
+   * @return the signature
+   */
   public String getSignature() {
 
     final StringBuilder buf = new StringBuilder();

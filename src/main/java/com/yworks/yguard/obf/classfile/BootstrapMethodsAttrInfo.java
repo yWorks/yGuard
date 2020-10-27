@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Representation of a bootstrap-methods attribute.
  *
- * @author      Sebastian Rheinnecker, yworks
+ * @author Sebastian Rheinnecker, yworks
  */
 public class BootstrapMethodsAttrInfo extends AttrInfo {
     // Constants -------------------------------------------------------------
@@ -19,7 +19,14 @@ public class BootstrapMethodsAttrInfo extends AttrInfo {
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Bootstrap methods attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+// Instance Methods ------------------------------------------------------
     protected BootstrapMethodsAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
       super(cf, attrNameIndex, attrLength);
@@ -49,7 +56,12 @@ public class BootstrapMethodsAttrInfo extends AttrInfo {
       }
     }
 
-    public BootstrapMethod[] getBootstrapMethods() {
+  /**
+   * Get bootstrap methods bootstrap method [ ].
+   *
+   * @return the bootstrap method [ ]
+   */
+  public BootstrapMethod[] getBootstrapMethods() {
       return bootstrapMethods;
     }
 }

@@ -14,46 +14,139 @@ import java.lang.reflect.Modifier;
 /**
  * Representation of RGS script files entry.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class YGuardRule
 {
-    public static final int PUBLIC = Modifier.PUBLIC;
-    public static final int PROTECTED = Modifier.PROTECTED;
-    public static final int FRIENDLY = 4096; 
-    public static final int PRIVATE = Modifier.PRIVATE;
-        
-    public static final int LEVEL_NONE = 0;
-    public static final int LEVEL_PUBLIC = PUBLIC;
-    public static final int LEVEL_PROTECTED = PROTECTED | LEVEL_PUBLIC;
-    public static final int LEVEL_FRIENDLY = FRIENDLY | LEVEL_PROTECTED;
-    public static final int LEVEL_PRIVATE = PRIVATE | LEVEL_FRIENDLY;
+  /**
+   * The constant PUBLIC.
+   */
+  public static final int PUBLIC = Modifier.PUBLIC;
+  /**
+   * The constant PROTECTED.
+   */
+  public static final int PROTECTED = Modifier.PROTECTED;
+  /**
+   * The constant FRIENDLY.
+   */
+  public static final int FRIENDLY = 4096;
+  /**
+   * The constant PRIVATE.
+   */
+  public static final int PRIVATE = Modifier.PRIVATE;
 
-    // Constants -------------------------------------------------------------
+  /**
+   * The constant LEVEL_NONE.
+   */
+  public static final int LEVEL_NONE = 0;
+  /**
+   * The constant LEVEL_PUBLIC.
+   */
+  public static final int LEVEL_PUBLIC = PUBLIC;
+  /**
+   * The constant LEVEL_PROTECTED.
+   */
+  public static final int LEVEL_PROTECTED = PROTECTED | LEVEL_PUBLIC;
+  /**
+   * The constant LEVEL_FRIENDLY.
+   */
+  public static final int LEVEL_FRIENDLY = FRIENDLY | LEVEL_PROTECTED;
+  /**
+   * The constant LEVEL_PRIVATE.
+   */
+  public static final int LEVEL_PRIVATE = PRIVATE | LEVEL_FRIENDLY;
+
+  /**
+   * The constant TYPE_ATTR.
+   */
+// Constants -------------------------------------------------------------
     public static final int TYPE_ATTR = 0;
-    public static final int TYPE_CLASS = 1;
-    public static final int TYPE_FIELD = 2;
-    public static final int TYPE_METHOD = 3;
-    public static final int TYPE_PACKAGE_MAP = 4;
-    public static final int TYPE_CLASS_MAP = 5;
-    public static final int TYPE_FIELD_MAP = 6;
-    public static final int TYPE_METHOD_MAP = 7;
-    public static final int TYPE_SOURCE_ATTRIBUTE_MAP = 8;
-    public static final int TYPE_LINE_NUMBER_MAPPER = 9;
-    public static final int TYPE_ATTR2 = 10;
-    public static final int TYPE_PACKAGE = 11;
+  /**
+   * The constant TYPE_CLASS.
+   */
+  public static final int TYPE_CLASS = 1;
+  /**
+   * The constant TYPE_FIELD.
+   */
+  public static final int TYPE_FIELD = 2;
+  /**
+   * The constant TYPE_METHOD.
+   */
+  public static final int TYPE_METHOD = 3;
+  /**
+   * The constant TYPE_PACKAGE_MAP.
+   */
+  public static final int TYPE_PACKAGE_MAP = 4;
+  /**
+   * The constant TYPE_CLASS_MAP.
+   */
+  public static final int TYPE_CLASS_MAP = 5;
+  /**
+   * The constant TYPE_FIELD_MAP.
+   */
+  public static final int TYPE_FIELD_MAP = 6;
+  /**
+   * The constant TYPE_METHOD_MAP.
+   */
+  public static final int TYPE_METHOD_MAP = 7;
+  /**
+   * The constant TYPE_SOURCE_ATTRIBUTE_MAP.
+   */
+  public static final int TYPE_SOURCE_ATTRIBUTE_MAP = 8;
+  /**
+   * The constant TYPE_LINE_NUMBER_MAPPER.
+   */
+  public static final int TYPE_LINE_NUMBER_MAPPER = 9;
+  /**
+   * The constant TYPE_ATTR2.
+   */
+  public static final int TYPE_ATTR2 = 10;
+  /**
+   * The constant TYPE_PACKAGE.
+   */
+  public static final int TYPE_PACKAGE = 11;
 
-    // Fields ----------------------------------------------------------------
+  /**
+   * The Type.
+   */
+// Fields ----------------------------------------------------------------
     public int type;
-    public String name;
-    public String descriptor;
-    public String obfName;
-    public LineNumberTableMapper lineNumberTableMapper;
-    public int retainFields = LEVEL_NONE;
-    public int retainMethods = LEVEL_NONE;
-    public int retainClasses = LEVEL_PRIVATE;
+  /**
+   * The Name.
+   */
+  public String name;
+  /**
+   * The Descriptor.
+   */
+  public String descriptor;
+  /**
+   * The Obf name.
+   */
+  public String obfName;
+  /**
+   * The Line number table mapper.
+   */
+  public LineNumberTableMapper lineNumberTableMapper;
+  /**
+   * The Retain fields.
+   */
+  public int retainFields = LEVEL_NONE;
+  /**
+   * The Retain methods.
+   */
+  public int retainMethods = LEVEL_NONE;
+  /**
+   * The Retain classes.
+   */
+  public int retainClasses = LEVEL_PRIVATE;
 
-    // Instance Methods-------------------------------------------------------
+  /**
+   * Instantiates a new Y guard rule.
+   *
+   * @param type the type
+   * @param name the name
+   */
+// Instance Methods-------------------------------------------------------
     public YGuardRule(int type, String name)
     {
       this.type = type;
@@ -62,7 +155,15 @@ public class YGuardRule
       this.obfName = null;
       this.lineNumberTableMapper = null;
     }
-    public YGuardRule(int type, String name, String descriptor)
+
+  /**
+   * Instantiates a new Y guard rule.
+   *
+   * @param type       the type
+   * @param name       the name
+   * @param descriptor the descriptor
+   */
+  public YGuardRule(int type, String name, String descriptor)
     {
         this.obfName = null;
         this.type = type;
@@ -71,7 +172,13 @@ public class YGuardRule
         this.lineNumberTableMapper = null;
     }
 
-    public YGuardRule(String className, LineNumberTableMapper lineNumberTableMapper) {
+  /**
+   * Instantiates a new Y guard rule.
+   *
+   * @param className             the class name
+   * @param lineNumberTableMapper the line number table mapper
+   */
+  public YGuardRule(String className, LineNumberTableMapper lineNumberTableMapper) {
       this.descriptor = null;
       this.obfName = null;
       this.name = className;
@@ -79,7 +186,12 @@ public class YGuardRule
       this.lineNumberTableMapper = lineNumberTableMapper;
     }
 
-    public void logProperties(PrintWriter pw){
+  /**
+   * Log properties.
+   *
+   * @param pw the pw
+   */
+  public void logProperties(PrintWriter pw){
       if (type == TYPE_LINE_NUMBER_MAPPER){
         lineNumberTableMapper.logProperties(pw);
       }
@@ -93,7 +205,13 @@ public class YGuardRule
         +" classes: "+methodToString(retainClasses);
     }
 
-    public static String typeToString(int type){
+  /**
+   * Type to string string.
+   *
+   * @param type the type
+   * @return the string
+   */
+  public static String typeToString(int type){
       switch (type){
         default: return "Unknown type "+type;
         case TYPE_ATTR:
@@ -122,8 +240,14 @@ public class YGuardRule
           return "PACKAGE";
       }
     }
-    
-    public static String methodToString(int modifier){
+
+  /**
+   * Method to string string.
+   *
+   * @param modifier the modifier
+   * @return the string
+   */
+  public static String methodToString(int modifier){
       switch (modifier){
         default: return "Unknown modifier "+modifier;
         case LEVEL_NONE:

@@ -7,12 +7,19 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 
 /**
+ * The type Xml logger.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class XmlLogger extends Logger {
 
   private PrintWriter pw;
 
+  /**
+   * Instantiates a new Xml logger.
+   *
+   * @param pw the pw
+   */
   public XmlLogger( PrintWriter pw ) {
     this.pw = pw;
     pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -56,6 +63,12 @@ public class XmlLogger extends Logger {
     unregister();
   }
 
+  /**
+   * Replace special chars string.
+   *
+   * @param s the s
+   * @return the string
+   */
   public static String replaceSpecialChars( String s ) {
 
     StringReader reader = new StringReader( s );

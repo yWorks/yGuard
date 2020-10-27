@@ -2,6 +2,7 @@ package com.yworks.yguard.obf.classfile;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 import java.util.List;
 import java.util.Collection;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Representation of an Local Variable table entry.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class StackMapFrameInfo {
   private VerificationTypeInfo[] verificationTypeInfoStack;
@@ -19,7 +20,14 @@ public class StackMapFrameInfo {
   // Constants -------------------------------------------------------------
 
 
-    // Class Methods ---------------------------------------------------------
+  /**
+   * Create stack map frame info.
+   *
+   * @param din the din
+   * @return the stack map frame info
+   * @throws IOException the io exception
+   */
+// Class Methods ---------------------------------------------------------
     public static StackMapFrameInfo create(DataInput din) throws java.io.IOException
     {
       if (din == null) throw new NullPointerException("DataInput cannot be null!");
@@ -32,8 +40,12 @@ public class StackMapFrameInfo {
     // Instance Methods ------------------------------------------------------
     private StackMapFrameInfo() {}
 
-    /** Check for Utf8 references to constant pool and mark them. */
-    protected void markUtf8Refs(ConstantPool pool)
+  /**
+   * Check for Utf8 references to constant pool and mark them.
+   *
+   * @param pool the pool
+   */
+  protected void markUtf8Refs(ConstantPool pool)
     {
       if (u1_frameType < 64){
         // SAME
@@ -66,6 +78,11 @@ public class StackMapFrameInfo {
     }
 
 
+  /**
+   * Get verification type infos collection.
+   *
+   * @return the collection
+   */
   public Collection getVerificationTypeInfos(){
     ArrayList result = new ArrayList();
     if (verificationTypeInfoLocals != null){
@@ -129,8 +146,13 @@ public class StackMapFrameInfo {
       }
     }
 
-    /** Export the representation to a DataOutput stream. */
-    public void write(DataOutput dout) throws java.io.IOException
+  /**
+   * Export the representation to a DataOutput stream.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
+  public void write(DataOutput dout) throws java.io.IOException
     {
       dout.writeByte(u1_frameType);
       if (u1_frameType < 64){

@@ -16,6 +16,8 @@ import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ObfuscatorTask;
 
 /**
+ * The type Map parser.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public final class MapParser implements ContentHandler {
@@ -25,14 +27,29 @@ public final class MapParser implements ContentHandler {
   private Map ownerProperties = new HashMap();
   private final ObfuscatorTask obfuscatorTask;
 
+  /**
+   * Instantiates a new Map parser.
+   *
+   * @param obfuscatorTask the obfuscator task
+   */
   public MapParser( ObfuscatorTask obfuscatorTask ) {
     this.obfuscatorTask = obfuscatorTask;
   }
 
+  /**
+   * Get entries collection.
+   *
+   * @return the collection
+   */
   public Collection getEntries(){
     return entries;
   }
 
+  /**
+   * Get owner properties map.
+   *
+   * @return the map
+   */
   Map getOwnerProperties(){
     return ownerProperties;
   }

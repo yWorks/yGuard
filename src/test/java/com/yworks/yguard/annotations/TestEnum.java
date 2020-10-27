@@ -11,10 +11,22 @@
 package com.yworks.yguard.annotations;
 
 /**
+ * The enum Test enum.
  *
  * @author muellese
  */
 public enum TestEnum
 {
-  V1, V2, V3;
+    /**
+     * V 1 test enum.
+     */
+    V1,
+    /**
+     * V 2 test enum.
+     */
+    V2,
+    /**
+     * V 3 test enum.
+     */
+    V3;
 }

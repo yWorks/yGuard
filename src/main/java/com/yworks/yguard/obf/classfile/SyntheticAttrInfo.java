@@ -12,7 +12,7 @@ import java.io.DataOutput;
 /**
  * Representation of an attribute.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class SyntheticAttrInfo extends AttrInfo
 {
@@ -25,7 +25,14 @@ public class SyntheticAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Synthetic attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+// Instance Methods ------------------------------------------------------
     protected SyntheticAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);

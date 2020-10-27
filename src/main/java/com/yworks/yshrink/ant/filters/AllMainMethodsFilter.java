@@ -12,6 +12,9 @@ import com.yworks.logging.Logger;
  */
 public class AllMainMethodsFilter extends AbstractEntryPointFilter {
 
+  /**
+   * The Main desc.
+   */
   static String MAIN_DESC = "([Ljava/lang/String;)V";
 
   @Override

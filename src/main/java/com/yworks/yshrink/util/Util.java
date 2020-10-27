@@ -7,10 +7,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * The type Util.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class Util {
 
+  /**
+   * To java class string.
+   *
+   * @param className the class name
+   * @return the string
+   */
   public static final String toJavaClass( String className ) {
     if ( className.endsWith( ".class" ) ) {
       className = className.substring( 0, className.length() - 6 );
@@ -18,6 +26,12 @@ public class Util {
     return className.replace( '/', '.' );
   }
 
+  /**
+   * To internal class string.
+   *
+   * @param className the class name
+   * @return the string
+   */
   public static final String toInternalClass( String className ) {
     if ( className.endsWith( ".class" ) ) {
       className = className.substring( 0, className.length() - 6 );
@@ -56,6 +70,12 @@ public class Util {
     return nat.toString();
   }
 
+  /**
+   * Verbose to native type string.
+   *
+   * @param type the type
+   * @return the string
+   */
   public static final String verboseToNativeType( String type ) {
 
     if ( type == "" ) return null;
@@ -75,7 +95,7 @@ public class Util {
    * extracts the class name or primitve identifier from any type descriptor.
    * e.g. [[Ltest/ugly/JJ {@literal ->} test/ugly/JJ
    *
-   * @param desc
+   * @param desc the desc
    * @return the extracted class name or primitive identifier.
    */
   public static final String getTypeNameFromDescriptor( final String desc ) {
@@ -98,6 +118,12 @@ public class Util {
     return r;
   }
 
+  /**
+   * To java type string.
+   *
+   * @param type the type
+   * @return the string
+   */
   public static String toJavaType( String type ) {
     StringBuffer nat = new StringBuffer( 30 );
     int arraydim = 0;
@@ -153,6 +179,12 @@ public class Util {
     return nat.toString();
   }
 
+  /**
+   * To java parameters string.
+   *
+   * @param parameters the parameters
+   * @return the string
+   */
   public static String toJavaParameters( String parameters ) {
     StringBuffer nat = new StringBuffer( 30 );
     switch ( parameters.charAt( 0 ) ) {
@@ -215,6 +247,12 @@ public class Util {
     return nat.toString();
   }
 
+  /**
+   * Gets argument string.
+   *
+   * @param arguments the arguments
+   * @return the argument string
+   */
   public static final String getArgumentString( Type[] arguments ) {
 
     StringBuilder buf = new StringBuilder();
@@ -228,6 +266,12 @@ public class Util {
     return buf.toString();
   }
 
+  /**
+   * To native method string [ ].
+   *
+   * @param javaMethod the java method
+   * @return the string [ ]
+   */
   public static final String[] toNativeMethod( String javaMethod ) {
     StringTokenizer tokenizer = new StringTokenizer( javaMethod, "(,[]) ", true );
     String tmp = tokenizer.nextToken();
@@ -305,6 +349,12 @@ public class Util {
       'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/' };
   private static final char pad = '=';
 
+  /**
+   * To base 64 string.
+   *
+   * @param b the b
+   * @return the string
+   */
   public static String toBase64( byte[] b ) {
     StringBuffer sb = new StringBuffer();
     for ( int ptr = 0; ptr < b.length; ptr += 3 ) {

@@ -6,11 +6,17 @@ import com.yworks.common.ant.YGuardBaseTask;
 
 import java.util.Collection;
 
-/** Used by ant to handle the <code>attributes</code> element.
+/**
+ * Used by ant to handle the <code>attributes</code> element.
  */
 public final class SourceFileSection extends PatternMatchedClassesSection implements Mappable {
   private YGuardBaseTask obfuscatorTask;
 
+  /**
+   * Instantiates a new Source file section.
+   *
+   * @param obfuscatorTask the obfuscator task
+   */
   public SourceFileSection( YGuardBaseTask obfuscatorTask ){
     super();
     this.obfuscatorTask = obfuscatorTask;

@@ -18,10 +18,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.Manifest;
 
+/**
+ * The type Directory wrapper.
+ */
 public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive {
   private File directory;
   private Map<Entry, File> entries = new HashMap<>();
 
+  /**
+   * Instantiates a new Directory wrapper.
+   *
+   * @param directory the directory
+   * @throws IOException the io exception
+   */
   public DirectoryWrapper( File directory ) throws IOException {
     this.directory = directory;
     Files.walkFileTree(directory.toPath(), this);

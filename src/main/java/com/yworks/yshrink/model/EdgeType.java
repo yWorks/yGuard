@@ -1,6 +1,8 @@
 package com.yworks.yshrink.model;
 
 /**
+ * The enum Edge type.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public enum EdgeType {

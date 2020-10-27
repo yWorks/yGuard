@@ -5,7 +5,8 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 /**
- * Representation of the nest host attribute. 
+ * Representation of the nest host attribute.
+ *
  * @author Thomas Behr
  */
 public class NestHostAttrInfo extends AttrInfo {
@@ -19,7 +20,14 @@ public class NestHostAttrInfo extends AttrInfo {
   // Class Methods ---------------------------------------------------------
 
 
-  // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Nest host attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+// Instance Methods ------------------------------------------------------
   NestHostAttrInfo(
           final ClassFile cf, final int attrNameIndex, final int attrLength
   ) {

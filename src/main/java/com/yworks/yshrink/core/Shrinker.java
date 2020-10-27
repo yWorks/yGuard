@@ -17,12 +17,19 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
+ * The type Shrinker.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class Shrinker {
 
   //private Model model;
 
+  /**
+   * Shrink.
+   *
+   * @param model the model
+   */
   public void shrink( final Model model ) {
     //this.model = model;
 
@@ -61,11 +68,21 @@ public class Shrinker {
 
     private int mode = EXPLORE_MODE;
 
+    /**
+     * Instantiates a new Shrink dfs.
+     *
+     * @param model the model
+     */
     ShrinkDfs( final Model model ) {
       this.model = model;
       this.network = model.getNetwork();
     }
 
+    /**
+     * Init.
+     *
+     * @param entryPointNode the entry point node
+     */
     public void init( final Node entryPointNode ) {
 
       this.entryPointNode = entryPointNode;
@@ -79,6 +96,11 @@ public class Shrinker {
       }
     }
 
+    /**
+     * Next round int.
+     *
+     * @return the int
+     */
     protected int nextRound() {
       round++;
       numSkipped = 0;
@@ -110,6 +132,9 @@ public class Shrinker {
       }
     }
 
+    /**
+     * Mark reachable nodes.
+     */
     protected void markReachableNodes() {
       int oldMode = mode;
       mode = RESULT_MODE;
@@ -203,6 +228,11 @@ public class Shrinker {
       }
     }
 
+    /**
+     * Gets num skipped.
+     *
+     * @return the num skipped
+     */
     protected int getNumSkipped() {
       return numSkipped;
     }

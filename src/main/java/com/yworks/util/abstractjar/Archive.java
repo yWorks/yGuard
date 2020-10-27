@@ -11,10 +11,41 @@ import java.util.jar.Manifest;
  * Thus AbstractArchive provides an abstraction layer to account for both JAR files and directories (and potentially more).
  */
 public interface Archive {
+  /**
+   * Gets name.
+   *
+   * @return the name
+   */
   String getName();
 
+  /**
+   * Gets entries.
+   *
+   * @return the entries
+   */
   Enumeration<Entry> getEntries();
+
+  /**
+   * Gets manifest.
+   *
+   * @return the manifest
+   * @throws IOException the io exception
+   */
   Manifest getManifest() throws IOException;
+
+  /**
+   * Gets input stream.
+   *
+   * @param entry the entry
+   * @return the input stream
+   * @throws IOException the io exception
+   */
   InputStream getInputStream(Entry entry) throws IOException;
+
+  /**
+   * Close.
+   *
+   * @throws IOException the io exception
+   */
   void close() throws IOException;
 }

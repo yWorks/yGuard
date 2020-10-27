@@ -15,7 +15,7 @@ import com.yworks.yguard.obf.classfile.*;
 /**
  * Tree item representing a package.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class Pk extends PkCl
 {
@@ -27,20 +27,36 @@ public class Pk extends PkCl
 
 
     // Class Methods ---------------------------------------------------------
-    /** Create the root entry for a tree. */
-    public static Pk createRoot(ClassTree classTree) {return new Pk(classTree);}
+
+  /**
+   * Create the root entry for a tree.
+   *
+   * @param classTree the class tree
+   * @return the pk
+   */
+  public static Pk createRoot(ClassTree classTree) {return new Pk(classTree);}
 
 
     // Instance Methods ------------------------------------------------------
-    /** Constructor for default package level. */
-    public Pk(ClassTree classTree)
+
+  /**
+   * Constructor for default package level.
+   *
+   * @param classTree the class tree
+   */
+  public Pk(ClassTree classTree)
     {
         this(null, "");
         this.classTree = classTree;
     }
 
-    /** Constructor for regular package levels. */
-    public Pk(TreeItem parent, String name)
+  /**
+   * Constructor for regular package levels.
+   *
+   * @param parent the parent
+   * @param name   the name
+   */
+  public Pk(TreeItem parent, String name)
     {
         super(parent, name);
         if (parent == null && !name.equals(""))
@@ -53,17 +69,35 @@ public class Pk extends PkCl
         }
     }
 
-    /** Get a package level by name. */
-    public Pk getPackage(String name)  {return (Pk)pks.get(name);}
+  /**
+   * Get a package level by name.
+   *
+   * @param name the name
+   * @return the package
+   */
+  public Pk getPackage(String name)  {return (Pk)pks.get(name);}
 
-    /** Get an Enumeration of packages. */
-    public Enumeration getPackageEnum()  {return pks.elements();}
+  /**
+   * Get an Enumeration of packages.
+   *
+   * @return the package enum
+   */
+  public Enumeration getPackageEnum()  {return pks.elements();}
 
-    /** Return number of packages. */
-    public int getPackageCount() {return pks.size();}
+  /**
+   * Return number of packages.
+   *
+   * @return the package count
+   */
+  public int getPackageCount() {return pks.size();}
 
-    /** Add a sub-package level. */
-    public Pk addPackage(String name) 
+  /**
+   * Add a sub-package level.
+   *
+   * @param name the name
+   * @return the pk
+   */
+  public Pk addPackage(String name)
     {
         Pk pk = getPackage(name);
         if (pk == null)

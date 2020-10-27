@@ -19,11 +19,20 @@ import java.util.List;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
+/**
+ * The type Default method test.
+ */
 public class DefaultMethodTest {
-  @Rule
+    /**
+     * The Name.
+     */
+    @Rule
   public TestName name = new TestName();
 
-  @Test
+    /**
+     * Direct super interface test.
+     */
+    @Test
   public void DirectSuperInterfaceTest() {
     final String testTypeName = "com.yworks.yshrink.java13.DirectSuperInterfaceTest";
 
@@ -72,7 +81,10 @@ public class DefaultMethodTest {
     }
   }
 
-  @Test
+    /**
+     * Simple chain test.
+     */
+    @Test
   public void SimpleChainTest() {
     final String testTypeName = "com.yworks.yshrink.java13.SimpleChainTest";
 

@@ -6,30 +6,47 @@ import java.io.IOException;
 
 /**
  * Representation of a 'class', 'module', or 'package' entry in the ConstantPool.
+ *
  * @author Thomas Behr
  */
 public abstract class AbstractTypeCpInfo extends CpInfo {
   // Constants -------------------------------------------------------------
 
 
-  // Fields ----------------------------------------------------------------
+  /**
+   * The U 2 name index.
+   */
+// Fields ----------------------------------------------------------------
   int u2nameIndex;
 
 
   // Class Methods ---------------------------------------------------------
 
 
-  // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Abstract type cp info.
+   *
+   * @param tag the tag
+   */
+// Instance Methods ------------------------------------------------------
   protected AbstractTypeCpInfo(int tag) {
     super(tag);
   }
 
-  /** Return the name index. */
+  /**
+   * Return the name index.
+   *
+   * @return the name index
+   */
   protected int getNameIndex() {
     return u2nameIndex;
   }
 
-  /** Set the name index. */
+  /**
+   * Set the name index.
+   *
+   * @param index the index
+   */
   protected void setNameIndex(int index) {
     u2nameIndex = index;
   }

@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Representation of a 'long' entry in the ConstantPool (takes up two indices).
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class LongCpInfo extends CpInfo
 {
@@ -29,7 +29,10 @@ public class LongCpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Long cp info.
+     */
+// Instance Methods ------------------------------------------------------
     protected LongCpInfo()
     {
         super(CONSTANT_Long);

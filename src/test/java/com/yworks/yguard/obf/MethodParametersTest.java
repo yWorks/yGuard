@@ -29,18 +29,35 @@ import static junit.framework.TestCase.assertEquals;
 
 /**
  * Tests if {@code MethodParameters} bytecode attributes are properly handled.
+ *
  * @author Thomas Behr
  */
 public class MethodParametersTest extends AbstractObfuscationTest {
+  /**
+   * The Name.
+   */
   @Rule
   public TestName name = new TestName();
+  /**
+   * The Opcodes asm.
+   */
   static final int OPCODES_ASM = Opcodes.ASM7;
 
+  /**
+   * Test simple method parameters.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testSimpleMethodParameters() throws Exception {
     impl(false);
   }
 
+  /**
+   * Test retain method parameters.
+   *
+   * @throws Exception the exception
+   */
   @Test
   public void testRetainMethodParameters() throws Exception {
     impl(true);
@@ -160,9 +177,20 @@ public class MethodParametersTest extends AbstractObfuscationTest {
 
 
   private static final class MethodParameterVisitor extends ClassVisitor {
+    /**
+     * The Prefix.
+     */
     String prefix;
+    /**
+     * The Has method parameters attribute.
+     */
     final Map<String, Boolean> hasMethodParametersAttribute;
 
+    /**
+     * Instantiates a new Method parameter visitor.
+     *
+     * @param hasMethodParametersAttribute the has method parameters attribute
+     */
     MethodParameterVisitor( final Map<String, Boolean> hasMethodParametersAttribute ) {
       super(OPCODES_ASM);
       this.prefix = "";
@@ -211,6 +239,12 @@ public class MethodParametersTest extends AbstractObfuscationTest {
     private final String methodId;
     private final Map<String, Boolean> hasMethodParametersAttribute;
 
+    /**
+     * Instantiates a new Parameter visitor.
+     *
+     * @param methodId                     the method id
+     * @param hasMethodParametersAttribute the has method parameters attribute
+     */
     ParameterVisitor(
             final String methodId,
             final Map<String, Boolean> hasMethodParametersAttribute
@@ -235,12 +269,22 @@ public class MethodParametersTest extends AbstractObfuscationTest {
     private boolean type;
     private String del;
 
+    /**
+     * Instantiates a new Signature builder.
+     */
     SignatureBuilder() {
       dim = 0;
       type = false;
       del = "";
     }
 
+    /**
+     * Append signature string builder.
+     *
+     * @param sb         the sb
+     * @param descriptor the descriptor
+     * @return the string builder
+     */
     StringBuilder appendSignature(
             final StringBuilder sb, final String descriptor
     ) {

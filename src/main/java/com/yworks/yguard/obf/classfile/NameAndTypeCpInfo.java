@@ -13,7 +13,7 @@ import java.io.DataOutput;
 /**
  * Representation of a 'nameandtype' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class NameAndTypeCpInfo extends CpInfo implements Cloneable
 {
@@ -28,7 +28,10 @@ public class NameAndTypeCpInfo extends CpInfo implements Cloneable
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Name and type cp info.
+   */
+// Instance Methods ------------------------------------------------------
     protected NameAndTypeCpInfo()
     {
         super(CONSTANT_NameAndType);
@@ -44,17 +47,33 @@ public class NameAndTypeCpInfo extends CpInfo implements Cloneable
         return cloneInfo;
     }
 
-    /** Return the name index. */
-    protected int getNameIndex() {return u2nameIndex;}
+  /**
+   * Return the name index.
+   *
+   * @return the name index
+   */
+  protected int getNameIndex() {return u2nameIndex;}
 
-    /** Set the name index. */
-    protected void setNameIndex(int index) {u2nameIndex = index;}
+  /**
+   * Set the name index.
+   *
+   * @param index the index
+   */
+  protected void setNameIndex(int index) {u2nameIndex = index;}
 
-    /** Return the descriptor index. */
-    protected int getDescriptorIndex() {return u2descriptorIndex;}
+  /**
+   * Return the descriptor index.
+   *
+   * @return the descriptor index
+   */
+  protected int getDescriptorIndex() {return u2descriptorIndex;}
 
-    /** Set the descriptor index. */
-    protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
+  /**
+   * Set the descriptor index.
+   *
+   * @param index the index
+   */
+  protected void setDescriptorIndex(int index) {u2descriptorIndex = index;}
 
     /** Check for Utf8 references to constant pool and mark them. */
     protected void markUtf8Refs(ConstantPool pool) 

@@ -12,6 +12,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
+ * The type Jar stream provider.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class JarStreamProvider implements StreamProvider {
@@ -19,11 +21,20 @@ public class JarStreamProvider implements StreamProvider {
   private JarFile f;
   private Enumeration<? extends JarEntry> en;
 
+  /**
+   * The Current entry.
+   */
   JarEntry currentEntry;
   private String currentEntryName;
   private String currentDir;
   private String currentFilename;
 
+  /**
+   * Instantiates a new Jar stream provider.
+   *
+   * @param jarFile the jar file
+   * @throws IOException the io exception
+   */
   public JarStreamProvider( final File jarFile ) throws IOException {
     if ( !jarFile.exists() )
       throw new IllegalArgumentException("jar file not found: " + jarFile.toString());

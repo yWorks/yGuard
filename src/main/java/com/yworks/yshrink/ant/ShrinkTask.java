@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 /**
+ * The type Shrink task.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ShrinkTask extends YGuardBaseTask {
@@ -36,10 +38,19 @@ public class ShrinkTask extends YGuardBaseTask {
   private String digests = "SHA-1,MD5";
 
   private EntryPointsSection entryPointsSection;
+
+  /**
+   * Instantiates a new Shrink task.
+   */
   public ShrinkTask() {
     super();
   }
 
+  /**
+   * Instantiates a new Shrink task.
+   *
+   * @param mode the mode
+   */
   public ShrinkTask( boolean mode ) {
     super( mode );
   }
@@ -257,22 +268,47 @@ public class ShrinkTask extends YGuardBaseTask {
     return log;
   }
 
+  /**
+   * Gets create stubs.
+   *
+   * @return the create stubs
+   */
   public boolean getCreateStubs() {
     return createStubs;
   }
 
+  /**
+   * Sets create stubs.
+   *
+   * @param createStubs the create stubs
+   */
   public void setCreateStubs( boolean createStubs ) {
     this.createStubs = createStubs;
   }
 
+  /**
+   * Gets digests.
+   *
+   * @return the digests
+   */
   public String getDigests() {
     return digests;
   }
 
+  /**
+   * Sets digests.
+   *
+   * @param digests the digests
+   */
   public void setDigests( String digests ) {
     this.digests = digests;
   }
 
+  /**
+   * Sets log file.
+   *
+   * @param file the file
+   */
   public void setLogFile( File file ) {
     this.logFile = file;
   }
@@ -293,12 +329,17 @@ public class ShrinkTask extends YGuardBaseTask {
   /**
    * not for ant, used if the ShrinkTask is created 'artificially'.
    *
-   * @param eps
+   * @param eps the eps
    */
   public void setEntryPointsExternally( EntryPointsSection eps ) {
     this.entryPointsSection = eps;
   }
 
+  /**
+   * Create expose entry points section.
+   *
+   * @return the entry points section
+   */
   public EntryPointsSection createExpose() {
     return createEntryPoints();
   }
@@ -321,6 +362,11 @@ public class ShrinkTask extends YGuardBaseTask {
     }
   }
 
+  /**
+   * Add configured entrypointjar.
+   *
+   * @param entrypointjar the entrypointjar
+   */
   public void addConfiguredEntrypointjar( final EntryPointJar entrypointjar ) {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
     pairs.add( entrypointjar );

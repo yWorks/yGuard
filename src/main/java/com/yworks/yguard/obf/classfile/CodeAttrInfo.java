@@ -15,11 +15,14 @@ import com.yworks.yguard.obf.*;
 /**
  * Representation of an attribute.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class CodeAttrInfo extends AttrInfo
 {
-    // Constants -------------------------------------------------------------
+  /**
+   * The constant CONSTANT_FIELD_SIZE.
+   */
+// Constants -------------------------------------------------------------
     public static final int CONSTANT_FIELD_SIZE = 12;
 
 
@@ -30,14 +33,27 @@ public class CodeAttrInfo extends AttrInfo
     private byte[] code;
     private int u2exceptionTableLength;
     private ExceptionInfo[] exceptionTable;
-    protected int u2attributesCount;
-    protected AttrInfo[] attributes;
+  /**
+   * The U 2 attributes count.
+   */
+  protected int u2attributesCount;
+  /**
+   * The Attributes.
+   */
+  protected AttrInfo[] attributes;
 
 
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Code attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+// Instance Methods ------------------------------------------------------
     protected CodeAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);

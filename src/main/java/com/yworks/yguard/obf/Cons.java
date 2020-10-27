@@ -14,18 +14,30 @@ package com.yworks.yguard.obf;
 /**
  * A 'cons' of two references -- useful as a generic return grouping from Enumerations.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class Cons
 {
-    // Fields ----------------------------------------------------------------
+  /**
+   * The Car.
+   */
+// Fields ----------------------------------------------------------------
     public Object car;
-    public Object cdr;
+  /**
+   * The Cdr.
+   */
+  public Object cdr;
 
 
     // Instance Methods ---------------------------------------------------------
-    /** Ctor. */
-    public Cons(Object car, Object cdr)
+
+  /**
+   * Ctor.
+   *
+   * @param car the car
+   * @param cdr the cdr
+   */
+  public Cons(Object car, Object cdr)
     {
         this.car = car;
         this.cdr = cdr;

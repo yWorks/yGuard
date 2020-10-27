@@ -4,21 +4,58 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 /**
+ * The interface Stream provider.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public interface StreamProvider {
 
-  DataInputStream getNextClassEntryStream() throws IOException;
+    /**
+     * Gets next class entry stream.
+     *
+     * @return the next class entry stream
+     * @throws IOException the io exception
+     */
+    DataInputStream getNextClassEntryStream() throws IOException;
 
-  DataInputStream getNextResourceEntryStream() throws IOException;
+    /**
+     * Gets next resource entry stream.
+     *
+     * @return the next resource entry stream
+     * @throws IOException the io exception
+     */
+    DataInputStream getNextResourceEntryStream() throws IOException;
 
-  Entry getCurrentEntry();
+    /**
+     * Gets current entry.
+     *
+     * @return the current entry
+     */
+    Entry getCurrentEntry();
 
-  String getCurrentEntryName();
+    /**
+     * Gets current entry name.
+     *
+     * @return the current entry name
+     */
+    String getCurrentEntryName();
 
-  String getCurrentDir();
+    /**
+     * Gets current dir.
+     *
+     * @return the current dir
+     */
+    String getCurrentDir();
 
-  String getCurrentFilename();
+    /**
+     * Gets current filename.
+     *
+     * @return the current filename
+     */
+    String getCurrentFilename();
 
-  void reset();
+    /**
+     * Reset.
+     */
+    void reset();
 }

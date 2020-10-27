@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Representation of an attribute.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class LocalVariableTypeTableAttrInfo extends AttrInfo
 {
@@ -29,7 +29,14 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Local variable type table attr info.
+   *
+   * @param cf            the cf
+   * @param attrNameIndex the attr name index
+   * @param attrLength    the attr length
+   */
+// Instance Methods ------------------------------------------------------
     protected LocalVariableTypeTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
@@ -41,12 +48,22 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
         return ATTR_LocalVariableTypeTable;
     }
 
-    /** Return the array of local variable table entries. */
-    protected LocalVariableTypeInfo[] getLocalVariableTypeTable() 
+  /**
+   * Return the array of local variable table entries.
+   *
+   * @return the local variable type info [ ]
+   */
+  protected LocalVariableTypeInfo[] getLocalVariableTypeTable()
     {
         return localVariableTypeTable;
     }
-    public void setLocalVariableTypeTable(LocalVariableTypeInfo[] lvts) {
+
+  /**
+   * Sets local variable type table.
+   *
+   * @param lvts the lvts
+   */
+  public void setLocalVariableTypeTable(LocalVariableTypeInfo[] lvts) {
       this.localVariableTypeTable = lvts;
       this.u2localVariableTypeTableLength = lvts.length;
       this.u4attrLength = 2 + 10 * u2localVariableTypeTableLength;

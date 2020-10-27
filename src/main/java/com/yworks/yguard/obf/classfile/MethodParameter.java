@@ -7,6 +7,7 @@ import java.io.IOException;
 /**
  * Representation of a method parameter struct in the method parameters
  * attribute section.
+ *
  * @author Thomas Behr
  */
 public class MethodParameter {
@@ -24,12 +25,25 @@ public class MethodParameter {
     this.u2accessFlags = flags;
   }
 
+  /**
+   * Read method parameter.
+   *
+   * @param din the din
+   * @return the method parameter
+   * @throws IOException the io exception
+   */
   static MethodParameter read( final DataInput din ) throws IOException {
     final int index = din.readUnsignedShort();
     final int flags = din.readUnsignedShort();
     return new MethodParameter(index, flags);
   }
 
+  /**
+   * Write.
+   *
+   * @param dout the dout
+   * @throws IOException the io exception
+   */
   void write( final DataOutput dout ) throws IOException {
     dout.writeShort(u2nameIndex);
     dout.writeShort(u2accessFlags);

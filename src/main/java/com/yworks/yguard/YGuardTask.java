@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * The type Y guard task.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class YGuardTask extends YGuardBaseTask {
@@ -146,6 +148,11 @@ public class YGuardTask extends YGuardBaseTask {
     }
   }
 
+  /**
+   * Create shrink shrink task.
+   *
+   * @return the shrink task
+   */
   public ShrinkTask createShrink() {
     ShrinkTask shrinkTask = new ShrinkTask( YGuardBaseTask.MODE_NESTED );
     configureSubTask(shrinkTask);
@@ -153,6 +160,11 @@ public class YGuardTask extends YGuardBaseTask {
     return shrinkTask;
   }
 
+  /**
+   * Create rename obfuscator task.
+   *
+   * @return the obfuscator task
+   */
   public ObfuscatorTask createRename() {
     ObfuscatorTask obfuscatorTask = new ObfuscatorTask( YGuardBaseTask.MODE_NESTED );
     configureSubTask(obfuscatorTask);
@@ -169,6 +181,11 @@ public class YGuardTask extends YGuardBaseTask {
     task.init();
   }
 
+  /**
+   * Create obfuscate obfuscator task.
+   *
+   * @return the obfuscator task
+   */
   public ObfuscatorTask createObfuscate() {
     return createRename();
   }

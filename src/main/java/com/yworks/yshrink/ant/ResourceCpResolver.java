@@ -14,12 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The type Resource cp resolver.
+ *
  * @author Sebastian Mueller, yWorks GmbH  (sebastian.mueller@yworks.com)
  */
 public class ResourceCpResolver implements ClassResolver {
   private Path resource;
+  /**
+   * The Url class loader.
+   */
   URLClassLoader urlClassLoader;
 
+  /**
+   * Instantiates a new Resource cp resolver.
+   *
+   * @param resources the resources
+   * @param target    the target
+   */
   public ResourceCpResolver(final Path resources, final Task target) {
     this.resource = resources;
     final String[] list = resources.list();

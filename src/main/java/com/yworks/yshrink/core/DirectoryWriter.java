@@ -23,6 +23,9 @@ import java.text.NumberFormat;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The type Directory writer.
+ */
 public class DirectoryWriter implements ArchiveWriter {
   private static final String MANIFEST_FILENAME = "META-INF/MANIFEST.MF";
   private static final String SIGNATURE_FILE_PREFIX = "META-INF/";
@@ -32,6 +35,11 @@ public class DirectoryWriter implements ArchiveWriter {
   private Set<String> directoriesWritten = new HashSet<String>();
   private boolean createStubs;
 
+  /**
+   * Instantiates a new Directory writer.
+   *
+   * @param createStubs the create stubs
+   */
   public DirectoryWriter( boolean createStubs ) {
     this.createStubs = createStubs;
   }

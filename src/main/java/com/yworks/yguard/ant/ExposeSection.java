@@ -28,56 +28,108 @@ public class ExposeSection extends Exclude {
   private List lineNumberTables = new ArrayList( 5 );
   private List sourceFiles = new ArrayList( 5 );
 
+  /**
+   * Instantiates a new Expose section.
+   *
+   * @param task the task
+   */
   public ExposeSection( ObfuscatorTask task ) {
     super( task );
   }
 
+  /**
+   * Add pattern set.
+   *
+   * @param ps the ps
+   */
   public void addPatternSet( PatternSet ps ) {
     patterns.add( ps );
   }
 
+  /**
+   * Create method method section.
+   *
+   * @return the method section
+   */
   public MethodSection createMethod() {
     MethodSection ms = new MethodSection();
     this.methods.add( ms );
     return ms;
   }
 
+  /**
+   * Create field field section.
+   *
+   * @return the field section
+   */
   public FieldSection createField() {
     FieldSection fs = new FieldSection();
     this.fields.add( fs );
     return fs;
   }
 
+  /**
+   * Create class class section.
+   *
+   * @return the class section
+   */
   public ClassSection createClass() {
     ClassSection cs = new ClassSection( task );
     this.classes.add( cs );
     return cs;
   }
 
+  /**
+   * Create package package section.
+   *
+   * @return the package section
+   */
   public PackageSection createPackage() {
     PackageSection ps = new PackageSection();
     this.packages.add( ps );
     return ps;
   }
 
+  /**
+   * Create attribute attributes section.
+   *
+   * @return the attributes section
+   */
   public AttributesSection createAttribute() {
     AttributesSection as = new AttributesSection( task );
     attributes.add( as );
     return as;
   }
 
+  /**
+   * Create line number table line number table section.
+   *
+   * @return the line number table section
+   */
   public LineNumberTableSection createLineNumberTable() {
     LineNumberTableSection lns = new LineNumberTableSection( task );
     lineNumberTables.add( lns );
     return lns;
   }
 
+  /**
+   * Create source file source file section.
+   *
+   * @return the source file section
+   */
   public SourceFileSection createSourceFile() {
     SourceFileSection sfs = new SourceFileSection( task );
     sourceFiles.add( sfs );
     return sfs;
   }
 
+  /**
+   * Create entries collection.
+   *
+   * @param srcJars the src jars
+   * @return the collection
+   * @throws IOException the io exception
+   */
   public Collection createEntries( Collection srcJars ) throws IOException {
     Collection entries = new ArrayList( 20 );
     if ( source ) {
@@ -185,34 +237,74 @@ public class ExposeSection extends Exclude {
     return entries;
   }
 
+  /**
+   * Gets classes.
+   *
+   * @return the classes
+   */
   public List getClasses() {
     return classes;
   }
 
+  /**
+   * Gets packages.
+   *
+   * @return the packages
+   */
   public List getPackages() {
     return packages;
   }
 
+  /**
+   * Gets patterns.
+   *
+   * @return the patterns
+   */
   public List getPatterns() {
     return patterns;
   }
 
+  /**
+   * Gets methods.
+   *
+   * @return the methods
+   */
   public List getMethods() {
     return methods;
   }
 
+  /**
+   * Gets fields.
+   *
+   * @return the fields
+   */
   public List getFields() {
     return fields;
   }
 
+  /**
+   * Gets attributes.
+   *
+   * @return the attributes
+   */
   public List getAttributes() {
     return attributes;
   }
 
+  /**
+   * Gets line number tables.
+   *
+   * @return the line number tables
+   */
   public List getLineNumberTables() {
     return lineNumberTables;
   }
 
+  /**
+   * Gets source files.
+   *
+   * @return the source files
+   */
   public List getSourceFiles() {
     return sourceFiles;
   }

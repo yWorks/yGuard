@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Representation of a 'UTF8' entry in the ConstantPool.
  *
- * @author      Mark Welsh
+ * @author Mark Welsh
  */
 public class Utf8CpInfo extends CpInfo
 {
@@ -31,14 +31,21 @@ public class Utf8CpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-    // Instance Methods ------------------------------------------------------
+  /**
+   * Instantiates a new Utf 8 cp info.
+   */
+// Instance Methods ------------------------------------------------------
     protected Utf8CpInfo()
     {
         super(CONSTANT_Utf8);
     }
 
-    /** Ctor used when appending fresh Utf8 entries to the constant pool. */
-    public Utf8CpInfo(String s) 
+  /**
+   * Ctor used when appending fresh Utf8 entries to the constant pool.
+   *
+   * @param s the s
+   */
+  public Utf8CpInfo(String s)
     {
         super(CONSTANT_Utf8);
         setString(s);
@@ -55,8 +62,12 @@ public class Utf8CpInfo extends CpInfo
         }
     }
 
-    /** Return UTF8 data as a String. */
-    public String getString() 
+  /**
+   * Return UTF8 data as a String.
+   *
+   * @return the string
+   */
+  public String getString()
     {
         if (utf8string == null)
         {
@@ -69,8 +80,12 @@ public class Utf8CpInfo extends CpInfo
         return utf8string;
     }
 
-    /** Set UTF8 data as String. */
-    public void setString(String str) 
+  /**
+   * Set UTF8 data as String.
+   *
+   * @param str the str
+   */
+  public void setString(String str)
     {
         utf8string = str;
         try{
@@ -81,8 +96,10 @@ public class Utf8CpInfo extends CpInfo
         u2length = bytes.length;
     }
 
-    /** Set the UTF8 data to empty. */
-    public void clearString() 
+  /**
+   * Set the UTF8 data to empty.
+   */
+  public void clearString()
     {
         u2length = 0;
         bytes = new byte[0];

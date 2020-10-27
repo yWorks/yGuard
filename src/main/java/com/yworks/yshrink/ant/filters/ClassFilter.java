@@ -15,12 +15,19 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * The type Class filter.
+ *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class ClassFilter extends PatternMatchedFilter {
 
   private List<ClassSection> sections;
 
+  /**
+   * Instantiates a new Class filter.
+   *
+   * @param project the project
+   */
   public ClassFilter( Project project ) {
     super( project );
   }
@@ -139,6 +146,11 @@ public class ClassFilter extends PatternMatchedFilter {
     return false;
   }
 
+  /**
+   * Add class section.
+   *
+   * @param cs the cs
+   */
   public void addClassSection( ClassSection cs ) {
     if ( null == sections ) {
       sections = new ArrayList<ClassSection>( 5 );
