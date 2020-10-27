@@ -9,6 +9,9 @@ public class Network<N, E> {
   Map<N, Set<N>> out = new HashMap<>();
   Map<N, Set<N>> in = new HashMap<>();
   Map<EndpointPair<N>, Set<E>> edges = new HashMap<>();
+  // NOTE: This occupies double the amount of memory but is worth the sacrifice because it
+  // reduces runtime from potentially O(n^2) to O(1)
+  Map<E, EndpointPair<N>> reverseEdges = new HashMap<>();
 
   public void addEdge(N source, N target, E edge) {
     addNode(source, target);
@@ -17,6 +20,7 @@ public class Network<N, E> {
     EndpointPair endpointPair = newPair(source, target);
     addEdge(endpointPair);
     edges.get(endpointPair).add(edge);
+    reverseEdges.put(edge, endpointPair);
   }
 
   public Set<E> inEdges( N node) {
@@ -65,12 +69,7 @@ public class Network<N, E> {
   }
 
   public EndpointPair<N> incidentNodes( E edge) {
-    for (Map.Entry<EndpointPair<N>, Set<E>> entry : edges.entrySet()) {
-      if (entry.getValue().contains(edge)) {
-        return entry.getKey();
-      }
-    }
-    return null;
+    return reverseEdges.get(edge);
   }
 
   private Set<E> getEdges( final N source, final N target ) {
