@@ -8,9 +8,12 @@ import java.util.Set;
 public class Network<N, E> {
   Map<N, Set<N>> out = new HashMap<>();
   Map<N, Set<N>> in = new HashMap<>();
-  Map<EndpointPair<N>, Set<E>> edges = new HashMap<>();
+  Map<N, Set<E>> inEdges = new HashMap<>();
+  Map<N, Set<E>> outEdges = new HashMap<>();
+
   // NOTE: This occupies double the amount of memory but is worth the sacrifice because it
   // reduces runtime from potentially O(n^2) to O(1)
+  Map<EndpointPair<N>, Set<E>> edges = new HashMap<>();
   Map<E, EndpointPair<N>> reverseEdges = new HashMap<>();
 
   public void addEdge(N source, N target, E edge) {
@@ -20,23 +23,19 @@ public class Network<N, E> {
     EndpointPair endpointPair = newPair(source, target);
     addEdge(endpointPair);
     edges.get(endpointPair).add(edge);
+    inEdges.get(target).add(edge);
+    outEdges.get(source).add(edge);
     reverseEdges.put(edge, endpointPair);
   }
 
   public Set<E> inEdges( N node) {
-    Set<E> inEdges = new HashSet<>();
-    for (N in: in.get(node)) {
-      inEdges.addAll(getEdges(in, node));
-    }
-    return inEdges;
+    if (inEdges.containsKey(node)) return inEdges.get(node);
+    return new HashSet<>();
   }
 
   public Set<E> outEdges( N node) {
-    Set<E> outEdges = new HashSet<>();
-    for (N out: out.get(node)) {
-      outEdges.addAll(getEdges(node, out));
-    }
-    return outEdges;
+    if (outEdges.containsKey(node)) return outEdges.get(node);
+    return new HashSet<>();
   }
 
   public Set<E> edgesConnecting( N source, N target) {
@@ -59,7 +58,13 @@ public class Network<N, E> {
   public void addEdge(EndpointPair<N> endpointPair) {
     if (!edges.containsKey(endpointPair)) {
       edges.put(endpointPair, new HashSet<E>());
-    };
+    }
+    if (!inEdges.containsKey(endpointPair.target())) {
+      inEdges.put(endpointPair.target(), new HashSet<E>());
+    }
+    if(!outEdges.containsKey(endpointPair.source())) {
+      outEdges.put(endpointPair.source(), new HashSet<E>());
+    }
   }
 
   public Set<N> nodes() {
