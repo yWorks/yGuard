@@ -63,17 +63,4 @@ public class Node {
         return null;
     }
 
-  /**
-   * Returns the edge directly connecting to this node, if any.
-   *
-   * @param node - the node which you would like to know the edge for.
-   * @return {Edge|null}
-   */
-  public Edge getEdgeTo(Node node) {
-        Set<Edge> connectingEdges = this.network.edgesConnecting(this, node);
-        if (connectingEdges.iterator().hasNext()) {
-            return connectingEdges.iterator().next();
-        }
-        return null;
-    }
 }
