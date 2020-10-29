@@ -1,7 +1,6 @@
 package com.yworks.yshrink.model;
 
 import org.objectweb.asm.Opcodes;
-import com.yworks.util.graph.Node;
 
 import java.io.File;
 import java.util.List;
@@ -25,7 +24,7 @@ public abstract class AbstractDescriptor {
   /**
    * The Node.
    */
-  protected Node node;
+  protected Object node;
   /**
    * The Access.
    */
@@ -80,7 +79,7 @@ public abstract class AbstractDescriptor {
    *
    * @return the node
    */
-  public Node getNode() {
+  public Object getNode() {
     return node;
   }
 
@@ -89,7 +88,7 @@ public abstract class AbstractDescriptor {
    *
    * @param node the node
    */
-  public void setNode( final Node node ) {
+  public void setNode( final Object node ) {
     this.node = node;
   }
 

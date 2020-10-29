@@ -1,7 +1,6 @@
 package com.yworks.yshrink.core;
 
 import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
-import com.yworks.util.graph.Node;
 import com.yworks.common.ShrinkBag;
 import com.yworks.yshrink.model.AbstractDescriptor;
 import com.yworks.yshrink.model.AnnotationUsage;
@@ -303,7 +302,7 @@ public class Analyzer {
       return;
     }
 
-    Node newNode = cd.getNewNode();
+    Object newNode = cd.getNewNode();
 
     if ( newNode == null ) {
       Logger.err( "no NEW-Node found for " + cd.getName() );
@@ -595,7 +594,7 @@ public class Analyzer {
 		 * @param createResolveEdge wether to create an additional RESOLVE edge.
    */
   private void createEdgeToImplementingMethod( ClassDescriptor owner, final String targetMethod, final String targetDesc,
-                                               Model model, Node node,
+                                               Model model, Object node,
                                                EdgeType type, boolean createResolveEdge ) {
 
     ArrayList<ClassDescriptor> classHierarchy = new ArrayList<ClassDescriptor>();
