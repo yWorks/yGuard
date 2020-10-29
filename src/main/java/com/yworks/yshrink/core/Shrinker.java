@@ -6,7 +6,7 @@ import com.yworks.yshrink.model.EdgeType;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.NodeType;
-import com.yworks.graph.Network;
+import com.yworks.util.graph.Network;
 import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;

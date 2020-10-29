@@ -1,4 +1,4 @@
-package com.yworks.graph;
+package com.yworks.util.graph;
 
 class Edge {
   private final Node source;

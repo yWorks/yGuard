@@ -1,6 +1,6 @@
 package com.yworks.yshrink.core;
 
-import com.yworks.graph.Network;
+import com.yworks.util.graph.Network;
 import java.util.HashMap;
 import java.util.Map;
 

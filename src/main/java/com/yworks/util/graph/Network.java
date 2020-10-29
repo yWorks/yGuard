@@ -1,4 +1,4 @@
-package com.yworks.graph;
+package com.yworks.util.graph;
 
 import java.util.Iterator;
 

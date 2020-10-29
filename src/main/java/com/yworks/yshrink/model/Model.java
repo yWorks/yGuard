@@ -1,10 +1,10 @@
 package com.yworks.yshrink.model;
 
-import com.yworks.graph.DefaultNetwork;
+import com.yworks.util.graph.DefaultNetwork;
 import com.yworks.logging.Logger;
 import com.yworks.yshrink.core.ClassResolver;
 import com.yworks.yshrink.util.Util;
-import com.yworks.graph.Network;
+import com.yworks.util.graph.Network;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 

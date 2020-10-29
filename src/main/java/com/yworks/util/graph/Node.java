@@ -1,7 +1,6 @@
-package com.yworks.graph;
+package com.yworks.util.graph;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 class Node {
