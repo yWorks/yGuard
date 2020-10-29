@@ -64,20 +64,14 @@ public class DefaultNetwork implements Network {
 
   @Override
   public Object firstInEdge( final Object node ) {
-    Iterator inEdgesIterator = inEdges(node);
-    if (inEdgesIterator.hasNext()) {
-      return inEdgesIterator.next();
-    }
-    return null;
+    Node n = (Node) node;
+    return n.getInEdges().size() > 0 ? n.getInEdges().get(0) : null;
   }
 
   @Override
   public Object firstOutEdge( final Object node ) {
-    Iterator outEdgesIterator = outEdges(node);
-    if (outEdgesIterator.hasNext()) {
-      return outEdgesIterator.next();
-    }
-    return null;
+    Node n = (Node) node;
+    return n.getOutEdges().size() > 0 ? n.getOutEdges().get(0) : null;
   }
 
   @Override
