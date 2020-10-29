@@ -48,11 +48,6 @@ public class DefaultNetwork implements Network {
   }
 
   @Override
-  public Integer edgesSize() {
-    return edges.size();
-  }
-
-  @Override
   public Iterator edges() {
     return edges.iterator();
   }
