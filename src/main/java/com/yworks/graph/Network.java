@@ -13,6 +13,8 @@ public interface Network {
 
   Iterator nodes();
   Iterator edges();
+  Integer nodesSize();
+  Integer edgesSize();
 
   Iterator inEdges(Object node);
   Iterator outEdges(Object node);
@@ -22,5 +24,7 @@ public interface Network {
 
   Object nextInEdge(Object edge);
   Object nextOutEdge(Object edge);
+
+  Iterator edgesConnecting(Object source, Object target);
   Object opposite(Object edge, Object node);
 }

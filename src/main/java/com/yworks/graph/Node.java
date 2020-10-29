@@ -8,12 +8,12 @@ class Node {
   private final List<Edge> inEdges = new ArrayList<>();
   private final List<Edge> outEdges = new ArrayList<>();
 
-  public Iterator getInEdges() {
-    return inEdges.iterator();
+  public List<Edge> getInEdges() {
+    return inEdges;
   }
 
-  public Iterator getOutEdges() {
-    return outEdges.iterator();
+  public List<Edge> getOutEdges() {
+    return outEdges;
   }
 
   public void addInEdge(Object edge) {

@@ -2,6 +2,7 @@ package com.yworks.graph;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,18 +44,28 @@ public class DefaultNetwork implements Network {
   }
 
   @Override
+  public Integer nodesSize() {
+    return nodes.size();
+  }
+
+  @Override
+  public Integer edgesSize() {
+    return edges.size();
+  }
+
+  @Override
   public Iterator edges() {
     return edges.iterator();
   }
 
   @Override
   public Iterator inEdges( final Object node ) {
-    return ((Node)node).getInEdges();
+    return ((Node)node).getInEdges().iterator();
   }
 
   @Override
   public Iterator outEdges( final Object node ) {
-    return ((Node)node).getOutEdges();
+    return ((Node)node).getOutEdges().iterator();
   }
 
   @Override
@@ -105,6 +116,15 @@ public class DefaultNetwork implements Network {
       }
     }
     return null;
+  }
+
+  @Override
+  public Iterator edgesConnecting(Object source, Object target) {
+    Node src = (Node) source;
+    Node tgt = (Node) target;
+    List<Edge> edgesConnecting = new ArrayList<>(src.getOutEdges());
+    edgesConnecting.retainAll(tgt.getInEdges());
+    return edgesConnecting.iterator();
   }
 
   @Override

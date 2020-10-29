@@ -112,6 +112,14 @@ public class DefaultNetworkTest extends TestCase {
     assertEquals(network.nextOutEdge(edge), edge2);
   }
 
+  public void testEdgesConnecting() {
+    Network network = new DefaultNetwork();
+    Object src = network.createNode();
+    Object tgt = network.createNode();
+    Object edge = network.createEdge(src, tgt);
+    assertEquals(network.edgesConnecting(src, tgt).next(), edge);
+  }
+
   public void testOpposite() {
     Network network = new DefaultNetwork();
     Object src = network.createNode();
