@@ -1,15 +1,12 @@
 package com.yworks.yshrink.model;
 
-import com.google.common.graph.Network;
-import com.google.common.graph.NetworkBuilder;
-import com.yworks.yshrink.core.ClassResolver;
+import com.yworks.util.graph.DefaultNetwork;
 import com.yworks.logging.Logger;
+import com.yworks.yshrink.core.ClassResolver;
 import com.yworks.yshrink.util.Util;
-import com.yworks.graph.Node;
-import com.yworks.graph.Edge;
+import com.yworks.util.graph.Network;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
-import com.google.common.graph.MutableNetwork;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -19,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,7 +36,7 @@ public class Model {
   /**
    * The Network.
    */
-  protected MutableNetwork<Node, Edge> network;
+  protected Network network;
   private Map<Object, Object> dependencyTypes;
   /**
    * The Node 2 descriptor.
@@ -49,7 +47,7 @@ public class Model {
    */
   protected Map<Object, Object> node2Type;
 
-  private Node entryPointNode;
+  private Object entryPointNode;
 
   private boolean simpleModelSet = false;
 
@@ -117,15 +115,11 @@ public class Model {
    *
    * @param network the network
    */
-  public Model( MutableNetwork<Node, Edge> network ) {
+  public Model( Network network ) {
     if ( network != null ) {
       this.network = network;
     } else {
-      this.network = NetworkBuilder
-              .directed()
-              .allowsParallelEdges(true)
-              .allowsSelfLoops(true)
-              .build();
+      this.network = new DefaultNetwork();
     }
 
     setClassResolver( null );
@@ -134,8 +128,7 @@ public class Model {
     dependencyTypes = new HashMap<>();
     model = new HashMap<>();
 
-    entryPointNode = new Node(this.network);
-    this.network.addNode(entryPointNode);
+    entryPointNode = this.network.createNode();
     node2Type.put( entryPointNode, NodeType.ENTRYPOINT );
   }
 
@@ -144,7 +137,7 @@ public class Model {
    *
    * @return the entry point node
    */
-  public Node getEntryPointNode() {
+  public Object getEntryPointNode() {
     return entryPointNode;
   }
 
@@ -167,7 +160,7 @@ public class Model {
    * @param type   the edge type
    * @return the created edge, or null if no edge was created
    */
-  public Edge createDependencyEdge( final AbstractDescriptor source, final AbstractDescriptor target,
+  public Object createDependencyEdge( final AbstractDescriptor source, final AbstractDescriptor target,
                                     final EdgeType type ) {
 
     if ( ( !source.equals( target ) ) ) {
@@ -185,20 +178,21 @@ public class Model {
    * @param edgeType   the edge type
    * @return the edge
    */
-  public Edge createDependencyEdge( final Node sourceNode, final Node targetNode, final EdgeType edgeType ) {
+  public Object createDependencyEdge( final Object sourceNode, final Object targetNode, final EdgeType edgeType ) {
     if ( hasEdge( sourceNode, targetNode, edgeType ) ) {
       return null;
     } else {
-      final Edge e = new Edge(this.network);
-      this.network.addEdge( sourceNode, targetNode, e );
+      final Object e = network.createEdge(sourceNode, targetNode);
       dependencyTypes.put( e, edgeType );
       return e;
     }
   }
 
-  private boolean hasEdge( final Node src, final Node tgt, final EdgeType type ) {
-    for (Edge edge : network.edgesConnecting(src, tgt)) {
-      if (dependencyTypes.get(edge) == type) {
+  private boolean hasEdge( final Object src, final Object tgt, final EdgeType type ) {
+    Iterator connectingEdgesIterator = network.edgesConnecting(src, tgt);
+    while (connectingEdgesIterator.hasNext()) {
+      Object currentEdge = connectingEdgesIterator.next();
+      if (dependencyTypes.get(currentEdge) == type) {
         return true;
       }
     }
@@ -218,8 +212,7 @@ public class Model {
   public ClassDescriptor newClassDescriptor( final String name, final String superName, final String[] interfaces,
                                              final int access, final File sourceJar ) {
 
-    final Node newNode = new Node(this.network);
-    this.network.addNode(newNode);
+    final Object newNode = network.createNode();
     final AbstractDescriptor newNodeDescriptor = new NewNodeDescriptor( Opcodes.ACC_PUBLIC, sourceJar );
     node2Descriptor.put( newNode, newNodeDescriptor );
     node2Type.put( newNode, NodeType.NEW );
@@ -227,8 +220,7 @@ public class Model {
 
     final ClassDescriptor cd = new ClassDescriptor( name, superName, interfaces, access, newNode, sourceJar );
 
-    final Node classNode = new Node(this.network);
-    this.network.addNode(classNode);
+    final Object classNode = network.createNode();
     node2Descriptor.put( classNode, cd );
     node2Type.put( classNode, NodeType.CLASS );
     cd.setNode( classNode );
@@ -254,8 +246,7 @@ public class Model {
 
     final MethodDescriptor md = new MethodDescriptor( name, access, desc, exceptions, sourceJar );
     cd.addMethod( md );
-    final Node n = new Node(this.network);
-    this.network.addNode(n);
+    final Object n = network.createNode();
     node2Descriptor.put( n, md );
     node2Type.put( n, NodeType.METHOD );
     md.setNode( n );
@@ -276,8 +267,7 @@ public class Model {
                                              final int access, final File sourceJar ) {
     final FieldDescriptor fd = new FieldDescriptor( desc, name, access, sourceJar );
     cd.addField( fd );
-    final Node n = new Node(this.network);
-    network.addNode(n);
+    final Object n = network.createNode();
     node2Descriptor.put( n, fd );
     node2Type.put( n, NodeType.FIELD );
     fd.setNode( n );
@@ -323,7 +313,7 @@ public class Model {
    * @param n the n
    * @return the descriptor
    */
-  public AbstractDescriptor getDescriptor( final Node n ) {
+  public AbstractDescriptor getDescriptor( final Object n ) {
     return (AbstractDescriptor) node2Descriptor.get( n );
   }
 
@@ -333,15 +323,17 @@ public class Model {
    * @param memberNode the member node
    * @return the class node
    */
-  public Node getClassNode( final Node memberNode ) {
+  public Object getClassNode( final Object memberNode ) {
 
     if ( getDescriptor( memberNode ) instanceof ClassDescriptor ) {
       throw new IllegalArgumentException( "Node " + memberNode + " is a classNode " );
     }
 
-    for (final Edge e: memberNode.outEdges() ) {
+    Iterator outEdgesIterator = network.outEdges(memberNode);
+    while (outEdgesIterator.hasNext()) {
+      Object e = outEdgesIterator.next();
       if ( getDependencyType( e ).equals( EdgeType.MEMBER_OF ) ) {
-        return e.target();
+        return network.getTarget(e);
       }
     }
 
@@ -354,7 +346,7 @@ public class Model {
    * @param e the e
    * @return the dependency type
    */
-  public EdgeType getDependencyType( final Edge e ) {
+  public EdgeType getDependencyType( final Object e ) {
     return (EdgeType) dependencyTypes.get( e );
   }
 
@@ -367,10 +359,12 @@ public class Model {
   public Set<ClassDescriptor> getAllImplementingClasses( final ClassDescriptor cd ) {
     Set<ClassDescriptor> ret = null;
 
-    for (final Edge e: cd.getNode().inEdges()) {
+    Iterator inEdgesIterator = network.inEdges(cd.getNode());
+    while (inEdgesIterator.hasNext()) {
+      Object e = inEdgesIterator.next();
       if ( dependencyTypes.get( e ).equals( EdgeType.IMPLEMENTS ) ) {
         if ( ret == null ) ret = new HashSet<ClassDescriptor>();
-        final ClassDescriptor subClass = (ClassDescriptor) node2Descriptor.get( e.source() );
+        final ClassDescriptor subClass = (ClassDescriptor) node2Descriptor.get( network.getSource(e) );
         ret.add( subClass );
       }
     }
@@ -542,9 +536,11 @@ public class Model {
    * @param descendants the descendants
    */
   public void getInternalDescendants( final ClassDescriptor cd, final List<ClassDescriptor> descendants ) {
-    for ( final Edge e: cd.getNode().inEdges() ) {
+    Iterator inEdgesIterator = network.inEdges(cd.getNode());
+    while (inEdgesIterator.hasNext()) {
+      Object e = inEdgesIterator.next();
       if ( dependencyTypes.get( e ).equals( EdgeType.EXTENDS ) ) {
-        final ClassDescriptor subClass = (ClassDescriptor) node2Descriptor.get( e.source() );
+        final ClassDescriptor subClass = (ClassDescriptor) node2Descriptor.get( network.getSource(e) );
         descendants.add( subClass );
         getInternalDescendants( subClass, descendants );
       }
@@ -702,7 +698,7 @@ public class Model {
    */
   public void createEntryPointEdges( List<AbstractDescriptor> entryPoints ) {
 
-    Node entryPointNode = getEntryPointNode();
+    Object entryPointNode = getEntryPointNode();
 
     for ( AbstractDescriptor descriptor : entryPoints ) {
       if ( descriptor instanceof MethodDescriptor ) {
@@ -768,7 +764,7 @@ public class Model {
    * @param n the n
    * @return the node type
    */
-  public int getNodeType( final Node n ) {
+  public int getNodeType( final Object n ) {
     return (int) node2Type.get( n );
   }
 
@@ -777,7 +773,7 @@ public class Model {
    *
    * @param n the n
    */
-  public void markObsolete( final Node n ) {
+  public void markObsolete( final Object n ) {
 
     int type = getNodeType( n );
     if ( ! NodeType.isObsolete( type ) ) {
@@ -791,7 +787,7 @@ public class Model {
    *
    * @param n the n
    */
-  public void markNotObsolete( final Node n ) {
+  public void markNotObsolete( final Object n ) {
 
     // TODO use ~
     int type = getNodeType( n );
@@ -806,7 +802,7 @@ public class Model {
    *
    * @param n the n
    */
-  public void markStubNeeded( final Node n ) {
+  public void markStubNeeded( final Object n ) {
     int type = getNodeType( n );
     if ( ! NodeType.isStubNeeded( type ) ) {
       type += NodeType.STUB;
@@ -820,7 +816,7 @@ public class Model {
    * @param n the n
    * @return the boolean
    */
-  public boolean isObsolete( final Node n ) {
+  public boolean isObsolete( final Object n ) {
     return NodeType.isObsolete( (int) node2Type.get( n ) );
   }
 
@@ -830,7 +826,7 @@ public class Model {
    * @param n the n
    * @return the boolean
    */
-  public boolean isStubNeeded( final Node n ) {
+  public boolean isStubNeeded( final Object n ) {
     return NodeType.isStubNeeded( (int) node2Type.get( n ) );
   }
 
@@ -839,7 +835,7 @@ public class Model {
    *
    * @return the network
    */
-  public Network<Node, Edge> getNetwork() {
+  public Network getNetwork() {
     return network;
   }
 }

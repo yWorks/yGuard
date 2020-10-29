@@ -1,7 +1,6 @@
 package com.yworks.yshrink.model;
 
 import org.objectweb.asm.Opcodes;
-import com.yworks.graph.Node;
 
 import java.io.File;
 import java.util.*;
@@ -26,7 +25,7 @@ public class ClassDescriptor extends AbstractDescriptor {
   private Set<String> allInterfaces;
   private Set<String> allAncestors;
 
-  private Node newNode;
+  private Object newNode;
 
   private boolean hasExternalAncestors = false;
 
@@ -40,7 +39,7 @@ public class ClassDescriptor extends AbstractDescriptor {
    * @param newNode   the new node
    * @param sourceJar the source jar
    */
-  protected ClassDescriptor( final String name, final int access, Node newNode, File sourceJar ) {
+  protected ClassDescriptor( final String name, final int access, Object newNode, File sourceJar ) {
 
     super( access, sourceJar );
 
@@ -60,7 +59,7 @@ public class ClassDescriptor extends AbstractDescriptor {
    * @param newNode    the new node
    * @param sourceJar  the source jar
    */
-  protected ClassDescriptor( final String name, final String superName, final String[] interfaces, final int access, Node newNode, File sourceJar ) {
+  protected ClassDescriptor( final String name, final String superName, final String[] interfaces, final int access, Object newNode, File sourceJar ) {
 
     this( name, access, newNode, sourceJar );
     this.superName = superName;
@@ -341,7 +340,7 @@ public class ClassDescriptor extends AbstractDescriptor {
    *
    * @return the new node
    */
-  public Node getNewNode() {
+  public Object getNewNode() {
     return this.newNode;
   }
 

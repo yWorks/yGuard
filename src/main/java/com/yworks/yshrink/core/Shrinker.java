@@ -1,17 +1,16 @@
 package com.yworks.yshrink.core;
 
-import com.google.common.graph.Network;
 import com.yworks.yshrink.model.AbstractDescriptor;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.EdgeType;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.NodeType;
-import com.yworks.graph.Node;
-import com.yworks.graph.Edge;
+import com.yworks.util.graph.Network;
 import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -37,8 +36,9 @@ public class Shrinker {
     shrinkDfs.setDirectedMode( true );
 
     // initially mark all nodes OBSOLETE
-    for ( final Object o: model.getNetwork().nodes() ) {
-      Node node = (Node) o;
+    Iterator nodeIterator = model.getNetwork().nodes();
+    while (nodeIterator.hasNext()) {
+      Object node = nodeIterator.next();
       model.markObsolete( node );
     }
 
@@ -56,8 +56,8 @@ public class Shrinker {
   private class ShrinkDfs extends Dfs {
 
     private Model model;
-    private Network<Node, Edge> network;
-    private Node entryPointNode;
+    private Network network;
+    private Object entryPointNode;
     private Map<Object, Object> instanceMap;
     private int numInstantiated = 0;
     private int round = 0;
@@ -83,7 +83,7 @@ public class Shrinker {
      *
      * @param entryPointNode the entry point node
      */
-    public void init( final Node entryPointNode ) {
+    public void init( final Object entryPointNode ) {
 
       this.entryPointNode = entryPointNode;
 
@@ -91,7 +91,9 @@ public class Shrinker {
       if ( instanceMap == null ) {
         this.instanceMap = new HashMap<>();
       }
-      for ( final Object n: network.nodes() ) {
+      Iterator nodeIterator = network.nodes();
+      while (nodeIterator.hasNext()) {
+        Object n = nodeIterator.next();
         instanceMap.put( n, -1 );
       }
     }
@@ -110,12 +112,12 @@ public class Shrinker {
     }
 
     @Override
-    protected void postVisit( final Node node, final int i, final int j ) {
+    protected void postVisit( final Object node, final int i, final int j ) {
 
       if ( mode == EXPLORE_MODE ) {
         if ( NodeType.isNewNode( model.getNodeType( node ) ) ) {
 
-          final Node classNode = model.getClassNode( node );
+          final Object classNode = model.getClassNode( node );
 
           instanceMap.put( classNode, round );
           numInstantiated++;
@@ -124,7 +126,7 @@ public class Shrinker {
     }
 
     @Override
-    protected void preVisit( final Node node, final int dfsNumber ) {
+    protected void preVisit( final Object node, final int dfsNumber ) {
 
       if ( mode == RESULT_MODE ) {
 
@@ -143,12 +145,12 @@ public class Shrinker {
     }
 
     @Override
-    protected boolean doTraverse( final Edge edge ) {
+    protected boolean doTraverse( final Object edge ) {
 
       boolean allowed = false;
 
       // TODO use NodeType
-      final Node target = edge.target();
+      final Object target = network.getTarget(edge);
       
       // class, field node: allow always
       if ( !NodeType.isMethodNode( model.getNodeType( target ) ) ) {
@@ -161,7 +163,7 @@ public class Shrinker {
 
           final AbstractDescriptor targetDescriptor = model.getDescriptor( target );
           final MethodDescriptor targetMethod = (MethodDescriptor) targetDescriptor;
-          final Node classNode = model.getClassNode( target );
+          final Object classNode = model.getClassNode( target );
           final ClassDescriptor targetClass = (ClassDescriptor) model.getDescriptor( classNode );
 
           allowed = allowed || targetMethod.isStatic();
@@ -214,10 +216,10 @@ public class Shrinker {
       return false;
     }
 
-    private boolean wasClassInstantiated( final Edge edge ) {
+    private boolean wasClassInstantiated( final Object edge ) {
 
-      final Node targetNode = edge.target();
-      final Node classNode = model.getClassNode( targetNode );
+      final Object targetNode = network.getTarget(edge);
+      final Object classNode = model.getClassNode( targetNode );
       if ( (int) instanceMap.get( classNode ) >= ( round - 1 ) ) {
         return true;
       } else {

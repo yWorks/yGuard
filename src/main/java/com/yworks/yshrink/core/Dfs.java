@@ -1,9 +1,6 @@
 package com.yworks.yshrink.core;
 
-import com.yworks.graph.Edge;
-import com.yworks.graph.Node;
-import com.google.common.graph.Network;
-
+import com.yworks.util.graph.Network;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +16,7 @@ public class Dfs {
 
   private int dfsNum;
   private int compNum;
+  private Network network;
 
   private boolean directedMode;
 
@@ -69,8 +67,9 @@ public class Dfs {
    * @param network the network
    * @param start   the start
    */
-  public void start( final Network<Node, Edge> network, final Node start ) {
+  public void start( final Network network, final Object start ) {
     if ( null == start ) return;
+    this.network = network;
 
     stateMap = new HashMap<>();
     if ( !directedMode ) {
@@ -80,7 +79,7 @@ public class Dfs {
     dfsNum = 0;
     compNum = 0;
 
-    final int stackSize = Math.min( 60, network.nodes().size() + 3 );
+    final int stackSize = Math.min( 60, network.nodesSize() + 3 );
     Stack stack = new Stack( stackSize );
 
     try {
@@ -99,7 +98,7 @@ public class Dfs {
     }
   }
 
-  private Edge nextEdge( final Node currentNode, final Edge currentEdge, final byte[] currentMode ) {
+  private Object nextEdge( final Object currentNode, final Object currentEdge, final byte[] currentMode ) {
 
     switch ( currentMode[ 0 ] ) {
 
@@ -108,11 +107,11 @@ public class Dfs {
           currentMode[ 0 ] = 1;
 
           // return null to force finish
-          return currentNode.firstOutEdge();
+          return network.firstOutEdge(currentNode);
         } else {
-          Edge edge = currentNode.firstOutEdge();
+          Object edge = network.firstOutEdge(currentNode);
           if ( edge == null ) {
-            edge = currentNode.firstInEdge();
+            edge = network.firstInEdge(currentNode);
             currentMode[ 0 ] = 3;
           } else {
             currentMode[ 0 ] = 2;
@@ -121,25 +120,25 @@ public class Dfs {
         }
       case 1:
         // return null to force finish
-        return currentEdge.nextOutEdge();
+        return network.nextOutEdge(currentEdge);
       case 2: {
-        Edge edge = currentEdge.nextOutEdge();
+        Object edge = network.nextOutEdge(currentEdge);
         if ( edge == null ) {
-          edge = currentNode.firstInEdge();
+          edge = network.firstInEdge(currentNode);
           currentMode[ 0 ] = 3;
         }
         return edge;
       }
       case 3:
-        return currentEdge.nextInEdge();
+        return network.nextInEdge(currentEdge);
       default:
         throw new InternalError();
     }
   }
 
-  private Edge doNextEdge( final Node currentNode, final Edge currentEdge, final byte[] currentMode ) {
+  private Object doNextEdge( final Object currentNode, final Object currentEdge, final byte[] currentMode ) {
 
-    Edge edge = nextEdge( currentNode, currentEdge, currentMode );
+    Object edge = nextEdge( currentNode, currentEdge, currentMode );
 
     while ( edge != null && !doTraverse( edge ) ) {
       edge = nextEdge( currentNode, edge, currentMode );
@@ -150,31 +149,31 @@ public class Dfs {
 
   private byte[] nextState = new byte[1];
 
-  private void workStack( final Stack stack, final Node start ) {
+  private void workStack( final Stack stack, final Object start ) {
     nextState[ 0 ] = 0;
-    Node currentNode = start;
+    Object currentNode = start;
     stateMap.put( currentNode, GRAY);
     preVisit( currentNode, ++dfsNum );
 
     {
-      final Edge nextEdge = doNextEdge( currentNode, null, nextState );
+      final Object nextEdge = doNextEdge( currentNode, null, nextState );
       stack.pushState( currentNode, nextEdge, nextState[ 0 ], dfsNum );
     }
 
     while ( !stack.isEmpty() ) {
 
-      Edge edge = stack.peekCurrentEdge();
+      Object edge = stack.peekCurrentEdge();
       nextState[ 0 ] = stack.peekIteratorState();
 
       while ( edge != null ) {
 
         if ( directedMode || !(boolean)edgeVisit.get( edge ) ) {
-          final Node other;
+          final Object other;
           if ( !directedMode ) {
             edgeVisit.put( edge, true );
-            other = edge.opposite( currentNode );
+            other = network.opposite(edge, currentNode);
           } else {
-            other = edge.target();
+            other = network.getTarget(edge);
           }
           if ( stateMap.get( other ) == null ) {
 
@@ -212,12 +211,12 @@ public class Dfs {
       stateMap.put( currentNode, BLACK );
       stack.pop();
       if ( !stack.isEmpty() ) {
-        final Edge currentEdge = stack.peekCurrentEdge();
+        final Object currentEdge = stack.peekCurrentEdge();
         postTraverse( currentEdge, currentNode );
         currentNode = stack.peekNode();
         nextState[ 0 ] = stack.peekIteratorState();
         {
-          final Edge nextEdge = doNextEdge( currentNode, currentEdge, nextState );
+          final Object nextEdge = doNextEdge( currentNode, currentEdge, nextState );
 
           stack.updateTop( nextEdge, nextState[ 0 ] );
         }
@@ -233,7 +232,7 @@ public class Dfs {
    * @param node      the node
    * @param dfsNumber the dfs number
    */
-  protected void preVisit( final Node node, final int dfsNumber ) {
+  protected void preVisit( final Object node, final int dfsNumber ) {
   }
 
   /**
@@ -244,7 +243,7 @@ public class Dfs {
    * @param dfsNumber  the dfs number
    * @param compNumber the comp number
    */
-  protected void postVisit( final Node node, final int dfsNumber, final int compNumber ) {
+  protected void postVisit( final Object node, final int dfsNumber, final int compNumber ) {
   }
 
   /**
@@ -257,7 +256,7 @@ public class Dfs {
    * @param treeEdge the tree edge
    * @return the boolean
    */
-  protected boolean preTraverse( final Edge edge, final Node node, final boolean treeEdge ) {
+  protected boolean preTraverse( final Object edge, final Object node, final boolean treeEdge ) {
     return true;
   }
 
@@ -268,7 +267,7 @@ public class Dfs {
    * @param edge the edge
    * @param node the node
    */
-  protected void postTraverse( final Edge edge, final Node node ) {
+  protected void postTraverse( final Object edge, final Object node ) {
   }
 
   /**
@@ -277,7 +276,7 @@ public class Dfs {
    * @param e the e
    * @return the boolean
    */
-  protected boolean doTraverse( final Edge e ) {
+  protected boolean doTraverse( final Object e ) {
     return true;
   }
 
@@ -296,7 +295,7 @@ public class Dfs {
     /**
      * The Current edges.
      */
-    Edge[] currentEdges;
+    Object[] currentEdges;
     /**
      * The Local dfs nums.
      */
@@ -304,7 +303,7 @@ public class Dfs {
     /**
      * The Nodes.
      */
-    Node[] nodes;
+    Object[] nodes;
 
     /**
      * Instantiates a new Stack.
@@ -313,9 +312,9 @@ public class Dfs {
      */
     Stack( final int initialSize ) {
       localDfsNums = new int[initialSize];
-      currentEdges = new Edge[initialSize];
+      currentEdges = new Object[initialSize];
       iteratorStates = new byte[initialSize];
-      nodes = new Node[initialSize];
+      nodes = new Object[initialSize];
     }
 
     /**
@@ -339,7 +338,7 @@ public class Dfs {
      *
      * @return the node
      */
-    Node peekNode() {
+    Object peekNode() {
       return nodes[ stackIndex ];
     }
 
@@ -348,7 +347,7 @@ public class Dfs {
      *
      * @return the edge
      */
-    Edge peekCurrentEdge() {
+    Object peekCurrentEdge() {
       return currentEdges[ stackIndex ];
     }
 
@@ -379,14 +378,14 @@ public class Dfs {
      * @param localDfsNum    the local dfs num
      * @return the int
      */
-    int pushState( final Node node, final Edge currentEdge, final byte iterastorState, final int localDfsNum ) {
+    int pushState( final Object node, final Object currentEdge, final byte iterastorState, final int localDfsNum ) {
       stackIndex++;
       if ( stackIndex == nodes.length ) {
         final int newSize = ( stackIndex + 1 ) * 2;
-        final Node[] newStack = new Node[newSize];
+        final Object[] newStack = new Object[newSize];
         System.arraycopy( nodes, 0, newStack, 0, nodes.length );
         this.nodes = newStack;
-        final Edge[] newEStack = new Edge[newSize];
+        final Object[] newEStack = new Object[newSize];
         System.arraycopy( currentEdges, 0, newEStack, 0, currentEdges.length );
         this.currentEdges = newEStack;
         final int[] newDStack = new int[newSize];
@@ -408,7 +407,7 @@ public class Dfs {
      * @param currentEdge   the current edge
      * @param iteratorState the iterator state
      */
-    void updateTop( final Edge currentEdge, final byte iteratorState ) {
+    void updateTop( final Object currentEdge, final byte iteratorState ) {
       this.currentEdges[ stackIndex ] = currentEdge;
       this.iteratorStates[ stackIndex ] = iteratorState;
     }
