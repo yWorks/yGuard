@@ -92,6 +92,12 @@ public interface Network {
    */
   Object nextOutEdge(Object edge);
 
+  /**
+   * Returns all edges connecting source and target nodes
+   * @param source - the source node
+   * @param target - the target node
+   * @return a collection iterator of edges
+   */
   Iterator edgesConnecting(Object source, Object target);
 
   /**

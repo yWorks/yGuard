@@ -3,6 +3,9 @@ package com.yworks.util.graph;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Package-private class used by DefaultNetwork to represent an Node.
+ */
 class Node {
   private final List<Edge> inEdges = new ArrayList<>();
   private final List<Edge> outEdges = new ArrayList<>();

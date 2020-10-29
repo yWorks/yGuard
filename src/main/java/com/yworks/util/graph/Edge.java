@@ -1,5 +1,8 @@
 package com.yworks.util.graph;
 
+/**
+ * Package-private class used by DefaultNetwork to represent an Edge.
+ */
 class Edge {
   private final Node source;
   private final Node target;
