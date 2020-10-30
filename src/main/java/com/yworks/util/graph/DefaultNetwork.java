@@ -13,7 +13,7 @@ public class DefaultNetwork implements Network {
   public Object createNode() {
     Node node = new Node();
     nodes.add(node);
-    return (Object) node;
+    return node;
   }
 
   @Override
@@ -21,7 +21,9 @@ public class DefaultNetwork implements Network {
     Node src = (Node) source;
     Node tgt = (Node) target;
     Edge edge = new Edge(src, tgt);
+    if (src.getOutEdges().size() > 0) src.getOutEdges().get(src.getOutEdges().size() - 1).setNextOutEdge(edge);
     src.addOutEdge(edge);
+    if (tgt.getInEdges().size() > 0) tgt.getInEdges().get(tgt.getInEdges().size() - 1).setNextInEdge(edge);
     tgt.addInEdge(edge);
     edges.add(edge);
     return edge;
@@ -76,34 +78,12 @@ public class DefaultNetwork implements Network {
 
   @Override
   public Object nextInEdge( final Object edge ) {
-    Iterator inEdgesIterator = inEdges(getTarget(edge));
-    boolean found = false;
-    Object currentEdge = null;
-    while (inEdgesIterator.hasNext()) {
-      currentEdge = inEdgesIterator.next();
-      if (found) {
-        return currentEdge;
-      } else if (edge.equals(currentEdge)) {
-        found = true;
-      }
-    }
-    return null;
+    return ((Edge) edge).getNextInEdge();
   }
 
   @Override
   public Object nextOutEdge( final Object edge ) {
-    Iterator outEdgesIterator = outEdges(getSource(edge));
-    boolean found = false;
-    Object currentEdge = null;
-    while (outEdgesIterator.hasNext()) {
-      currentEdge = outEdgesIterator.next();
-      if (found) {
-        return currentEdge;
-      } else if (edge.equals(currentEdge)) {
-        found = true;
-      }
-    }
-    return null;
+    return ((Edge) edge).getNextOutEdge();
   }
 
   @Override
