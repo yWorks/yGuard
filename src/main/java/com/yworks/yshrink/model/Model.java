@@ -3,6 +3,7 @@ package com.yworks.yshrink.model;
 import com.yworks.util.graph.DefaultNetwork;
 import com.yworks.logging.Logger;
 import com.yworks.yshrink.core.ClassResolver;
+import com.yworks.yshrink.util.MultiReleaseException;
 import com.yworks.yshrink.util.Util;
 import com.yworks.util.graph.Network;
 import org.objectweb.asm.Opcodes;
@@ -303,6 +304,9 @@ public class Model {
     if ( isClassModeled( className ) ) {
       return model.get( className );
     } else {
+      if (className.startsWith("META-INF")) {
+        throw new MultiReleaseException();
+      }
       return null;
     }
   }

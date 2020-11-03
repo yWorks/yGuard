@@ -9,6 +9,7 @@ import com.yworks.yshrink.YShrink;
 import com.yworks.yshrink.ant.filters.*;
 import com.yworks.logging.Logger;
 import com.yworks.logging.XmlLogger;
+import com.yworks.yshrink.util.MultiReleaseException;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.PatternSet;
@@ -217,6 +218,8 @@ public class ShrinkTask extends YGuardBaseTask {
     try {
 
       yShrink.doShrinkPairs( pairs, epfs, resolver );
+    } catch ( MultiReleaseException mre ) {
+      throw mre;
     } catch ( RuntimeException rte ) {
       if ( rte.getMessage() != null ) {
         Logger.err( rte.getMessage(), rte );
