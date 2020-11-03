@@ -89,9 +89,12 @@ public class DefaultNetwork implements Network {
   @Override
   public Iterator edgesConnecting(Object source, Object target) {
     Node src = (Node) source;
-    List<Edge> edgesConnecting = new ArrayList<>(src.getInEdges().size());
-    for (Edge e: src.getOutEdges()) {
-      if (e.getTarget().equals(target)) edgesConnecting.add(e);
+    Node tgt = (Node) target;
+    List<Edge> edgesConnecting = new ArrayList<>(src.getOutEdges().size());
+    for (Edge e : src.getOutEdges()) {
+      if (e.getTarget() == tgt) {
+        edgesConnecting.add(e);
+      }
     }
     return edgesConnecting.iterator();
   }
