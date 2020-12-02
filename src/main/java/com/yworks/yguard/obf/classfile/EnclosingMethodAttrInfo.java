@@ -8,8 +8,9 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.PrintWriter;
 
 /**
  * Representation of an attribute.
