@@ -851,6 +851,13 @@ public class Cl extends PkCl implements NameListUp, NameListDown
     /** Get obfuscated method name from list, or null if no mapping exists. */
     public String getMethodObfNameUp(String name, String descriptor) throws ClassNotFoundException
     {
+        // Check self
+        Md md = getMethod(name, descriptor);
+        if (md != null && !Modifier.isPrivate(md.access))
+        {
+          return md.getObfName();
+        }
+
         // Check supers
         for (Enumeration enumeration = nameListUps.elements(); enumeration.hasMoreElements(); )
         {
@@ -861,16 +868,8 @@ public class Cl extends PkCl implements NameListUp, NameListDown
             }
         }
 
-        // Check self
-        Md md = getMethod(name, descriptor);
-        if (md != null && !Modifier.isPrivate(md.access))
-        {
-            return md.getObfName();
-        }
-        else
-        {
-            return null;
-        }
+      // No method could be found in any super interface
+      return null;
     }
 
     /** Get output field name from list, or null if no mapping exists. */
