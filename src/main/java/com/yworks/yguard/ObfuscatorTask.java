@@ -1409,13 +1409,28 @@ public class ObfuscatorTask extends YGuardBaseTask
        for(Iterator iter = adjustSections.iterator(); iter.hasNext();)
        {
          AdjustSection as = (AdjustSection)iter.next();
-         if(as.contains(resourceName) && as.getReplaceContent())
+         if(filterContentImpl(in, out, resourceName, as))
          {
-           Writer writer = new OutputStreamWriter(out);
-           getContentReplacer().replace(new InputStreamReader(in), writer, db, as.replaceContentSeparator);
-           writer.flush();
            return true;
          }
+       }
+       return false;
+     }
+
+     /**
+      * Performs the content filtering for one Adjust section,
+      * subclasses may provide custom implementations.
+      *
+      * @return  {@code true} to terminate filtering once filtering performed
+      */
+     protected boolean filterContentImpl(InputStream in, OutputStream out, String resourceName, AdjustSection as) throws IOException
+     {
+       if(as.contains(resourceName) && as.getReplaceContent())
+       {
+         Writer writer = new OutputStreamWriter(out);
+         getContentReplacer().replace(new InputStreamReader(in), writer, db, as.replaceContentSeparator);
+         writer.flush();
+         return true;
        }
        return false;
      }
