@@ -11,7 +11,7 @@ import java.util.EnumSet;
  *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
-public final class FieldSection extends PatternMatchedSection {
+public class FieldSection extends PatternMatchedSection {
 
   private String name;
   private String className;
@@ -80,9 +80,19 @@ public final class FieldSection extends PatternMatchedSection {
 
   @Override
   public TypePatternSet createPatternSet() {
-    TypePatternSet typePatternSet = new TypePatternSet();
+    TypePatternSet typePatternSet = newTypePatternSet();
     typePatternSet.setType( "class" );
     addPatternSet( typePatternSet, typePatternSet.getType() );
     return typePatternSet;
+  }
+
+  /**
+   * Instantiates a type pattern set,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new type pattern set
+   */
+  protected TypePatternSet newTypePatternSet() {
+    return new TypePatternSet();
   }
 }

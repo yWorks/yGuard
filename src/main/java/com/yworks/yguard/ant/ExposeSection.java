@@ -2,6 +2,7 @@ package com.yworks.yguard.ant;
 
 import com.yworks.yguard.ObfuscatorTask;
 import com.yworks.common.ant.Exclude;
+import com.yworks.common.ant.YGuardBaseTask;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.ClassConstants;
 import org.apache.tools.ant.types.PatternSet;
@@ -52,9 +53,19 @@ public class ExposeSection extends Exclude {
    * @return the method section
    */
   public MethodSection createMethod() {
-    MethodSection ms = new MethodSection();
+    MethodSection ms = newMethodSection();
     this.methods.add( ms );
     return ms;
+  }
+
+  /**
+   * Instantiates a method section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new method section
+   */
+  protected MethodSection newMethodSection() {
+    return new MethodSection();
   }
 
   /**
@@ -63,9 +74,19 @@ public class ExposeSection extends Exclude {
    * @return the field section
    */
   public FieldSection createField() {
-    FieldSection fs = new FieldSection();
+    FieldSection fs = newFieldSection();
     this.fields.add( fs );
     return fs;
+  }
+
+  /**
+   * Instantiates a field section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new field section
+   */
+  protected FieldSection newFieldSection() {
+    return new FieldSection();
   }
 
   /**
@@ -74,9 +95,19 @@ public class ExposeSection extends Exclude {
    * @return the class section
    */
   public ClassSection createClass() {
-    ClassSection cs = new ClassSection( task );
+    ClassSection cs = newClassSection( task );
     this.classes.add( cs );
     return cs;
+  }
+
+  /**
+   * Instantiates a class section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new class section
+   */
+  protected ClassSection newClassSection( YGuardBaseTask bt ) {
+    return new ClassSection( bt );
   }
 
   /**
@@ -85,9 +116,19 @@ public class ExposeSection extends Exclude {
    * @return the package section
    */
   public PackageSection createPackage() {
-    PackageSection ps = new PackageSection();
+    PackageSection ps = newPackageSection();
     this.packages.add( ps );
     return ps;
+  }
+
+  /**
+   * Instantiates a package section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new package section
+   */
+  protected PackageSection newPackageSection() {
+    return new PackageSection();
   }
 
   /**
@@ -96,9 +137,19 @@ public class ExposeSection extends Exclude {
    * @return the attributes section
    */
   public AttributesSection createAttribute() {
-    AttributesSection as = new AttributesSection( task );
+    AttributesSection as = newAttributesSection( task );
     attributes.add( as );
     return as;
+  }
+
+  /**
+   * Instantiates an attributes section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new attributes section
+   */
+  protected AttributesSection newAttributesSection( YGuardBaseTask obfuscatorTask ) {
+    return new AttributesSection( obfuscatorTask );
   }
 
   /**
@@ -107,9 +158,19 @@ public class ExposeSection extends Exclude {
    * @return the line number table section
    */
   public LineNumberTableSection createLineNumberTable() {
-    LineNumberTableSection lns = new LineNumberTableSection( task );
+    LineNumberTableSection lns = newLineNumberTableSection( task );
     lineNumberTables.add( lns );
     return lns;
+  }
+
+  /**
+   * Instantiates a line number table section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new line number table section
+   */
+  protected LineNumberTableSection newLineNumberTableSection( YGuardBaseTask obfuscatorTask ) {
+    return new LineNumberTableSection( obfuscatorTask );
   }
 
   /**
@@ -118,9 +179,19 @@ public class ExposeSection extends Exclude {
    * @return the source file section
    */
   public SourceFileSection createSourceFile() {
-    SourceFileSection sfs = new SourceFileSection( task );
+    SourceFileSection sfs = newSourceFileSection( task );
     sourceFiles.add( sfs );
     return sfs;
+  }
+
+  /**
+   * Instantiates a source file section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new source file section
+   */
+  protected SourceFileSection newSourceFileSection( YGuardBaseTask obfuscatorTask ) {
+    return new SourceFileSection( obfuscatorTask );
   }
 
   /**

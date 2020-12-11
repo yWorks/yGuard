@@ -8,12 +8,12 @@ import java.util.Collection;
 /**
  * Used by ant to handle the <code>method</code> element.
  */
-public final class MethodSection extends PatternMatchedClassesSection implements Mappable {
+public class MethodSection extends PatternMatchedClassesSection implements Mappable {
     private String name;
     private String className;
     private String mapTo;
 
-//  private final YGuardBaseTask task;
+//  protected final YGuardBaseTask task;
 
 //  public MethodSection( YGuardBaseTask task ) {
 //    this.task = task;

@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * Used by ant to handle the <code>package</code> element.
  */
-public final class PackageSection implements Mappable {
+public class PackageSection implements Mappable {
   private String name;
   private String mapTo;
   /**

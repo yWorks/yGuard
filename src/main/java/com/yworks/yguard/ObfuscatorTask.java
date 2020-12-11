@@ -659,8 +659,18 @@ public class ObfuscatorTask extends YGuardBaseTask
     if (this.expose != null){
           throw new IllegalArgumentException("Only one expose element allowed!");
       }
-      this.expose = new ExposeSection( this );
+      this.expose = newExposeSection( this );
     return expose;
+  }
+
+  /**
+   * Instantiates the expose section,
+   * subclasses may provide custom implementations.
+   *
+   * @return a new ExposeSection instance
+   */
+  protected ExposeSection newExposeSection( ObfuscatorTask ot ) {
+    return new ExposeSection( ot );
   }
 
   /**
@@ -699,10 +709,20 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @return an AdjustSection instance
    */
   public AdjustSection createAdjust(){
-    AdjustSection adjust = new AdjustSection();
+    AdjustSection adjust = newAdjustSection();
     adjust.setProject(this.getProject());
     adjustSections.add(adjust);
     return adjust;
+  }
+
+  /**
+   * Instantiates an adjust section,
+   * subclasses may provide custom implementations.
+   *
+   * @return a new AdjustSection instance
+   */
+  protected AdjustSection newAdjustSection() {
+    return new AdjustSection();
   }
 
   /**
@@ -723,7 +743,17 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @return the entry points section
    */
   public EntryPointsSection createEntryPoints() {
-    return new EntryPointsSection( this );
+    return newEntryPointsSection( this );
+  }
+
+  /**
+   * Instantiates an entry points section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new entry points section
+   */
+  protected EntryPointsSection newEntryPointsSection( YGuardBaseTask bt ) {
+    return new EntryPointsSection( bt );
   }
 
   /**
@@ -747,8 +777,18 @@ public class ObfuscatorTask extends YGuardBaseTask
       if (this.map != null){
           throw new IllegalArgumentException("Only one map element allowed!");
       }
-      this.map = new MapSection();
+      this.map = newMapSection();
     return map;
+  }
+
+  /**
+   * Instantiates the nested <code>map</code> element,
+   * subclasses may provide custom implementations.
+   *
+   * @return a new instance of MapSection
+   */
+  protected MapSection newMapSection() {
+    return new MapSection();
   }
 
   /**
@@ -772,8 +812,18 @@ public class ObfuscatorTask extends YGuardBaseTask
       if (this.patch != null){
           throw new IllegalArgumentException("Only one patch element allowed!");
       }
-      this.patch = new PatchSection();
+      this.patch = newPatchSection();
     return patch;
+  }
+
+  /**
+   * Instantiates the nested <code>patch</code> element,
+   * subclasses may provide custom implementations.
+   *
+   * @return a new instance of PatchSection
+   */
+  protected PatchSection newPatchSection() {
+    return new PatchSection();
   }
 
   /**
@@ -993,7 +1043,7 @@ public class ObfuscatorTask extends YGuardBaseTask
           }
           filter = new ClassFileFilter(new CollectionFilter(names));
         }
-        GuardDB db = new GuardDB(inFiles);
+        GuardDB db = newGuardDB(inFiles);
 
         if (properties.containsKey("digests")) {
           String digests = (String) properties.get("digests");
@@ -1006,7 +1056,7 @@ public class ObfuscatorTask extends YGuardBaseTask
 
         if (annotationClass != null) db.setAnnotationClass(toNativeClass(annotationClass));
 
-        db.setResourceHandler(new ResourceAdjuster(db));
+        db.setResourceHandler(newResourceAdjuster(db));
         db.setPedantic(pedantic);
         db.setReplaceClassNameStrings(replaceClassNameStrings);
         db.addListener(listener);
@@ -1065,6 +1115,26 @@ public class ObfuscatorTask extends YGuardBaseTask
         // can't do nothing about it
       }
     }
+  }
+
+  /**
+   * Instantiates the classfile database for obfuscation,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new classfile database instance
+   */
+  protected GuardDB newGuardDB(File[] inFile) throws IOException{
+    return new GuardDB(inFile);
+  }
+
+  /**
+   * Instantiates the type Resource adjuster,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new type Resource adjuster instance
+   */
+  protected ResourceAdjuster newResourceAdjuster(GuardDB db) {
+    return new ResourceAdjuster(db);
   }
 
   private void doShrink() {
@@ -1243,16 +1313,16 @@ public class ObfuscatorTask extends YGuardBaseTask
   /**
    * The type Resource adjuster.
    */
-  class ResourceAdjuster implements ResourceHandler
+  protected class ResourceAdjuster implements ResourceHandler
   {
     /**
      * The Db.
      */
-    GuardDB db;
+    protected final GuardDB db;
     /**
      * The Map.
      */
-    Map map;
+    protected final Map map;
     /**
      * The Content replacer.
      */
@@ -1263,7 +1333,7 @@ public class ObfuscatorTask extends YGuardBaseTask
      *
      * @param db the db
      */
-    ResourceAdjuster(final GuardDB db)
+    protected ResourceAdjuster(final GuardDB db)
      {
        this.db = db;
        map = new HashMap() {
@@ -1361,7 +1431,7 @@ public class ObfuscatorTask extends YGuardBaseTask
      *
      * @return the content replacer
      */
-    StringReplacer getContentReplacer()
+    protected StringReplacer getContentReplacer()
      {
        if(contentReplacer == null)
        {

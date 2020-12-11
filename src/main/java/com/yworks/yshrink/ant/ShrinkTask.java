@@ -325,8 +325,18 @@ public class ShrinkTask extends YGuardBaseTask {
     if ( this.entryPointsSection != null ) {
       throw new IllegalArgumentException( "Only one entrypoints or expose element allowed!" );
     }
-    this.entryPointsSection = new EntryPointsSection( this );
+    this.entryPointsSection = newEntryPointsSection( this );
     return entryPointsSection;
+  }
+
+  /**
+   * Instantiates the nested <code>entryPoint</code> element,
+   * subclasses may provide custom implementations.
+   *
+   * @return a new EntryPointsSection instance
+   */
+  protected EntryPointsSection newEntryPointsSection( YGuardBaseTask bt ) {
+    return new EntryPointsSection( bt );
   }
 
   /**

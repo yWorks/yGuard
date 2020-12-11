@@ -10,7 +10,7 @@ import java.util.EnumSet;
 /**
  * Used by ant to handle the <code>method</code> element.
  */
-public final class MethodSection extends PatternMatchedSection {
+public class MethodSection extends PatternMatchedSection {
 
   private String signature;
   private String name;
@@ -151,9 +151,19 @@ public final class MethodSection extends PatternMatchedSection {
   @Override
   public TypePatternSet createPatternSet() {
     System.out.println( "MethodSection.createPatternSet" );
-    TypePatternSet typePatternSet = new TypePatternSet();
+    TypePatternSet typePatternSet = newTypePatternSet();
     typePatternSet.setType( "class" );
     addPatternSet( typePatternSet, typePatternSet.getType() );
     return typePatternSet;
+  }
+
+  /**
+   * Instantiates a type pattern set,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new type pattern set
+   */
+  protected TypePatternSet newTypePatternSet() {
+    return new TypePatternSet();
   }
 }
