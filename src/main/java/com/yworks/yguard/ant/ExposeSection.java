@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class ExposeSection extends Exclude {
 
-  private List classes = new ArrayList( 5 );
-  private List packages = new ArrayList( 5 );
-  private List patterns = new ArrayList( 5 );
-  private List methods = new ArrayList( 5 );
-  private List fields = new ArrayList( 5 );
-  private List attributes = new ArrayList( 5 );
-  private List lineNumberTables = new ArrayList( 5 );
-  private List sourceFiles = new ArrayList( 5 );
+  protected List classes = new ArrayList( 5 );
+  protected List packages = new ArrayList( 5 );
+  protected List patterns = new ArrayList( 5 );
+  protected List methods = new ArrayList( 5 );
+  protected List fields = new ArrayList( 5 );
+  protected List attributes = new ArrayList( 5 );
+  protected List lineNumberTables = new ArrayList( 5 );
+  protected List sourceFiles = new ArrayList( 5 );
 
   /**
    * Instantiates a new Expose section.

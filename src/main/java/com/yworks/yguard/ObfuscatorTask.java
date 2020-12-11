@@ -101,15 +101,15 @@ public class ObfuscatorTask extends YGuardBaseTask
   private String mainClass;
   private boolean conserveManifest = false;
   private File logFile = new File("yguardlog.xml");
-  private ExposeSection expose = null;
-  private List adjustSections = new ArrayList();
-  private MapSection map = null;
-  private PatchSection patch = null;
+  protected ExposeSection expose = null;
+  protected List adjustSections = new ArrayList();
+  protected MapSection map = null;
+  protected PatchSection patch = null;
   //private Path resourceClassPath;
 
   // shrinking attributes
   private boolean doShrink = false;
-  private EntryPointsSection entryPoints = null;
+  protected EntryPointsSection entryPoints = null;
   private File shrinkLog = null;
   private boolean useExposeAsEntryPoints = true;
 

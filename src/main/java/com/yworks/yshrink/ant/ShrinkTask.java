@@ -38,7 +38,7 @@ public class ShrinkTask extends YGuardBaseTask {
 
   private String digests = "SHA-1,MD5";
 
-  private EntryPointsSection entryPointsSection;
+  protected EntryPointsSection entryPointsSection;
 
   /**
    * Instantiates a new Shrink task.

@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class YGuardTask extends YGuardBaseTask {
 
-  private List<YGuardBaseTask> subTasks = new ArrayList<YGuardBaseTask>();
+  protected List<YGuardBaseTask> subTasks = new ArrayList<YGuardBaseTask>();
 
   @Override
   public void execute() throws BuildException {
