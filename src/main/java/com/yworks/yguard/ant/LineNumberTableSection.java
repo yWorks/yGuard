@@ -12,8 +12,8 @@ import java.io.PrintWriter;
 /**
  * Used by ant to handle the <code>attributes</code> element.
  */
-public final class LineNumberTableSection extends PatternMatchedClassesSection implements Mappable {
-  private YGuardBaseTask obfuscatorTask;
+public class LineNumberTableSection extends PatternMatchedClassesSection implements Mappable {
+  protected final YGuardBaseTask obfuscatorTask;
 
   /**
    * Instantiates a new Line number table section.

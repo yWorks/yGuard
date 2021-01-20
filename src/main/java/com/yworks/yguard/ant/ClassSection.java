@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * Used by ant to handle the <code>class</code> element.
  */
-public final class ClassSection extends PatternMatchedClassesSection implements Mappable {
+public class ClassSection extends PatternMatchedClassesSection implements Mappable {
   private String name;
   private String mapTo;
   private int methodMode = YGuardRule.LEVEL_NONE;
@@ -23,7 +23,7 @@ public final class ClassSection extends PatternMatchedClassesSection implements 
   private String extendsType;
   private String implementsType;
 
-  private final YGuardBaseTask task;
+  protected final YGuardBaseTask task;
 
   /**
    * Instantiates a new Class section.

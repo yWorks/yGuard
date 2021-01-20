@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class YGuardTask extends YGuardBaseTask {
 
-  private List<YGuardBaseTask> subTasks = new ArrayList<YGuardBaseTask>();
+  protected List<YGuardBaseTask> subTasks = new ArrayList<YGuardBaseTask>();
 
   @Override
   public void execute() throws BuildException {
@@ -154,10 +154,20 @@ public class YGuardTask extends YGuardBaseTask {
    * @return the shrink task
    */
   public ShrinkTask createShrink() {
-    ShrinkTask shrinkTask = new ShrinkTask( YGuardBaseTask.MODE_NESTED );
+    ShrinkTask shrinkTask = newShrinkTask( YGuardBaseTask.MODE_NESTED );
     configureSubTask(shrinkTask);
     subTasks.add( shrinkTask );
     return shrinkTask;
+  }
+
+  /**
+   * Instantiates a shrink task,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new shrink task
+   */
+  protected ShrinkTask newShrinkTask( boolean mode ) {
+    return new ShrinkTask( mode );
   }
 
   /**
@@ -166,10 +176,20 @@ public class YGuardTask extends YGuardBaseTask {
    * @return the obfuscator task
    */
   public ObfuscatorTask createRename() {
-    ObfuscatorTask obfuscatorTask = new ObfuscatorTask( YGuardBaseTask.MODE_NESTED );
+    ObfuscatorTask obfuscatorTask = newObfuscatorTask( YGuardBaseTask.MODE_NESTED );
     configureSubTask(obfuscatorTask);
     subTasks.add( obfuscatorTask );
     return obfuscatorTask;
+  }
+
+  /**
+   * Instantiates an obfuscator task,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new obfuscator task
+   */
+  protected ObfuscatorTask newObfuscatorTask( boolean mode ) {
+    return new ObfuscatorTask( mode );
   }
 
   private void configureSubTask(Task task) {

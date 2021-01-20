@@ -78,9 +78,19 @@ public abstract class YGuardBaseTask extends Task {
    */
   public AttributesSection createAttribute() {
     if( attributesSections == null ) attributesSections = new ArrayList<AttributesSection>();
-    AttributesSection as = new AttributesSection();
+    AttributesSection as = newAttributesSection();
     attributesSections.add( as );
     return as;
+  }
+
+  /**
+   * Instantiates an attributes section,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new attributes section
+   */
+  protected AttributesSection newAttributesSection() {
+    return new AttributesSection();
   }
 
   /**
@@ -90,9 +100,19 @@ public abstract class YGuardBaseTask extends Task {
    */
   public ShrinkBag createInOutPair() {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
-    ShrinkBag pair = new InOutPair();
+    ShrinkBag pair = newInOutPair();
     pairs.add( pair );
     return pair;
+  }
+
+  /**
+   * Instantiates an in out pair shrink bag,
+   * subclasses may provide custom implementations.
+   *
+   * @return the new shrink bag
+   */
+  protected InOutPair newInOutPair() {
+    return new InOutPair();
   }
 
   /**

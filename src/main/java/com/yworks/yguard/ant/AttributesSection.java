@@ -9,8 +9,8 @@ import java.util.StringTokenizer;
 /**
  * Used by ant to handle the <code>attributes</code> element.
  */
-public final class AttributesSection extends PatternMatchedClassesSection implements Mappable {
-  private YGuardBaseTask obfuscatorTask;
+public class AttributesSection extends PatternMatchedClassesSection implements Mappable {
+  protected final YGuardBaseTask obfuscatorTask;
 
   /**
    * Instantiates a new Attributes section.

@@ -9,8 +9,8 @@ import java.util.Collection;
 /**
  * Used by ant to handle the <code>attributes</code> element.
  */
-public final class SourceFileSection extends PatternMatchedClassesSection implements Mappable {
-  private YGuardBaseTask obfuscatorTask;
+public class SourceFileSection extends PatternMatchedClassesSection implements Mappable {
+  protected final YGuardBaseTask obfuscatorTask;
 
   /**
    * Instantiates a new Source file section.

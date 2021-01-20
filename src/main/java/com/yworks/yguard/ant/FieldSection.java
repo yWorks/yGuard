@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * Used by ant to handle the <code>field</code> element.
  */
-public final class FieldSection extends PatternMatchedClassesSection implements Mappable {
+public class FieldSection extends PatternMatchedClassesSection implements Mappable {
     private String name;
     private String className;
     private String mapTo;
