@@ -1,18 +1,16 @@
 package com.yworks.yshrink.core;
 
-import com.yworks.util.abstractjar.Archive;
-import com.yworks.util.abstractjar.StreamProvider;
-import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
-import com.yworks.util.abstractjar.impl.DirectoryWrapper;
-import com.yworks.util.abstractjar.impl.JarFileWrapper;
-import com.yworks.util.abstractjar.impl.JarStreamProvider;
 import com.yworks.common.ResourcePolicy;
 import com.yworks.common.ShrinkBag;
+import com.yworks.logging.Logger;
+import com.yworks.util.Version;
+import com.yworks.util.abstractjar.Archive;
+import com.yworks.util.abstractjar.ArchiveWriter;
+import com.yworks.util.abstractjar.Factory;
+import com.yworks.util.abstractjar.StreamProvider;
 import com.yworks.yshrink.model.ClassDescriptor;
 import com.yworks.yshrink.model.Model;
-import com.yworks.logging.Logger;
 import com.yworks.yshrink.util.Util;
-import com.yworks.util.Version;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 
@@ -32,16 +30,11 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
 /**
- * The type Jar writer.
+ * The type Writer.
  *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
-public class JarWriter implements ArchiveWriter {
-
-  private Set<String> directoriesWritten = new HashSet<String>();
-  private FileOutputStream fos;
-  private JarOutputStream jos;
-  private Manifest manifest;
+public class Writer {
 
   private static final String MANIFEST_FILENAME = "META-INF/MANIFEST.MF";
   private static final String SIGNATURE_FILE_PREFIX = "META-INF/";
@@ -51,12 +44,12 @@ public class JarWriter implements ArchiveWriter {
   private final MessageDigest[] digests;
 
   /**
-   * Instantiates a new Jar writer.
+   * Instantiates a new Writer.
    *
    * @param createStubs    the create stubs
    * @param digestNamesStr the digest names str
    */
-  public JarWriter( boolean createStubs, String digestNamesStr ) {
+  public Writer( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
 
     String[] digestNames = ( digestNamesStr.trim().equalsIgnoreCase(
@@ -78,108 +71,6 @@ public class JarWriter implements ArchiveWriter {
     }
   }
 
-  /**
-   * Get digests message digest [ ].
-   *
-   * @return the message digest [ ]
-   */
-  public MessageDigest[] getDigests() {
-    return digests;
-  }
-
-  private void addDigests( String entryName ) {
-    Attributes oldEntryAttributes = manifest.getAttributes(entryName);
-    Attributes newEntryAttributes = new Attributes(digests.length + 1);
-
-    if (null != oldEntryAttributes) {
-      Set<Object> keys = oldEntryAttributes.keySet();
-      for (Object key : keys) {
-        if (((Attributes.Name) key).toString().indexOf("Digest") == -1) {
-          newEntryAttributes.put(key, oldEntryAttributes.get(key));
-        }
-      }
-    }
-
-    StringBuffer digestsList = new StringBuffer();
-    for (int i = 0; i < digests.length; i++) {
-      MessageDigest digest = digests[i];
-
-      if (null != digest) {
-
-        String digestKey = digest.getAlgorithm() + "-Digest";
-        digestsList.append(digest.getAlgorithm());
-        if (i < digests.length - 1) {
-          digestsList.append(", ");
-        }
-
-        String digestVal = Util.toBase64(digest.digest());
-
-        newEntryAttributes.putValue(digestKey, digestVal);
-      }
-    }
-
-    newEntryAttributes.putValue("Digest-Algorithms", digestsList.toString());
-
-    this.manifest.getEntries().put(entryName, newEntryAttributes);
-  }
-
-  private void calcDigests( final byte[] data ) {
-    for (int i = digests.length - 1; i >= 0; i--) {
-      if (null != digests[i]) {
-        digests[i].reset();
-        digests[i].update(data);
-      }
-    }
-  }
-
-  private void addEntry( final String fileName, final byte[] data ) throws IOException {
-
-    JarEntry outEntry = new JarEntry(fileName);
-    addDirectory(fileName);
-    jos.putNextEntry(outEntry);
-    jos.write(data);
-    jos.closeEntry();
-
-    calcDigests(data);
-
-    addDigests(fileName);
-  }
-
-  private void addDirectory( final String fileName ) throws IOException {
-    int index = 0;
-    while ((index = fileName.indexOf("/", index + 1)) >= 0) {
-      String directory = fileName.substring(0, index + 1);
-      if (!directoriesWritten.contains(directory)) {
-        directoriesWritten.add(directory);
-        JarEntry directoryEntry = new JarEntry(directory);
-        jos.putNextEntry(directoryEntry);
-        jos.closeEntry();
-      }
-    }
-  }
-
-  private void finishManifest() throws IOException {
-    manifest.getMainAttributes().putValue("Created-by",
-                                          "yGuard Bytecode Obfuscator: Shrinker " + Version.getVersion());
-
-    addDirectory(JarWriter.MANIFEST_FILENAME);
-    jos.putNextEntry(new JarEntry(JarWriter.MANIFEST_FILENAME));
-    this.manifest.write(jos);
-    jos.closeEntry();
-  }
-
-  private void close() throws IOException {
-    finishManifest();
-    if (jos != null) {
-      jos.finish();
-      jos.close();
-    }
-    if (fos != null) {
-      fos.close();
-    }
-  }
-
-  @Override
   public void write( Model model, ShrinkBag bag ) throws IOException {
 
     File in = bag.getIn();
@@ -191,16 +82,13 @@ public class JarWriter implements ArchiveWriter {
 
     long inLength = in.length();
 
-    Archive inJar = (in.isDirectory()) ? new DirectoryWrapper(in) : new JarFileWrapper(in);
-
-    StreamProvider jarStreamProvider = (in.isDirectory()) ? new DirectoryStreamProvider(in) : new JarStreamProvider(in);
+    StreamProvider jarStreamProvider = Factory.newStreamProvider( in );
     DataInputStream stream = jarStreamProvider.getNextClassEntryStream();
 
     if ( !out.exists() ) out.createNewFile();
 
-    manifest = ( inJar.getManifest() != null) ? new Manifest( inJar.getManifest() ) : new Manifest();
-    fos = new FileOutputStream(out);
-    jos = new JarOutputStream(new BufferedOutputStream(fos));
+    final Manifest newManifest = getManifest( in );
+    final ArchiveWriter writer = newArchiveCreator(out, newManifest );
 
     int numClasses = 0;
     int numObsoleteClasses = 0;
@@ -245,9 +133,9 @@ public class JarWriter implements ArchiveWriter {
         numObsoleteFields += outputVisitor.getNumObsoleteFields();
 
         byte[] modifiedClass = cw.toByteArray();
-        addEntry( entryName, modifiedClass );
+        writer.addFile(entryName, modifiedClass );
       } else {
-        manifest.getEntries().remove( entryName );
+        newManifest.getEntries().remove( entryName );
         numObsoleteClasses++;
         Logger.shrinkLog( "\t\t<class name=\"" + Util.toJavaClass( entryName ) + "\" />" );
       }
@@ -276,7 +164,7 @@ public class JarWriter implements ArchiveWriter {
                     ( resourcePolicy.equals( ResourcePolicy.AUTO ) &&
                         nonEmptyDirs.contains( jarStreamProvider.getCurrentDir() ) ) ) ) {
 
-          copyResource( entryName, jarStreamProvider, stream );
+          copyResource( entryName, jarStreamProvider, stream, writer );
         } else {
           numRemovedResources++;
           Logger.shrinkLog(
@@ -289,7 +177,7 @@ public class JarWriter implements ArchiveWriter {
 
     Logger.shrinkLog( "\t</removed-resources>" );
 
-    close();
+    writer.close();
 
     long outLength = out.length();
 
@@ -306,7 +194,8 @@ public class JarWriter implements ArchiveWriter {
     Logger.shrinkLog( "</inOutPair>" );
   }
 
-  private void copyResource( String entryName, StreamProvider jarStreamProvider, DataInputStream stream ) throws IOException {
+  private void copyResource( String entryName, StreamProvider jarStreamProvider, DataInputStream stream,
+                             ArchiveWriter writer ) throws IOException {
 
     // don't copy manifest/signature files.
     if ( ! entryName.equals( MANIFEST_FILENAME )
@@ -316,9 +205,159 @@ public class JarWriter implements ArchiveWriter {
       if ( -1 != entrySize ) {
         byte[] data = new byte[ entrySize ];
         stream.readFully( data );
-        addEntry( entryName, data );
+        writer.addFile( entryName, data );
       }
     }
   }
 
+
+  private ArchiveWriter newArchiveCreator(
+    final File out, final Manifest manifest
+  ) throws IOException{
+    return out.isDirectory()
+           ? new DirectoryWriter( out, manifest) // TODO: support digests
+           : new JarWriter( out, manifest );
+  }
+
+  private static Manifest getManifest( final File file ) throws IOException {
+    final Archive inJar = Factory.newArchive(file);
+
+    final Manifest oldManifest = inJar.getManifest();
+    final Manifest newManifest =
+      oldManifest != null ? new Manifest(oldManifest) : new Manifest();
+
+    try {
+      inJar.close();
+    } catch (IOException ioe) {
+      // ignore
+    }
+
+    return newManifest;
+  }
+
+
+  private class JarWriter extends ArchiveWriter {
+
+    private Set<String> directoriesWritten = new HashSet<String>();
+    private final FileOutputStream fos;
+    private final JarOutputStream jos;
+
+    private Manifest manifest;
+
+    public JarWriter( File outFile, Manifest manifest ) throws IOException {
+      super(manifest);
+
+      this.manifest = manifest;
+
+      fos = new FileOutputStream( outFile );
+
+      jos = new JarOutputStream(
+          new BufferedOutputStream(
+              fos ) );
+    }
+
+    private void addDigests( String entryName ) {
+
+      Attributes oldEntryAttributes = this.manifest.getAttributes(entryName );
+      Attributes newEntryAttributes = new Attributes( digests.length + 1 );
+
+      if ( null != oldEntryAttributes ) {
+        Set<Object> keys = oldEntryAttributes.keySet();
+        for ( Object key : keys ) {
+          if ( ( (Attributes.Name) key ).toString().indexOf( "Digest" ) == -1 ) {
+            newEntryAttributes.put( key, oldEntryAttributes.get( key ) );
+          }
+        }
+      }
+
+      StringBuffer digestsList = new StringBuffer();
+      for (int i = 0; i < digests.length; i++) {
+        MessageDigest digest = digests[i];
+
+        if (null != digest) {
+
+          String digestKey = digest.getAlgorithm() + "-Digest";
+          digestsList.append(digest.getAlgorithm());
+          if (i < digests.length - 1){
+            digestsList.append(", ");
+          }
+
+          String digestVal = Util.toBase64(digest.digest());
+
+          newEntryAttributes.putValue(digestKey, digestVal);
+        }
+      }
+
+      newEntryAttributes.putValue("Digest-Algorithms", digestsList.toString());
+
+      this.manifest.getEntries().put( entryName, newEntryAttributes );
+    }
+
+    @Override
+    public void setComment( final String comment ) {
+      jos.setComment(comment);
+    }
+
+    @Override
+    public void addFile( final String fileName, final byte[] data ) throws IOException {
+
+      JarEntry outEntry = new JarEntry( fileName );
+      addDirectory( fileName );
+      jos.putNextEntry( outEntry );
+      jos.write( data );
+      jos.closeEntry();
+
+      calcDigests( data );
+
+      addDigests( fileName );
+    }
+
+    private void calcDigests( final byte[] data ) {
+
+      for ( int i = digests.length - 1; i >= 0; i-- ) {
+        if ( null != digests[ i ] ) {
+          digests[ i ].reset();
+          digests[ i ].update( data );
+        }
+      }
+    }
+
+    @Override
+    public void addDirectory( final String fileName ) throws IOException {
+      int index = 0;
+      while ( ( index = fileName.indexOf( "/", index + 1 ) ) >= 0 ) {
+        String directory = fileName.substring( 0, index + 1 );
+        if ( !directoriesWritten.contains( directory ) ) {
+          directoriesWritten.add( directory );
+          JarEntry directoryEntry = new JarEntry(directory );
+          jos.putNextEntry( directoryEntry );
+          jos.closeEntry();
+        }
+      }
+    }
+
+    @Override
+    public void close() throws IOException {
+
+      finishManifest();
+
+      if ( jos != null ) {
+        jos.finish();
+        jos.close();
+      }
+      if ( fos != null ) {
+        fos.close();
+      }
+    }
+
+    private void finishManifest() throws IOException {
+      manifest.getMainAttributes().putValue( "Created-by",
+          "yGuard Bytecode Obfuscator: Shrinker " + Version.getVersion() );
+
+      addDirectory( MANIFEST_FILENAME );
+      jos.putNextEntry( new JarEntry( MANIFEST_FILENAME ) );
+      this.manifest.write( jos );
+      jos.closeEntry();
+    }
+  }
 }

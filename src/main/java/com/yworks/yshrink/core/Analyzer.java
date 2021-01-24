@@ -1,7 +1,9 @@
 package com.yworks.yshrink.core;
 
-import com.yworks.util.abstractjar.impl.DirectoryStreamProvider;
 import com.yworks.common.ShrinkBag;
+import com.yworks.logging.Logger;
+import com.yworks.util.abstractjar.Factory;
+import com.yworks.util.abstractjar.StreamProvider;
 import com.yworks.yshrink.model.AbstractDescriptor;
 import com.yworks.yshrink.model.AnnotationUsage;
 import com.yworks.yshrink.model.ClassDescriptor;
@@ -11,9 +13,6 @@ import com.yworks.yshrink.model.Invocation;
 import com.yworks.yshrink.model.MethodDescriptor;
 import com.yworks.yshrink.model.Model;
 import com.yworks.yshrink.model.ModelVisitor;
-import com.yworks.util.abstractjar.impl.JarStreamProvider;
-import com.yworks.logging.Logger;
-import com.yworks.util.abstractjar.StreamProvider;
 import com.yworks.yshrink.util.Util;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -103,7 +102,7 @@ public class Analyzer {
    */
   private void visitAllClasses( final ClassVisitor v, final File jarFile ) throws IOException {
 
-    final StreamProvider jarStreamProvider = (jarFile.isDirectory()) ? new DirectoryStreamProvider(jarFile) : new JarStreamProvider(jarFile);
+    final StreamProvider jarStreamProvider = Factory.newStreamProvider(jarFile);
     InputStream stream = jarStreamProvider.getNextClassEntryStream();
     ClassReader cr;
     while ( stream != null ) {

@@ -9,10 +9,9 @@ package com.yworks.yguard.obf;
 
 import com.yworks.util.Version;
 import com.yworks.util.abstractjar.Archive;
+import com.yworks.util.abstractjar.ArchiveWriter;
 import com.yworks.util.abstractjar.Entry;
-import com.yworks.util.abstractjar.impl.DirectoryWrapper;
-import com.yworks.util.abstractjar.impl.JarEntryWrapper;
-import com.yworks.util.abstractjar.impl.JarFileWrapper;
+import com.yworks.util.abstractjar.Factory;
 import com.yworks.yguard.Conversion;
 import com.yworks.yguard.ObfuscationListener;
 import com.yworks.yguard.ParseException;
@@ -20,16 +19,13 @@ import com.yworks.yguard.obf.classfile.ClassConstants;
 import com.yworks.yguard.obf.classfile.ClassFile;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -46,7 +42,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
-import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
 /**
@@ -105,7 +100,13 @@ public class GuardDB implements ClassConstants
   {
     inJar = new Archive[inFile.length];
     for(int i = 0; i < inFile.length; i++)
-      inJar[i] = (inFile[i].isDirectory()) ? new DirectoryWrapper(inFile[i]) : new JarFileWrapper(inFile[i]);
+      inJar[i] = Factory.newArchive(inFile[i]);
+  }
+
+  /** Close input JAR file and log-file at GC-time. */
+  protected void finalize() throws java.io.IOException
+  {
+    close();
   }
 
   /**
@@ -340,17 +341,15 @@ public class GuardDB implements ClassConstants
     StringBuffer replaceNameLog = new StringBuffer();
     StringBuffer replaceContentsLog = new StringBuffer();
 
-    JarOutputStream outJar = null;
+    ArchiveWriter outJar = null;
     // Open the entry and prepare to process it
     DataInputStream inStream = null;
-    OutputStream os = null;
     for(int i = 0; i < inJar.length; i++)
     {
-      os = null;
       outJar = null;
       //store the whole jar in memory, I known this might be alot, but anyway
       //this is the best option, if you want to create correct jar files...
-      Map<Entry, byte[]> jarEntries = new HashMap<>();
+      List jarEntries = new ArrayList();
       try
       {
         // Go through the input Jar, removing attributes and remapping the Constant Pool
@@ -403,7 +402,7 @@ public class GuardDB implements ClassConstants
               // Dump the classfile, while creating the digests
               cf.write(classOutputStream);
               classOutputStream.flush();
-              jarEntries.put(new JarEntryWrapper(outEntry), baos.toByteArray());
+              jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
               baos.reset();
               // Now update the manifest entry for the class with new name and new digests
               updateManifest(i, inName, cf.getName() + CLASS_EXT, digests);
@@ -482,7 +481,7 @@ public class GuardDB implements ClassConstants
               JarEntry outEntry = new JarEntry(outName);
 
 
-              jarEntries.put(new JarEntryWrapper(outEntry), baos.toByteArray());
+              jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
               baos.reset();
               // Now update the manifest entry for the entry with new name and new digests
               MessageDigest[] digests =
@@ -492,70 +491,44 @@ public class GuardDB implements ClassConstants
           }
         }
 
+        if (conserveManifest){
+          outJar = Factory.newArchiveWriter(out[i], oldManifest[i]);
+        } else {
+          outJar = Factory.newArchiveWriter(out[i], newManifest[i]);
+        }
+        if (Version.getJarComment() != null) {
+          outJar.setComment(Version.getJarComment());
+        }
+
         // sort the entries in ascending order
-        List<Entry> keys = new ArrayList<>(jarEntries.keySet());
-        Collections.sort(keys, new Comparator<Entry>() {
-          @Override
-          public int compare( final Entry o1, final Entry o2 ) {
-            return o1.getName().compareTo(o2.getName());
+        Collections.sort(jarEntries, new Comparator(){
+          public int compare(Object a, Object b){
+            Object[] array1 = (Object[]) a;
+            JarEntry entry1 = (JarEntry) array1[0];
+            Object[] array2 = (Object[]) b;
+            JarEntry entry2 = (JarEntry) array2[0];
+            return entry1.getName().compareTo(entry2.getName());
           }
         });
-
-        if (out[i].isDirectory()) {
-
-          Set<String> directoriesWritten = new HashSet<>();
-          for (Entry jarEntry : keys) {
-            String name = jarEntry.getName();
-            // make sure the directory entries are written to the jar file
-            if (!jarEntry.isDirectory()) {
-              int index = 0;
-              while ((index = name.indexOf("/", index + 1)) >= 0) {
-                String directory = name.substring(0, index + 1);
-                if (!directoriesWritten.contains(directory)) {
-                  directoriesWritten.add(directory);
-                  Files.createDirectory(out[i].toPath().resolve(directory));
-                }
+        // Finally, write the big bunch of data
+        Set directoriesWritten = new HashSet();
+        for (int j = 0; j < jarEntries.size(); j++){
+          Object[] array = (Object[]) jarEntries.get(j);
+          JarEntry entry = (JarEntry) array[0];
+          String name = entry.getName();
+          // make sure the directory entries are written to the jar file
+          if (!entry.isDirectory()){
+            int index = 0;
+            while ((index = name.indexOf("/", index + 1))>= 0){
+              String directory = name.substring(0, index+1);
+              if (!directoriesWritten.contains(directory)){
+                directoriesWritten.add(directory);
+                outJar.addDirectory(directory);
               }
             }
-            // write the entry itself
-            byte[] bytes = (byte[]) jarEntries.get(jarEntry);
-            Files.write(out[i].toPath().resolve(jarEntry.getName()), bytes);
           }
-        } else {
-          os = new FileOutputStream(out[i]);
-          if (conserveManifest){
-            outJar = new JarOutputStream(new BufferedOutputStream(os),oldManifest[i]);
-          } else {
-            outJar = new JarOutputStream(new BufferedOutputStream(os),newManifest[i]);
-          }
-          if (Version.getJarComment() != null) {
-            outJar.setComment( Version.getJarComment());
-          }
-
-          // Finally, write the big bunch of data
-          Set<String> directoriesWritten = new HashSet<>();
-          for (Entry jarEntry: keys) {
-            String name = jarEntry.getName();
-            // make sure the directory entries are written to the jar file
-            if (!jarEntry.isDirectory()) {
-              int index = 0;
-              while ((index = name.indexOf("/", index + 1)) >= 0) {
-                String directory = name.substring(0, index + 1);
-                if (!directoriesWritten.contains(directory)) {
-                  directoriesWritten.add(directory);
-                  JarEntry directoryEntry = new JarEntry(directory);
-                  outJar.putNextEntry(directoryEntry);
-                  outJar.closeEntry();
-                }
-              }
-            }
-            // write the entry itself
-            byte[] bytes = jarEntries.get(jarEntry);
-            JarEntryWrapper entryWrapper = (JarEntryWrapper) jarEntry;
-            outJar.putNextEntry(entryWrapper.getJarEntry());
-            outJar.write(bytes);
-            outJar.closeEntry();
-          }
+          // write the entry itself
+          outJar.addFile(entry.getName(), (byte[]) array[1]);
         }
 
       }
@@ -583,9 +556,6 @@ public class GuardDB implements ClassConstants
         if (outJar != null)
         {
           outJar.close();
-        }
-        if (os != null){
-          os.close();
         }
       }
     }
