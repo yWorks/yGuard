@@ -3,6 +3,7 @@ package com.yworks.util.abstractjar.impl;
 import com.yworks.util.abstractjar.Archive;
 import com.yworks.util.abstractjar.Entry;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -59,10 +60,9 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
   public Manifest getManifest() throws IOException {
     File manifestFile = new File(directory, JarFile.MANIFEST_NAME);
     if (manifestFile.exists()) {
-      FileInputStream manifestStream = new FileInputStream(manifestFile);
-      Manifest manifest = new Manifest(manifestStream);
-      manifestStream.close();
-      return manifest;
+      try (BufferedInputStream is = new BufferedInputStream(new FileInputStream(manifestFile))) {
+        return new Manifest(is);
+      }
     }
     return null;
   }
