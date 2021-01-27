@@ -6,6 +6,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0]
+
+### Added
+- Added testimonials
+- Add class constant for Kotlin (Kotlin support)
+- Added directory support for reading archives from directories
+- Added subclassing capabilities to further extend yGuard
+
+### Removed
+- Remove ability to read archives from URL
+
+### Fixed
+- Parse `exposed` section of log files as well
+- Added compatability fixes to increment to Java 14
+- Fixed major bug with interface inheritance
+- Fixed Windows being unable to run yGuard because of file system issues
+
+### Changed
+- Replace internal dependency graph from a Guava-dependant implementation to a standalone implementation
+- Remove artificial split of retroguard and yGuard and unify the project under a single MIT license
+
 ## [2.10.0] 2020-05-22
 
 ### Added
@@ -302,7 +323,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented more robust handling of Manifest files. Implementation now makes use of `java.util.jar.Manifest`.
 - The `conserveManifest` attribute of the obfuscate task now conserves the manifest in a better way.
 
-[Unreleased]: https://github.com/yworks/yguard/compare/2.10.0...HEAD
+[Unreleased]: https://github.com/yworks/yguard/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/yworks/yguard/compare/2.10.0...3.0.0
 [2.10.0]: https://github.com/yworks/yguard/compare/2.9.2...2.10.0
 [2.9.2]: https://github.com/yworks/yguard/compare/2.9.1...2.9.2
 [2.9.1]: https://github.com/yworks/yguard/compare/2.9.0...2.9.1
