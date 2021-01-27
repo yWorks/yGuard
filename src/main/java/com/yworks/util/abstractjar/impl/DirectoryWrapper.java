@@ -40,7 +40,7 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
   @Override
   public FileVisitResult visitFile( final Path path, final BasicFileAttributes attrs ) throws IOException {
     if ( attrs.isRegularFile() ) {
-      entries.put(new FileEntryWrapper(directory, path.toFile()), path.toFile());
+      entries.put(new FileEntryWrapper(path.toFile(), directory.toPath().relativize( path ).toString()), path.toFile());
     }
     return FileVisitResult.CONTINUE;
   }
@@ -59,7 +59,10 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
   public Manifest getManifest() throws IOException {
     File manifestFile = new File(directory, JarFile.MANIFEST_NAME);
     if (manifestFile.exists()) {
-      return new Manifest(new FileInputStream(manifestFile));
+      FileInputStream manifestStream = new FileInputStream(manifestFile);
+      Manifest manifest = new Manifest(manifestStream);
+      manifestStream.close();
+      return manifest;
     }
     return null;
   }
