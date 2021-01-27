@@ -8,14 +8,16 @@ import java.io.File;
  * The type File entry wrapper.
  */
 public class FileEntryWrapper implements Entry {
-  private File file;
+  private File file, directory;
 
   /**
    * Instantiates a new File entry wrapper.
    *
+   * @param directory the top level directory
    * @param file the file
    */
-  FileEntryWrapper( File file ) {
+  FileEntryWrapper( File directory, File file ) {
+    this.directory = directory;
     this.file = file;
   }
 
@@ -26,7 +28,7 @@ public class FileEntryWrapper implements Entry {
 
   @Override
   public String getName() {
-    return file.getName();
+    return directory.toPath().relativize(file.toPath()).toString();
   }
 
   @Override

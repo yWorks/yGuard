@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 /**
@@ -39,7 +40,7 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
   @Override
   public FileVisitResult visitFile( final Path path, final BasicFileAttributes attrs ) throws IOException {
     if ( attrs.isRegularFile() ) {
-      entries.put(new FileEntryWrapper(path.toFile()), path.toFile());
+      entries.put(new FileEntryWrapper(directory, path.toFile()), path.toFile());
     }
     return FileVisitResult.CONTINUE;
   }
@@ -56,6 +57,10 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
 
   @Override
   public Manifest getManifest() throws IOException {
+    File manifestFile = new File(directory, JarFile.MANIFEST_NAME);
+    if (manifestFile.exists()) {
+      return new Manifest(new FileInputStream(manifestFile));
+    }
     return null;
   }
 

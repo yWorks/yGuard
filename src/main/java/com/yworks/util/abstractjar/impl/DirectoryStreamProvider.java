@@ -41,7 +41,7 @@ public class DirectoryStreamProvider extends SimpleFileVisitor<Path> implements 
   @Override
   public FileVisitResult visitFile( final Path path, final BasicFileAttributes attrs ) throws IOException {
     if (attrs.isRegularFile()) {
-      entries.add(new FileEntryWrapper(path.toFile()));
+      entries.add(new FileEntryWrapper(directory, path.toFile()));
     }
     return FileVisitResult.CONTINUE;
   }
