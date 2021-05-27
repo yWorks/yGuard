@@ -423,13 +423,15 @@ public class GuardDB implements ClassConstants
             if (size != -1)
             {
 
-              // Create an OutputStream piped through a number of digest generators for the manifest
-              MessageDigest shaDigest = MessageDigest.getInstance("SHA");
-              MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-              DataOutputStream dataOutputStream =
-              new DataOutputStream(new DigestOutputStream(new DigestOutputStream(baos,
-              shaDigest),
-              md5Digest));
+              if (digestStrings == null){
+                digestStrings = new String[]{"SHA", "MD5"};
+              }
+              DataOutputStream dataOutputStream = new DataOutputStream(baos);
+              for (String digestAlg : digestStrings) {
+                // Create an OutputStream piped through a number of digest generators for the manifest
+                MessageDigest digest = MessageDigest.getInstance(digestAlg);
+                dataOutputStream = new DataOutputStream(new DigestOutputStream(dataOutputStream, digest));
+              }
 
               String outName;
 
@@ -484,8 +486,12 @@ public class GuardDB implements ClassConstants
               jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
               baos.reset();
               // Now update the manifest entry for the entry with new name and new digests
-              MessageDigest[] digests =
-              {shaDigest, md5Digest};
+              MessageDigest[] digests = new MessageDigest[digestStrings.length];
+              for (int j = 0; j < digestStrings.length; j++) {
+                String digestString = digestStrings[j];
+                MessageDigest digest = MessageDigest.getInstance(digestString);
+                digests[j] = digest;
+              }
               updateManifest(i , inName, outName, digests);
             }
           }
