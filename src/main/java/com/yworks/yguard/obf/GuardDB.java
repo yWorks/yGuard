@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -383,21 +384,12 @@ public class GuardDB implements ClassConstants
               JarEntry outEntry = new JarEntry(cf.getName() + CLASS_EXT);
 
               DataOutputStream classOutputStream;
-              MessageDigest[] digests;
               if (digestStrings == null){
                 digestStrings = new String[]{"SHA-1", "MD5"};
               }
-              digests = new MessageDigest[digestStrings.length];
-              OutputStream stream = baos;
+              MessageDigest[] digests = new MessageDigest[digestStrings.length];
               // Create an OutputStream piped through a number of digest generators for the manifest
-
-              for (int j = 0; j < digestStrings.length; j++) {
-                String digestString = digestStrings[j];
-                MessageDigest digest = MessageDigest.getInstance(digestString);
-                digests[j] = digest;
-                stream = new DigestOutputStream(stream, digest);
-              }
-              classOutputStream = new DataOutputStream(stream);
+              classOutputStream = fillDigests(baos, digestStrings, digests);
 
               // Dump the classfile, while creating the digests
               cf.write(classOutputStream);
@@ -423,13 +415,11 @@ public class GuardDB implements ClassConstants
             if (size != -1)
             {
 
-              // Create an OutputStream piped through a number of digest generators for the manifest
-              MessageDigest shaDigest = MessageDigest.getInstance("SHA");
-              MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-              DataOutputStream dataOutputStream =
-              new DataOutputStream(new DigestOutputStream(new DigestOutputStream(baos,
-              shaDigest),
-              md5Digest));
+              if (digestStrings == null){
+                digestStrings = new String[]{"SHA-1", "MD5"};
+              }
+              MessageDigest[] digests = new MessageDigest[digestStrings.length];
+              DataOutputStream dataOutputStream = fillDigests(baos, digestStrings, digests);
 
               String outName;
 
@@ -484,8 +474,6 @@ public class GuardDB implements ClassConstants
               jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
               baos.reset();
               // Now update the manifest entry for the entry with new name and new digests
-              MessageDigest[] digests =
-              {shaDigest, md5Digest};
               updateManifest(i , inName, outName, digests);
             }
           }
@@ -579,6 +567,19 @@ public class GuardDB implements ClassConstants
       log.println("-->");
     }
 
+  }
+
+  private DataOutputStream fillDigests(ByteArrayOutputStream baos, String[] digestStrings, MessageDigest[] digests) throws NoSuchAlgorithmException {
+
+    OutputStream stream = baos;
+
+    for (int i = 0; i < digestStrings.length; i++) {
+      String digestString = digestStrings[i];
+      MessageDigest digest = MessageDigest.getInstance(digestString);
+      digests[i] = digest;
+      stream = new DigestOutputStream(stream, digest);
+    }
+    return new DataOutputStream(stream);
   }
 
   /**
