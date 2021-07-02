@@ -123,4 +123,16 @@ public class JarStreamProvider implements StreamProvider {
       currentFilename = null;
     }
   }
+
+  @Override
+  public void close() throws IOException {
+    final JarFile archive = this.f;
+
+    this.f = null;
+    this.en = null;
+
+    if (archive != null) {
+      archive.close();
+    }
+  }
 }

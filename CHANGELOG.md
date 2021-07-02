@@ -6,11 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Ensured all opened streams are properly closed.
+
 ## [3.0.0]
 
 ### Added
 - Added testimonials
-- Add class constant for Kotlin (Kotlin support)
+- Added class constant for Kotlin (Kotlin support)
 - Added directory support for reading archives from directories
 - Added subclassing capabilities to further extend yGuard
 
@@ -24,8 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed Windows being unable to run yGuard because of file system issues
 
 ### Changed
-- Replace internal dependency graph from a Guava-dependant implementation to a standalone implementation
-- Remove artificial split of retroguard and yGuard and unify the project under a single MIT license
+- Replaced internal dependency graph from a Guava-dependant implementation to a standalone implementation
+- Removed artificial split of retroguard and yGuard and unify the project under a single MIT license
 
 ## [2.10.0] 2020-05-22
 

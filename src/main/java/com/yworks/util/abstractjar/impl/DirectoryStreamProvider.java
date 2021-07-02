@@ -119,4 +119,10 @@ public class DirectoryStreamProvider extends SimpleFileVisitor<Path> implements 
   public void reset() {
     entryIterator = entries.iterator();
   }
+
+  @Override
+  public void close() throws IOException {
+    entries = null;
+    entryIterator = null;
+  }
 }

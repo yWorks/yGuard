@@ -19,6 +19,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
@@ -52,8 +53,8 @@ public class Writer {
   public Writer( boolean createStubs, String digestNamesStr ) {
     this.createStubs = createStubs;
 
-    String[] digestNames = ( digestNamesStr.trim().equalsIgnoreCase(
-        "none" ) ) ? new String[ 0 ] : digestNamesStr.split( "," );
+    String[] digestNames = digestNamesStr.trim().equalsIgnoreCase( "none" )
+      ? new String[ 0 ] : digestNamesStr.split( "," );
 
     for ( int i = 0; i < digestNames.length; i++ ) {
       digestNames[ i ] = digestNames[ i ].trim();
@@ -82,8 +83,7 @@ public class Writer {
 
     long inLength = in.length();
 
-    StreamProvider jarStreamProvider = Factory.newStreamProvider( in );
-    DataInputStream stream = jarStreamProvider.getNextClassEntryStream();
+    StreamProvider provider = Factory.newStreamProvider( in );
 
     if ( !out.exists() ) out.createNewFile();
 
@@ -100,9 +100,11 @@ public class Writer {
 
     Logger.shrinkLog( "\t<removed-code>" );
 
-    while ( stream != null ) {
+    for (DataInputStream stream = provider.getNextClassEntryStream();
+         stream != null;
+         stream = provider.getNextClassEntryStream()) {
 
-      String entryName = jarStreamProvider.getCurrentEntryName();
+      String entryName = provider.getCurrentEntryName();
 
       numClasses++;
 
@@ -112,7 +114,7 @@ public class Writer {
 
       if ( !obsolete ) {
 
-        nonEmptyDirs.add( jarStreamProvider.getCurrentDir() );
+        nonEmptyDirs.add( provider.getCurrentDir() );
 
         // asm 3.x
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -140,7 +142,7 @@ public class Writer {
         Logger.shrinkLog( "\t\t<class name=\"" + Util.toJavaClass( entryName ) + "\" />" );
       }
 
-      stream = jarStreamProvider.getNextClassEntryStream();
+      close(stream);
     }
 
     Logger.shrinkLog( "\t</removed-code>" );
@@ -150,29 +152,33 @@ public class Writer {
 
     if ( ! resourcePolicy.equals( ResourcePolicy.NONE ) ) {
 
-      jarStreamProvider.reset();
-      stream = jarStreamProvider.getNextResourceEntryStream();
+      provider.reset();
 
-      while ( stream != null ) {
-        String entryName = jarStreamProvider.getCurrentEntryName();
+      for (DataInputStream stream = provider.getNextResourceEntryStream();
+           stream != null;
+           stream = provider.getNextResourceEntryStream()) {
+        String entryName = provider.getCurrentEntryName();
 
-        if ( ! resourcePolicy.equals( ResourcePolicy.NONE )
-            &&
-            (
-                resourcePolicy.equals( ResourcePolicy.COPY )
-                    ||
-                    ( resourcePolicy.equals( ResourcePolicy.AUTO ) &&
-                        nonEmptyDirs.contains( jarStreamProvider.getCurrentDir() ) ) ) ) {
+        if ( !resourcePolicy.equals( ResourcePolicy.NONE ) &&
+            ( resourcePolicy.equals( ResourcePolicy.COPY ) ||
+              ( resourcePolicy.equals( ResourcePolicy.AUTO ) &&
+                nonEmptyDirs.contains( provider.getCurrentDir() ) ) ) ) {
 
-          copyResource( entryName, jarStreamProvider, stream, writer );
+          copyResource( entryName, provider, stream, writer );
         } else {
           numRemovedResources++;
           Logger.shrinkLog(
-              "\t<resource dir=\"" + jarStreamProvider.getCurrentDir() + "\" name=\"" + jarStreamProvider.getCurrentFilename() + "\" />" );
+              "\t<resource dir=\"" + provider.getCurrentDir() + "\" name=\"" + provider.getCurrentFilename() + "\" />" );
         }
 
-        stream = jarStreamProvider.getNextResourceEntryStream();
+        close(stream);
       }
+    }
+
+    try {
+      provider.close();
+    } catch (Exception ex) {
+      // ignore
     }
 
     Logger.shrinkLog( "\t</removed-resources>" );
@@ -194,12 +200,21 @@ public class Writer {
     Logger.shrinkLog( "</inOutPair>" );
   }
 
+  private static void close( final InputStream is ) {
+    try {
+      is.close();
+    } catch (Exception ex) {
+      // ignore
+    }
+  }
+
   private void copyResource( String entryName, StreamProvider jarStreamProvider, DataInputStream stream,
                              ArchiveWriter writer ) throws IOException {
 
     // don't copy manifest/signature files.
-    if ( ! entryName.equals( MANIFEST_FILENAME )
-        && ! ( entryName.endsWith( SIGNATURE_FILE_SUFFIX ) && entryName.startsWith( SIGNATURE_FILE_PREFIX ) ) ) {
+    if ( !entryName.equals( MANIFEST_FILENAME ) &&
+         !( entryName.endsWith( SIGNATURE_FILE_SUFFIX ) &&
+            entryName.startsWith( SIGNATURE_FILE_PREFIX ) ) ) {
 
       int entrySize = (int) jarStreamProvider.getCurrentEntry().getSize();
       if ( -1 != entrySize ) {
