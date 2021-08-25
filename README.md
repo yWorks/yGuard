@@ -27,9 +27,9 @@ Additionally, `yGuard` is distributed with usage instructions. In your distribut
 
 Below you will find a list of users relying on `yGuard` to keep their product secure.
 
-[<img src="docs/img/yFiles-text.svg" height="100" width="250"/>](https://www.yworks.com/products/yfiles)
+[<img src="docs/img/yFiles-text.svg" height="100"/>](https://www.yworks.com/products/yfiles)
 
-[<img src="docs/img/dbvissplash.png" height="100" width="250"/>](https://www.dbvis.com/)
+[<img src="docs/img/dbvissplash.png" height="100"/>](https://www.dbvis.com/)
 
 If your product uses `yGuard` as well and you would like to add it to this list, please contact us.
 
