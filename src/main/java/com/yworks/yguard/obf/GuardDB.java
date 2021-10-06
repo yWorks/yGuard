@@ -746,7 +746,7 @@ public class GuardDB implements ClassConstants
                     "module-info".equals(cfn) ? createModuleKey(cf) : cfn;
 
             Object[] old = (Object[]) parsedClasses.get(key);
-            if (old != null && !cfn.contains("MemoryMapFinishEventHandler")){
+            if (old != null){
               int jarIndex = ((Integer)old[0]).intValue();
               String warning = "yGuard detected a duplicate class definition " +
                 "for \n    " + Conversion.toJavaClass(cfn) +
