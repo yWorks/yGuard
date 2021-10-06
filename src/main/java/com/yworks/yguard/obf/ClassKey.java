@@ -1,6 +1,5 @@
 package com.yworks.yguard.obf;
 
-import com.yworks.util.abstractjar.Entry;
 import com.yworks.yguard.obf.classfile.ClassFile;
 
 import java.util.Objects;
@@ -12,15 +11,19 @@ public class ClassKey {
   public ClassKey( String entryName, ClassFile classFile ) {
     if (entryName.startsWith(GuardDB.SIGNATURE_MULTI_RELEASE_PREFIX)) {
       int indexOfPrefixTail = entryName.indexOf("/", GuardDB.SIGNATURE_MULTI_RELEASE_PREFIX.length());
-      this.multiReleasePrefixOrEmpty = entryName.substring(0, indexOfPrefixTail);
+      multiReleasePrefixOrEmpty = entryName.substring(0, indexOfPrefixTail);
     } else {
-      this.multiReleasePrefixOrEmpty = "";
+      multiReleasePrefixOrEmpty = "";
     }
-    this.className = classFile.getName();
+    className = classFile.getName();
   }
 
   public String fullName() {
-    return this.multiReleasePrefixOrEmpty + this.className;
+    if (multiReleasePrefixOrEmpty.isEmpty()) {
+      return className;
+    } else {
+      return this.multiReleasePrefixOrEmpty + "/" + this.className;
+    }
   }
 
   @Override
