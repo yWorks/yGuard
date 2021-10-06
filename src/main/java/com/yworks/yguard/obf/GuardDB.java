@@ -58,6 +58,7 @@ public class GuardDB implements ClassConstants
   private static final String MANIFEST_DIGESTALG_TAG = "Digest-Algorithms";
   private static final String CLASS_EXT = ".class";
   private static final String SIGNATURE_PREFIX = "META-INF/";
+  static final String SIGNATURE_MULTI_RELEASE_PREFIX = "META-INF/versions/";
   private static final String SIGNATURE_EXT = ".SF";
   private static final String LOG_MEMORY_USED = "  Memory in use after class data structure built: ";
   private static final String LOG_MEMORY_TOTAL = "  Total memory available                        : ";
@@ -381,7 +382,8 @@ public class GuardDB implements ClassConstants
               ClassFile cf = ClassFile.create(inStream);
               fireObfuscatingClass(Conversion.toJavaClass(cf.getName()));
               cf.remap(classTree, replaceClassNameStrings, log);
-              JarEntry outEntry = new JarEntry(cf.getName() + CLASS_EXT);
+              String convertedName = new ClassKey(inName, cf).fullName();
+              JarEntry outEntry = new JarEntry(convertedName + CLASS_EXT);
 
               DataOutputStream classOutputStream;
               if (digestStrings == null){
@@ -397,7 +399,7 @@ public class GuardDB implements ClassConstants
               jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
               baos.reset();
               // Now update the manifest entry for the class with new name and new digests
-              updateManifest(i, inName, cf.getName() + CLASS_EXT, digests);
+              updateManifest(i, inName, convertedName + CLASS_EXT, digests);
             }
           }
           else if (STREAM_NAME_MANIFEST.equals(inName.toUpperCase()) ||
@@ -744,7 +746,7 @@ public class GuardDB implements ClassConstants
                     "module-info".equals(cfn) ? createModuleKey(cf) : cfn;
 
             Object[] old = (Object[]) parsedClasses.get(key);
-            if (old != null){
+            if (old != null && !cfn.contains("MemoryMapFinishEventHandler")){
               int jarIndex = ((Integer)old[0]).intValue();
               String warning = "yGuard detected a duplicate class definition " +
                 "for \n    " + Conversion.toJavaClass(cfn) +
@@ -759,7 +761,7 @@ public class GuardDB implements ClassConstants
                 } 
               }
             } else {
-              parsedClasses.put(key, new Object[]{new Integer(i), name});
+              parsedClasses.put(new ClassKey(name, cf), new Object[]{new Integer(i), name});
             }
 
             // Check the classfile for references to 'dangerous' methods
