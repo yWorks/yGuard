@@ -14,7 +14,6 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
-import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -45,7 +44,7 @@ public class DefaultMethodTest {
     final com.yworks.util.Compiler compiler = com.yworks.util.Compiler.newCompiler();
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    compiler.compile(List.of(compiler.newUrlSource(testTypeName, source)), baos);
+    compiler.compile(Utils.listOf(compiler.newUrlSource(testTypeName, source)), baos);
 
     try {
       // store resulting bytecode in temporary files and ...
@@ -58,7 +57,7 @@ public class DefaultMethodTest {
       InOutPair inOutPair = new InOutPair();
       inOutPair.setIn(inTmp);
       inOutPair.setOut(outTmp);
-      yShrink.doShrinkPairs(List.of(inOutPair), new AllMainMethodsFilter(), null);
+      yShrink.doShrinkPairs(Utils.listOf(inOutPair), new AllMainMethodsFilter(), null);
 
       //   load shrinked class and run test method
       final ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -97,7 +96,7 @@ public class DefaultMethodTest {
     final com.yworks.util.Compiler compiler = com.yworks.util.Compiler.newCompiler();
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    compiler.compile(List.of(compiler.newUrlSource(testTypeName, source)), baos);
+    compiler.compile(Utils.listOf(compiler.newUrlSource(testTypeName, source)), baos);
 
     try {
       // store resulting bytecode in temporary files and ...
@@ -110,7 +109,7 @@ public class DefaultMethodTest {
       InOutPair inOutPair = new InOutPair();
       inOutPair.setIn(inTmp);
       inOutPair.setOut(outTmp);
-      yShrink.doShrinkPairs(List.of(inOutPair), new AllMainMethodsFilter(), null);
+      yShrink.doShrinkPairs(Utils.listOf(inOutPair), new AllMainMethodsFilter(), null);
 
       //   load shrinked class and run test method
       final ByteArrayOutputStream output = new ByteArrayOutputStream();

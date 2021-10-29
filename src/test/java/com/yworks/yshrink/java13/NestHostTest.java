@@ -15,7 +15,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -38,8 +37,6 @@ public class NestHostTest {
     // LambdaMetaFactory bootstrap methods are used only in Java 8 and newer
     final String testTypeName = "com.yworks.yshrink.java13.NestHostStubTest";
 
-    final String testMethodName = "void run(java.io.PrintStream)";
-
     // look for java source code that will be compiled with StringConcatFactory
     // bootstrap methods
     final String fileName = "NestHostStubTest.txt";
@@ -50,7 +47,7 @@ public class NestHostTest {
     final com.yworks.util.Compiler compiler = com.yworks.util.Compiler.newCompiler();
 
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    compiler.compile(List.of(compiler.newUrlSource(testTypeName, source)), baos);
+    compiler.compile(Utils.listOf(compiler.newUrlSource(testTypeName, source)), baos);
 
     try {
       // store resulting bytecode in temporary files and ...
@@ -63,7 +60,7 @@ public class NestHostTest {
       InOutPair inOutPair = new InOutPair();
       inOutPair.setIn(inTmp);
       inOutPair.setOut(outTmp);
-      yShrink.doShrinkPairs(List.of(inOutPair), new AllMainMethodsFilter(), null);
+      yShrink.doShrinkPairs(Utils.listOf(inOutPair), new AllMainMethodsFilter(), null);
 
       //   load shrinked class and run test method
       final ByteArrayOutputStream output = new ByteArrayOutputStream();
