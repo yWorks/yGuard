@@ -6,7 +6,7 @@ Depending on your build system, you will use [`AntRun`](http://maven.apache.org/
 Download the bundle from the [Github release page](https://github.com/yWorks/yguard/releases/latest). After downloading and extracting the `jar` files, place them in a path near to your build script. You may use absolute paths, but our examples expect the jar file to lie in the same directory as your build file. Once extracted, you can use the `yguard` element like so:
 
 ```xml
-<property name="version" value="2.9.x"/>
+<property name="version" value="3.0.0"/>
 
 <target name="yguard">
     <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${projectDir}/yguard-${version}.jar"/>
@@ -23,7 +23,7 @@ You can use `yGuard` directly from `Maven` central. Add the `yGuard` dependency 
 <dependency>
     <groupId>com.yworks</groupId>
     <artifactId>yguard</artifactId>
-    <version>2.9.x</version>
+    <version>3.0.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -64,7 +64,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.yworks:yguard:2.9.x'
+  compile 'com.yworks:yguard:3.0.0'
 }
 
 task yguard {
