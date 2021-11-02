@@ -57,6 +57,7 @@ public class GuardDB implements ClassConstants
   private static final String MANIFEST_NAME_TAG = "Name";
   private static final String MANIFEST_DIGESTALG_TAG = "Digest-Algorithms";
   private static final String CLASS_EXT = ".class";
+  private static final String MULTI_RELEASE_PREFIX = "META-INF/versions/";
   private static final String SIGNATURE_PREFIX = "META-INF/";
   private static final String SIGNATURE_EXT = ".SF";
   private static final String LOG_MEMORY_USED = "  Memory in use after class data structure built: ";
@@ -381,7 +382,8 @@ public class GuardDB implements ClassConstants
               ClassFile cf = ClassFile.create(inStream);
               fireObfuscatingClass(Conversion.toJavaClass(cf.getName()));
               cf.remap(classTree, replaceClassNameStrings, log);
-              JarEntry outEntry = new JarEntry(cf.getName() + CLASS_EXT);
+              String outName = createClassFileName(inName, cf) + CLASS_EXT;
+              JarEntry outEntry = new JarEntry(outName);
 
               DataOutputStream classOutputStream;
               if (digestStrings == null){
@@ -397,7 +399,7 @@ public class GuardDB implements ClassConstants
               jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
               baos.reset();
               // Now update the manifest entry for the class with new name and new digests
-              updateManifest(i, inName, cf.getName() + CLASS_EXT, digests);
+              updateManifest(i, inName, outName, digests);
             }
           }
           else if (STREAM_NAME_MANIFEST.equals(inName.toUpperCase()) ||
@@ -740,8 +742,8 @@ public class GuardDB implements ClassConstants
 
           if (cf != null){
             final String cfn = cf.getName();
-            final String key =
-                    "module-info".equals(cfn) ? createModuleKey(cf) : cfn;
+            final String key = "module-info".equals(cfn)
+              ? createModuleKey(cf) : createClassFileName(name, cf);
 
             Object[] old = (Object[]) parsedClasses.get(key);
             if (old != null){
@@ -788,6 +790,18 @@ public class GuardDB implements ClassConstants
 
   private static String createJarName(Archive jar, String name){
     return "jar:"+jar.getName() + "|" + name;
+  }
+
+  private static String createClassFileName(
+    final String jarEntryName, final ClassFile cf
+  ) {
+    final String prefix = GuardDB.MULTI_RELEASE_PREFIX;
+    if (jarEntryName.startsWith(prefix)) {
+      final int idx = jarEntryName.indexOf('/', prefix.length());
+      return jarEntryName.substring(0, idx + 1) + cf.getName();
+    } else {
+      return cf.getName();
+    }
   }
 
   private static String createModuleKey( final ClassFile cf ) {
