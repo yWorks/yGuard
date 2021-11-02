@@ -21,4 +21,4 @@ yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of t
 
 ## Problems and Bug Reports
 
-If you experience any problems or think you have found a bug feel free to open an issue on our [public issue tracker](https://github.com/yWorks/yguard/issues). Please make sure you have read the [documentation](task) thoroughly before. We will do our best and try to answer your questions.
+If you experience any problems or think you have found a bug feel free to open an issue on our [public issue tracker](https://github.com/yWorks/yguard/issues). Please make sure you have read the [documentation](task_documentation) thoroughly before. We will do our best and try to answer your questions.
