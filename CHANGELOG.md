@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Support for obfuscating multi-release jars.
+  (Shrinking multi-release jars is not supported.)
+
 ### Fixed
 - Fixed digests for resource files.
 - Ensured all opened streams are properly closed.
