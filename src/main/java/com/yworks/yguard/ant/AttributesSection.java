@@ -34,18 +34,18 @@ public class AttributesSection extends PatternMatchedClassesSection implements M
         this.attributes = attributes;
     }
 
-    public void addEntries( Collection entries, String className){
-      StringTokenizer st = new StringTokenizer(this.attributes, ", ", false);
-      while (st.hasMoreTokens()){
-        String token = st.nextToken().trim();
-        YGuardRule entry = new YGuardRule(YGuardRule.TYPE_ATTR2, token, className);
-        entries.add(entry);
-      }
+  public void addEntries( Collection entries, String className){
+    StringTokenizer st = new StringTokenizer(this.attributes, ", ", false);
+    while (st.hasMoreTokens()){
+      String token = st.nextToken().trim();
+      YGuardRule entry = new YGuardRule(YGuardRule.TYPE_ATTR2, token, className);
+      entries.add(entry);
     }
+  }
 
-    public void addMapEntries(Collection entries)
-    {
-    }
+  public void addMapEntries(Collection entries)
+  {
+  }
 
   /**
    * Gets attributes.

@@ -1,12 +1,5 @@
-/*
- * ElementValueInfo.java
- *
- * Created on April 20, 2005, 4:19 PM
- */
-
 package com.yworks.yguard.obf.classfile;
 
-import com.yworks.yguard.ParseException;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -35,8 +28,7 @@ public class ElementValuePairInfo
    * @return the element value pair info
    * @throws IOException the io exception
    */
-  public static ElementValuePairInfo create(DataInput din) throws IOException
-  {
+  public static ElementValuePairInfo create(DataInput din) throws IOException {
     ElementValuePairInfo evp = new ElementValuePairInfo();
     evp.read(din);
     return evp;
@@ -48,8 +40,7 @@ public class ElementValuePairInfo
    * @param din the din
    * @throws IOException the io exception
    */
-  protected void read(DataInput din) throws java.io.IOException
-  {
+  protected void read(DataInput din) throws java.io.IOException {
     u2ElementNameIndex = din.readUnsignedShort();
     elementValue = ElementValueInfo.create(din);
   }

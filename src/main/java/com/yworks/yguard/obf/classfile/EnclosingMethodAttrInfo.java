@@ -1,10 +1,9 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
@@ -30,52 +29,52 @@ public class EnclosingMethodAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Enclosing method attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Enclosing method attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected EnclosingMethodAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Return the String name of the attribute; over-ride this in sub-classes. */
     protected String getAttrName() 
     {
         return ATTR_EnclosingMethod;
     }
 
-  /**
-   * Return the class index.
-   *
-   * @return the class index
-   */
-  protected int getClassIndex() {return u2classIndex;}
+    /**
+     * Return the class index.
+     *
+     * @return the class index
+     */
+    protected int getClassIndex() {return u2classIndex;}
 
-  /**
-   * Return the class index.
-   *
-   * @param index the index
-   */
-  protected void setClassIndex(int index) { this.u2classIndex = index; }
+    /**
+     * Return the class index.
+     *
+     * @param index the index
+     */
+    protected void setClassIndex(int index) { this.u2classIndex = index; }
 
-  /**
-   * Return the name-and-type index.
-   *
-   * @return the name and type index
-   */
-  protected int getNameAndTypeIndex() {return u2nameAndTypeIndex;}
+    /**
+     * Return the name-and-type index.
+     *
+     * @return the name and type index
+     */
+    protected int getNameAndTypeIndex() {return u2nameAndTypeIndex;}
 
-  /**
-   * Set the name-and-type index.
-   *
-   * @param index the index
-   */
-  protected void setNameAndTypeIndex(int index) {u2nameAndTypeIndex = index;}
+    /**
+     * Set the name-and-type index.
+     *
+     * @param index the index
+     */
+    protected void setNameAndTypeIndex(int index) {u2nameAndTypeIndex = index;}
 
     /**
      * Check for Utf8 references in the 'info' data to the constant pool and
@@ -113,14 +112,14 @@ public class EnclosingMethodAttrInfo extends AttrInfo
         dout.writeShort(u2nameAndTypeIndex);
     }
 
-  /**
-   * Dump the content of the class file to the specified file (used for debugging).
-   *
-   * @param pw    the pw
-   * @param cf    the cf
-   * @param index the index
-   */
-  public void dump(PrintWriter pw, ClassFile cf, int index)
+    /**
+     * Dump the content of the class file to the specified file (used for debugging).
+     *
+     * @param pw    the pw
+     * @param cf    the cf
+     * @param index the index
+     */
+    public void dump(PrintWriter pw, ClassFile cf, int index)
     {
         pw.println("  EnclosingMethod " );
 //        + Integer.toString(index) + ": " + ((Utf8CpInfo)cf.getCpEntry(((ClassCpInfo)cf.getCpEntry(u2classIndex)).getNameIndex())).getString() +
@@ -128,4 +127,3 @@ public class EnclosingMethodAttrInfo extends AttrInfo
 //                   " " + ((Utf8CpInfo)cf.getCpEntry(((NameAndTypeCpInfo)cf.getCpEntry(u2nameAndTypeIndex)).getDescriptorIndex())).getString());
     }
 }
-

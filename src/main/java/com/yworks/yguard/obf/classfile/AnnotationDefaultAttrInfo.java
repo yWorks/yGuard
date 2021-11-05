@@ -1,9 +1,3 @@
-/*
- * RuntimeVisibleAnnotationsAttrInfo.java
- *
- * Created on April 20, 2005, 11:51 AM
- */
-
 package com.yworks.yguard.obf.classfile;
 
 /**

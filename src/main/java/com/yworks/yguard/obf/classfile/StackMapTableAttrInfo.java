@@ -19,34 +19,34 @@ public class StackMapTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Stack map table attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Stack map table attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected StackMapTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Return the String name of the attribute; over-ride this in sub-classes. */
     protected String getAttrName()
     {
         return ATTR_StackMapTable;
     }
 
-  /**
-   * Return the array of local variable table entries.
-   *
-   * @return the stack map frame info [ ]
-   */
-  protected StackMapFrameInfo[] getEntries()
-    {
-        return entries;
-    }
+    /**
+     * Return the array of local variable table entries.
+     *
+     * @return the stack map frame info [ ]
+     */
+    protected StackMapFrameInfo[] getEntries()
+      {
+          return entries;
+      }
 
     /** Check for Utf8 references in the 'info' data to the constant pool and mark them. */
     protected void markUtf8RefsInInfo(ConstantPool pool)
@@ -77,5 +77,4 @@ public class StackMapTableAttrInfo extends AttrInfo
             entries[i].write(dout);
         }
     }
-
 }

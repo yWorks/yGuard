@@ -1,4 +1,4 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
@@ -7,7 +7,6 @@
 package com.yworks.yguard;
 
 import com.yworks.yguard.obf.ClassTree;
-import java.util.StringTokenizer;
 
 /**
  * The type Conversion.
@@ -29,10 +28,10 @@ public class Conversion
    * @return the string
    */
   public static String toJavaClass(String className){
-      if (className.endsWith(".class")){
-        className = className.substring(0, className.length()- 6);
-      }
-      return className.replace('/','.');
+    if (className.endsWith(".class")){
+      className = className.substring(0, className.length()- 6);
+    }
+    return className.replace('/','.');
   }
 
 
@@ -43,58 +42,58 @@ public class Conversion
    * @return the string
    */
   public static String toJavaType(String type){
-      StringBuffer nat = new StringBuffer(30);
-      int arraydim = 0;
-      while (type.charAt(arraydim)=='[') arraydim++;
-      type = type.substring(arraydim);
-      switch (type.charAt(0)){
-        default:
-          throw new IllegalArgumentException("unknown native type:"+type);
-        case 'B':
-          nat.append("byte");
-          break;
-        case 'C':
-          nat.append("char");
-          break;
-        case 'D':
-          nat.append("double");
-          break;
-        case 'F':
-          nat.append("float");
-          break;
-        case 'I':
-          nat.append("int");
-          break;
-        case 'J':
-          nat.append("long");
-          break;
-        case 'S':
-          nat.append("short");
-          break;
-        case 'Z':
-          nat.append("boolean");
-          break;
-        case 'V':
-          nat.append("void");
-          break;
-        case 'L':
-          String className = type.substring(1, type.length()-1);
-          if (className.indexOf('<') >= 0){
-            String parameters = type.substring(className.indexOf('<') + 2, className.lastIndexOf('>') - 1);
-            className = className.substring(0, className.indexOf('<') );
-            nat.append(className.replace('/','.'));
-            nat.append('<');
-            nat.append(toJavaParameters(parameters));
-            nat.append('>');
-          } else {
-            nat.append(className.replace('/','.'));
-          }
-          break;
-      }
-      for (int i = 0; i < arraydim; i++){
-          nat.append("[]");
-      }
-      return nat.toString();
+    StringBuffer nat = new StringBuffer(30);
+    int arraydim = 0;
+    while (type.charAt(arraydim)=='[') arraydim++;
+    type = type.substring(arraydim);
+    switch (type.charAt(0)){
+      default:
+        throw new IllegalArgumentException("unknown native type:"+type);
+      case 'B':
+        nat.append("byte");
+        break;
+      case 'C':
+        nat.append("char");
+        break;
+      case 'D':
+        nat.append("double");
+        break;
+      case 'F':
+        nat.append("float");
+        break;
+      case 'I':
+        nat.append("int");
+        break;
+      case 'J':
+        nat.append("long");
+        break;
+      case 'S':
+        nat.append("short");
+        break;
+      case 'Z':
+        nat.append("boolean");
+        break;
+      case 'V':
+        nat.append("void");
+        break;
+      case 'L':
+        String className = type.substring(1, type.length()-1);
+        if (className.indexOf('<') >= 0){
+          String parameters = type.substring(className.indexOf('<') + 2, className.lastIndexOf('>') - 1);
+          className = className.substring(0, className.indexOf('<') );
+          nat.append(className.replace('/','.'));
+          nat.append('<');
+          nat.append(toJavaParameters(parameters));
+          nat.append('>');
+        } else {
+          nat.append(className.replace('/','.'));
+        }
+        break;
+    }
+    for (int i = 0; i < arraydim; i++){
+      nat.append("[]");
+    }
+    return nat.toString();
   }
 
   /**
@@ -105,8 +104,8 @@ public class Conversion
    * @see com.yworks.yguard.obf.classfile.NameMapper#mapSignature com.yworks.yguard.obf.classfile.NameMapper#mapSignaturecom.yworks.yguard.obf.classfile.NameMapper#mapSignature
    */
   public static String mapSignature(String signature){
-      return new ClassTree().mapSignature(signature);
-    }
+    return new ClassTree().mapSignature(signature);
+  }
 
 
   /**

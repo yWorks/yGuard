@@ -1,9 +1,8 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard;
 
@@ -43,4 +42,3 @@ public interface ObfuscationListener extends java.util.EventListener
   void parsingJar(String jar);
   
 }
-

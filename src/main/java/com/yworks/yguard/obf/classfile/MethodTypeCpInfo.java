@@ -10,31 +10,31 @@ import java.io.IOException;
  * @author Sebastian Rheinnecker, yworks
  */
 public class MethodTypeCpInfo extends CpInfo {
-    // Constants -------------------------------------------------------------
+  // Constants -------------------------------------------------------------
 
 
-    // Fields ----------------------------------------------------------------
-    private int u2descriptorIndex;
+  // Fields ----------------------------------------------------------------
+  private int u2descriptorIndex;
 
-    // Class Methods ---------------------------------------------------------
+  // Class Methods ---------------------------------------------------------
 
 
   /**
    * Instantiates a new Method type cp info.
    */
-// Instance Methods ------------------------------------------------------
-    protected MethodTypeCpInfo()
-    {
-      super(CONSTANT_MethodType);
-    }
+  protected MethodTypeCpInfo()
+  {
+    super(CONSTANT_MethodType);
+  }
 
-    protected void readInfo(DataInput din) throws IOException {
-      u2descriptorIndex = din.readUnsignedShort();
-    }
+  // Instance Methods ------------------------------------------------------
+  protected void readInfo(DataInput din) throws IOException {
+    u2descriptorIndex = din.readUnsignedShort();
+  }
 
-    protected void writeInfo(DataOutput dout) throws IOException {
-      dout.writeShort(u2descriptorIndex);
-    }
+  protected void writeInfo(DataOutput dout) throws IOException {
+    dout.writeShort(u2descriptorIndex);
+  }
 
   /**
    * Gets u 2 descriptor index.

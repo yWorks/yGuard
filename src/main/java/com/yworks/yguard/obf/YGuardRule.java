@@ -1,4 +1,4 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
@@ -8,7 +8,6 @@
 package com.yworks.yguard.obf;
 
 import java.io.*;
-import java.util.*;
 import java.lang.reflect.Modifier;
 
 /**
@@ -18,6 +17,7 @@ import java.lang.reflect.Modifier;
  */
 public class YGuardRule
 {
+  // Constants -------------------------------------------------------------
   /**
    * The constant PUBLIC.
    */
@@ -59,8 +59,7 @@ public class YGuardRule
   /**
    * The constant TYPE_ATTR.
    */
-// Constants -------------------------------------------------------------
-    public static final int TYPE_ATTR = 0;
+  public static final int TYPE_ATTR = 0;
   /**
    * The constant TYPE_CLASS.
    */
@@ -106,11 +105,11 @@ public class YGuardRule
    */
   public static final int TYPE_PACKAGE = 11;
 
+  // Fields ----------------------------------------------------------------
   /**
    * The Type.
    */
-// Fields ----------------------------------------------------------------
-    public int type;
+  public int type;
   /**
    * The Name.
    */
@@ -146,15 +145,14 @@ public class YGuardRule
    * @param type the type
    * @param name the name
    */
-// Instance Methods-------------------------------------------------------
-    public YGuardRule(int type, String name)
-    {
-      this.type = type;
-      this.name = name;
-      this.descriptor = null;
-      this.obfName = null;
-      this.lineNumberTableMapper = null;
-    }
+  public YGuardRule(int type, String name)
+  {
+    this.type = type;
+    this.name = name;
+    this.descriptor = null;
+    this.obfName = null;
+    this.lineNumberTableMapper = null;
+  }
 
   /**
    * Instantiates a new Y guard rule.
@@ -164,13 +162,13 @@ public class YGuardRule
    * @param descriptor the descriptor
    */
   public YGuardRule(int type, String name, String descriptor)
-    {
-        this.obfName = null;
-        this.type = type;
-        this.name = name;
-        this.descriptor = descriptor;
-        this.lineNumberTableMapper = null;
-    }
+  {
+      this.obfName = null;
+      this.type = type;
+      this.name = name;
+      this.descriptor = descriptor;
+      this.lineNumberTableMapper = null;
+  }
 
   /**
    * Instantiates a new Y guard rule.
@@ -179,31 +177,32 @@ public class YGuardRule
    * @param lineNumberTableMapper the line number table mapper
    */
   public YGuardRule(String className, LineNumberTableMapper lineNumberTableMapper) {
-      this.descriptor = null;
-      this.obfName = null;
-      this.name = className;
-      this.type = TYPE_LINE_NUMBER_MAPPER;
-      this.lineNumberTableMapper = lineNumberTableMapper;
-    }
+    this.descriptor = null;
+    this.obfName = null;
+    this.name = className;
+    this.type = TYPE_LINE_NUMBER_MAPPER;
+    this.lineNumberTableMapper = lineNumberTableMapper;
+  }
 
+  // Instance Methods-------------------------------------------------------
   /**
    * Log properties.
    *
    * @param pw the pw
    */
   public void logProperties(PrintWriter pw){
-      if (type == TYPE_LINE_NUMBER_MAPPER){
-        lineNumberTableMapper.logProperties(pw);
-      }
+    if (type == TYPE_LINE_NUMBER_MAPPER){
+      lineNumberTableMapper.logProperties(pw);
     }
+  }
 
-    public String toString()
-    {
-        return typeToString(type)+" "+ name + " "
-        + descriptor+" fields: "+methodToString(retainFields)
-        +" methods: "+methodToString(retainMethods)
-        +" classes: "+methodToString(retainClasses);
-    }
+  public String toString()
+  {
+    return typeToString(type)+" "+ name + " "
+    + descriptor+" fields: "+methodToString(retainFields)
+    +" methods: "+methodToString(retainMethods)
+    +" classes: "+methodToString(retainClasses);
+  }
 
   /**
    * Type to string string.
@@ -212,34 +211,34 @@ public class YGuardRule
    * @return the string
    */
   public static String typeToString(int type){
-      switch (type){
-        default: return "Unknown type "+type;
-        case TYPE_ATTR:
-          return "ATTRIBUTE";
-        case TYPE_ATTR2:
-          return "ATTRIBUTE PER CLASS";
-        case TYPE_CLASS:
-          return "CLASS";
-        case TYPE_CLASS_MAP:
-          return "CLASS_MAP";
-        case TYPE_FIELD:
-          return "FIELD";
-        case TYPE_FIELD_MAP:
-          return "FIELD_MAP";
-        case TYPE_METHOD:
-          return "METHOD";
-        case TYPE_METHOD_MAP:
-          return "METHOD_MAP";
-        case TYPE_PACKAGE_MAP:
-          return "PACKAGE_MAP";
-        case TYPE_SOURCE_ATTRIBUTE_MAP:
-          return "SOURCE_ATTRIBUTE_MAP";
-        case TYPE_LINE_NUMBER_MAPPER:
-          return "LINE_NUMBER_MAPPER";
-        case TYPE_PACKAGE:
-          return "PACKAGE";
-      }
+    switch (type){
+      default: return "Unknown type "+type;
+      case TYPE_ATTR:
+        return "ATTRIBUTE";
+      case TYPE_ATTR2:
+        return "ATTRIBUTE PER CLASS";
+      case TYPE_CLASS:
+        return "CLASS";
+      case TYPE_CLASS_MAP:
+        return "CLASS_MAP";
+      case TYPE_FIELD:
+        return "FIELD";
+      case TYPE_FIELD_MAP:
+        return "FIELD_MAP";
+      case TYPE_METHOD:
+        return "METHOD";
+      case TYPE_METHOD_MAP:
+        return "METHOD_MAP";
+      case TYPE_PACKAGE_MAP:
+        return "PACKAGE_MAP";
+      case TYPE_SOURCE_ATTRIBUTE_MAP:
+        return "SOURCE_ATTRIBUTE_MAP";
+      case TYPE_LINE_NUMBER_MAPPER:
+        return "LINE_NUMBER_MAPPER";
+      case TYPE_PACKAGE:
+        return "PACKAGE";
     }
+  }
 
   /**
    * Method to string string.
@@ -248,18 +247,18 @@ public class YGuardRule
    * @return the string
    */
   public static String methodToString(int modifier){
-      switch (modifier){
-        default: return "Unknown modifier "+modifier;
-        case LEVEL_NONE:
-          return "LEVEL_NONE";
-        case LEVEL_FRIENDLY:
-          return "LEVEL_FRIENDLY";
-        case LEVEL_PRIVATE:
-          return "LEVEL_PRIVATE";
-        case LEVEL_PROTECTED:
-          return "LEVEL_PROTECTED";
-        case LEVEL_PUBLIC:
-          return "LEVEL_PUBLIC";
-      }
+    switch (modifier){
+      default: return "Unknown modifier "+modifier;
+      case LEVEL_NONE:
+        return "LEVEL_NONE";
+      case LEVEL_FRIENDLY:
+        return "LEVEL_FRIENDLY";
+      case LEVEL_PRIVATE:
+        return "LEVEL_PRIVATE";
+      case LEVEL_PROTECTED:
+        return "LEVEL_PROTECTED";
+      case LEVEL_PUBLIC:
+        return "LEVEL_PUBLIC";
     }
+  }
 }

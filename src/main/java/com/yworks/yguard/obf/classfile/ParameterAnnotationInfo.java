@@ -1,9 +1,3 @@
-/*
- * ParameterAnnotationInfo.java
- *
- * Created on April 20, 2005, 4:27 PM
- */
-
 package com.yworks.yguard.obf.classfile;
 
 import java.io.DataInput;
@@ -26,6 +20,7 @@ public class ParameterAnnotationInfo
   private AnnotationInfo[] annotations;
 
 
+  // Class Methods ---------------------------------------------------------
   /**
    * Create parameter annotation info.
    *
@@ -33,7 +28,6 @@ public class ParameterAnnotationInfo
    * @return the parameter annotation info
    * @throws IOException the io exception
    */
-// Class Methods ---------------------------------------------------------
   public static ParameterAnnotationInfo create(DataInput din) throws java.io.IOException
   {
     if (din == null) throw new NullPointerException("DataInput cannot be null!");

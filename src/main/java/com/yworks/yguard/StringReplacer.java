@@ -1,9 +1,3 @@
-/*
- * QuotedStringsReplacement.java
- *
- * Created on June 25, 2003, 4:13 PM
- */
-
 package com.yworks.yguard;
 
 import com.yworks.yguard.obf.GuardDB;
@@ -101,38 +95,37 @@ public class StringReplacer
     
     while((line = bin.readLine())!= null)
     {
-       result.setLength(0);
-       Matcher matcher = pattern.matcher(line);
-       String match;
+      result.setLength(0);
+      Matcher matcher = pattern.matcher(line);
+      String match;
 
-       boolean found = matcher.find();
-       while (found)
-       {
-         String replacement = "";
-         match = line.substring(matcher.start(), matcher.end());
-         String[] parts = match.split(Pattern.quote(separator));
-         List<String> mapped = db.translateItem(parts);
-         while (mapped.size() < parts.length) {
-           mapped.add(parts[mapped.size()]);
-         }
-         for(int i = 0; i < mapped.size(); i++) {
-           if (i > 0) replacement += separator;
-           replacement += mapped.get(i);
-         }
-         if (replacement.indexOf('\\') >= 0){
-           replacement = replacement.replaceAll("\\\\","\\\\\\\\");
-         }
-         if (replacement.indexOf('$') >= 0){
-           replacement = replacement.replaceAll("\\$","\\\\\\$");
-         }
+      boolean found = matcher.find();
+      while (found)
+      {
+        String replacement = "";
+        match = line.substring(matcher.start(), matcher.end());
+        String[] parts = match.split(Pattern.quote(separator));
+        List<String> mapped = db.translateItem(parts);
+        while (mapped.size() < parts.length) {
+          mapped.add(parts[mapped.size()]);
+        }
+        for(int i = 0; i < mapped.size(); i++) {
+          if (i > 0) replacement += separator;
+          replacement += mapped.get(i);
+        }
+        if (replacement.indexOf('\\') >= 0){
+          replacement = replacement.replaceAll("\\\\","\\\\\\\\");
+        }
+        if (replacement.indexOf('$') >= 0){
+          replacement = replacement.replaceAll("\\$","\\\\\\$");
+        }
 
-         matcher.appendReplacement(result, replacement); 
-         found = matcher.find();
-       }
-       matcher.appendTail(result);
-       out.write(result.toString());
-       out.write('\n');
-      
+        matcher.appendReplacement(result, replacement);
+        found = matcher.find();
+      }
+      matcher.appendTail(result);
+      out.write(result.toString());
+      out.write('\n');
     }
   }
   

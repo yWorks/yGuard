@@ -1,14 +1,4 @@
-/*
- * RuntimeVisibleAnnotationsAttrInfo.java
- *
- * Created on April 20, 2005, 11:51 AM
- */
-
 package com.yworks.yguard.obf.classfile;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
 
 /**
  * The type Runtime visible annotations attr info.
@@ -82,9 +72,9 @@ public class RuntimeVisibleAnnotationsAttrInfo extends AttrInfo
     }
   }
 
-    protected void markUtf8RefsInInfo(ConstantPool pool) {
-      for (int i = 0; i < u2AnnotationCount; i++){
-        annotations[i].markUtf8RefsInInfo(pool);
-      }
+  protected void markUtf8RefsInInfo(ConstantPool pool) {
+    for (int i = 0; i < u2AnnotationCount; i++){
+      annotations[i].markUtf8RefsInInfo(pool);
     }
+  }
 }

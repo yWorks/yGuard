@@ -1,16 +1,13 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf;
 
-import java.io.*;
 import java.lang.reflect.*;
-import java.util.*;
 import com.yworks.yguard.obf.classfile.*;
 
 /**
@@ -33,22 +30,22 @@ abstract public class MdFd extends TreeItem
 
     // Instance Methods ------------------------------------------------------
 
-  /**
-   * Ctor.
-   *
-   * @param parent            the parent
-   * @param isSynthetic       the is synthetic
-   * @param name              the name
-   * @param descriptor        the descriptor
-   * @param access            the access
-   * @param obfuscationConfig the obfuscation config
-   */
-  public MdFd(TreeItem parent, boolean isSynthetic, String name, String descriptor, int access, ObfuscationConfig obfuscationConfig)
+    /**
+     * Ctor.
+     *
+     * @param parent            the parent
+     * @param isSynthetic       the is synthetic
+     * @param name              the name
+     * @param descriptor        the descriptor
+     * @param access            the access
+     * @param obfuscationConfig the obfuscation config
+     */
+    public MdFd(TreeItem parent, boolean isSynthetic, String name, String descriptor, int access, ObfuscationConfig obfuscationConfig)
     {
         super(parent, name);
         this.descriptor = descriptor;
-      this.obfuscationConfig = obfuscationConfig;
-      this.access = access;
+        this.obfuscationConfig = obfuscationConfig;
+        this.access = access;
 
         this.isSynthetic = isSynthetic;
         if (name.equals("") || descriptor.equals("") || !(parent instanceof Cl))
@@ -63,21 +60,21 @@ abstract public class MdFd extends TreeItem
         }
     }
 
-  /**
-   * Gets obfuscation config.
-   *
-   * @return the obfuscation config
-   */
-  public ObfuscationConfig getObfuscationConfig() {
-    return obfuscationConfig;
-  }
+    /**
+     * Gets obfuscation config.
+     *
+     * @return the obfuscation config
+     */
+    public ObfuscationConfig getObfuscationConfig() {
+      return obfuscationConfig;
+    }
 
-  /**
-   * Return the method or field descriptor String.
-   *
-   * @return the descriptor
-   */
-  public String getDescriptor() {return descriptor;}
+    /**
+     * Return the method or field descriptor String.
+     *
+     * @return the descriptor
+     */
+    public String getDescriptor() {return descriptor;}
 
     /** Return the display name for field. */
     public String toString()
@@ -130,33 +127,33 @@ abstract public class MdFd extends TreeItem
         return sb.toString();
     }
 
-  /**
-   * Return the display name of the return type.
-   *
-   * @return the return type name
-   */
-  protected String getReturnTypeName()
+    /**
+     * Return the display name of the return type.
+     *
+     * @return the return type name
+     */
+    protected String getReturnTypeName()
     {
         String[] types = parseTypes();
         return (types.length > 0 ? types[types.length - 1] : "") + " ";
     }
 
-  /**
-   * Return the display name of the descriptor types.
-   *
-   * @return the descriptor name
-   */
-  abstract protected String getDescriptorName();
+    /**
+     * Return the display name of the descriptor types.
+     *
+     * @return the descriptor name
+     */
+    abstract protected String getDescriptorName();
 
     /** Return the parsed descriptor types array. */
     private String[] parsedTypes = null;
 
-  /**
-   * Parse types string [ ].
-   *
-   * @return the string [ ]
-   */
-  protected String[] parseTypes()
+    /**
+     * Parse types string [ ].
+     *
+     * @return the string [ ]
+     */
+    protected String[] parseTypes()
     {
         if (parsedTypes == null)
         {

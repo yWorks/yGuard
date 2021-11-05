@@ -9,10 +9,10 @@ import java.util.Collection;
  * Used by ant to handle the <code>field</code> element.
  */
 public class FieldSection extends PatternMatchedClassesSection implements Mappable {
-    private String name;
-    private String className;
-    private String mapTo;
-  //private final YGuardBaseTask obfuscatorTask;
+  private String name;
+  private String className;
+  private String mapTo;
+//  private final YGuardBaseTask obfuscatorTask;
 
 
 
@@ -53,13 +53,13 @@ public class FieldSection extends PatternMatchedClassesSection implements Mappab
       this.mapTo = map;
     }
 
-    public void addMapEntries(Collection entries)
-    {
-      String lname = ObfuscatorTask.toNativeClass(className)+'/'+name;
-      YGuardRule entry = new YGuardRule(YGuardRule.TYPE_FIELD_MAP, lname);
-      entry.obfName = mapTo;
-      entries.add(entry);
-    }
+  public void addMapEntries(Collection entries)
+  {
+    String lname = ObfuscatorTask.toNativeClass(className)+'/'+name;
+    YGuardRule entry = new YGuardRule(YGuardRule.TYPE_FIELD_MAP, lname);
+    entry.obfName = mapTo;
+    entries.add(entry);
+  }
 
   /**
    * Gets name.

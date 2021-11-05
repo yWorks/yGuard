@@ -1,9 +1,3 @@
-/*
- * ElementValueInfo.java
- *
- * Created on April 20, 2005, 4:19 PM
- */
-
 package com.yworks.yguard.obf.classfile;
 
 import com.yworks.yguard.ParseException;

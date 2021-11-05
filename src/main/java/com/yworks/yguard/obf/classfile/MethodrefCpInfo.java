@@ -1,21 +1,11 @@
-/* ===========================================================================
- * $RCSfile$
- * ===========================================================================
+/*
+ * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
- * RetroGuard -- an obfuscation package for Java classfiles.
+ * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
+ * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
- * Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
- *
-
- *
- *
- * $Date$
- * $Revision$
  */
 package com.yworks.yguard.obf.classfile;
-
-import java.io.*;
-import java.util.*;
 
 /**
  * Representation of a 'methodref' entry in the ConstantPool.
@@ -36,9 +26,10 @@ public class MethodrefCpInfo extends RefCpInfo
     /**
      * Instantiates a new Methodref cp info.
      */
-// Instance Methods ------------------------------------------------------
     protected MethodrefCpInfo()
     {
         super(CONSTANT_Methodref);
     }
+
+    // Instance Methods ------------------------------------------------------
 }

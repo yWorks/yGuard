@@ -1,4 +1,4 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
@@ -26,19 +26,19 @@ public class DeprecatedAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Deprecated attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Deprecated attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected DeprecatedAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Return the String name of the attribute. */
     protected String getAttrName() 
     {
@@ -51,4 +51,3 @@ public class DeprecatedAttrInfo extends AttrInfo
     /** Export data following the header to a DataOutput stream. */
     public void writeInfo(DataOutput dout)  {}
 }
-

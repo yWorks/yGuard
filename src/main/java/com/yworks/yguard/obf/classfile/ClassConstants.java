@@ -1,16 +1,9 @@
-/* ===========================================================================
- * $RCSfile$
- * ===========================================================================
+/*
+ * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
- * RetroGuard -- an obfuscation package for Java classfiles.
+ * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
+ * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
- * Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
- *
-
- *
- *
- * $Date$
- * $Revision$
  */
 package com.yworks.yguard.obf.classfile;
 
@@ -21,11 +14,11 @@ package com.yworks.yguard.obf.classfile;
  */
 public interface  ClassConstants
 {
+  // Constants -------------------------------------------------------------
   /**
    * The constant MAGIC.
    */
-// Constants -------------------------------------------------------------
-    public static final int MAGIC = 0xCAFEBABE;
+  public static final int MAGIC = 0xCAFEBABE;
 
   /**
    * The constant MINOR_VERSION_MAX.
@@ -149,36 +142,40 @@ public interface  ClassConstants
    * The constant CONSTANT_NameAndType.
    */
   public static final int CONSTANT_NameAndType        = 12;
+
+  // new in java 7
   /**
    * The constant CONSTANT_MethodHandle.
    */
-// new in java 7
-    public static final int CONSTANT_MethodHandle       = 15;
+  public static final int CONSTANT_MethodHandle       = 15;
+  // new in java 7
   /**
    * The constant CONSTANT_MethodType.
    */
-// new in java 7
-    public static final int CONSTANT_MethodType         = 16;
+  public static final int CONSTANT_MethodType         = 16;
+
+  // new in java 11
   /**
    * The constant CONSTANT_Dynamic.
    */
-// new in java 11
-    public static final int CONSTANT_Dynamic            = 17;
+  public static final int CONSTANT_Dynamic            = 17;
+
+  // new in java 7
   /**
    * The constant CONSTANT_InvokeDynamic.
    */
-// new in java 7
-    public static final int CONSTANT_InvokeDynamic      = 18;
+  public static final int CONSTANT_InvokeDynamic      = 18;
+
+  // new in java 9
   /**
    * The constant CONSTANT_Module.
    */
-// new in java 9
-    public static final int CONSTANT_Module             = 19;
+  public static final int CONSTANT_Module             = 19;
+  // new in java 9
   /**
    * The constant CONSTANT_Package.
    */
-// new in java 9
-    public static final int CONSTANT_Package            = 20;
+  public static final int CONSTANT_Package            = 20;
 
   /**
    * The constant ATTR_Unknown.
@@ -272,16 +269,18 @@ public interface  ClassConstants
    * The constant ATTR_Varargs.
    */
   public static final String ATTR_Varargs = "Varargs";
+
+  // new in java 7
   /**
    * The constant ATTR_BootstrapMethods.
    */
-// new in java 7
-    public static final String ATTR_BootstrapMethods = "BootstrapMethods";
+  public static final String ATTR_BootstrapMethods = "BootstrapMethods";
+
+  // new in java 8
   /**
    * The constant ATTR_RuntimeVisibleTypeAnnotations.
    */
-// new in java 8
-    public static final String ATTR_RuntimeVisibleTypeAnnotations = "RuntimeVisibleTypeAnnotations";
+  public static final String ATTR_RuntimeVisibleTypeAnnotations = "RuntimeVisibleTypeAnnotations";
   /**
    * The constant ATTR_RuntimeInvisibleTypeAnnotations.
    */
@@ -290,11 +289,12 @@ public interface  ClassConstants
    * The constant ATTR_MethodParameters.
    */
   public static final String ATTR_MethodParameters = "MethodParameters";
+
+  // new in java 9
   /**
    * The constant ATTR_Module.
    */
-// new in java 9
-    public static final String ATTR_Module = "Module";
+  public static final String ATTR_Module = "Module";
   /**
    * The constant ATTR_ModulePackages.
    */
@@ -303,20 +303,22 @@ public interface  ClassConstants
    * The constant ATTR_ModuleMainClass.
    */
   public static final String ATTR_ModuleMainClass = "ModuleMainClass";
+
+  // new in java 11
   /**
    * The constant ATTR_NestHost.
    */
-// new in java 11
-    public static final String ATTR_NestHost = "NestHost";
+  public static final String ATTR_NestHost = "NestHost";
   /**
    * The constant ATTR_NestMembers.
    */
   public static final String ATTR_NestMembers = "NestMembers";
+
+  // source debug for kotlin
   /**
    * The constant ATTR_SourceDebugExtension.
    */
-// source debug for kotlin
-    public static final String ATTR_SourceDebugExtension = "SourceDebugExtension";
+  public static final String ATTR_SourceDebugExtension = "SourceDebugExtension";
 
   /**
    * The constant REF_getField.
@@ -357,66 +359,64 @@ public interface  ClassConstants
 
 
   /**
-   * The constant KNOWN_ATTRS.
+   * The list of known attributes.
    */
-// List of known attributes
-    public static final String[] KNOWN_ATTRS = {
-        ATTR_Code,
-        ATTR_ConstantValue,
-        ATTR_Exceptions,
-        ATTR_LineNumberTable,
-        ATTR_SourceFile,
-        ATTR_LocalVariableTable,
-        ATTR_InnerClasses,
-        ATTR_Synthetic,
-        ATTR_Deprecated,
-        ATTR_Signature,
-        ATTR_LocalVariableTypeTable,
-        ATTR_EnclosingMethod,
-        ATTR_AnnotationDefault,
-        ATTR_RuntimeVisibleAnnotations,
-        ATTR_RuntimeInvisibleAnnotations,
-        ATTR_RuntimeVisibleParameterAnnotations,
-        ATTR_RuntimeInvisibleParameterAnnotations,
-        ATTR_BootstrapMethods,
-        ATTR_Bridge,
-        ATTR_Enum,
-        ATTR_StackMapTable,
-        ATTR_Varargs,
-        ATTR_MethodParameters,
-        ATTR_Module,
-        ATTR_ModulePackages,
-        ATTR_ModuleMainClass,
-        ATTR_NestHost,
-        ATTR_NestMembers,
-    };
+  public static final String[] KNOWN_ATTRS = {
+    ATTR_Code,
+    ATTR_ConstantValue,
+    ATTR_Exceptions,
+    ATTR_LineNumberTable,
+    ATTR_SourceFile,
+    ATTR_LocalVariableTable,
+    ATTR_InnerClasses,
+    ATTR_Synthetic,
+    ATTR_Deprecated,
+    ATTR_Signature,
+    ATTR_LocalVariableTypeTable,
+    ATTR_EnclosingMethod,
+    ATTR_AnnotationDefault,
+    ATTR_RuntimeVisibleAnnotations,
+    ATTR_RuntimeInvisibleAnnotations,
+    ATTR_RuntimeVisibleParameterAnnotations,
+    ATTR_RuntimeInvisibleParameterAnnotations,
+    ATTR_BootstrapMethods,
+    ATTR_Bridge,
+    ATTR_Enum,
+    ATTR_StackMapTable,
+    ATTR_Varargs,
+    ATTR_MethodParameters,
+    ATTR_Module,
+    ATTR_ModulePackages,
+    ATTR_ModuleMainClass,
+    ATTR_NestHost,
+    ATTR_NestMembers,
+  };
 
   /**
-   * The constant REQUIRED_ATTRS.
+   * The list of required attributes.
    */
-// List of required attributes
-    public static final String[] REQUIRED_ATTRS = {
-        ATTR_Code,
-        ATTR_ConstantValue,
-        ATTR_Exceptions,
-        ATTR_InnerClasses,
-        ATTR_Synthetic,
-        ATTR_Signature,
-        ATTR_RuntimeVisibleAnnotations,
-        ATTR_EnclosingMethod,
-        ATTR_AnnotationDefault,
-        ATTR_RuntimeInvisibleParameterAnnotations,
-        ATTR_RuntimeInvisibleAnnotations,
-        ATTR_RuntimeInvisibleTypeAnnotations,
-        ATTR_RuntimeVisibleAnnotations,
-        ATTR_RuntimeVisibleTypeAnnotations,
-        ATTR_RuntimeVisibleParameterAnnotations,
-        ATTR_StackMapTable,
-        ATTR_BootstrapMethods,
-        ATTR_Module,
-        ATTR_ModulePackages,
-        ATTR_ModuleMainClass,
-        ATTR_NestHost,
-        ATTR_NestMembers,
-    };
+  public static final String[] REQUIRED_ATTRS = {
+    ATTR_Code,
+    ATTR_ConstantValue,
+    ATTR_Exceptions,
+    ATTR_InnerClasses,
+    ATTR_Synthetic,
+    ATTR_Signature,
+    ATTR_RuntimeVisibleAnnotations,
+    ATTR_EnclosingMethod,
+    ATTR_AnnotationDefault,
+    ATTR_RuntimeInvisibleParameterAnnotations,
+    ATTR_RuntimeInvisibleAnnotations,
+    ATTR_RuntimeInvisibleTypeAnnotations,
+    ATTR_RuntimeVisibleAnnotations,
+    ATTR_RuntimeVisibleTypeAnnotations,
+    ATTR_RuntimeVisibleParameterAnnotations,
+    ATTR_StackMapTable,
+    ATTR_BootstrapMethods,
+    ATTR_Module,
+    ATTR_ModulePackages,
+    ATTR_ModuleMainClass,
+    ATTR_NestHost,
+    ATTR_NestMembers,
+  };
 }

@@ -1,13 +1,9 @@
-/* ===========================================================================
- * $RCSfile$
- * ===========================================================================
+/*
+ * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
- * RetroGuard -- an obfuscation package for Java classfiles.
+ * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
+ * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
- * Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
- *
- * $Date$
- * $Revision$
  */
 package com.yworks.yguard.obf;
 
@@ -18,26 +14,26 @@ package com.yworks.yguard.obf;
  */
 public class Cons
 {
-  /**
-   * The Car.
-   */
-// Fields ----------------------------------------------------------------
+    // Fields ----------------------------------------------------------------
+    /**
+     * The Car.
+     */
     public Object car;
-  /**
-   * The Cdr.
-   */
-  public Object cdr;
+    /**
+     * The Cdr.
+     */
+    public Object cdr;
 
 
     // Instance Methods ---------------------------------------------------------
 
-  /**
-   * Ctor.
-   *
-   * @param car the car
-   * @param cdr the cdr
-   */
-  public Cons(Object car, Object cdr)
+    /**
+     * Ctor.
+     *
+     * @param car the car
+     * @param cdr the cdr
+     */
+    public Cons(Object car, Object cdr)
     {
         this.car = car;
         this.cdr = cdr;

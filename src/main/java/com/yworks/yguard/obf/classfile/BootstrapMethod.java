@@ -11,11 +11,11 @@ import java.io.IOException;
  */
 public class BootstrapMethod {
   /**
-   * The U 2 bootstrap method ref.
+   * The bootstrap method ref.
    */
   int u2bootstrapMethodRef;
   /**
-   * The U 2 bootstrap arguments.
+   * The bootstrap arguments.
    */
   int[] u2bootstrapArguments;
 

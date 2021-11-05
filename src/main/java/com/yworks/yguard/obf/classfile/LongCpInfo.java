@@ -1,15 +1,13 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Representation of a 'long' entry in the ConstantPool (takes up two indices).
@@ -32,12 +30,12 @@ public class LongCpInfo extends CpInfo
     /**
      * Instantiates a new Long cp info.
      */
-// Instance Methods ------------------------------------------------------
     protected LongCpInfo()
     {
         super(CONSTANT_Long);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Read the 'info' data following the u1tag byte. */
     protected void readInfo(DataInput din) throws java.io.IOException
     {

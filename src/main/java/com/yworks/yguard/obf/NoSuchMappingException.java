@@ -1,10 +1,9 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Copyright (c) 2003 yWorks GmbH (yguard@yworks.com)
  *
  */
-
 package com.yworks.yguard.obf;
 
 /**

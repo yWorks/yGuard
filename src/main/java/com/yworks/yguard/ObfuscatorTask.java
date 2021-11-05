@@ -1,8 +1,3 @@
-/*
- * ObfuscatorTask.java
- *
- * Created on October 10, 2002, 5:30 PM
- */
 package com.yworks.yguard;
 
 import com.yworks.util.CollectionFilter;
@@ -186,7 +181,7 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @return the string
    */
   public static final String toNativeClass(String className){
-      return className.replace('.','/');
+    return className.replace('.','/');
   }
 
   /**
@@ -195,101 +190,101 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @param javaMethod the java method
    * @return the string [ ]
    */
-  public static final String[] toNativeMethod(String javaMethod){
-      StringTokenizer tokenizer = new StringTokenizer(javaMethod, "(,[]) ", true);
-      String tmp = tokenizer.nextToken();;
-      while (tmp.trim().length() == 0){
-          tmp = tokenizer.nextToken();
-      }
-      String returnType = tmp;
+  public static final String[] toNativeMethod( String javaMethod ) {
+    StringTokenizer tokenizer = new StringTokenizer(javaMethod, "(,[]) ", true);
+    String tmp = tokenizer.nextToken();
+    while (tmp.trim().length() == 0) {
       tmp = tokenizer.nextToken();
-      int retarraydim = 0;
-      while (tmp.equals("[")){
-          tmp = tokenizer.nextToken();
-          if (!tmp.equals("]")) throw new IllegalArgumentException("']' expected but found "+tmp);
-          retarraydim++;
-          tmp = tokenizer.nextToken();
-      }
-    if ( tmp.trim().length() != 0 ) {
-      throw new IllegalArgumentException( "space expected but found " + tmp );
     }
+    String returnType = tmp;
+    tmp = tokenizer.nextToken();
+    int retarraydim = 0;
+    while (tmp.equals("[")) {
       tmp = tokenizer.nextToken();
-      while (tmp.trim().length() == 0){
-          tmp = tokenizer.nextToken();
+      if (!tmp.equals("]")) throw new IllegalArgumentException("']' expected but found " + tmp);
+      retarraydim++;
+      tmp = tokenizer.nextToken();
+    }
+    if (tmp.trim().length() != 0) {
+      throw new IllegalArgumentException("space expected but found " + tmp);
+    }
+    tmp = tokenizer.nextToken();
+    while (tmp.trim().length() == 0) {
+      tmp = tokenizer.nextToken();
+    }
+    String name = tmp;
+    StringBuffer nativeMethod = new StringBuffer(30);
+    nativeMethod.append('(');
+    tmp = tokenizer.nextToken();
+    while (tmp.trim().length() == 0) {
+      tmp = tokenizer.nextToken();
+    }
+    if (!tmp.equals("(")) throw new IllegalArgumentException("'(' expected but found " + tmp);
+    tmp = tokenizer.nextToken();
+    while (!tmp.equals(")")) {
+      while (tmp.trim().length() == 0) {
+        tmp = tokenizer.nextToken();
       }
-      String name = tmp;
-      StringBuffer nativeMethod = new StringBuffer(30);
-      nativeMethod.append('(');
+      String type = tmp;
       tmp = tokenizer.nextToken();
-      while (tmp.trim().length() == 0){
-          tmp = tokenizer.nextToken();
+      while (tmp.trim().length() == 0) {
+        tmp = tokenizer.nextToken();
       }
-      if (!tmp.equals("(")) throw new IllegalArgumentException("'(' expected but found "+tmp);
-      tmp = tokenizer.nextToken();
-      while (!tmp.equals(")")){
-          while (tmp.trim().length() == 0){
-              tmp = tokenizer.nextToken();
-          }
-          String type = tmp;
-          tmp = tokenizer.nextToken();
-          while (tmp.trim().length() == 0){
-              tmp = tokenizer.nextToken();
-          }
-          int arraydim = 0;
-          while (tmp.equals("[")){
-              tmp = tokenizer.nextToken();
-              if (!tmp.equals("]")) throw new IllegalArgumentException("']' expected but found "+tmp);
-              arraydim++;
-              tmp = tokenizer.nextToken();
-          }
-          while (tmp.trim().length() == 0){
-              tmp = tokenizer.nextToken();
-          }
+      int arraydim = 0;
+      while (tmp.equals("[")) {
+        tmp = tokenizer.nextToken();
+        if (!tmp.equals("]")) throw new IllegalArgumentException("']' expected but found " + tmp);
+        arraydim++;
+        tmp = tokenizer.nextToken();
+      }
+      while (tmp.trim().length() == 0) {
+        tmp = tokenizer.nextToken();
+      }
 
-          nativeMethod.append(toNativeType(type, arraydim));
-          if (tmp.equals(",")){
-              tmp = tokenizer.nextToken();
-              while (tmp.trim().length() == 0){
-                  tmp = tokenizer.nextToken();
-              }
-              continue;
-          }
+      nativeMethod.append(toNativeType(type, arraydim));
+      if (tmp.equals(",")) {
+        tmp = tokenizer.nextToken();
+        while (tmp.trim().length() == 0) {
+          tmp = tokenizer.nextToken();
+        }
+        continue;
       }
-      nativeMethod.append(')');
-      nativeMethod.append(toNativeType(returnType, retarraydim));
-      String[] result = new String[]{name, nativeMethod.toString()};
-      return result;
+    }
+    nativeMethod.append(')');
+    nativeMethod.append(toNativeType(returnType, retarraydim));
+    String[] result = new String[]{name, nativeMethod.toString()};
+    return result;
   }
 
-  private static final String toNativeType(String type, int arraydim){
-      StringBuffer nat = new StringBuffer(30);
-      for (int i = 0; i < arraydim; i++){
-          nat.append('[');
-      }
-      if ("byte".equals(type)){
-          nat.append('B');
-      } else       if ("char".equals(type)){
-          nat.append('C');
-      } else       if ("double".equals(type)){
-          nat.append('D');
-      } else       if ("float".equals(type)){
-          nat.append('F');
-      } else       if ("int".equals(type)){
-          nat.append('I');
-      } else       if ("long".equals(type)){
-          nat.append('J');
-      } else       if ("short".equals(type)){
-          nat.append('S');
-      } else       if ("boolean".equals(type)){
-          nat.append('Z');
-      } else       if ("void".equals(type)){
-          nat.append('V');
-      } else { //Lclassname;
-          nat.append('L');
-          nat.append(type.replace('.','/'));
-          nat.append(';');
-      }
-      return nat.toString();
+  private static final String toNativeType( String type, int arraydim ) {
+    StringBuffer nat = new StringBuffer(30);
+    for (int i = 0; i < arraydim; i++) {
+      nat.append('[');
+    }
+    if ("byte".equals(type)) {
+      nat.append('B');
+    } else if ("char".equals(type)) {
+      nat.append('C');
+    } else if ("double".equals(type)) {
+      nat.append('D');
+    } else if ("float".equals(type)) {
+      nat.append('F');
+    } else if ("int".equals(type)) {
+      nat.append('I');
+    } else if ("long".equals(type)) {
+      nat.append('J');
+    } else if ("short".equals(type)) {
+      nat.append('S');
+    } else if ("boolean".equals(type)) {
+      nat.append('Z');
+    } else if ("void".equals(type)) {
+      nat.append('V');
+    } else { //Lclassname;
+      nat.append('L');
+      nat.append(type.replace('.', '/'));
+      nat.append(';');
+    }
+    return nat.toString();
   }
 
   /**
@@ -344,8 +339,9 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  /** Used by ant to handle the <code>inoutpair</code> element.
-   */
+//  /**
+//   * Used by ant to handle the <code>inoutpair</code> element.
+//   */
 //  public static final class InOutPair{
 //    private File inFile;
 //    private File outFile;
@@ -420,16 +416,17 @@ public class ObfuscatorTask extends YGuardBaseTask
       mappables.add(ps);
     }
 
-    /**
-     * Add configured class.
-     *
-     * @param ps the ps
-     */
 //    public ClassSection createClass() {
 //      ClassSection cs = new ClassSection(  );
 //      mappables.add( cs );
 //      return cs;
 //    }
+
+    /**
+     * Add configured class.
+     *
+     * @param ps the ps
+     */
     public void addConfiguredClass(ClassSection ps){
       mappables.add(ps);
     }
@@ -516,20 +513,20 @@ public class ObfuscatorTask extends YGuardBaseTask
    * Used by ant to handle the <code>adjust</code> element.
    */
   public class AdjustSection extends ZipFileSet {
-      private boolean replaceName = false;
-      private boolean replaceContent = false;
-      private String  replaceContentSeparator = "/";
-      private boolean replacePath = true;
+    private boolean replaceName = false;
+    private boolean replaceContent = false;
+    private String  replaceContentSeparator = "/";
+    private boolean replacePath = true;
 
-      private Set entries;
+    private Set entries;
 
     /**
      * Instantiates a new Adjust section.
      */
     public AdjustSection()
-      {
-        setProject(ObfuscatorTask.this.getProject());
-      }
+    {
+      setProject(ObfuscatorTask.this.getProject());
+    }
 
     /**
      * Contains boolean.
@@ -538,9 +535,9 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @return the boolean
      */
     public boolean contains(String name)
-      {
-        return entries.contains(name);
-      }
+    {
+      return entries.contains(name);
+    }
 
     /**
      * Set replace content.
@@ -548,8 +545,8 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @param rc the rc
      */
     public void setReplaceContent(boolean rc){
-        this.replaceContent = rc;
-      }
+      this.replaceContent = rc;
+    }
 
     /**
      * Gets replace content.
@@ -557,9 +554,9 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @return the replace content
      */
     public boolean getReplaceContent()
-      {
-        return replaceContent;
-      }
+    {
+      return replaceContent;
+    }
 
     /**
      * Sets replace content separator.
@@ -567,8 +564,8 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @param separator the separator
      */
     public void setReplaceContentSeparator(String separator) {
-        this.replaceContentSeparator = separator;
-      }
+      this.replaceContentSeparator = separator;
+    }
 
     /**
      * Gets replace content separator.
@@ -576,8 +573,8 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @return the replace content separator
      */
     public String getReplaceContentSeparator() {
-        return replaceContentSeparator;
-      }
+      return replaceContentSeparator;
+    }
 
     /**
      * Set replace path.
@@ -585,8 +582,8 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @param rp the rp
      */
     public void setReplacePath(boolean rp){
-        this.replacePath = rp;
-      }
+      this.replacePath = rp;
+    }
 
     /**
      * Gets replace path.
@@ -594,9 +591,9 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @return the replace path
      */
     public boolean getReplacePath()
-      {
-        return replacePath;
-      }
+    {
+      return replacePath;
+    }
 
     /**
      * Gets replace name.
@@ -604,9 +601,9 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @return the replace name
      */
     public boolean getReplaceName()
-      {
-        return replaceName;
-      }
+    {
+      return replaceName;
+    }
 
     /**
      * Set replace name.
@@ -614,8 +611,8 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @param rn the rn
      */
     public void setReplaceName(boolean rn){
-        this.replaceName = rn;
-      }
+      this.replaceName = rn;
+    }
 
     /**
      * Create entries.
@@ -624,22 +621,22 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @throws IOException the io exception
      */
     public void createEntries(Collection srcJars) throws IOException
+    {
+      entries = new HashSet();
+      for(Iterator iter = srcJars.iterator(); iter.hasNext();)
       {
-        entries = new HashSet();
-        for(Iterator iter = srcJars.iterator(); iter.hasNext();)
+        File file = (File) iter.next();
+        setSrc(file);
+
+        DirectoryScanner scanner = getDirectoryScanner(getProject());
+        String[] includedFiles  = ZipScannerTool.getMatches(this, scanner);
+
+        for(int i = 0; i < includedFiles.length; i++)
         {
-          File file = (File) iter.next();
-          setSrc(file);
-
-          DirectoryScanner scanner = getDirectoryScanner(getProject());
-          String[] includedFiles  = ZipScannerTool.getMatches(this, scanner);
-
-          for(int i = 0; i < includedFiles.length; i++)
-          {
-            entries.add(includedFiles[i]);
-          }
+          entries.add(includedFiles[i]);
         }
       }
+    }
   }
 
 //  public Path createExternalClasses(){
@@ -657,9 +654,9 @@ public class ObfuscatorTask extends YGuardBaseTask
    */
   public ExposeSection createExpose(){
     if (this.expose != null){
-          throw new IllegalArgumentException("Only one expose element allowed!");
-      }
-      this.expose = newExposeSection( this );
+      throw new IllegalArgumentException("Only one expose element allowed!");
+    }
+    this.expose = newExposeSection( this );
     return expose;
   }
 
@@ -731,10 +728,10 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @param ex the ex
    */
   public void addConfiguredExpose(ExposeSection ex){
-      if (this.expose != null){
-          throw new IllegalArgumentException("Only one expose element allowed!");
-      }
-      this.expose = ex;
+    if (this.expose != null){
+      throw new IllegalArgumentException("Only one expose element allowed!");
+    }
+    this.expose = ex;
   }
 
   /**
@@ -774,10 +771,10 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @return an instance of MapSection
    */
   public MapSection createMap(){
-      if (this.map != null){
-          throw new IllegalArgumentException("Only one map element allowed!");
-      }
-      this.map = newMapSection();
+    if (this.map != null){
+      throw new IllegalArgumentException("Only one map element allowed!");
+    }
+    this.map = newMapSection();
     return map;
   }
 
@@ -797,10 +794,10 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @param map the map
    */
   public void addConfiguredMap(MapSection map){
-      if (this.map != null){
-          throw new IllegalArgumentException("Only one map element allowed!");
-      }
-      this.map = map;
+    if (this.map != null) {
+      throw new IllegalArgumentException("Only one map element allowed!");
+    }
+    this.map = map;
   }
 
   /**
@@ -809,10 +806,10 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @return an instance of PatchSection
    */
   public PatchSection createPatch(){
-      if (this.patch != null){
-          throw new IllegalArgumentException("Only one patch element allowed!");
-      }
-      this.patch = newPatchSection();
+    if (this.patch != null) {
+      throw new IllegalArgumentException("Only one patch element allowed!");
+    }
+    this.patch = newPatchSection();
     return patch;
   }
 
@@ -832,10 +829,10 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @param patch the patch
    */
   public void addConfiguredPatch(PatchSection patch){
-      if (this.patch != null){
-          throw new IllegalArgumentException("Only one patch element allowed!");
-      }
-      this.patch = patch;
+    if (this.patch != null) {
+      throw new IllegalArgumentException("Only one patch element allowed!");
+    }
+    this.patch = patch;
   }
 
 
@@ -1138,9 +1135,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   }
 
   private void doShrink() {
-
-
-
     YShrinkInvoker yShrinkInvoker = null;
 
     try {
@@ -1282,14 +1276,12 @@ public class ObfuscatorTask extends YGuardBaseTask
    * @param doShrink the do shrink
    */
   public void setShrink( boolean doShrink ) {
-
     if ( mode == MODE_STANDALONE ) {
       this.doShrink = doShrink;
     } else {
       throw new BuildException(
           "The shrink attribute is not supported when the obfuscate task is nested inside a yguard task.\n Use a separate nested shrink task instead." );
     }
-
   }
 
   /**
@@ -1454,13 +1446,12 @@ public class ObfuscatorTask extends YGuardBaseTask
        }
        return contentReplacer;
      }
-
   };
 
 
   //accepts classes and their inner classes
   private static final class ClassFileFilter implements Filter{
-      private com.yworks.util.Filter parent;
+    private com.yworks.util.Filter parent;
 
     /**
      * Instantiates a new Class file filter.
@@ -1470,6 +1461,7 @@ public class ObfuscatorTask extends YGuardBaseTask
     ClassFileFilter(com.yworks.util.Filter parent){
       this.parent = parent;
     }
+
     public boolean accepts(Object o)
     {
       String s= (String) o;
@@ -1529,17 +1521,17 @@ public class ObfuscatorTask extends YGuardBaseTask
   {
     log.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     log.println("<yguard version=\""+"1.5"+"\">");
-      log.println("<!--");
-      log.println(LOG_TITLE_PRE_VERSION + Version.getVersion() + LOG_TITLE_POST_VERSION);
+    log.println("<!--");
+    log.println(LOG_TITLE_PRE_VERSION + Version.getVersion() + LOG_TITLE_POST_VERSION);
+    log.println();
+    log.println(LOG_CREATED + new Date().toString());
+    log.println();
+    for(int i = 0; i < inFile.length; i++){
+      log.println(LOG_INPUT_FILE + inFile[i].getName());
+      log.println(LOG_OUTPUT_FILE + outFile[i].getName());
       log.println();
-      log.println(LOG_CREATED + new Date().toString());
-      log.println();
-      for(int i = 0; i < inFile.length; i++){
-        log.println(LOG_INPUT_FILE + inFile[i].getName());
-        log.println(LOG_OUTPUT_FILE + outFile[i].getName());
-        log.println();
-      }
-      log.println("-->");
+    }
+    log.println("-->");
   }
 
   private static final class LogListener implements ObfuscationListener {
@@ -1574,7 +1566,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     {
       p.log("Parsing jar "+jar);
     }
-
   }
 
   private void writeLogFooter(PrintWriter log){
@@ -1877,7 +1868,6 @@ public class ObfuscatorTask extends YGuardBaseTask
           } else {
             return new LongNameMaker(reservedNames, true, 256);
           }
-
       }
     }
 
@@ -1951,6 +1941,7 @@ public class ObfuscatorTask extends YGuardBaseTask
       this.nm1 = nm1;
       this.nm2 = nm2;
     }
+
     public String nextName(String descriptor)
     {
       return nm1.nextName(descriptor)+nm2.nextName(descriptor);
@@ -2188,7 +2179,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     {
       return prefix + delegate.generateName(i);
     }
-
   }
 
   /**

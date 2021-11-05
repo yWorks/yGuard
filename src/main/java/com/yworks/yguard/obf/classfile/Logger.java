@@ -1,10 +1,9 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
@@ -105,5 +104,4 @@ public class Logger
   public boolean isAllResolved() {
     return allResolved;
   }
-
 }

@@ -20,15 +20,15 @@ public class MethodHandleCpInfo extends CpInfo {
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Method handle cp info.
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Method handle cp info.
+     */
     protected MethodHandleCpInfo()
     {
       super(CONSTANT_MethodHandle);
     }
 
+    // Instance Methods ------------------------------------------------------
     protected void readInfo(DataInput din) throws IOException {
       u1referenceKind = din.readUnsignedByte();
       u2referenceIndex = din.readUnsignedShort();
@@ -39,21 +39,21 @@ public class MethodHandleCpInfo extends CpInfo {
       dout.writeShort(u2referenceIndex);
     }
 
-  /**
-   * Gets reference kind.
-   *
-   * @return the reference kind
-   */
-  protected int getReferenceKind() {
-      return u1referenceKind;
-    }
+    /**
+     * Gets reference kind.
+     *
+     * @return the reference kind
+     */
+    protected int getReferenceKind() {
+        return u1referenceKind;
+      }
 
-  /**
-   * Gets reference index.
-   *
-   * @return the reference index
-   */
-  protected int getReferenceIndex() {
-      return u2referenceIndex;
-    }
+    /**
+     * Gets reference index.
+     *
+     * @return the reference index
+     */
+    protected int getReferenceIndex() {
+        return u2referenceIndex;
+      }
 }

@@ -1,7 +1,5 @@
 package com.yworks.yguard.obf.classfile;
 
-import java.io.DataInput;
-
 /**
  * The type Runtime visible type annotations attr info.
  *

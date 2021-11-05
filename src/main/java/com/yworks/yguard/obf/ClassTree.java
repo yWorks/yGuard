@@ -35,11 +35,11 @@ import java.util.Vector;
  */
 public class ClassTree implements NameMapper
 {
+  // Constants -------------------------------------------------------------
   /**
    * The constant PACKAGE_LEVEL.
    */
-// Constants -------------------------------------------------------------
-    public static final char PACKAGE_LEVEL = '/';
+  public static final char PACKAGE_LEVEL = '/';
   /**
    * The constant CLASS_LEVEL.
    */
@@ -49,11 +49,11 @@ public class ClassTree implements NameMapper
    */
   public static final char METHOD_FIELD_LEVEL = '/';
 
-    // Fields ----------------------------------------------------------------
-    private Vector retainAttrs = new Vector();  // List of attributes to retain
-    private Pk root = null;   // Root package in database (Java default package)
+  // Fields ----------------------------------------------------------------
+  private Vector retainAttrs = new Vector();  // List of attributes to retain
+  private Pk root = null;   // Root package in database (Java default package)
 
-    // Class methods ---------------------------------------------------------
+  // Class methods ---------------------------------------------------------
 
   /**
    * Return a fully qualified name broken into package/class segments.
@@ -62,66 +62,66 @@ public class ClassTree implements NameMapper
    * @return the name enum
    */
   public static Enumeration getNameEnum(String name)
-    {
-        Vector vec = new Vector();
-        String nameOrig = name;
-        while (!name.equals(""))
-        {
-            int posP = name.indexOf(PACKAGE_LEVEL);
-            int posC = name.indexOf(CLASS_LEVEL);
-            Cons cons = null;
-            if (posP == -1 && posC == 0)
-            {
-              // this is the rare case when a toplevel class name starts with a dollar sign ('$')
-              // currently GSon has this in its library and causes problems with yGuard.
-              int innerClassIndex = name.indexOf(CLASS_LEVEL, 1);
-              int endIndex = innerClassIndex > 0 ? innerClassIndex : name.length();
-              cons = new Cons(new Character(CLASS_LEVEL), name.substring(0, endIndex));
-              name = name.substring(endIndex);
-            }
-            if (posP == -1 && posC == -1)
-            {
-                cons = new Cons(new Character(CLASS_LEVEL), name);
-                name = "";
-            }
-            if (posP == -1 && posC > 0)
-            {
-                cons = new Cons(new Character(CLASS_LEVEL), name.substring(0, posC));
-                //fixes retroguard bug, where
-                // 'ClassName$$InnerClassName' leads to a runtimeerror
-                while ((posC+1 < name.length()) && (name.charAt(posC+1) == CLASS_LEVEL)) posC++;
-                name = name.substring(posC + 1, name.length());
-            }
-            if (posP != -1 && posC == -1)
-            {
-                cons = new Cons(new Character(PACKAGE_LEVEL), name.substring(0, posP));
-                name = name.substring(posP + 1, name.length());
-            }
-            if (posP != -1 && posC != -1)
-            {
-                if (posP < posC)
-                {
-                    cons = new Cons(new Character(PACKAGE_LEVEL), name.substring(0, posP));
-                    name = name.substring(posP + 1, name.length());
-                }
-                else
-                {
-                    throw new IllegalArgumentException("Invalid fully qualified name (a): " +
-                                          nameOrig);
-                }
-            }
-            if (((String)cons.cdr).equals(""))
-            {
-                throw new IllegalArgumentException("Invalid fully qualified name (b): " +
-                                      nameOrig);
-            }
-            vec.addElement(cons);
-        }
-        return vec.elements();
-    }
+  {
+      Vector vec = new Vector();
+      String nameOrig = name;
+      while (!name.equals(""))
+      {
+          int posP = name.indexOf(PACKAGE_LEVEL);
+          int posC = name.indexOf(CLASS_LEVEL);
+          Cons cons = null;
+          if (posP == -1 && posC == 0)
+          {
+            // this is the rare case when a toplevel class name starts with a dollar sign ('$')
+            // currently GSon has this in its library and causes problems with yGuard.
+            int innerClassIndex = name.indexOf(CLASS_LEVEL, 1);
+            int endIndex = innerClassIndex > 0 ? innerClassIndex : name.length();
+            cons = new Cons(new Character(CLASS_LEVEL), name.substring(0, endIndex));
+            name = name.substring(endIndex);
+          }
+          if (posP == -1 && posC == -1)
+          {
+              cons = new Cons(new Character(CLASS_LEVEL), name);
+              name = "";
+          }
+          if (posP == -1 && posC > 0)
+          {
+              cons = new Cons(new Character(CLASS_LEVEL), name.substring(0, posC));
+              //fixes retroguard bug, where
+              // 'ClassName$$InnerClassName' leads to a runtimeerror
+              while ((posC+1 < name.length()) && (name.charAt(posC+1) == CLASS_LEVEL)) posC++;
+              name = name.substring(posC + 1, name.length());
+          }
+          if (posP != -1 && posC == -1)
+          {
+              cons = new Cons(new Character(PACKAGE_LEVEL), name.substring(0, posP));
+              name = name.substring(posP + 1, name.length());
+          }
+          if (posP != -1 && posC != -1)
+          {
+              if (posP < posC)
+              {
+                  cons = new Cons(new Character(PACKAGE_LEVEL), name.substring(0, posP));
+                  name = name.substring(posP + 1, name.length());
+              }
+              else
+              {
+                  throw new IllegalArgumentException("Invalid fully qualified name (a): " +
+                                        nameOrig);
+              }
+          }
+          if (((String)cons.cdr).equals(""))
+          {
+              throw new IllegalArgumentException("Invalid fully qualified name (b): " +
+                                    nameOrig);
+          }
+          vec.addElement(cons);
+      }
+      return vec.elements();
+  }
 
 
-    // Instance Methods ------------------------------------------------------
+  // Instance Methods ------------------------------------------------------
 
   /**
    * Ctor.
@@ -145,13 +145,13 @@ public class ClassTree implements NameMapper
    * @return the tree item
    */
   public TreeItem findTreeItem(String[] nameParts){
-      TreeItem tmp = root;
-      for (int i = 0; tmp != null && i < nameParts.length; i++){
-        String name = nameParts[i];
-        tmp = findSubItem(tmp, name);
-      }
-      return tmp;
+    TreeItem tmp = root;
+    for (int i = 0; tmp != null && i < nameParts.length; i++){
+      String name = nameParts[i];
+      tmp = findSubItem(tmp, name);
     }
+    return tmp;
+  }
 
   /**
    * walks the tree of TreeItems in order to find a class forName
@@ -160,93 +160,93 @@ public class ClassTree implements NameMapper
    * @return the cl
    */
   public Cl findClassForName(String name){
-      int dindex = name.indexOf('$');
-      String innerClass = null;
-      if (dindex>0){
-        innerClass = name.substring(dindex+1);
-        name = name.substring(0, dindex);
-      }
-      int pindex = name.lastIndexOf('.');
-      String packageName = null;
-      if (pindex>0){
-        packageName = name.substring(0, pindex);
-        name = name.substring(pindex+1);
-      }
-      Pk pk = root;
-      if (packageName != null){
-        for (StringTokenizer st = new StringTokenizer(packageName, ".", false); st.hasMoreTokens();){
-          String token = st.nextToken();
-          pk = findPackage(pk, token);
-          if (pk == null) return null;
-        }
-      }
-      Cl cl = findClass(pk, name);
-      if (cl != null && innerClass != null){
-        for (StringTokenizer st = new StringTokenizer(innerClass, "$", false); st.hasMoreTokens();){
-          String token = st.nextToken();
-          cl = findClass(cl, token);
-          if (cl == null) return null;
-        }
-      }
-      return cl;
+    int dindex = name.indexOf('$');
+    String innerClass = null;
+    if (dindex>0){
+      innerClass = name.substring(dindex+1);
+      name = name.substring(0, dindex);
     }
+    int pindex = name.lastIndexOf('.');
+    String packageName = null;
+    if (pindex>0){
+      packageName = name.substring(0, pindex);
+      name = name.substring(pindex+1);
+    }
+    Pk pk = root;
+    if (packageName != null){
+      for (StringTokenizer st = new StringTokenizer(packageName, ".", false); st.hasMoreTokens();){
+        String token = st.nextToken();
+        pk = findPackage(pk, token);
+        if (pk == null) return null;
+      }
+    }
+    Cl cl = findClass(pk, name);
+    if (cl != null && innerClass != null){
+      for (StringTokenizer st = new StringTokenizer(innerClass, "$", false); st.hasMoreTokens();){
+        String token = st.nextToken();
+        cl = findClass(cl, token);
+        if (cl == null) return null;
+      }
+    }
+    return cl;
+  }
 
-    private Pk findPackage(TreeItem parent, String pName){
-      if (parent instanceof Pk){
-        for (Enumeration enumeration = ((Pk)parent).getPackageEnum(); enumeration.hasMoreElements();){
-          Pk subPk = (Pk) enumeration.nextElement();
-          if (subPk.getInName().equals(pName)){
-            return subPk;
-          }
+  private Pk findPackage(TreeItem parent, String pName){
+    if (parent instanceof Pk){
+      for (Enumeration enumeration = ((Pk)parent).getPackageEnum(); enumeration.hasMoreElements();){
+        Pk subPk = (Pk) enumeration.nextElement();
+        if (subPk.getInName().equals(pName)){
+          return subPk;
         }
       }
-      return null;
     }
+    return null;
+  }
 
-    private Cl findClass(PkCl parent, String pName){
-      for (Enumeration enumeration = ((PkCl)parent).getClassEnum(); enumeration.hasMoreElements();){
+  private Cl findClass(PkCl parent, String pName){
+    for (Enumeration enumeration = ((PkCl)parent).getClassEnum(); enumeration.hasMoreElements();){
+      Cl cl = (Cl) enumeration.nextElement();
+      if (cl.getInName().equals(pName)){
+        return cl;
+      }
+    }
+    return null;
+  }
+
+  private TreeItem findSubItem(TreeItem parent, String childName){
+    if (parent instanceof Pk){
+      for (Enumeration enumeration = ((Pk)parent).getPackageEnum(); enumeration.hasMoreElements();){
+        Pk subPk = (Pk) enumeration.nextElement();
+        if (subPk.getInName().equals(childName)){
+          return subPk;
+        }
+      }
+      for (Enumeration enumeration = ((Pk)parent).getClassEnum(); enumeration.hasMoreElements();){
         Cl cl = (Cl) enumeration.nextElement();
-        if (cl.getInName().equals(pName)){
+        if (cl.getInName().equals(childName)){
+          return cl;
+        }
+      }
+    }
+    if (parent instanceof Cl){
+      for (Enumeration enumeration = ((Cl)parent).getClassEnum(); enumeration.hasMoreElements();){
+        Cl cl = (Cl) enumeration.nextElement();
+        if (cl.getInName().equals(childName)){
           return cl;
         }
       }
       return null;
     }
+    return null;
+  }
 
-    private TreeItem findSubItem(TreeItem parent, String childName){
-      if (parent instanceof Pk){
-        for (Enumeration enumeration = ((Pk)parent).getPackageEnum(); enumeration.hasMoreElements();){
-          Pk subPk = (Pk) enumeration.nextElement();
-          if (subPk.getInName().equals(childName)){
-            return subPk;
-          }
-        }
-        for (Enumeration enumeration = ((Pk)parent).getClassEnum(); enumeration.hasMoreElements();){
-          Cl cl = (Cl) enumeration.nextElement();
-          if (cl.getInName().equals(childName)){
-            return cl;
-          }
-        }
-      }
-      if (parent instanceof Cl){
-        for (Enumeration enumeration = ((Cl)parent).getClassEnum(); enumeration.hasMoreElements();){
-          Cl cl = (Cl) enumeration.nextElement();
-          if (cl.getInName().equals(childName)){
-            return cl;
-          }
-        }
-        return null;
-      }
-      return null;
-    }
-
-  /**
-   * Update the path of the passed filename, if that path corresponds to a package.
-   *
-   * @param inName the in name
-   * @return the out name
-   */
-  public String getOutName(String inName)
+    /**
+     * Update the path of the passed filename, if that path corresponds to a package.
+     *
+     * @param inName the in name
+     * @return the out name
+     */
+    public String getOutName(String inName)
     {
         try
         {
@@ -295,12 +295,12 @@ public class ClassTree implements NameMapper
         return inName;
     }
 
-  /**
-   * Add a classfile's package, class, method and field entries to database.
-   *
-   * @param cf the cf
-   */
-  public void addClassFile(ClassFile cf)
+    /**
+     * Add a classfile's package, class, method and field entries to database.
+     *
+     * @param cf the cf
+     */
+    public void addClassFile(ClassFile cf)
     {
         // Add the fully qualified class name
         TreeItem ti = root;
@@ -364,12 +364,12 @@ public class ClassTree implements NameMapper
         }
     }
 
-  /**
-   * Mark an attribute type for retention.
-   *
-   * @param name the name
-   */
-  public void retainAttribute(String name)
+    /**
+     * Mark an attribute type for retention.
+     *
+     * @param name the name
+     */
+    public void retainAttribute(String name)
     {
         retainAttrs.addElement(name);
     }
@@ -389,16 +389,16 @@ public class ClassTree implements NameMapper
         return (level & YGuardRule.FRIENDLY) == YGuardRule.FRIENDLY;
     }
 
-  /**
-   * Mark a class/interface type (and possibly methods and fields defined in class) for retention.
-   *
-   * @param name            the name
-   * @param classLevel      the class level
-   * @param methodLevel     the method level
-   * @param fieldLevel      the field level
-   * @param retainHierarchy the retain hierarchy
-   */
-  public void retainClass(String name, int classLevel, int methodLevel, int fieldLevel, boolean retainHierarchy)
+    /**
+     * Mark a class/interface type (and possibly methods and fields defined in class) for retention.
+     *
+     * @param name            the name
+     * @param classLevel      the class level
+     * @param methodLevel     the method level
+     * @param fieldLevel      the field level
+     * @param retainHierarchy the retain hierarchy
+     */
+    public void retainClass(String name, int classLevel, int methodLevel, int fieldLevel, boolean retainHierarchy)
     {
 
         // Mark the class (or classes, if this is a wildcarded specifier)
@@ -462,13 +462,13 @@ public class ClassTree implements NameMapper
         }
     }
 
-  /**
-   * Mark a method type for retention.
-   *
-   * @param name       the name
-   * @param descriptor the descriptor
-   */
-  public void retainMethod(String name, String descriptor)
+    /**
+     * Mark a method type for retention.
+     *
+     * @param name       the name
+     * @param descriptor the descriptor
+     */
+    public void retainMethod(String name, String descriptor)
     {
         for (Enumeration enumeration = getMdEnum(name, descriptor);
              enumeration.hasMoreElements(); ) {
@@ -478,12 +478,12 @@ public class ClassTree implements NameMapper
         }
     }
 
-  /**
-   * Mark a field type for retention.
-   *
-   * @param name the name
-   */
-  public void retainField(String name)
+    /**
+     * Mark a field type for retention.
+     *
+     * @param name the name
+     */
+    public void retainField(String name)
     {
         for (Enumeration enumeration = getFdEnum(name); enumeration.hasMoreElements(); ) {
             Fd fd = (Fd)enumeration.nextElement();
@@ -492,48 +492,47 @@ public class ClassTree implements NameMapper
         }
     }
 
-  /**
-   * Mark a package for retention, and specify its new name.
-   *
-   * @param name    the name
-   * @param obfName the obf name
-   */
-  public void retainPackageMap(String name, String obfName)
+    /**
+     * Mark a package for retention, and specify its new name.
+     *
+     * @param name    the name
+     * @param obfName the obf name
+     */
+    public void retainPackageMap(String name, String obfName)
     {
         retainItemMap(getPk(name), obfName);
     }
 
-  /**
-   * Mark a class/interface type for retention, and specify its new name.
-   *
-   * @param name    the name
-   * @param obfName the obf name
-   */
-  public void retainClassMap(String name, String obfName)
+    /**
+     * Mark a class/interface type for retention, and specify its new name.
+     *
+     * @param name    the name
+     * @param obfName the obf name
+     */
+    public void retainClassMap(String name, String obfName)
     {
         retainItemMap(getCl(name), obfName);
     }
 
-  /**
-   * Mark a method type for retention, and specify its new name.
-   *
-   * @param name       the name
-   * @param descriptor the descriptor
-   * @param obfName    the obf name
-   */
-  public void retainMethodMap(String name, String descriptor,
-                                String obfName)
+    /**
+     * Mark a method type for retention, and specify its new name.
+     *
+     * @param name       the name
+     * @param descriptor the descriptor
+     * @param obfName    the obf name
+     */
+    public void retainMethodMap(String name, String descriptor, String obfName)
     {
         retainItemMap(getMd(name, descriptor), obfName);
     }
 
-  /**
-   * Mark a field type for retention, and specify its new name.
-   *
-   * @param name    the name
-   * @param obfName the obf name
-   */
-  public void retainFieldMap(String name, String obfName)
+    /**
+     * Mark a field type for retention, and specify its new name.
+     *
+     * @param name    the name
+     * @param obfName the obf name
+     */
+    public void retainFieldMap(String name, String obfName)
     {
         retainItemMap(getFd(name), obfName);
     }
@@ -560,10 +559,10 @@ public class ClassTree implements NameMapper
 //        item.setOutName(obfName);
     }
 
-  /**
-   * Traverse the class tree, generating obfuscated names within each namespace.
-   */
-  public void generateNames()
+    /**
+     * Traverse the class tree, generating obfuscated names within each namespace.
+     */
+    public void generateNames()
     {
         walkTree(new TreeAction() {
             public void packageAction(Pk pk)  {pk.generateNames();}
@@ -571,12 +570,12 @@ public class ClassTree implements NameMapper
         });
     }
 
-  /**
-   * Resolve the polymorphic dependencies of each class.  @throws ClassNotFoundException the class not found exception
-   *
-   * @throws ClassNotFoundException the class not found exception
-   */
-  public void resolveClasses() throws ClassNotFoundException
+    /**
+     * Resolve the polymorphic dependencies of each class.  @throws ClassNotFoundException the class not found exception
+     *
+     * @throws ClassNotFoundException the class not found exception
+     */
+    public void resolveClasses() throws ClassNotFoundException
     {
         walkTree(new TreeAction() {
             public void classAction(Cl cl)  {cl.resetResolve();}
@@ -606,12 +605,12 @@ public class ClassTree implements NameMapper
         }
     }
 
-  /**
-   * Return a list of attributes marked to keep.
-   *
-   * @return the string [ ]
-   */
-  public String[] getAttrsToKeep()
+    /**
+     * Return a list of attributes marked to keep.
+     *
+     * @return the string [ ]
+     */
+    public String[] getAttrsToKeep()
     {
         String[] attrs = new String[retainAttrs.size()];
         for (int i = 0; i < attrs.length; i++)
@@ -621,27 +620,27 @@ public class ClassTree implements NameMapper
         return attrs;
     }
 
-  /**
-   * Get classes in tree from the fully qualified name
-   * (can be wildcarded).
-   *
-   * @param fullName the full name
-   * @return the cl enum
-   */
-  public Enumeration getClEnum(String fullName)
+    /**
+     * Get classes in tree from the fully qualified name
+     * (can be wildcarded).
+     *
+     * @param fullName the full name
+     * @return the cl enum
+     */
+    public Enumeration getClEnum(String fullName)
     {
        return getClEnum(fullName, YGuardRule.LEVEL_PRIVATE);
     }
 
-  /**
-   * Get classes in tree from the fully qualified name
-   * (can be wildcarded).
-   *
-   * @param fullName  the full name
-   * @param classMode the class mode
-   * @return the cl enum
-   */
-  public Enumeration getClEnum(String fullName, final int classMode)
+    /**
+     * Get classes in tree from the fully qualified name
+     * (can be wildcarded).
+     *
+     * @param fullName  the full name
+     * @param classMode the class mode
+     * @return the cl enum
+     */
+    public Enumeration getClEnum(String fullName, final int classMode)
     {
         final Vector vec = new Vector();
 
@@ -691,16 +690,15 @@ public class ClassTree implements NameMapper
         return vec.elements();
     }
 
-  /**
-   * Get methods in tree from the fully qualified, and possibly
-   * wildcarded, name.
-   *
-   * @param fullName   the full name
-   * @param descriptor the descriptor
-   * @return the md enum
-   */
-  public Enumeration getMdEnum(String fullName,
-                                 String descriptor)
+    /**
+     * Get methods in tree from the fully qualified, and possibly
+     * wildcarded, name.
+     *
+     * @param fullName   the full name
+     * @param descriptor the descriptor
+     * @return the md enum
+     */
+    public Enumeration getMdEnum(String fullName, String descriptor)
     {
         final Vector vec = new Vector();
         final String fDesc = descriptor;
@@ -739,14 +737,14 @@ public class ClassTree implements NameMapper
         return vec.elements();
     }
 
-  /**
-   * Get fields in tree from the fully qualified, and possibly
-   * wildcarded, name.
-   *
-   * @param fullName the full name
-   * @return the fd enum
-   */
-  public Enumeration getFdEnum(String fullName)
+    /**
+     * Get fields in tree from the fully qualified, and possibly
+     * wildcarded, name.
+     *
+     * @param fullName the full name
+     * @return the fd enum
+     */
+    public Enumeration getFdEnum(String fullName)
     {
         final Vector vec = new Vector();
         if (fullName.indexOf('*') != -1) {
@@ -783,13 +781,13 @@ public class ClassTree implements NameMapper
         return vec.elements();
     }
 
-  /**
-   * Get class in tree from the fully qualified name, returning null if name not found.
-   *
-   * @param fullName the full name
-   * @return the cl
-   */
-  public Cl getCl(String fullName)
+    /**
+     * Get class in tree from the fully qualified name, returning null if name not found.
+     *
+     * @param fullName the full name
+     * @return the cl
+     */
+    public Cl getCl(String fullName)
     {
         TreeItem ti = root;
         for (Enumeration nameEnum = getNameEnum(fullName); nameEnum.hasMoreElements(); )
@@ -826,13 +824,13 @@ public class ClassTree implements NameMapper
         return (Cl)ti;
     }
 
-  /**
-   * Get package in tree from the fully qualified name, returning null if name not found.
-   *
-   * @param fullName the full name
-   * @return the pk
-   */
-  public Pk getPk(String fullName)
+    /**
+     * Get package in tree from the fully qualified name, returning null if name not found.
+     *
+     * @param fullName the full name
+     * @return the pk
+     */
+    public Pk getPk(String fullName)
     {
         TreeItem ti = root;
         for (Enumeration nameEnum = getNameEnum(fullName); nameEnum.hasMoreElements(); )
@@ -855,14 +853,14 @@ public class ClassTree implements NameMapper
         return (Pk)ti;
     }
 
-  /**
-   * Get method in tree from the fully qualified name.
-   *
-   * @param fullName   the full name
-   * @param descriptor the descriptor
-   * @return the md
-   */
-  public Md getMd(String fullName, String descriptor)
+    /**
+     * Get method in tree from the fully qualified name.
+     *
+     * @param fullName   the full name
+     * @param descriptor the descriptor
+     * @return the md
+     */
+    public Md getMd(String fullName, String descriptor)
     {
         // Split into class and method names
         int pos = fullName.lastIndexOf(METHOD_FIELD_LEVEL);
@@ -870,13 +868,13 @@ public class ClassTree implements NameMapper
         return cl.getMethod(fullName.substring(pos + 1), descriptor);
     }
 
-  /**
-   * Get field in tree from the fully qualified name.
-   *
-   * @param fullName the full name
-   * @return the fd
-   */
-  public Fd getFd(String fullName)
+    /**
+     * Get field in tree from the fully qualified name.
+     *
+     * @param fullName the full name
+     * @return the fd
+     */
+    public Fd getFd(String fullName)
     {
         // Split into class and field names
         int pos = fullName.lastIndexOf(METHOD_FIELD_LEVEL);
@@ -1467,12 +1465,12 @@ public class ClassTree implements NameMapper
         return pk == null ? packageName : pk.getFullOutName();
     }
 
-  /**
-   * Dump the content of the class tree to the specified file (used for logging).
-   *
-   * @param log the log
-   */
-  public void dump(final PrintWriter log)
+    /**
+     * Dump the content of the class tree to the specified file (used for logging).
+     *
+     * @param log the log
+     */
+    public void dump(final PrintWriter log)
     {
         log.println("<expose>");
         walkTree(new TreeAction() {
@@ -1533,13 +1531,13 @@ public class ClassTree implements NameMapper
         log.println("</map>");
     }
 
-  /**
-   * To utf 8 xml string string.
-   *
-   * @param s the s
-   * @return the string
-   */
-  public static final String toUtf8XmlString(String s){
+    /**
+     * To utf 8 xml string string.
+     *
+     * @param s the s
+     * @return the string
+     */
+    public static final String toUtf8XmlString(String s){
       boolean bad = false;
       for (int i = 0; i< s.length(); i++){
         char c = s.charAt(i);
@@ -1627,15 +1625,15 @@ public class ClassTree implements NameMapper
         }
     }
 
-  /**
-   * Walk the whole tree taking action once only on each package level, class, method and field.
-   *
-   * @param ta the ta
-   */
-  public void walkTree(TreeAction ta)
-    {
-        walkTree(ta, root);
-    }
+    /**
+     * Walk the whole tree taking action once only on each package level, class, method and field.
+     *
+     * @param ta the ta
+     */
+    public void walkTree(TreeAction ta)
+      {
+          walkTree(ta, root);
+      }
 
     // Walk the tree which has TreeItem as its root taking action once only on each
     // package level, class, method and field.
@@ -1680,9 +1678,9 @@ public class ClassTree implements NameMapper
    * @return Value of property replaceClassNameStrings.
    */
   public boolean isReplaceClassNameStrings()
-    {
-      return this.replaceClassNameStrings;
-    }
+  {
+    return this.replaceClassNameStrings;
+  }
 
   /**
    * Setter for property replaceClassNameStrings.
@@ -1690,9 +1688,9 @@ public class ClassTree implements NameMapper
    * @param replaceClassNameStrings New value of property replaceClassNameStrings.
    */
   public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
-    {
-      this.replaceClassNameStrings = replaceClassNameStrings;
-    }
+  {
+    this.replaceClassNameStrings = replaceClassNameStrings;
+  }
 
   /**
    * Getter for property pedantic.

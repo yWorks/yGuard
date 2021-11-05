@@ -9,9 +9,9 @@ import java.util.Collection;
  * Used by ant to handle the <code>method</code> element.
  */
 public class MethodSection extends PatternMatchedClassesSection implements Mappable {
-    private String name;
-    private String className;
-    private String mapTo;
+  private String name;
+  private String className;
+  private String mapTo;
 
 //  protected final YGuardBaseTask task;
 
@@ -34,9 +34,8 @@ public class MethodSection extends PatternMatchedClassesSection implements Mappa
    * @param name the name
    */
   public void setClass(String name){
-
-      this.className = name;
-    }
+    this.className = name;
+  }
 
   /**
    * Set map.
@@ -47,23 +46,23 @@ public class MethodSection extends PatternMatchedClassesSection implements Mappa
       this.mapTo = mapTo;
     }
 
-    public void addEntries( Collection entries, String className){
-      String[] method = ObfuscatorTask.toNativeMethod(name);
-      String name = ObfuscatorTask.toNativeClass(className)+'/'+method[0];
-      String descriptor = method[1];
-      YGuardRule entry = new YGuardRule(YGuardRule.TYPE_METHOD, name, descriptor);
-      entries.add(entry);
-    }
+  public void addEntries( Collection entries, String className){
+    String[] method = ObfuscatorTask.toNativeMethod(name);
+    String name = ObfuscatorTask.toNativeClass(className)+'/'+method[0];
+    String descriptor = method[1];
+    YGuardRule entry = new YGuardRule(YGuardRule.TYPE_METHOD, name, descriptor);
+    entries.add(entry);
+  }
 
-    public void addMapEntries(Collection entries)
-    {
-      String[] method = ObfuscatorTask.toNativeMethod(name);
-      String name = ObfuscatorTask.toNativeClass(className)+'/'+method[0];
-      String descriptor = method[1];
-      YGuardRule entry = new YGuardRule(YGuardRule.TYPE_METHOD_MAP, name, descriptor);
-      entry.obfName = mapTo;
-      entries.add(entry);
-    }
+  public void addMapEntries(Collection entries)
+  {
+    String[] method = ObfuscatorTask.toNativeMethod(name);
+    String name = ObfuscatorTask.toNativeClass(className)+'/'+method[0];
+    String descriptor = method[1];
+    YGuardRule entry = new YGuardRule(YGuardRule.TYPE_METHOD_MAP, name, descriptor);
+    entry.obfName = mapTo;
+    entries.add(entry);
+  }
 
   /**
    * Gets name.

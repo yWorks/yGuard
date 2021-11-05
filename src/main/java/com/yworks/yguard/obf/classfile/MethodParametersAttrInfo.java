@@ -27,11 +27,11 @@ public class MethodParametersAttrInfo extends AttrInfo {
    * @param attrNameIndex the attr name index
    * @param attrLength    the attr length
    */
-// Instance Methods ------------------------------------------------------
   MethodParametersAttrInfo( final ClassFile cf, final int attrNameIndex, final int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
+  // Instance Methods ------------------------------------------------------
   /**
    * Returns <code>"MethodParameters"</code>.
    */

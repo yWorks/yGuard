@@ -1,15 +1,13 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Representation of an Exception table entry.
@@ -18,10 +16,10 @@ import java.util.*;
  */
 public class ExceptionInfo
 {
-  /**
-   * The constant CONSTANT_FIELD_SIZE.
-   */
-// Constants -------------------------------------------------------------
+    // Constants -------------------------------------------------------------
+    /**
+     * The constant CONSTANT_FIELD_SIZE.
+     */
     public static final int CONSTANT_FIELD_SIZE = 8;
 
 
@@ -32,14 +30,14 @@ public class ExceptionInfo
     private int u2catchType;
 
 
-  /**
-   * Create exception info.
-   *
-   * @param din the din
-   * @return the exception info
-   * @throws IOException the io exception
-   */
-// Class Methods ---------------------------------------------------------
+    // Class Methods ---------------------------------------------------------
+    /**
+     * Create exception info.
+     *
+     * @param din the din
+     * @return the exception info
+     * @throws IOException the io exception
+     */
     public static ExceptionInfo create(DataInput din) throws java.io.IOException
     {
         ExceptionInfo ei = new ExceptionInfo();
@@ -58,13 +56,13 @@ public class ExceptionInfo
         u2catchType = din.readUnsignedShort();
     }
 
-  /**
-   * Export the representation to a DataOutput stream.
-   *
-   * @param dout the dout
-   * @throws IOException the io exception
-   */
-  public void write(DataOutput dout) throws java.io.IOException
+    /**
+     * Export the representation to a DataOutput stream.
+     *
+     * @param dout the dout
+     * @throws IOException the io exception
+     */
+    public void write(DataOutput dout) throws java.io.IOException
     {
         dout.writeShort(u2startpc);
         dout.writeShort(u2endpc);

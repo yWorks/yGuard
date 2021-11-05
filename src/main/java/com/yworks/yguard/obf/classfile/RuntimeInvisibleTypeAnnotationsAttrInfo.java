@@ -21,5 +21,4 @@ public class RuntimeInvisibleTypeAnnotationsAttrInfo extends RuntimeVisibleTypeA
   protected String getAttrName() {
     return ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations;
   }
-  
 }

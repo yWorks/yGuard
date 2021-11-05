@@ -1,14 +1,12 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
 import java.util.*;
 
 /**
@@ -32,13 +30,13 @@ public class ConstantPool
 
     // Instance Methods ------------------------------------------------------
 
-  /**
-   * Ctor, which initializes Constant Pool using an array of CpInfo.
-   *
-   * @param classFile the class file
-   * @param cpInfo    the cp info
-   */
-  public ConstantPool(ClassFile classFile, CpInfo[] cpInfo)
+    /**
+     * Ctor, which initializes Constant Pool using an array of CpInfo.
+     *
+     * @param classFile the class file
+     * @param cpInfo    the cp info
+     */
+    public ConstantPool(ClassFile classFile, CpInfo[] cpInfo)
     {
         myClassFile = classFile;
         int length = cpInfo.length;
@@ -50,33 +48,33 @@ public class ConstantPool
         }
     }
 
-  /**
-   * Return an Enumeration of all Constant Pool entries.
-   *
-   * @return the enumeration
-   */
-  public Enumeration elements()
+    /**
+     * Return an Enumeration of all Constant Pool entries.
+     *
+     * @return the enumeration
+     */
+    public Enumeration elements()
     {
         return pool.elements();
     }
 
-  /**
-   * Return the Constant Pool length.
-   *
-   * @return the int
-   */
-  public int length()
+    /**
+     * Return the Constant Pool length.
+     *
+     * @return the int
+     */
+    public int length()
     {
         return pool.size();
     }
 
-  /**
-   * Return the specified Constant Pool entry.
-   *
-   * @param i the
-   * @return the cp entry
-   */
-  public CpInfo getCpEntry(int i)
+    /**
+     * Return the specified Constant Pool entry.
+     *
+     * @param i the
+     * @return the cp entry
+     */
+    public CpInfo getCpEntry(int i)
     {
         if (i < pool.size())
         {
@@ -85,10 +83,10 @@ public class ConstantPool
         throw new IndexOutOfBoundsException("Constant Pool index out of range.");
     }
 
-  /**
-   * Set the reference count for each element, using references from the owning ClassFile.
-   */
-  public void updateRefCount()
+    /**
+     * Set the reference count for each element, using references from the owning ClassFile.
+     */
+    public void updateRefCount()
     {
         // Reset all reference counts to zero
         walkPool(new PoolAction() {
@@ -107,12 +105,12 @@ public class ConstantPool
         });
     }
 
-  /**
-   * Increment the reference count for the specified element.
-   *
-   * @param i the
-   */
-  public void incRefCount(int i)
+    /**
+     * Increment the reference count for the specified element.
+     *
+     * @param i the
+     */
+    public void incRefCount(int i)
     {
         CpInfo cpInfo = (CpInfo)pool.elementAt(i);
         if (cpInfo == null)
@@ -126,25 +124,25 @@ public class ConstantPool
         }
     }
 
-  /**
-   * Remap a specified Utf8 entry to the given value and return its new index.
-   *
-   * @param newString the new string
-   * @param oldIndex  the old index
-   * @return the int
-   */
-  public int remapUtf8To(String newString, int oldIndex)
+    /**
+     * Remap a specified Utf8 entry to the given value and return its new index.
+     *
+     * @param newString the new string
+     * @param oldIndex  the old index
+     * @return the int
+     */
+    public int remapUtf8To(String newString, int oldIndex)
     {
         decRefCount(oldIndex);
         return addUtf8Entry(newString);
     }
 
-  /**
-   * Decrement the reference count for the specified element, blanking if Utf and refs are zero.
-   *
-   * @param i the
-   */
-  public void decRefCount(int i)
+    /**
+     * Decrement the reference count for the specified element, blanking if Utf and refs are zero.
+     *
+     * @param i the
+     */
+    public void decRefCount(int i)
     {
         CpInfo cpInfo = (CpInfo)pool.elementAt(i);
         if (cpInfo == null)
@@ -158,13 +156,13 @@ public class ConstantPool
         }
     }
 
-  /**
-   * Add an entry to the constant pool and return its index.
-   *
-   * @param entry the entry
-   * @return the int
-   */
-  public int addEntry(CpInfo entry)
+    /**
+     * Add an entry to the constant pool and return its index.
+     *
+     * @param entry the entry
+     * @return the int
+     */
+    public int addEntry(CpInfo entry)
     {
         int oldLength = pool.size();
         pool.setSize(oldLength + 1);
@@ -210,25 +208,29 @@ public class ConstantPool
         return addEntry(new Utf8CpInfo(s));
     }
 
-  /**
-   * The type Pool action.
-   */
-// Data walker
+    // Data walker
+    /**
+     * The type Pool action.
+     */
     class PoolAction {
-    /**
-     * Utf 8 action.
-     *
-     * @param cpInfo the cp info
-     */
-    public void utf8Action(Utf8CpInfo cpInfo)  {defaultAction(cpInfo);}
+      /**
+       * Utf 8 action.
+       *
+       * @param cpInfo the cp info
+       */
+      public void utf8Action(Utf8CpInfo cpInfo) {
+        defaultAction(cpInfo);
+      }
 
-    /**
-     * Default action.
-     *
-     * @param cpInfo the cp info
-     */
-    public void defaultAction(CpInfo cpInfo)  {}}
-    private void walkPool(PoolAction pa) 
+      /**
+       * Default action.
+       *
+       * @param cpInfo the cp info
+       */
+      public void defaultAction(CpInfo cpInfo)  {}
+    }
+
+    private void walkPool(PoolAction pa)
     {
         for (Enumeration enumeration = pool.elements(); enumeration.hasMoreElements(); )
         {

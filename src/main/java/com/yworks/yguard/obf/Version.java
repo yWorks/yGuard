@@ -1,10 +1,9 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf;
 
@@ -22,21 +21,21 @@ public class Version {
 
     // Class Methods ---------------------------------------------------------
 
-  /**
-   * Return the current major.minor version string.
-   *
-   * @return the version
-   */
-  public static String getVersion() {
+    /**
+     * Return the current major.minor version string.
+     *
+     * @return the version
+     */
+    public static String getVersion() {
         return REL_VERSION;
     }
 
-  /**
-   * Return the current Jar comment String.
-   *
-   * @return the jar comment
-   */
-  public static String getJarComment() {
+    /**
+     * Return the current Jar comment String.
+     *
+     * @return the jar comment
+     */
+    public static String getJarComment() {
         return YGUARD_REL_JAR_COMMENT;
     }
 }

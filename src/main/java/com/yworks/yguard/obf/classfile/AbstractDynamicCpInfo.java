@@ -26,11 +26,11 @@ public abstract class AbstractDynamicCpInfo extends CpInfo {
    *
    * @param tag the tag
    */
-// Instance Methods ------------------------------------------------------
   protected AbstractDynamicCpInfo( final int tag ) {
     super(tag);
   }
 
+  // Instance Methods ------------------------------------------------------
   protected void readInfo( final DataInput din ) throws IOException {
     u2bootstrapMethodAttrIndex = din.readUnsignedShort();
     u2nameAndTypeIndex = din.readUnsignedShort();

@@ -1,10 +1,9 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
@@ -31,27 +30,27 @@ public class Utf8CpInfo extends CpInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Utf 8 cp info.
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Utf 8 cp info.
+     */
     protected Utf8CpInfo()
     {
         super(CONSTANT_Utf8);
     }
 
-  /**
-   * Ctor used when appending fresh Utf8 entries to the constant pool.
-   *
-   * @param s the s
-   */
-  public Utf8CpInfo(String s)
+    /**
+     * Ctor used when appending fresh Utf8 entries to the constant pool.
+     *
+     * @param s the s
+     */
+    public Utf8CpInfo(String s)
     {
         super(CONSTANT_Utf8);
         setString(s);
         refCount = 1;
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Decrement the reference count, blanking the entry if no more references. */
     public void decRefCount() 
     {
@@ -62,12 +61,12 @@ public class Utf8CpInfo extends CpInfo
         }
     }
 
-  /**
-   * Return UTF8 data as a String.
-   *
-   * @return the string
-   */
-  public String getString()
+    /**
+     * Return UTF8 data as a String.
+     *
+     * @return the string
+     */
+    public String getString()
     {
         if (utf8string == null)
         {
@@ -80,12 +79,12 @@ public class Utf8CpInfo extends CpInfo
         return utf8string;
     }
 
-  /**
-   * Set UTF8 data as String.
-   *
-   * @param str the str
-   */
-  public void setString(String str)
+    /**
+     * Set UTF8 data as String.
+     *
+     * @param str the str
+     */
+    public void setString(String str)
     {
         utf8string = str;
         try{
@@ -96,10 +95,10 @@ public class Utf8CpInfo extends CpInfo
         u2length = bytes.length;
     }
 
-  /**
-   * Set the UTF8 data to empty.
-   */
-  public void clearString()
+    /**
+     * Set the UTF8 data to empty.
+     */
+    public void clearString()
     {
         u2length = 0;
         bytes = new byte[0];
@@ -120,8 +119,8 @@ public class Utf8CpInfo extends CpInfo
     protected void writeInfo(DataOutput dout) throws java.io.IOException
     {
         dout.writeShort(u2length);
-	if (bytes.length > 0) {
-	    dout.write(bytes);
-	}
+        if (bytes.length > 0) {
+            dout.write(bytes);
+        }
     }
 }

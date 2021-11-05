@@ -1,4 +1,4 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
@@ -28,41 +28,41 @@ public class LocalVariableTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Local variable table attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Local variable table attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected LocalVariableTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Return the String name of the attribute; over-ride this in sub-classes. */
     protected String getAttrName() 
     {
         return ATTR_LocalVariableTable;
     }
 
-  /**
-   * Return the array of local variable table entries.
-   *
-   * @return the local variable info [ ]
-   */
-  protected LocalVariableInfo[] getLocalVariableTable()
+    /**
+     * Return the array of local variable table entries.
+     *
+     * @return the local variable info [ ]
+     */
+    protected LocalVariableInfo[] getLocalVariableTable()
     {
         return localVariableTable;
     }
 
-  /**
-   * Sets local variable table.
-   *
-   * @param lvts the lvts
-   */
-  public void setLocalVariableTable(LocalVariableInfo[] lvts) {
+    /**
+     * Sets local variable table.
+     *
+     * @param lvts the lvts
+     */
+    public void setLocalVariableTable(LocalVariableInfo[] lvts) {
       this.localVariableTable = lvts;
       this.u2localVariableTableLength = lvts.length;
       this.u4attrLength = 2 + 10 * u2localVariableTableLength;
@@ -97,6 +97,4 @@ public class LocalVariableTableAttrInfo extends AttrInfo
             localVariableTable[i].write(dout);
         }
     }
-
 }
-

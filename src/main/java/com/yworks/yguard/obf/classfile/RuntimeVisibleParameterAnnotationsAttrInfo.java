@@ -1,9 +1,3 @@
-/*
- * RuntimeVisibleParameterAnnotationsAttrInfo.java
- *
- * Created on April 20, 2005, 4:23 PM
- */
-
 package com.yworks.yguard.obf.classfile;
 
 /**
@@ -50,11 +44,11 @@ public class RuntimeVisibleParameterAnnotationsAttrInfo extends AttrInfo
     }
   }
   
-    protected void markUtf8RefsInInfo(ConstantPool pool) {
-      for (int i = 0; i < u1parameterCount; i++){
-        annotations[i].markUtf8RefsInInfo(pool);
-      }
+  protected void markUtf8RefsInInfo(ConstantPool pool) {
+    for (int i = 0; i < u1parameterCount; i++){
+      annotations[i].markUtf8RefsInInfo(pool);
     }
+  }
 
 
   protected void readInfo(java.io.DataInput din) throws java.io.IOException
@@ -65,6 +59,4 @@ public class RuntimeVisibleParameterAnnotationsAttrInfo extends AttrInfo
       annotations[i] = ParameterAnnotationInfo.create(din);
     }
   }
-
-  
 }

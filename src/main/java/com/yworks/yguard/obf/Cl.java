@@ -1,4 +1,4 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
@@ -20,29 +20,29 @@ import com.yworks.yguard.obf.classfile.*;
  */
 public class Cl extends PkCl implements NameListUp, NameListDown
 {
-  private boolean sourceFileMappingSet;
+    private boolean sourceFileMappingSet;
 
-  /**
-   * Gets attributes to keep.
-   *
-   * @return the attributes to keep
-   */
-  public Set getAttributesToKeep() {
+    /**
+     * Gets attributes to keep.
+     *
+     * @return the attributes to keep
+     */
+    public Set getAttributesToKeep() {
         return attributesToKeep;
     }
 
-  /**
-   * The interface Class resolver.
-   */
-  public interface ClassResolver extends AutoCloseable {
     /**
-     * Resolve class.
-     *
-     * @param className the class name
-     * @return the class
-     * @throws ClassNotFoundException the class not found exception
+     * The interface Class resolver.
      */
-    Class resolve(String className) throws ClassNotFoundException;
+    public interface ClassResolver extends AutoCloseable {
+      /**
+       * Resolve class.
+       *
+       * @param className the class name
+       * @return the class
+       * @throws ClassNotFoundException the class not found exception
+       */
+      Class resolve(String className) throws ClassNotFoundException;
     }
     
     private static final class DefaultClassResolver implements ClassResolver{
@@ -65,30 +65,30 @@ public class Cl extends PkCl implements NameListUp, NameListDown
       resolver = new DefaultClassResolver();
     }
 
-  /**
-   * Get class resolver class resolver.
-   *
-   * @return the class resolver
-   */
-  public static ClassResolver getClassResolver(){
+    /**
+     * Get class resolver class resolver.
+     *
+     * @return the class resolver
+     */
+    public static ClassResolver getClassResolver(){
       return resolver;
     }
 
-  /**
-   * Set pedantic.
-   *
-   * @param val the val
-   */
-  public static void setPedantic(boolean val){
+    /**
+     * Set pedantic.
+     *
+     * @param val the val
+     */
+    public static void setPedantic(boolean val){
       pedantic = val;
     }
 
-  /**
-   * Set class resolver.
-   *
-   * @param res the res
-   */
-  public static void setClassResolver(ClassResolver res){
+    /**
+     * Set class resolver.
+     *
+     * @param res the res
+     */
+    public static void setClassResolver(ClassResolver res){
       if (res != null){
         resolver = res;
       } else {
@@ -104,16 +104,16 @@ public class Cl extends PkCl implements NameListUp, NameListDown
     private String superClass; // Our superclass name
     private String[] superInterfaces; // Names of implemented interfaces
     private boolean isInnerClass; // Is this an inner class?
-  private ObfuscationConfig obfuscationConfig;
-  private String sourceFileMapping;
+    private ObfuscationConfig obfuscationConfig;
+    private String sourceFileMapping;
     private int classFileAccess;
     private LineNumberTableMapper lineNumberTableMapper;
     private Vector nameListUps = new Vector(); // NameListUp interfaces for super-class/interfaces
     private Vector nameListDowns = new Vector(); // NameListDown interfaces for derived class/interfaces
-  /**
-   * The constant nameSpace.
-   */
-  public static int nameSpace = 0;
+    /**
+     * The constant nameSpace.
+     */
+    public static int nameSpace = 0;
     private static NameMaker methodNameMaker;
     private static NameMaker fieldNameMaker;
     private Map innerClassModifiers = new HashMap();
@@ -125,26 +125,27 @@ public class Cl extends PkCl implements NameListUp, NameListDown
 
     // Instance Methods ------------------------------------------------------
 
-  /**
-   * Ctor.
-   *
-   * @param parent            the parent
-   * @param isInnerClass      the is inner class
-   * @param name              the name
-   * @param superClass        the super class
-   * @param superInterfaces   the super interfaces
-   * @param modifiers         the modifiers
-   * @param obfuscationConfig the obfuscation config
-   */
-  public Cl(TreeItem parent, boolean isInnerClass, String name, String superClass, String[] superInterfaces,
-              int modifiers, ObfuscationConfig obfuscationConfig)
+    /**
+     * Ctor.
+     *
+     * @param parent            the parent
+     * @param isInnerClass      the is inner class
+     * @param name              the name
+     * @param superClass        the super class
+     * @param superInterfaces   the super interfaces
+     * @param modifiers         the modifiers
+     * @param obfuscationConfig the obfuscation config
+     */
+    public Cl(
+      TreeItem parent, boolean isInnerClass, String name, String superClass, String[] superInterfaces, int modifiers, ObfuscationConfig obfuscationConfig
+    )
     {
         super(parent, name);
         this.superClass = superClass;
         this.superInterfaces = superInterfaces;
         this.isInnerClass = isInnerClass;
-      this.obfuscationConfig = obfuscationConfig;
-      this.access = modifiers;
+        this.obfuscationConfig = obfuscationConfig;
+        this.access = modifiers;
         if (parent == null || name.equals(""))
         {
             System.err.println("Internal error: class must have parent and name");
@@ -161,95 +162,95 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         }
     }
 
-  /**
-   * Set class file access.
-   *
-   * @param classFileAccess the class file access
-   */
-  void setClassFileAccess(int classFileAccess){
+    /**
+     * Set class file access.
+     *
+     * @param classFileAccess the class file access
+     */
+    void setClassFileAccess(int classFileAccess){
       this.classFileAccess = classFileAccess;
     }
 
-  /**
-   * Gets line number table mapper.
-   *
-   * @return the line number table mapper
-   */
-  public LineNumberTableMapper getLineNumberTableMapper() {
+    /**
+     * Gets line number table mapper.
+     *
+     * @return the line number table mapper
+     */
+    public LineNumberTableMapper getLineNumberTableMapper() {
       return lineNumberTableMapper;
     }
 
-  /**
-   * Sets line number table mapper.
-   *
-   * @param lineNumberTableMapper the line number table mapper
-   */
-  public void setLineNumberTableMapper(LineNumberTableMapper lineNumberTableMapper) {
+    /**
+     * Sets line number table mapper.
+     *
+     * @param lineNumberTableMapper the line number table mapper
+     */
+    public void setLineNumberTableMapper(LineNumberTableMapper lineNumberTableMapper) {
       this.lineNumberTableMapper = lineNumberTableMapper;
     }
 
-  /**
-   * Gets source file mapping.
-   *
-   * @return the source file mapping
-   */
-  public String getSourceFileMapping() {
+    /**
+     * Gets source file mapping.
+     *
+     * @return the source file mapping
+     */
+    public String getSourceFileMapping() {
       return sourceFileMapping;
     }
 
-  /**
-   * Sets source file mapping.
-   *
-   * @param sourceFileMapping the source file mapping
-   */
-  public void setSourceFileMapping(String sourceFileMapping) {
+    /**
+     * Sets source file mapping.
+     *
+     * @param sourceFileMapping the source file mapping
+     */
+    public void setSourceFileMapping(String sourceFileMapping) {
       this.sourceFileMappingSet = true;
       this.sourceFileMapping = sourceFileMapping;
     }
 
-  /**
-   * Is source file mapping set boolean.
-   *
-   * @return the boolean
-   */
-  public boolean isSourceFileMappingSet(){
+    /**
+     * Is source file mapping set boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isSourceFileMappingSet(){
       return sourceFileMappingSet;
     }
 
-  /**
-   * Get super class string.
-   *
-   * @return the string
-   */
-  public String getSuperClass(){
+    /**
+     * Get super class string.
+     *
+     * @return the string
+     */
+    public String getSuperClass(){
       return this.superClass;
     }
 
-  /**
-   * Get interfaces string [ ].
-   *
-   * @return the string [ ]
-   */
-  public String[] getInterfaces(){
+    /**
+     * Get interfaces string [ ].
+     *
+     * @return the string [ ]
+     */
+    public String[] getInterfaces(){
       return this.superInterfaces;
     }
 
-  /**
-   * Set inner class modifiers.
-   *
-   * @param map the map
-   */
-  public void setInnerClassModifiers(Map map){
+    /**
+     * Set inner class modifiers.
+     *
+     * @param map the map
+     */
+    public void setInnerClassModifiers(Map map){
       this.innerClassModifiers.putAll(map);
     }
 
-  /**
-   * Get inner class modifier int.
-   *
-   * @param fqn the fqn
-   * @return the int
-   */
-  public int getInnerClassModifier(String fqn){
+    /**
+     * Get inner class modifier int.
+     *
+     * @param fqn the fqn
+     * @return the int
+     */
+    public int getInnerClassModifier(String fqn){
       Integer i = (Integer) innerClassModifiers.get(fqn);
       if (i == null){
         return Modifier.PRIVATE;
@@ -258,72 +259,72 @@ public class Cl extends PkCl implements NameListUp, NameListDown
       }
     }
 
-  /**
-   * Is this an inner class?
-   *
-   * @return the boolean
-   */
-  public boolean isInnerClass() {return isInnerClass;}
+    /**
+     * Is this an inner class?
+     *
+     * @return the boolean
+     */
+    public boolean isInnerClass() {return isInnerClass;}
 
-  /**
-   * Get a method by name.
-   *
-   * @param name       the name
-   * @param descriptor the descriptor
-   * @return the method
-   */
-  public Md getMethod(String name, String descriptor)  {return (Md)mds.get(name + descriptor);}
+    /**
+     * Get a method by name.
+     *
+     * @param name       the name
+     * @param descriptor the descriptor
+     * @return the method
+     */
+    public Md getMethod(String name, String descriptor)  {return (Md)mds.get(name + descriptor);}
 
-  /**
-   * Get a field by name.
-   *
-   * @param name the name
-   * @return the field
-   */
-  public Fd getField(String name)  {return (Fd)fds.get(name);}
+    /**
+     * Get a field by name.
+     *
+     * @param name the name
+     * @return the field
+     */
+    public Fd getField(String name)  {return (Fd)fds.get(name);}
 
-  /**
-   * Get an Enumeration of methods.
-   *
-   * @return the method enum
-   */
-  public Enumeration getMethodEnum()  {return mds.elements();}
+    /**
+     * Get an Enumeration of methods.
+     *
+     * @return the method enum
+     */
+    public Enumeration getMethodEnum()  {return mds.elements();}
 
-  /**
-   * Get an Enumeration of fields.
-   *
-   * @return the field enum
-   */
-  public Enumeration getFieldEnum()  {return fds.elements();}
+    /**
+     * Get an Enumeration of fields.
+     *
+     * @return the field enum
+     */
+    public Enumeration getFieldEnum()  {return fds.elements();}
 
-  /**
-   * Is this class's name a match to the wildcard pattern?
-   *
-   * @param pattern the pattern
-   * @return the boolean
-   */
-  public boolean isWildcardMatch(String pattern) {
+    /**
+     * Is this class's name a match to the wildcard pattern?
+     *
+     * @param pattern the pattern
+     * @return the boolean
+     */
+    public boolean isWildcardMatch(String pattern) {
         return isMatch(pattern, getFullInName());
     }
 
-  /**
-   * Is this class's name a non-recursive match to the wildcard pattern?
-   *
-   * @param pattern the pattern
-   * @return the boolean
-   */
-  public boolean isNRWildcardMatch(String pattern) {
+    /**
+     * Is this class's name a non-recursive match to the wildcard pattern?
+     *
+     * @param pattern the pattern
+     * @return the boolean
+     */
+    public boolean isNRWildcardMatch(String pattern) {
         return isNRMatch(pattern, getFullInName());
     }
 
-  /**
-   * Does this class have the specified class in its super chain?
-   *
-   * @param queryName the query name
-   * @return the boolean
-   * @throws ClassNotFoundException the class not found exception
-   */
-  public boolean hasAsSuper(String queryName) throws ClassNotFoundException
+    /**
+     * Does this class have the specified class in its super chain?
+     *
+     * @param queryName the query name
+     * @return the boolean
+     * @throws ClassNotFoundException the class not found exception
+     */
+    public boolean hasAsSuper(String queryName) throws ClassNotFoundException
     {
         // Special case: we are java/lang/Object
         if (superClass == null) return false;
@@ -372,13 +373,13 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         return addClass(true, classInfo);
     }
 
-  /**
-   * Add an inner class, used when copying inner classes from a placeholder.
-   *
-   * @param cl the cl
-   * @return the cl
-   */
-  public Cl addClass(Cl cl)
+    /**
+     * Add an inner class, used when copying inner classes from a placeholder.
+     *
+     * @param cl the cl
+     * @return the cl
+     */
+    public Cl addClass(Cl cl)
     {
         cls.put(cl.getInName(), cl);
         return cl;
@@ -390,13 +391,13 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         return addPlaceholderClass(true, name);
     }
 
-  /**
-   * Add a method.
-   *
-   * @param methodInfo the method info
-   * @return the md
-   */
-  public Md addMethod(MethodInfo methodInfo)
+    /**
+     * Add a method.
+     *
+     * @param methodInfo the method info
+     * @return the md
+     */
+    public Md addMethod(MethodInfo methodInfo)
     {
       boolean isSynthetic = methodInfo.isSynthetic();
       String name = methodInfo.getName();
@@ -427,13 +428,13 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         return md;
     }
 
-  /**
-   * Add a field.
-   *
-   * @param fieldInfo the field info
-   * @return the fd
-   */
-  public Fd addField(FieldInfo fieldInfo)
+    /**
+     * Add a field.
+     *
+     * @param fieldInfo the field info
+     * @return the fd
+     */
+    public Fd addField(FieldInfo fieldInfo)
     {
       boolean isSynthetic = fieldInfo.isSynthetic();
       String name = fieldInfo.getName();
@@ -448,20 +449,20 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         return fd;
     }
 
-  /**
-   * Prepare for resolve of a class entry by resetting flags.
-   */
-  public void resetResolve()
+    /**
+     * Prepare for resolve of a class entry by resetting flags.
+     */
+    public void resetResolve()
     {
         isScanned = false;
         isResolved = false;
         nameListDowns.removeAllElements();
     }
 
-  /**
-   * Set up reverse list of reserved names prior to resolving classes.
-   */
-  public void setupNameListDowns()
+    /**
+     * Set up reverse list of reserved names prior to resolving classes.
+     */
+    public void setupNameListDowns()
     {
         // Special case: we are java/lang/Object
         if (superClass == null) return;
@@ -482,13 +483,13 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         }
     }
 
-  /**
-   * Resolve a class entry - set obfuscation permissions based on super class and interfaces.
-   * Overload method and field names maximally.
-   *
-   * @throws ClassNotFoundException the class not found exception
-   */
-  public void resolveOptimally() throws ClassNotFoundException
+    /**
+     * Resolve a class entry - set obfuscation permissions based on super class and interfaces.
+     * Overload method and field names maximally.
+     *
+     * @throws ClassNotFoundException the class not found exception
+     */
+    public void resolveOptimally() throws ClassNotFoundException
     {
         // Already processed, then do nothing
 
@@ -1041,23 +1042,21 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         return nl;
     }
 
-  /**
-   * The type Ext name list up.
-   */
-// NameListUp for class/interface not in the database.
+    /**
+     * NameListUp for class/interface not in the database.
+     */
     class ExtNameListUp implements NameListUp
     {
         // Class's fully qualified name
         private Class extClass;
         private Method[] methods = null;
 
-      /**
-       * Instantiates a new Ext name list up.
-       *
-       * @param name the name
-       * @throws ClassNotFoundException the class not found exception
-       */
-// Ctor.
+        /**
+         * Instantiates a new Ext name list up.
+         *
+         * @param name the name
+         * @throws ClassNotFoundException the class not found exception
+         */
         public ExtNameListUp(String name) throws ClassNotFoundException
         {
           try
@@ -1075,13 +1074,12 @@ public class Cl extends PkCl implements NameListUp, NameListDown
           }
         }
 
-      /**
-       * Instantiates a new Ext name list up.
-       *
-       * @param extClass the ext class
-       */
-// Ctor.
-        public ExtNameListUp(Class extClass) 
+        /**
+         * Instantiates a new Ext name list up.
+         *
+         * @param extClass the ext class
+         */
+        public ExtNameListUp(Class extClass)
         {
             this.extClass = extClass;
         }
@@ -1252,13 +1250,12 @@ public class Cl extends PkCl implements NameListUp, NameListDown
         }
     }
 
-  /**
-   * Gets obfuscation config.
-   *
-   * @return the obfuscation config
-   */
-  public ObfuscationConfig getObfuscationConfig() {
-    return obfuscationConfig;
-  }
+    /**
+     * Gets obfuscation config.
+     *
+     * @return the obfuscation config
+     */
+    public ObfuscationConfig getObfuscationConfig() {
+      return obfuscationConfig;
+    }
 }
-

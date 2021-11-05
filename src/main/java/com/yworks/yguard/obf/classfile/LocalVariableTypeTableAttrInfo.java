@@ -1,15 +1,13 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Representation of an attribute.
@@ -29,14 +27,14 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Local variable type table attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Local variable type table attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected LocalVariableTypeTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
@@ -48,22 +46,22 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
         return ATTR_LocalVariableTypeTable;
     }
 
-  /**
-   * Return the array of local variable table entries.
-   *
-   * @return the local variable type info [ ]
-   */
-  protected LocalVariableTypeInfo[] getLocalVariableTypeTable()
+    /**
+     * Return the array of local variable table entries.
+     *
+     * @return the local variable type info [ ]
+     */
+    protected LocalVariableTypeInfo[] getLocalVariableTypeTable()
     {
         return localVariableTypeTable;
     }
 
-  /**
-   * Sets local variable type table.
-   *
-   * @param lvts the lvts
-   */
-  public void setLocalVariableTypeTable(LocalVariableTypeInfo[] lvts) {
+    /**
+     * Sets local variable type table.
+     *
+     * @param lvts the lvts
+     */
+    public void setLocalVariableTypeTable(LocalVariableTypeInfo[] lvts) {
       this.localVariableTypeTable = lvts;
       this.u2localVariableTypeTableLength = lvts.length;
       this.u4attrLength = 2 + 10 * u2localVariableTypeTableLength;
@@ -98,6 +96,4 @@ public class LocalVariableTypeTableAttrInfo extends AttrInfo
             localVariableTypeTable[i].write(dout);
         }
     }
-
 }
-

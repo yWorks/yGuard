@@ -1,10 +1,9 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
@@ -31,12 +30,12 @@ public class StringCpInfo extends CpInfo
     /**
      * Instantiates a new String cp info.
      */
-// Instance Methods ------------------------------------------------------
     protected StringCpInfo()
     {
         super(CONSTANT_String);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Check for Utf8 references to constant pool and mark them. */
     protected void markUtf8Refs(ConstantPool pool) 
     {

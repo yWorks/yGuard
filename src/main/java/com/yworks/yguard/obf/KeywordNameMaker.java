@@ -1,4 +1,4 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
@@ -115,43 +115,43 @@ public class KeywordNameMaker implements NameMaker
 
     // Instance Methods ------------------------------------------------------
 
-  /**
-   * Ctor.
-   */
-  public KeywordNameMaker()
+    /**
+     * Ctor.
+     */
+    public KeywordNameMaker()
     {
         this(null);
     }
 
-  /**
-   * Ctor - block names not to be obfuscated from the mapping target space.
-   *
-   * @param noObfNames the no obf names
-   */
-  public KeywordNameMaker(String[] noObfNames)
+    /**
+     * Ctor - block names not to be obfuscated from the mapping target space.
+     *
+     * @param noObfNames the no obf names
+     */
+    public KeywordNameMaker(String[] noObfNames)
     {
         this(noObfNames, true);
     }
 
-  /**
-   * Ctor - block names not to be obfuscated from the mapping target space.
-   *
-   * @param noObfNames  the no obf names
-   * @param useKeywords the use keywords
-   */
-  public KeywordNameMaker(String[] noObfNames, boolean useKeywords)
+    /**
+     * Ctor - block names not to be obfuscated from the mapping target space.
+     *
+     * @param noObfNames  the no obf names
+     * @param useKeywords the use keywords
+     */
+    public KeywordNameMaker(String[] noObfNames, boolean useKeywords)
     {
         this(noObfNames, true, false);
     }
 
-  /**
-   * Ctor - block names not to be obfuscated from the mapping target space.
-   *
-   * @param noObfNames    the no obf names
-   * @param useKeywords   the use keywords
-   * @param lowerCaseOnly the lower case only
-   */
-  public KeywordNameMaker(String[] noObfNames, boolean useKeywords, boolean lowerCaseOnly)
+    /**
+     * Ctor - block names not to be obfuscated from the mapping target space.
+     *
+     * @param noObfNames    the no obf names
+     * @param useKeywords   the use keywords
+     * @param lowerCaseOnly the lower case only
+     */
+    public KeywordNameMaker(String[] noObfNames, boolean useKeywords, boolean lowerCaseOnly)
     {
         this.noObfNames = noObfNames == null ? new String[0] : noObfNames;
         if (useKeywords)

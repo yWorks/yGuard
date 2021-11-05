@@ -1,10 +1,9 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
@@ -23,13 +22,13 @@ import java.io.IOException;
  */
 abstract public class ClassItemInfo implements ClassConstants
 {
-    // Constants -------------------------------------------------------------
+  // Constants -------------------------------------------------------------
 
 
-    // Fields ----------------------------------------------------------------
-    private int u2accessFlags;
-    private int u2nameIndex;
-    private int u2descriptorIndex;
+  // Fields ----------------------------------------------------------------
+  private int u2accessFlags;
+  private int u2nameIndex;
+  private int u2descriptorIndex;
   /**
    * The U 2 attributes count.
    */
@@ -39,8 +38,8 @@ abstract public class ClassItemInfo implements ClassConstants
    */
   protected AttrInfo attributes[];
 
-    private ClassFile cf;
-    private boolean isSynthetic = false;
+  private ClassFile cf;
+  private boolean isSynthetic = false;
   // marker instead of null
   private static final ObfuscationConfig DUMMY = new ObfuscationConfig(true, true);
   private ObfuscationConfig obfuscationConfig = DUMMY;
@@ -54,9 +53,9 @@ abstract public class ClassItemInfo implements ClassConstants
    *
    * @param cf the cf
    */
-// Instance Methods ------------------------------------------------------
-    protected ClassItemInfo(ClassFile cf) {this.cf = cf;}
+  protected ClassItemInfo(ClassFile cf) {this.cf = cf;}
 
+  // Instance Methods ------------------------------------------------------
   /**
    * Gets obfuscation config.
    *
@@ -166,9 +165,9 @@ abstract public class ClassItemInfo implements ClassConstants
    * @return the name
    */
   public String getName()
-    {
-        return ((Utf8CpInfo)cf.getCpEntry(u2nameIndex)).getString();
-    }
+  {
+    return ((Utf8CpInfo) cf.getCpEntry(u2nameIndex)).getString();
+  }
 
   /**
    * Return descriptor string.
@@ -176,9 +175,9 @@ abstract public class ClassItemInfo implements ClassConstants
    * @return the descriptor
    */
   public String getDescriptor()
-    {
-        return ((Utf8CpInfo)cf.getCpEntry(u2descriptorIndex)).getString();
-    }
+  {
+    return ((Utf8CpInfo) cf.getCpEntry(u2descriptorIndex)).getString();
+  }
 
   /**
    * Return access flags.
@@ -197,34 +196,34 @@ abstract public class ClassItemInfo implements ClassConstants
    * @param keepAttrs the keep attrs
    */
   protected void trimAttrsExcept(String[] keepAttrs)
+  {
+    // Traverse all attributes, removing all except those on 'keep' list
+    for (int i = 0; i < attributes.length; i++)
     {
-        // Traverse all attributes, removing all except those on 'keep' list
-        for (int i = 0; i < attributes.length; i++)
-        {
-            if (Tools.isInArray(attributes[i].getAttrName(), keepAttrs))
-            {
-                attributes[i].trimAttrsExcept(keepAttrs);
-            }
-            else
-            {
-                attributes[i] = null;
-            }
-        }
-
-        // Delete the marked attributes
-        AttrInfo[] left = new AttrInfo[attributes.length];
-        int j = 0;
-        for (int i = 0; i < attributes.length; i++)
-        {
-            if (attributes[i] != null)
-            {
-                left[j++] = attributes[i];
-            }
-        }
-        attributes = new AttrInfo[j];
-        System.arraycopy(left, 0, attributes, 0, j);
-        u2attributesCount = j;
+      if (Tools.isInArray(attributes[i].getAttrName(), keepAttrs))
+      {
+        attributes[i].trimAttrsExcept(keepAttrs);
+      }
+      else
+      {
+        attributes[i] = null;
+      }
     }
+
+    // Delete the marked attributes
+    AttrInfo[] left = new AttrInfo[attributes.length];
+    int j = 0;
+    for (int i = 0; i < attributes.length; i++)
+    {
+      if (attributes[i] != null)
+      {
+        left[j++] = attributes[i];
+      }
+    }
+    attributes = new AttrInfo[j];
+    System.arraycopy(left, 0, attributes, 0, j);
+    u2attributesCount = j;
+  }
 
   /**
    * Check for Utf8 references to constant pool and mark them.
@@ -232,14 +231,14 @@ abstract public class ClassItemInfo implements ClassConstants
    * @param pool the pool
    */
   protected void markUtf8Refs(ConstantPool pool)
+  {
+    pool.incRefCount(u2nameIndex);
+    pool.incRefCount(u2descriptorIndex);
+    for (int i = 0; i < attributes.length; i++)
     {
-        pool.incRefCount(u2nameIndex);
-        pool.incRefCount(u2descriptorIndex);
-        for (int i = 0; i < attributes.length; i++)
-        {
-            attributes[i].markUtf8Refs(pool);
-        }
+      attributes[i].markUtf8Refs(pool);
     }
+  }
 
   /**
    * Import the field or method data to internal representation.
@@ -248,21 +247,21 @@ abstract public class ClassItemInfo implements ClassConstants
    * @throws IOException the io exception
    */
   protected void read(DataInput din) throws java.io.IOException
+  {
+    u2accessFlags = din.readUnsignedShort();
+    u2nameIndex = din.readUnsignedShort();
+    u2descriptorIndex = din.readUnsignedShort();
+    u2attributesCount = din.readUnsignedShort();
+    attributes = new AttrInfo[u2attributesCount];
+    for (int i = 0; i < u2attributesCount; i++)
     {
-        u2accessFlags = din.readUnsignedShort();
-        u2nameIndex = din.readUnsignedShort();
-        u2descriptorIndex = din.readUnsignedShort();
-        u2attributesCount = din.readUnsignedShort();
-        attributes = new AttrInfo[u2attributesCount];
-        for (int i = 0; i < u2attributesCount; i++)
-        {
-            attributes[i] = AttrInfo.create(din, cf);
-            if (attributes[i].getAttrName().equals(ATTR_Synthetic))
-            {
-                isSynthetic = true;
-            }
-        }
+      attributes[i] = AttrInfo.create(din, cf);
+      if (attributes[i].getAttrName().equals(ATTR_Synthetic))
+      {
+        isSynthetic = true;
+      }
     }
+  }
 
   /**
    * Export the representation to a DataOutput stream.
@@ -271,17 +270,17 @@ abstract public class ClassItemInfo implements ClassConstants
    * @throws IOException the io exception
    */
   public void write(DataOutput dout) throws java.io.IOException
+  {
+    if (dout == null) throw new NullPointerException("No output stream was provided.");
+    dout.writeShort(u2accessFlags);
+    dout.writeShort(u2nameIndex);
+    dout.writeShort(u2descriptorIndex);
+    dout.writeShort(u2attributesCount);
+    for (int i = 0; i < u2attributesCount; i++)
     {
-        if (dout == null) throw new NullPointerException("No output stream was provided.");
-        dout.writeShort(u2accessFlags);
-        dout.writeShort(u2nameIndex);
-        dout.writeShort(u2descriptorIndex);
-        dout.writeShort(u2attributesCount);
-        for (int i = 0; i < u2attributesCount; i++)
-        {
-            attributes[i].write(dout);
-        }
+      attributes[i].write(dout);
     }
+  }
 
   /**
    * Gets obfuscation config.

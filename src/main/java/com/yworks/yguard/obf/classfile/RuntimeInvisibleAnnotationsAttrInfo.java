@@ -1,14 +1,4 @@
-/*
- * RuntimeVisibleAnnotationsAttrInfo.java
- *
- * Created on April 20, 2005, 11:51 AM
- */
-
 package com.yworks.yguard.obf.classfile;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
 
 /**
  * The type Runtime invisible annotations attr info.

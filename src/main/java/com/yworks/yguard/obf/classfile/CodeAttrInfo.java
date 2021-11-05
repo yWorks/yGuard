@@ -1,15 +1,13 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
 import java.io.*;
-import java.util.*;
 import com.yworks.yguard.obf.*;
 
 /**
@@ -19,10 +17,10 @@ import com.yworks.yguard.obf.*;
  */
 public class CodeAttrInfo extends AttrInfo
 {
-  /**
-   * The constant CONSTANT_FIELD_SIZE.
-   */
-// Constants -------------------------------------------------------------
+    // Constants -------------------------------------------------------------
+    /**
+     * The constant CONSTANT_FIELD_SIZE.
+     */
     public static final int CONSTANT_FIELD_SIZE = 12;
 
 
@@ -33,32 +31,32 @@ public class CodeAttrInfo extends AttrInfo
     private byte[] code;
     private int u2exceptionTableLength;
     private ExceptionInfo[] exceptionTable;
-  /**
-   * The U 2 attributes count.
-   */
-  protected int u2attributesCount;
-  /**
-   * The Attributes.
-   */
-  protected AttrInfo[] attributes;
+    /**
+     * The attributes count.
+     */
+    protected int u2attributesCount;
+    /**
+     * The Attributes.
+     */
+    protected AttrInfo[] attributes;
 
 
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Code attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Code attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected CodeAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Return the length in bytes of the attribute. */
     protected int getAttrInfoLength() 
     {
@@ -161,4 +159,3 @@ public class CodeAttrInfo extends AttrInfo
         }
     }
 }
-

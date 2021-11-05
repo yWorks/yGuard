@@ -114,5 +114,4 @@ public class PackageSection implements Mappable {
     entry.obfName = ObfuscatorTask.toNativeClass(mapTo);
     entries.add(entry);
   }
-
 }

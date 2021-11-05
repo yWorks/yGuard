@@ -39,11 +39,11 @@ public class ModuleAttrInfo extends AttrInfo {
    * @param attrNameIndex the attr name index
    * @param attrLength    the attr length
    */
-// Instance Methods ------------------------------------------------------
   ModuleAttrInfo( final ClassFile cf, final int attrNameIndex, final int attrLength ) {
     super(cf, attrNameIndex, attrLength);
   }
 
+  // Instance Methods ------------------------------------------------------
   /**
    * Gets module name index.
    *

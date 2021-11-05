@@ -27,13 +27,13 @@ public class NestHostAttrInfo extends AttrInfo {
    * @param attrNameIndex the attr name index
    * @param attrLength    the attr length
    */
-// Instance Methods ------------------------------------------------------
   NestHostAttrInfo(
           final ClassFile cf, final int attrNameIndex, final int attrLength
   ) {
     super(cf, attrNameIndex, attrLength);
   }
 
+  // Instance Methods ------------------------------------------------------
   /**
    * Returns <code>"NestHost"</code>.
    */

@@ -23,10 +23,10 @@ public class SourceFileSection extends PatternMatchedClassesSection implements M
     this.allowMatchAllPatternSet = true;
   }
 
-    public void addEntries( Collection entries, String className){
-      YGuardRule rule = createRule(className);
-      entries.add(rule);
-    }
+  public void addEntries( Collection entries, String className){
+    YGuardRule rule = createRule(className);
+    entries.add(rule);
+  }
 
   private YGuardRule createRule(String className) {
     if (properties.containsKey("mapping")){

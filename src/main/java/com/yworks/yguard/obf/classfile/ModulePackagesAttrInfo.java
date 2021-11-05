@@ -27,13 +27,13 @@ public class ModulePackagesAttrInfo extends AttrInfo {
    * @param attrNameIndex the attr name index
    * @param attrLength    the attr length
    */
-// Instance Methods ------------------------------------------------------
   ModulePackagesAttrInfo(
           final ClassFile cf, final int attrNameIndex, final int attrLength
   ) {
     super(cf, attrNameIndex, attrLength);
   }
 
+  // Instance Methods ------------------------------------------------------
   /**
    * Returns <code>"ModulePackages"</code>.
    */

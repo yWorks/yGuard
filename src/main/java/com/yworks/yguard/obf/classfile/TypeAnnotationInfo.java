@@ -367,7 +367,5 @@ public class TypeAnnotationInfo {
         dout.writeByte(u1TypeArgumentIndex);
       }
     }
-
   }
-
 }

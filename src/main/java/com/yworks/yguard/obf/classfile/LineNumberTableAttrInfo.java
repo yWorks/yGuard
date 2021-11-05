@@ -1,4 +1,4 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
@@ -28,40 +28,40 @@ public class LineNumberTableAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Line number table attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Line number table attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected LineNumberTableAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Return the String name of the attribute; over-ride this in sub-classes. */
     protected String getAttrName() 
     {
         return ATTR_LineNumberTable;
     }
 
-  /**
-   * Get line number table line number info [ ].
-   *
-   * @return the line number info [ ]
-   */
-  public LineNumberInfo[] getLineNumberTable(){
+    /**
+     * Get line number table line number info [ ].
+     *
+     * @return the line number info [ ]
+     */
+    public LineNumberInfo[] getLineNumberTable() {
       return lineNumberTable;
     }
 
-  /**
-   * Set line number table.
-   *
-   * @param table the table
-   */
-  public void setLineNumberTable(LineNumberInfo[] table){
+    /**
+     * Set line number table.
+     *
+     * @param table the table
+     */
+    public void setLineNumberTable(LineNumberInfo[] table) {
       this.lineNumberTable = table;
       this.u2lineNumberTableLength = this.lineNumberTable.length;
       this.u4attrLength = 2 + 4 * u2lineNumberTableLength;
@@ -88,4 +88,3 @@ public class LineNumberTableAttrInfo extends AttrInfo
         }
     }
 }
-

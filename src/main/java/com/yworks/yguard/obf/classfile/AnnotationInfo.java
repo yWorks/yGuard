@@ -1,9 +1,3 @@
-/*
- * AnnotationInfo.java
- *
- * Created on April 20, 2005, 4:18 PM
- */
-
 package com.yworks.yguard.obf.classfile;
 
 import java.io.DataInput;
@@ -18,15 +12,16 @@ public class AnnotationInfo
   // Constants -------------------------------------------------------------
 
 
+  // Fields ----------------------------------------------------------------
   /**
-   * The U 2 type index.
+   * The type index.
    */
-// Fields ----------------------------------------------------------------
   protected int u2typeIndex;
   private int u2elementCount;
   private ElementValuePairInfo[] elementValuePairs;
 
 
+  // Class Methods ---------------------------------------------------------
   /**
    * Create annotation info.
    *
@@ -34,7 +29,6 @@ public class AnnotationInfo
    * @return the annotation info
    * @throws IOException the io exception
    */
-// Class Methods ---------------------------------------------------------
   public static AnnotationInfo create(DataInput din) throws java.io.IOException
   {
     if (din == null) throw new NullPointerException("DataInput cannot be null!");
@@ -43,6 +37,10 @@ public class AnnotationInfo
     return an;
   }
 
+  private AnnotationInfo()
+  {}
+
+  // Instance Methods ------------------------------------------------------
   /**
    * Get element value pairs element value pair info [ ].
    *
@@ -52,10 +50,6 @@ public class AnnotationInfo
     return elementValuePairs;
   }
   
-  // Instance Methods ------------------------------------------------------
-  private AnnotationInfo()
-  {}
-
   /**
    * Mark utf 8 refs in info.
    *

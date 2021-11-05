@@ -1,15 +1,13 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Representation of an attribute.
@@ -29,14 +27,14 @@ public class InnerClassesAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Inner classes attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    // Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Inner classes attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected InnerClassesAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
@@ -48,12 +46,12 @@ public class InnerClassesAttrInfo extends AttrInfo
         return ATTR_InnerClasses;
     }
 
-  /**
-   * Return the array of inner classes data.
-   *
-   * @return the inner classes info [ ]
-   */
-  protected InnerClassesInfo[] getInfo()
+    /**
+     * Return the array of inner classes data.
+     *
+     * @return the inner classes info [ ]
+     */
+    protected InnerClassesInfo[] getInfo()
     {
         return classes;
     }
@@ -88,4 +86,3 @@ public class InnerClassesAttrInfo extends AttrInfo
         }
     }
 }
-

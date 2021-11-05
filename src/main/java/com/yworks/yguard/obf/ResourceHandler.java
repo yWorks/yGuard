@@ -1,15 +1,8 @@
-/*
- * ResourceHandler.java
- *
- * Created on June 26, 2003, 3:51 PM
- */
-
 package com.yworks.yguard.obf;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Map;
 
 /**
  * The interface Resource handler.

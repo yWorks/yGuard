@@ -1,15 +1,13 @@
-/**
+/*
  * YGuard -- an obfuscation library for Java(TM) classfiles.
  *
  * Original Copyright (c) 1999 Mark Welsh (markw@retrologic.com)
  * Modifications Copyright (c) 2002 yWorks GmbH (yguard@yworks.com)
  *
-
  */
 package com.yworks.yguard.obf.classfile;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * Representation of an attribute.
@@ -28,19 +26,19 @@ public class SourceFileAttrInfo extends AttrInfo
     // Class Methods ---------------------------------------------------------
 
 
-  /**
-   * Instantiates a new Source file attr info.
-   *
-   * @param cf            the cf
-   * @param attrNameIndex the attr name index
-   * @param attrLength    the attr length
-   */
-// Instance Methods ------------------------------------------------------
+    /**
+     * Instantiates a new Source file attr info.
+     *
+     * @param cf            the cf
+     * @param attrNameIndex the attr name index
+     * @param attrLength    the attr length
+     */
     protected SourceFileAttrInfo(ClassFile cf, int attrNameIndex, int attrLength)
     {
         super(cf, attrNameIndex, attrLength);
     }
 
+    // Instance Methods ------------------------------------------------------
     /** Return the String name of the attribute; over-ride this in sub-classes. */
     protected String getAttrName() 
     {
@@ -59,21 +57,21 @@ public class SourceFileAttrInfo extends AttrInfo
         u2sourceFileIndex = din.readUnsignedShort();
     }
 
-  /**
-   * Set source file index.
-   *
-   * @param index the index
-   */
-  protected void setSourceFileIndex(int index){
+    /**
+     * Set source file index.
+     *
+     * @param index the index
+     */
+    protected void setSourceFileIndex(int index){
       this.u2sourceFileIndex = index;
     }
 
-  /**
-   * Get source file index int.
-   *
-   * @return the int
-   */
-  protected int getSourceFileIndex(){
+    /**
+     * Get source file index int.
+     *
+     * @return the int
+     */
+    protected int getSourceFileIndex(){
       return this.u2sourceFileIndex;
     }
 
