@@ -449,9 +449,9 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 
 - [keep](#the-keep-element)
 - [property](#the-property-element)
-- [patch](#the-patch-property)
-- [adjust](#the-adjust-property)
-- [map](#the-map-property)
+- [patch](#generating-patch-jars)
+- [adjust](#the-adjust-element)
+- [map](#the-map-element)
 
 ## The property Element
 
