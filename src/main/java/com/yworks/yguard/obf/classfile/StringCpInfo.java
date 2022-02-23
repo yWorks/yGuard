@@ -35,6 +35,14 @@ public class StringCpInfo extends CpInfo
         super(CONSTANT_String);
     }
 
+    public int getStringIndex() {
+        return u2stringIndex;
+    }
+
+    public void setStringIndex( final int stringIndex ) {
+        u2stringIndex = stringIndex;
+    }
+
     // Instance Methods ------------------------------------------------------
     /** Check for Utf8 references to constant pool and mark them. */
     protected void markUtf8Refs(ConstantPool pool) 

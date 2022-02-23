@@ -70,11 +70,15 @@ public class ClassFile implements ClassConstants
     private static final String LOG_DANGER_CLASSLOADER_MID = " calls the java.lang.ClassLoader method ";
 
     /**
+     * {@link java.lang.runtime.ObjectMethods} method.
+     */
+    private static final int BM_TYPE_OM = 3;
+    /**
      * {@link java.lang.invoke.StringConcatFactory} method.
      */
     private static final int BM_TYPE_SCF = 2;
     /**
-     * {@link java.lang.invoke.java.lang.invoke.LambdaMetafactory} method.
+     * {@link java.lang.invoke.LambdaMetafactory} method.
      */
     private static final int BM_TYPE_LMF = 1;
     /**
@@ -984,6 +988,42 @@ public class ClassFile implements ClassConstants
                 // attribute references
                 //   CONSTANT_Package_Info
                 // structures
+            } else if (attrInfo instanceof RecordAttrInfo) {
+              final RecordAttrInfo record = (RecordAttrInfo) attrInfo;
+              final RecordComponent[] components = record.getComponents();
+              for (int j = 0, n = components.length; j < n; ++j) {
+                final int nameIndex = components[j].getNameIndex();
+                final Utf8CpInfo nameUtf = (Utf8CpInfo) getCpEntry(nameIndex);
+                final String remapName = nm.mapField(thisClassName, nameUtf.getString());
+                final int remapNameIndex = constantPool.remapUtf8To(remapName, nameIndex);
+                components[j].setNameIndex(remapNameIndex);
+
+                final int descIndex = components[j].getDescriptorIndex();
+                final Utf8CpInfo descUtf = (Utf8CpInfo) getCpEntry(descIndex);
+                final String remapDesc = nm.mapDescriptor(descUtf.getString());
+                final int remapDescIndex = constantPool.remapUtf8To(remapDesc, descIndex);
+                components[j].setDescriptorIndex(remapDescIndex);
+
+                // attributes:
+                // - Signature
+                //   Nothing to do.
+                //   Such a signature is always a simple name that does not
+                //   need to be changed.
+
+                // - RuntimeVisibleAnnotations
+                // - RuntimeInvisibleAnnotations
+                final AttrInfo[] attributes = components[j].getAttributes();
+                for (int k = 0; k < attributes.length; ++k) {
+                  if (attributes[k] instanceof RuntimeVisibleAnnotationsAttrInfo) {
+                    remapAnnotations((RuntimeVisibleAnnotationsAttrInfo) attributes[k], nm);
+                  }
+                }
+
+                // - RuntimeVisibleTypeAnnotations
+                // - RuntimeInvisibleTypeAnnotations
+                //   Currently not supported because obfuscating type
+                //   annotations requires adjusting code blocks. 
+              }
             }
         }
 
@@ -1137,7 +1177,8 @@ public class ClassFile implements ClassConstants
             this.replaceConstantPoolStrings((ClassTree)nm);
         }
 
-        int currentCpLength = constantPool.length(); // constant pool can be extended (never contracted) during loop
+      final LinkedHashSet ombIndicies = new LinkedHashSet();
+      int currentCpLength = constantPool.length(); // constant pool can be extended (never contracted) during loop
         for (int i = 0; i < currentCpLength; i++) {
             CpInfo cpInfo = getCpEntry(i);
             if (cpInfo != null) {
@@ -1175,6 +1216,19 @@ public class ClassFile implements ClassConstants
 
                             id.setNameAndTypeIndex(remapNT(refUtf, refUtf.getString(), descUtf, remapDesc, ntInfo, idx));
                         }   break;
+                        case BM_TYPE_OM: {
+                            ombIndicies.add(Integer.valueOf(id.getBootstrapMethodAttrIndex()));
+
+                            final int idx = id.getNameAndTypeIndex();
+
+                            final NameAndTypeCpInfo ntInfo = (NameAndTypeCpInfo) getCpEntry(idx);
+                            final Utf8CpInfo refUtf = (Utf8CpInfo) getCpEntry(ntInfo.getNameIndex());
+                            final Utf8CpInfo descUtf = (Utf8CpInfo) getCpEntry(ntInfo.getDescriptorIndex());
+
+                            final String remapDesc = nm.mapDescriptor(descUtf.getString());
+
+                            id.setNameAndTypeIndex(remapNT(refUtf, refUtf.getString(), descUtf, remapDesc, ntInfo, idx));
+                        }   break;
                         default:
                             final String sig = getBootstrapMethodSignature(bm);
                             throw new IllegalArgumentException("Unrecognized bootstrap method: " + sig);
@@ -1183,6 +1237,32 @@ public class ClassFile implements ClassConstants
                 }
             }
         }
+        if (!ombIndicies.isEmpty()) {
+          final BootstrapMethodsAttrInfo attr = getBootstrapMethodAttribute();
+          for (Iterator it = ombIndicies.iterator(); it.hasNext(); ) {
+            final BootstrapMethod bm = attr.getBootstrapMethods()[((Integer) it.next()).intValue()];
+
+            final StringCpInfo namesInfo = (StringCpInfo) getCpEntry(bm.getBootstrapArguments()[1]);
+            final Utf8CpInfo names = (Utf8CpInfo) getCpEntry(namesInfo.getStringIndex());
+            final StringBuilder sb = new StringBuilder();
+            final String delim = ";";
+            for (StringTokenizer st = new StringTokenizer(names.getString(), delim, true); st.hasMoreTokens();) {
+              final String origName = st.nextToken();
+              if (delim.equals(origName)) {
+                sb.append(delim);
+              } else {
+                sb.append(nm.mapField(thisClassName, origName));
+              }
+            }
+            final String remapNames = sb.toString();
+            final int remapNamesIndex = constantPool.addUtf8Entry(remapNames);
+            final StringCpInfo remapNamesInfo = new StringCpInfo();
+            remapNamesInfo.setStringIndex(remapNamesIndex);
+            final int remapNamesInfoIndex = constantPool.addEntry(remapNamesInfo);
+            bm.getBootstrapArguments()[1] = remapNamesInfoIndex;
+          }
+        }
+
         // Remap all field/method names and descriptors in the constant pool (depends on class names)
         currentCpLength = constantPool.length(); // constant pool can be extended (never contracted) during loop
         for (int i = 0; i < currentCpLength; i++)
@@ -1294,6 +1374,8 @@ public class ClassFile implements ClassConstants
         return BM_TYPE_LMF;
       } else if ("java/lang/invoke/LambdaMetafactory#altMetafactory(...)".equals(sig)) {
         return BM_TYPE_LMF;
+      } else if ("java/lang/runtime/ObjectMethods#bootstrap(...)".equals(sig)) {
+        return BM_TYPE_OM;
       } else {
         return BM_TYPE_UNKNOWN;
       }
@@ -1455,8 +1537,7 @@ public class ClassFile implements ClassConstants
       // If a remap is required, make a new N&T (increment ref count on 'name' and
       // 'descriptor', decrement original N&T's ref count, set new N&T ref count to 1),
       // remap new N&T's utf's
-      if (!remapRef.equals(refUtf.getString()) ||
-              !remapDesc.equals(descUtf.getString()))
+      if (!remapRef.equals(refUtf.getString()) || !remapDesc.equals(descUtf.getString()))
       {
         // Get the new N&T guy
         NameAndTypeCpInfo newNameTypeInfo;

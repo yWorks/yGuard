@@ -58,8 +58,6 @@ public class AttrInfo implements ClassConstants
      AttrInfo ai = null;
      int attrNameIndex = din.readUnsignedShort();
      int attrLength = din.readInt();
-//     byte[] buffer = new byte[attrLength];
-//     din.readFully(buffer);
 
      CpInfo cpInfo = cf.getCpEntry(attrNameIndex);
      if (cpInfo instanceof Utf8CpInfo)
@@ -166,7 +164,10 @@ public class AttrInfo implements ClassConstants
          ai = new NestMembersAttrInfo(cf, attrNameIndex, attrLength);
        }
        else if (ATTR_SourceDebugExtension.equals(attrName)) {
-         ai = new AttrInfo( cf, attrNameIndex, attrLength);
+         ai = new AttrInfo(cf, attrNameIndex, attrLength);
+       }
+       else if (ATTR_Record.equals(attrName)) {
+         ai = new RecordAttrInfo(cf, attrNameIndex, attrLength);
        }
        else {
          if ( attrLength > 0 ) {
@@ -180,7 +181,6 @@ public class AttrInfo implements ClassConstants
        throw new ParseException("Inconsistent reference to Constant Pool.");
      }
 
-//      ai.readInfo(new DataInputStream(new ByteArrayInputStream(buffer)));
       ai.readInfo(din);
       return ai;
     }

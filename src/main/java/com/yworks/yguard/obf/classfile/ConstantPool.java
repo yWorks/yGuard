@@ -171,7 +171,7 @@ public class ConstantPool
     }
 
     // Add a string to the constant pool and return its index
-    private int addUtf8Entry(String s) 
+    public int addUtf8Entry(String s)
     {
         // Search pool for the string. If found, just increment the reference count and return the index
         for (int i = 0; i < pool.size(); i++)
