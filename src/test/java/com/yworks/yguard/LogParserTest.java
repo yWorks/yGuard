@@ -1,7 +1,5 @@
 package com.yworks.yguard;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
 import org.junit.Test;
 import org.xml.sax.InputSource;
 

@@ -13,13 +13,11 @@ import static junit.framework.TestCase.assertTrue;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class TestPatternMatchedSection {
-
-    /**
-     * Test is access level.
-     */
-    @Test
+  /**
+   * Test is access level.
+   */
+  @Test
   public void testIsAccessLevel() {
-
     assertTrue(
         PatternMatchedSection.Access.PUBLIC.isAccessLevel(
             Opcodes.ACC_PUBLIC ) );

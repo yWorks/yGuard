@@ -11,7 +11,6 @@ import java.net.URL;
  * get exceptions instead of error if the compiler implementation cannot be
  * found.
  * </p>
- *
  * @author Thomas Behr
  */
 public final class Compiler {
@@ -19,10 +18,7 @@ public final class Compiler {
   private final Object cmplrInst;
 
   /**
-   * Instantiates a new Compiler.
-   *
-   * @param cmplrType the cmplr type
-   * @param cmplrInst the cmplr inst
+   * Initializes a new <code>Compiler</code> instance.
    */
   public Compiler( final Class cmplrType, final Object cmplrInst ) {
     this.cmplrType = cmplrType;
@@ -30,9 +26,7 @@ public final class Compiler {
   }
 
   /**
-   * New compiler compiler.
-   *
-   * @return the compiler
+   * Creates a new <code>Compiler</code> instance.
    */
   public static Compiler newCompiler() {
     try {
@@ -50,8 +44,6 @@ public final class Compiler {
 
   /**
    * Adds a compiler option.
-   *
-   * @param option the option
    */
   public void addOption( final String option ) {
     try {
@@ -69,10 +61,6 @@ public final class Compiler {
   /**
    * Creates source objects that can be compiled using method
    * {@link #compile(Iterable, OutputStream)}.
-   *
-   * @param typeName the type name
-   * @param code     the code
-   * @return the object
    */
   public Object newInMemorySource( final String typeName, final String code ) {
     try {
@@ -90,10 +78,6 @@ public final class Compiler {
   /**
    * Creates source objects that can be compiled using method
    * {@link #compile(Iterable, OutputStream)}.
-   *
-   * @param typeName the type name
-   * @param url      the url
-   * @return the object
    */
   public Object newUrlSource( final String typeName, final URL url ) {
     try {
@@ -109,11 +93,10 @@ public final class Compiler {
   }
 
   /**
-   * Compile boolean.
-   *
-   * @param sources iterable of source objects created using method                {@link #newSource(String, String)}.
-   * @param result  a simple output stream. The compiled sources will                be written as java archive to this stream.
-   * @return the boolean
+   * @param sources iterable of source objects created using method
+   * {@link #newSource(String, String)}.
+   * @param result  a simple output stream. The compiled sources will
+   * be written as java archive to this stream.
    */
   public boolean compile( final Iterable sources, final OutputStream result ) {
     try {

@@ -26,18 +26,18 @@ import static junit.framework.TestCase.assertTrue;
  * @author Thomas Behr
  */
 public class BootstrapMethodsTest extends AbstractObfuscationTest {
-    /**
-     * The Name.
-     */
-    @Rule
+  /**
+   * The Name.
+   */
+  @Rule
   public TestName name = new TestName();
 
-    /**
-     * Test lambda meta factory.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test lambda meta factory.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testLambdaMetaFactory() throws Exception {
     // LambdaMetaFactory bootstrap methods are used only in Java 8 and newer
     final String testTypeName = "com.yworks.yguard.obf.LambdaMetaFactoryTest";
@@ -106,12 +106,12 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
     }
   }
 
-    /**
-     * Test string concat factory.
-     *
-     * @throws Exception the exception
-     */
-    @Test
+  /**
+   * Test string concat factory.
+   *
+   * @throws Exception the exception
+   */
+  @Test
   public void testStringConcatFactory() throws Exception {
     // StringConcatFactory bootstrap methods are used only in Java 11 and newer
     assertTrue("Invalid Java version", 11 <= getMajorVersion());

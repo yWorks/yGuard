@@ -22,16 +22,16 @@ import static org.junit.Assert.assertEquals;
  * The type Invoke dynamic test.
  */
 public class InvokeDynamicTest {
-    /**
-     * The Name.
-     */
-    @Rule
+  /**
+   * The Name.
+   */
+  @Rule
   public TestName name = new TestName();
 
-    /**
-     * String concat factory test.
-     */
-    @Test
+  /**
+   * String concat factory test.
+   */
+  @Test
   public void StringConcatFactoryTest() {
     // StringConcatFactory bootstrap methods are used only in Java 8 and newer
     final String testTypeName = "com.yworks.yshrink.java13.StringConcatFactoryTest";

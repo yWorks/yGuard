@@ -22,16 +22,16 @@ import static org.junit.Assert.assertEquals;
  * The type Default method test.
  */
 public class DefaultMethodTest {
-    /**
-     * The Name.
-     */
-    @Rule
+  /**
+   * The Name.
+   */
+  @Rule
   public TestName name = new TestName();
 
-    /**
-     * Direct super interface test.
-     */
-    @Test
+  /**
+   * Direct super interface test.
+   */
+  @Test
   public void DirectSuperInterfaceTest() {
     final String testTypeName = "com.yworks.yshrink.java13.DirectSuperInterfaceTest";
 
@@ -80,10 +80,10 @@ public class DefaultMethodTest {
     }
   }
 
-    /**
-     * Simple chain test.
-     */
-    @Test
+  /**
+   * Simple chain test.
+   */
+  @Test
   public void SimpleChainTest() {
     final String testTypeName = "com.yworks.yshrink.java13.SimpleChainTest";
 

@@ -7,8 +7,6 @@ import java.io.IOException;
 import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
 
-import com.yworks.util.Compiler;
-
 /**
  * Provides utility methods for obfuscation tests.
  *
