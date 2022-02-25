@@ -10,6 +10,11 @@ import java.io.IOException;
  * @author Thomas Behr
  */
 public class RecordComponent {
+  /**
+   * Size of name_index + descriptor_index + attributes_count in bytes.
+   */
+  static final int CONSTANT_FIELD_SIZE = 6;
+
   int u2nameIndex;
   int u2descriptorIndex;
   AttrInfo[] attributes;
@@ -42,6 +47,12 @@ public class RecordComponent {
     return attributes;
   }
 
+  boolean trimAttrsExcept( final String[] keepAttrs ) {
+    final int oldAttributesCount = attributes.length;
+    attributes = AttrInfo.filter(attributes, keepAttrs);
+    return oldAttributesCount != attributes.length;
+  }
+
   void markUtf8Refs( final ConstantPool pool ) {
     pool.incRefCount(u2nameIndex);
     pool.incRefCount(u2descriptorIndex);
@@ -69,9 +80,9 @@ public class RecordComponent {
     dout.writeShort(u2nameIndex);
     dout.writeShort(u2descriptorIndex);
 
-    final int u2attribuesCount = attributes.length;
-    dout.writeShort(u2attribuesCount);
-    for (int i = 0; i < u2attribuesCount; ++i) {
+    final int u2attributesCount = attributes.length;
+    dout.writeShort(u2attributesCount);
+    for (int i = 0; i < u2attributesCount; ++i) {
       attributes[i].write(dout);
     }
   }

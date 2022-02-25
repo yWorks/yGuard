@@ -728,31 +728,9 @@ public class ClassFile implements ClassConstants
         {
             methods[i].trimAttrsExcept(keepAttrs);
         }
-        for (int i = 0; i < attributes.length; i++)
-        {
-            if (Tools.isInArray(attributes[i].getAttrName(), keepAttrs))
-            {
-                attributes[i].trimAttrsExcept(keepAttrs);
-            }
-            else
-            {
-                attributes[i] = null;
-            }
-        }
 
-        // Delete the marked attributes
-        AttrInfo[] left = new AttrInfo[attributes.length];
-        int j = 0;
-        for (int i = 0; i < attributes.length; i++)
-        {
-            if (attributes[i] != null)
-            {
-                left[j++] = attributes[i];
-            }
-        }
-        attributes = new AttrInfo[j];
-        System.arraycopy(left, 0, attributes, 0, j);
-        u2attributesCount = j;
+        attributes = AttrInfo.filter(attributes, keepAttrs);
+        u2attributesCount = attributes.length;
 
         // Signal that unknown attributes are gone
         isUnkAttrGone = true;
@@ -792,14 +770,6 @@ public class ClassFile implements ClassConstants
             }
         }
         return map;
-    }
-
-    /**
-     * Trim attributes from the classfile ('Code', 'Exceptions', 'ConstantValue'
-     * are preserved, all others are killed).
-     */
-    public void trimAttrs() {
-      trimAttrsExcept(null);
     }
     
     private boolean containsDotClassMethodReference(){
@@ -867,15 +837,7 @@ public class ClassFile implements ClassConstants
         String thisClassName = ((Utf8CpInfo)getCpEntry(((ClassCpInfo)getCpEntry(u2thisClass)).getNameIndex())).getString();
 
         // Remove unnecessary attributes from the class
-        final String[] attributesToKeep = nm.getAttrsToKeep(thisClassName);
-        if (attributesToKeep.length > 0)
-        {
-            trimAttrsExcept(attributesToKeep);
-        }
-        else
-        {
-            trimAttrs();
-        }
+        trimAttrsExcept(nm.getAttrsToKeep(thisClassName));
 
         // Remap the 'inner name' reference of the 'InnerClasses' attribute
         for (int i = 0; i < u2attributesCount; i++)
@@ -1747,15 +1709,6 @@ public class ClassFile implements ClassConstants
    */
   public AttrInfo[] getAttributes() {
     return attributes;
-  }
-
-  /**
-   * Gets u 2 attributes count.
-   *
-   * @return the u 2 attributes count
-   */
-  public int getU2attributesCount() {
-    return u2attributesCount;
   }
 
   /**

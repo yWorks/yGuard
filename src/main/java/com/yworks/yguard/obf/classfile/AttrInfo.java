@@ -7,9 +7,13 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
 import com.yworks.yguard.ParseException;
 import com.yworks.yguard.Conversion;
+import com.yworks.yguard.obf.Tools;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
 /**
  * Representation of an attribute. Specific attributes have their representations
@@ -29,7 +33,7 @@ public class AttrInfo implements ClassConstants
   // Fields ----------------------------------------------------------------
   private int u2attrNameIndex;
   /**
-   * The attr length.
+   * The length of the attribute in bytes.
    */
   protected int u4attrLength;
   private byte info[];
@@ -211,14 +215,14 @@ public class AttrInfo implements ClassConstants
   }
 
   /**
-   * Return the length in bytes of the attribute; over-ride this in sub-classes.
+   * Return the length of the attribute in bytes; over-ride this in sub-classes.
    *
    * @return the attr info length
    */
   protected int getAttrInfoLength()
-    {
-        return u4attrLength;
-    }
+  {
+    return u4attrLength;
+  }
 
   /**
    * Return the String name of the attribute; over-ride this in sub-classes.
@@ -226,9 +230,9 @@ public class AttrInfo implements ClassConstants
    * @return the attr name
    */
   protected String getAttrName()
-    {
-        return ATTR_Unknown;
-    }
+  {
+    return ATTR_Unknown;
+  }
 
   /**
    * Trim attributes from the classfile except those in the String[].
@@ -295,5 +299,37 @@ public class AttrInfo implements ClassConstants
 
   public String toString() {
     return getAttrName() + "[" + getAttrInfoLength() + "]";
+  }
+
+
+  /**
+   * Returns the attributes whose names are contained in the specified array.
+   * @param attributes the set of attributes to filter.
+   * @param acceptedAttrs the names of attributes to retain.
+   * @return the retained attributes.
+   */
+  static AttrInfo[] filter(AttrInfo[] attributes, String[] acceptedAttrs) {
+    if (attributes == null) {
+      return null;
+    }
+
+    // traverse all attributes, removing all except those on 'keep' list
+    int attrsToKeepCount = 0;
+    for (int i = 0, n = attributes.length; i < n; ++i) {
+      if (Tools.isInArray(attributes[i].getAttrName(), acceptedAttrs)) {
+        ++attrsToKeepCount;
+        attributes[i].trimAttrsExcept(acceptedAttrs);
+      } else {
+        attributes[i] = null;
+      }
+    }
+
+    AttrInfo[] attrsToKeep = new AttrInfo[attrsToKeepCount];
+    for (int i = 0, j = 0, n = attributes.length; i < n; ++i) {
+      if (attributes[i] != null) {
+        attrsToKeep[j++] = attributes[i];
+      }
+    }
+    return attrsToKeep;
   }
 }

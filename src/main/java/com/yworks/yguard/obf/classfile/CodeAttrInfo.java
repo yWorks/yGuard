@@ -7,8 +7,8 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import com.yworks.yguard.obf.*;
+import java.io.DataInput;
+import java.io.DataOutput;
 
 /**
  * Representation of an attribute.
@@ -81,32 +81,8 @@ public class CodeAttrInfo extends AttrInfo
      */
     protected void trimAttrsExcept(String[] keepAttrs) 
     {
-        // Traverse all attributes, removing all except those on 'keep' list
-        for (int i = 0; i < attributes.length; i++)
-        {
-            if (Tools.isInArray(attributes[i].getAttrName(), keepAttrs))
-            {
-                attributes[i].trimAttrsExcept(keepAttrs);
-            }
-            else
-            {
-                attributes[i] = null;
-            }
-        }
-
-        // Delete the marked attributes
-        AttrInfo[] left = new AttrInfo[attributes.length];
-        int j = 0;
-        for (int i = 0; i < attributes.length; i++)
-        {
-            if (attributes[i] != null)
-            {
-                left[j++] = attributes[i];
-            }
-        }
-        attributes = new AttrInfo[j];
-        System.arraycopy(left, 0, attributes, 0, j);
-        u2attributesCount = j;
+      attributes = AttrInfo.filter(attributes, keepAttrs);
+      u2attributesCount = attributes.length;
     }
 
     /** Check for references in the 'info' data to the constant pool and mark them. */

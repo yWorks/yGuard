@@ -8,7 +8,6 @@
 package com.yworks.yguard.obf.classfile;
 
 import com.yworks.yguard.obf.ObfuscationConfig;
-import com.yworks.yguard.obf.Tools;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -197,32 +196,8 @@ abstract public class ClassItemInfo implements ClassConstants
    */
   protected void trimAttrsExcept(String[] keepAttrs)
   {
-    // Traverse all attributes, removing all except those on 'keep' list
-    for (int i = 0; i < attributes.length; i++)
-    {
-      if (Tools.isInArray(attributes[i].getAttrName(), keepAttrs))
-      {
-        attributes[i].trimAttrsExcept(keepAttrs);
-      }
-      else
-      {
-        attributes[i] = null;
-      }
-    }
-
-    // Delete the marked attributes
-    AttrInfo[] left = new AttrInfo[attributes.length];
-    int j = 0;
-    for (int i = 0; i < attributes.length; i++)
-    {
-      if (attributes[i] != null)
-      {
-        left[j++] = attributes[i];
-      }
-    }
-    attributes = new AttrInfo[j];
-    System.arraycopy(left, 0, attributes, 0, j);
-    u2attributesCount = j;
+    attributes = AttrInfo.filter(attributes, keepAttrs);
+    u2attributesCount = attributes.length;
   }
 
   /**
