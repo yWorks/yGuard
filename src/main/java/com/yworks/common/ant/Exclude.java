@@ -1,65 +1,63 @@
 package com.yworks.common.ant;
 
 /**
- * The type Exclude.
- *
+ * Stores which byte code attributes to keep when renaming or shrinking. 
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public abstract class Exclude {
 
   /**
-   * The Source.
+   * Stores whether to keep the source file attribute.
    */
   protected boolean source = false;
   /**
-   * The Vtable.
+   * Stores whether to keep the local variable table attribute.
    */
   protected boolean vtable = false;
   /**
-   * The Ltable.
+   * Stores whether to keep the line number table attribute.
    */
   protected boolean ltable = false;
   /**
-   * The Lttable.
+   * Stores whether to keep the local variable type table attribute.
    */
   protected boolean lttable = false;
   /**
-   * The Rv ann.
+   * Stores whether to keep the runtime visible annotations.
    */
   protected boolean rvAnn = true;
   /**
-   * The Rv type ann.
+   * Stores whether to keep the runtime visible type annotations.
    */
   protected boolean rvTypeAnn = true;
   /**
-   * The Ri ann.
+   * Stores whether to keep the runtime invisible annotations.
    */
   protected boolean riAnn = false;
   /**
-   * The Ri type ann.
+   * Stores whether to keep the runtime invisible type annotations.
    */
   protected boolean riTypeAnn = false;
   /**
-   * The Rv pann.
+   * Stores whether to keep the runtime visible parameter annotations.
    */
   protected boolean rvPann = true;
   /**
-   * The Ri pann.
+   * Stores whether to keep the runtime invisible parameter annotations.
    */
   protected boolean riPann = false;
   /**
-   * The Debug extension.
+   * Stores whether to keep the source debug extension attribute.
    */
   protected boolean debugExtension = false;
   /**
-   * The Task.
+   * The task.
    */
   protected YGuardBaseTask task;
 
 
   /**
-   * Instantiates a new Exclude.
-   *
+   * Initializes a new <code>Exclude</code> instance for the given task.
    * @param task the task
    */
   public Exclude(YGuardBaseTask task) {
@@ -67,201 +65,182 @@ public abstract class Exclude {
   }
 
   /**
-   * Sets sourcefile.
-   *
-   * @param sf the sf
+   * Sets whether to keep the source file attribute.
+   * @param sf if <code>true</code>, source file attributes are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setSourcefile(boolean sf) {
     this.source = sf;
   }
 
   /**
-   * Sets localvariabletable.
-   *
-   * @param vt the vt
+   * Sets whether to keep the local variable table attribute.
+   * @param vt if <code>true</code>, local variable table attributes are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setLocalvariabletable(boolean vt) {
     this.vtable = vt;
   }
 
   /**
-   * Sets linenumbertable.
-   *
-   * @param lt the lt
+   * Sets whether to keep the line number table attribute.
+   * @param lt if <code>true</code>, line number table attributes are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setLinenumbertable(boolean lt) {
     this.ltable = lt;
   }
 
   /**
-   * Sets runtime visible annotations.
-   *
-   * @param v the v
+   * Sets whether to keep the runtime visible annotations.
+   * @param v if <code>true</code>, runtime visible annotations are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setRuntimeVisibleAnnotations(boolean v) {
     this.rvAnn = v;
   }
 
   /**
-   * Sets runtime visible type annotations.
-   *
-   * @param v the v
+   * Sets whether to keep the runtime visible type annotations.
+   * @param v if <code>true</code>, runtime visible type annotations are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setRuntimeVisibleTypeAnnotations(boolean v) {
     this.rvTypeAnn = v;
   }
 
   /**
-   * Sets runtime invisible annotations.
-   *
-   * @param v the v
+   * Sets whether to keep the runtime invisible annotations.
+   * @param v if <code>true</code>, runtime invisible annotations are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setRuntimeInvisibleAnnotations(boolean v) {
       this.riAnn = v;
   }
 
   /**
-   * Sets runtime invisible type annotations.
-   *
-   * @param v the v
+   * Sets whether to keep the runtime invisible type annotations.
+   * @param v if <code>true</code>, runtime invisible type annotations are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setRuntimeInvisibleTypeAnnotations(boolean v) {
     this.riTypeAnn = v;
   }
 
   /**
-   * Sets runtime visible parameter annotations.
-   *
-   * @param v the v
+   * Sets whether to keep the runtime visible parameter annotations.
+   * @param v if <code>true</code>, runtime visible parameter annotations are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setRuntimeVisibleParameterAnnotations(boolean v) {
     this.rvPann = v;
   }
 
   /**
-   * Sets runtime invisible parameter annotations.
-   *
-   * @param v the v
+   * Sets whether to keep the runtime invisible parameter annotations.
+   * @param v if <code>true</code>, runtime invisible parameter annotations are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setRuntimeInvisibleParameterAnnotations(boolean v) {
     this.riPann = v;
   }
 
   /**
-   * Sets local variable type table.
-   *
-   * @param lt the lt
+   * Sets whether to keep the local variable type table attribute.
+   * @param lt if <code>true</code>, local variable type table attributes are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setLocalVariableTypeTable(boolean lt) {
     this.lttable = lt;
   }
 
   /**
-   * Sets source debug extension.
-   *
-   * @param b the b
+   * Sets whether to keep the source debug extension attribute.
+   * @param b if <code>true</code>, source debug extension attributes are
+   * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setSourceDebugExtension(boolean b) {
     this.debugExtension = b;
   }
 
   /**
-   * Is source boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the source file attribute.
+   * @return <code>true</code> if source files attributes have to be
+   * kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isSource() {
     return source;
   }
 
   /**
-   * Is vtable boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the local variable table attribute.
+   * @return <code>true</code> if local variable table attributes have to be
+   * kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isVtable() {
     return vtable;
   }
 
   /**
-   * Is ltable boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the line number table attribute.
+   * @return <code>true</code> if line number table attributes have to be
+   * kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isLtable() {
     return ltable;
   }
 
   /**
-   * Is lttable boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the local variable type table attribute.
+   * @return <code>true</code> if local variable type table attributes have to
+   * be kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isLttable() {
     return lttable;
   }
 
   /**
-   * Is rv ann boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the runtime visible annotations.
+   * @return <code>true</code> if runtime visible annotations have to be
+   * kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isRvAnn() {
     return rvAnn;
   }
 
   /**
-   * Is ri ann boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the runtime invisible annotations.
+   * @return <code>true</code> if runtime invisible annotations have to be
+   * kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isRiAnn() {
     return riAnn;
   }
 
   /**
-   * Is rv pann boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the runtime visible parameter annotations.
+   * @return <code>true</code> if runtime visible parameter annotations have to
+   * be kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isRvPann() {
     return rvPann;
   }
 
   /**
-   * Is ri pann boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the runtime invisible parameter annotations.
+   * @return <code>true</code> if runtime invisible parameter annotations have
+   * to be kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isRiPann() {
     return riPann;
   }
 
   /**
-   * Is debug extension boolean.
-   *
-   * @return the boolean
+   * Determines whether to keep the source debug extension attribute.
+   * @return <code>true</code> if source debug extension attributes have to be
+   * kept when renaming or shrinking, <code>false</code> otherwise. 
    */
   public boolean isDebugExtension() {
     return debugExtension;
   }
-
-  /** Performs the check for circular references and returns the referenced PatternSet. */
-//  protected Exclude getRef() {
-//    if (!isChecked()) {
-//      Stack stk = new Stack();
-//      stk.push(this);
-//      dieOnCircularReference(stk, task.getProject());
-//    }
-//
-//    Object o = getRefid().getReferencedObject(task.getProject());
-//    if (!(o instanceof Exclude)) {
-//      String msg = getRefid().getRefId() + " doesn\'t denote a patternset";
-//      throw new BuildException(msg);
-//    } else {
-//      return (Exclude) o;
-//    }
-//  }
-
-
 }
