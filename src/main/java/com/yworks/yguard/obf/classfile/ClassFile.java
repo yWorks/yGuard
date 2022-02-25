@@ -7,12 +7,24 @@
  */
 package com.yworks.yguard.obf.classfile;
 
-import java.io.*;
-import java.util.*;
-import com.yworks.yguard.obf.*;
-import java.lang.reflect.Modifier;
 import com.yworks.yguard.Conversion;
 import com.yworks.yguard.ParseException;
+import com.yworks.yguard.obf.Cl;
+import com.yworks.yguard.obf.ClassTree;
+import com.yworks.yguard.obf.Tools;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.Modifier;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  * This is a representation of the data in a Java class-file (*.class).
@@ -135,7 +147,7 @@ public class ClassFile implements ClassConstants
      * @return the class file
      * @throws IOException if class file is corrupt or incomplete
      */
-    public static ClassFile create(DataInput din) throws java.io.IOException
+    public static ClassFile create(DataInput din) throws IOException
     {
         if (din == null) throw new NullPointerException("No input stream was provided.");
         ClassFile cf = new ClassFile();
@@ -326,7 +338,7 @@ public class ClassFile implements ClassConstants
     private ClassFile() {}
 
     // Import the class data to internal representation.
-    private void read(DataInput din) throws java.io.IOException
+    private void read(DataInput din) throws IOException
     {
         // Read the class file
         u4magic = din.readInt();
@@ -843,8 +855,10 @@ public class ClassFile implements ClassConstants
         for (int i = 0; i < u2attributesCount; i++)
         {
             AttrInfo attrInfo = attributes[i];
-            if (attrInfo instanceof RuntimeVisibleAnnotationsAttrInfo){
-              remapAnnotations((RuntimeVisibleAnnotationsAttrInfo)attrInfo, nm);
+            if (attrInfo instanceof RuntimeVisibleAnnotationsAttrInfo) {
+              remapAnnotations((RuntimeVisibleAnnotationsAttrInfo) attrInfo, nm);
+            } else if (attrInfo instanceof RuntimeVisibleTypeAnnotationsAttrInfo) {
+              remapTypeAnnotations((RuntimeVisibleTypeAnnotationsAttrInfo) attrInfo, nm);
             } else if (attrInfo instanceof InnerClassesAttrInfo) {
                 // For each inner class referemce,
                 InnerClassesInfo[] info = ((InnerClassesAttrInfo)attrInfo).getInfo();
@@ -974,17 +988,16 @@ public class ClassFile implements ClassConstants
 
                 // - RuntimeVisibleAnnotations
                 // - RuntimeInvisibleAnnotations
+                // - RuntimeVisibleTypeAnnotations
+                // - RuntimeInvisibleTypeAnnotations
                 final AttrInfo[] attributes = components[j].getAttributes();
                 for (int k = 0; k < attributes.length; ++k) {
                   if (attributes[k] instanceof RuntimeVisibleAnnotationsAttrInfo) {
                     remapAnnotations((RuntimeVisibleAnnotationsAttrInfo) attributes[k], nm);
+                  } else if (attributes[k] instanceof RuntimeVisibleTypeAnnotationsAttrInfo) {
+                    remapTypeAnnotations((RuntimeVisibleTypeAnnotationsAttrInfo) attributes[k], nm);
                   }
                 }
-
-                // - RuntimeVisibleTypeAnnotations
-                // - RuntimeInvisibleTypeAnnotations
-                //   Currently not supported because obfuscating type
-                //   annotations requires adjusting code blocks. 
               }
             }
         }
@@ -1004,20 +1017,19 @@ public class ClassFile implements ClassConstants
                 } else if (attrInfo instanceof RuntimeVisibleAnnotationsAttrInfo){
                   remapAnnotations((RuntimeVisibleAnnotationsAttrInfo)attrInfo, nm);
                 } else if (attrInfo instanceof RuntimeVisibleParameterAnnotationsAttrInfo){
-                  remapAnnotations((RuntimeVisibleParameterAnnotationsAttrInfo)attrInfo, nm);
+                  remapParameterAnnotations((RuntimeVisibleParameterAnnotationsAttrInfo)attrInfo, nm);
+                } else if (attrInfo instanceof RuntimeVisibleTypeAnnotationsAttrInfo) {
+                  remapTypeAnnotations((RuntimeVisibleTypeAnnotationsAttrInfo) attrInfo, nm);
                 } else if (attrInfo instanceof SignatureAttrInfo){
                   remapSignature(nm, (SignatureAttrInfo) attrInfo);
                 } else if (attrInfo instanceof CodeAttrInfo) {
                     CodeAttrInfo codeAttrInfo = (CodeAttrInfo)attrInfo;
-                    for (int k = 0; k < codeAttrInfo.u2attributesCount; k++)
-                    {
+                    for (int k = 0; k < codeAttrInfo.u2attributesCount; k++) {
                         AttrInfo innerAttrInfo = codeAttrInfo.attributes[k];
-                        if (innerAttrInfo instanceof LocalVariableTableAttrInfo)
-                        {
+                        if (innerAttrInfo instanceof LocalVariableTableAttrInfo) {
                             LocalVariableTableAttrInfo lvtAttrInfo = (LocalVariableTableAttrInfo)innerAttrInfo;
                             LocalVariableInfo[] lvts = lvtAttrInfo.getLocalVariableTable();
-                            for (int m = 0; m < lvts.length; m++)
-                            {
+                            for (int m = 0; m < lvts.length; m++) {
                                 // Remap name
                                 Utf8CpInfo nameUtf = (Utf8CpInfo)getCpEntry(lvts[m].getNameIndex());
                                 String remapName = nm.mapLocalVariable(thisClassName, methodName, descriptor, nameUtf.getString());
@@ -1041,7 +1053,7 @@ public class ClassFile implements ClassConstants
                                   lvts[m].setDescriptorIndex(constantPool.remapUtf8To(remapDesc, lvts[m].getDescriptorIndex()));
                                 }
                             }
-                        } else if (innerAttrInfo instanceof LocalVariableTypeTableAttrInfo){
+                        } else if (innerAttrInfo instanceof LocalVariableTypeTableAttrInfo) {
                             LocalVariableTypeTableAttrInfo lvttAttrInfo = (LocalVariableTypeTableAttrInfo) innerAttrInfo;
                             LocalVariableTypeInfo[] lvts = lvttAttrInfo.getLocalVariableTypeTable();
                             for (int m = 0; m < lvts.length; m++){
@@ -1080,6 +1092,8 @@ public class ClassFile implements ClassConstants
                               codeAttrInfo.u2attributesCount--;
                               k--;
                            }
+                        } else if (innerAttrInfo instanceof RuntimeVisibleTypeAnnotationsAttrInfo) {
+                          remapTypeAnnotations((RuntimeVisibleTypeAnnotationsAttrInfo) innerAttrInfo, nm);
                         }
                     }
                 }
@@ -1102,6 +1116,8 @@ public class ClassFile implements ClassConstants
               AttrInfo attrInfo = field.attributes[j];
               if (attrInfo instanceof RuntimeVisibleAnnotationsAttrInfo){
                 remapAnnotations((RuntimeVisibleAnnotationsAttrInfo)attrInfo, nm);
+              } else if (attrInfo instanceof RuntimeVisibleTypeAnnotationsAttrInfo) {
+                remapTypeAnnotations((RuntimeVisibleTypeAnnotationsAttrInfo) attrInfo, nm);
               } else if (attrInfo instanceof SignatureAttrInfo){
                 remapSignature(nm, (SignatureAttrInfo) attrInfo);
               } 
@@ -1384,29 +1400,31 @@ public class ClassFile implements ClassConstants
     }
     
     private void remapAnnotations(RuntimeVisibleAnnotationsAttrInfo annotation, NameMapper nm){
-      final AnnotationInfo[] annotations = annotation.getAnnotations();
-      if (annotations != null){
-        for (int i = 0; i < annotations.length; i++){
-          remapAnnotation(annotations[i], nm);
-        }
-      }
+      remapAnnotationInfoImpl(annotation.getAnnotations(), nm);
     }
     
-    private void remapAnnotations(RuntimeVisibleParameterAnnotationsAttrInfo annotation, NameMapper nm){
+    private void remapParameterAnnotations(RuntimeVisibleParameterAnnotationsAttrInfo annotation, NameMapper nm){
       final ParameterAnnotationInfo[] annotations = annotation.getParameterAnnotations();
       if (annotations != null){
         for (int i = 0; i < annotations.length; i++){
           final ParameterAnnotationInfo info = annotations[i];
-          final AnnotationInfo[] a = info.getAnnotations();
-          if (a != null) {
-            for (int j = 0; j < a.length; j++){
-              remapAnnotation(a[j], nm);
-            }
-          }
+          remapAnnotationInfoImpl(info.getAnnotations(), nm);
         }
       }
     }
-    
+
+    private void remapTypeAnnotations(RuntimeVisibleTypeAnnotationsAttrInfo annotation, NameMapper nm) {
+      remapAnnotationInfoImpl(annotation.getAnnotations(), nm);
+    }
+
+    private void remapAnnotationInfoImpl(AnnotationInfo[] a, NameMapper nm) {
+      if (a != null) {
+        for (int j = 0; j < a.length; j++) {
+          remapAnnotation(a[j], nm);
+        }
+      }
+    }
+
     private void remapAnnotation(AnnotationInfo annotation, NameMapper nm){
       CpInfo info = getCpEntry(annotation.u2typeIndex);
       if (info instanceof Utf8CpInfo){
@@ -1570,7 +1588,7 @@ public class ClassFile implements ClassConstants
      * @param dout the dout
      * @throws IOException the io exception
      */
-    public void write(DataOutput dout) throws java.io.IOException
+    public void write(DataOutput dout) throws IOException
     {
         if (dout == null) throw new NullPointerException("No output stream was provided.");
         dout.writeInt(u4magic);

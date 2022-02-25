@@ -17,7 +17,6 @@ public class AnnotationInfo
    * The type index.
    */
   protected int u2typeIndex;
-  private int u2elementCount;
   private ElementValuePairInfo[] elementValuePairs;
 
 
@@ -29,16 +28,15 @@ public class AnnotationInfo
    * @return the annotation info
    * @throws IOException the io exception
    */
-  public static AnnotationInfo create(DataInput din) throws java.io.IOException
+  public static AnnotationInfo create(DataInput din) throws IOException
   {
-    if (din == null) throw new NullPointerException("DataInput cannot be null!");
     AnnotationInfo an = new AnnotationInfo();
     an.read(din);
     return an;
   }
 
-  private AnnotationInfo()
-  {}
+  AnnotationInfo() {
+  }
 
   // Instance Methods ------------------------------------------------------
   /**
@@ -57,18 +55,17 @@ public class AnnotationInfo
    */
   protected void markUtf8RefsInInfo(ConstantPool pool) {
     pool.getCpEntry(u2typeIndex).incRefCount();
+    final int u2elementCount  = elementValuePairs.length;
     for (int i = 0; i < u2elementCount; i++){
       elementValuePairs[i].markUtf8RefsInInfo(pool);
     }
   }
   
-  private void read(DataInput din) throws java.io.IOException
-  {
+  void read(DataInput din) throws IOException {
     u2typeIndex = din.readUnsignedShort();
-    u2elementCount = din.readUnsignedShort();
+    final int u2elementCount = din.readUnsignedShort();
     elementValuePairs = new ElementValuePairInfo[u2elementCount];
-    for (int i = 0; i < u2elementCount; i++)
-    {
+    for (int i = 0; i < u2elementCount; i++) {
       elementValuePairs[i] = ElementValuePairInfo.create(din);
     }
   }
@@ -79,12 +76,12 @@ public class AnnotationInfo
    * @param dout the dout
    * @throws IOException the io exception
    */
-  public void write(DataOutput dout) throws java.io.IOException
+  public void write(DataOutput dout) throws IOException
   {
     dout.writeShort(u2typeIndex);
+    final int u2elementCount = elementValuePairs.length;
     dout.writeShort(u2elementCount);
-    for (int i = 0; i < u2elementCount; i++)
-    {
+    for (int i = 0; i < u2elementCount; i++) {
       elementValuePairs[i].write(dout);
     }
   }
