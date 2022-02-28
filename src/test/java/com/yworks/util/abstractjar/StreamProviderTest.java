@@ -30,6 +30,7 @@ public class StreamProviderTest extends AbstractArchiveTest {
          stream != null;
          stream = provider.getNextClassEntryStream()) {
       entries.add(provider.getCurrentEntry());
+      stream.close();
     }
 
     provider.reset();
@@ -37,6 +38,9 @@ public class StreamProviderTest extends AbstractArchiveTest {
          stream != null;
          stream = provider.getNextResourceEntryStream()) {
       entries.add(provider.getCurrentEntry());
+      stream.close();
     }
+
+    provider.close();
   }
 }

@@ -31,5 +31,7 @@ public class ArchiveTest extends AbstractArchiveTest {
     for (Enumeration<Entry> en = reader.getEntries(); en.hasMoreElements();) {
       entries.add(en.nextElement());
     }
+
+    reader.close();
   }
 }
