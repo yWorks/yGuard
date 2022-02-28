@@ -115,7 +115,7 @@ public abstract class Exclude {
    * kept when renaming or shrinking, otherwise they are removed.
    */
   public void setRuntimeInvisibleAnnotations(boolean v) {
-      this.riAnn = v;
+    this.riAnn = v;
   }
 
   /**
@@ -233,6 +233,24 @@ public abstract class Exclude {
    */
   public boolean isRiPann() {
     return riPann;
+  }
+
+  /**
+   * Determines whether to keep the runtime visible type annotations.
+   * @return <code>true</code> if runtime visible type annotations have
+   * to be kept when renaming or shrinking, <code>false</code> otherwise. 
+   */
+  public boolean isRvTypeAnn() {
+    return rvTypeAnn;
+  }
+
+  /**
+   * Determines whether to keep the runtime invisible type annotations.
+   * @return <code>true</code> if runtime invisible type annotations have
+   * to be kept when renaming or shrinking, <code>false</code> otherwise. 
+   */
+  public boolean isRiTypeAnn() {
+    return riTypeAnn;
   }
 
   /**

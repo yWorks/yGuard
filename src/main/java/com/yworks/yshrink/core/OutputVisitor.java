@@ -51,10 +51,8 @@ public class OutputVisitor extends ClassVisitor {
   }
 
   /**
-   * 
-		 * @param source source file
-   * 
-		 * @param debug  SourceDebugExtension
+   * @param source source file
+   * @param debug  SourceDebugExtension
    */
   public void visitSource( String source, String debug ) {
     if ( ! currentClass.getRetainAttribute( ClassConstants.ATTR_SourceFile ) ) {
@@ -88,6 +86,21 @@ public class OutputVisitor extends ClassVisitor {
 
   }
 
+  public AnnotationVisitor visitTypeAnnotation(
+    final int typeRef, final TypePath typePath, final String descriptor, final boolean visible
+  ) {
+    if (visible) {
+      if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeVisibleTypeAnnotations)) {
+        return ignoreAnnotation;
+      }
+    } else {
+      if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeInvisibleAnnotations)) {
+        return ignoreAnnotation;
+      }
+    }
+    return new OutputAnnotationVisitor(cv.visitTypeAnnotation(typeRef, typePath, descriptor, visible));
+  }
+
   public void visitAttribute( final Attribute attr ) {
     if ( currentClass.getRetainAttribute( attr.type ) ) {
       cv.visitAttribute( attr );
@@ -104,7 +117,7 @@ public class OutputVisitor extends ClassVisitor {
     }
   }
 
-  public void visitNestMember(java.lang.String nestMember) {
+  public void visitNestMember( final String nestMember ) {
     final ClassDescriptor cd = model.getClassDescriptor( nestMember );
     if ( cd.getHasNestMembers() && !model.isObsolete( cd.getNode() )) {
       cv.visitNestMember(  nestMember );
@@ -205,7 +218,6 @@ public class OutputVisitor extends ClassVisitor {
     }
 
     public AnnotationVisitor visitAnnotation( String desc, boolean visible ) {
-
       if ( visible ) {
         if ( ! currentClass.getRetainAttribute( ClassConstants.ATTR_RuntimeVisibleAnnotations ) ) {
           return ignoreAnnotation;
@@ -230,6 +242,69 @@ public class OutputVisitor extends ClassVisitor {
         }
       }
       return new OutputAnnotationVisitor( delegate.visitParameterAnnotation( parameter, desc, visible ) );
+    }
+
+    @Override
+    public AnnotationVisitor visitInsnAnnotation(
+      final int typeRef, final TypePath typePath, final String descriptor, final boolean visible
+    ) {
+      if (visible) {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeVisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      } else {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      }
+      return new OutputAnnotationVisitor(delegate.visitInsnAnnotation(typeRef, typePath, descriptor, visible));
+    }
+
+    @Override
+    public AnnotationVisitor visitLocalVariableAnnotation(
+      final int typeRef, final TypePath typePath, final Label[] start, final Label[] end, final int[] index, final String descriptor, final boolean visible
+    ) {
+      if (visible) {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeVisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      } else {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      }
+      return new OutputAnnotationVisitor(delegate.visitLocalVariableAnnotation(typeRef, typePath,start, end, index, descriptor, visible));
+    }
+
+    public AnnotationVisitor visitTypeAnnotation(
+      final int typeRef, final TypePath typePath, final String descriptor, final boolean visible
+    ) {
+      if (visible) {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeVisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      } else {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      }
+      return new OutputAnnotationVisitor(delegate.visitTypeAnnotation(typeRef, typePath, descriptor, visible));
+    }
+
+    @Override
+    public AnnotationVisitor visitTryCatchAnnotation(
+      final int typeRef, final TypePath typePath, final String descriptor, final boolean visible
+    ) {
+      if (visible) {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeVisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      } else {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      }
+      return new OutputAnnotationVisitor(delegate.visitTryCatchAnnotation(typeRef, typePath, descriptor, visible));
     }
 
     public void visitAttribute( Attribute attr ) {
@@ -364,6 +439,21 @@ public class OutputVisitor extends ClassVisitor {
          }
        }
       return new OutputAnnotationVisitor( delegate.visitAnnotation( desc, visible ) );
+    }
+
+    public AnnotationVisitor visitTypeAnnotation(
+      final int typeRef, final TypePath typePath, final String descriptor, final boolean visible
+    ) {
+      if (visible) {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeVisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      } else {
+        if (!currentClass.getRetainAttribute(ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations)) {
+          return ignoreAnnotation;
+        }
+      }
+      return new OutputAnnotationVisitor(delegate.visitTypeAnnotation(typeRef, typePath, descriptor, visible));
     }
 
     public void visitAttribute(Attribute attribute) {

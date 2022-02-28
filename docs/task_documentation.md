@@ -238,7 +238,7 @@ This will retain the attributes named _"SourceFile"_, _"LineNumberTable"_, and _
 
 ## The `shrink` Element
 The `shrink` task removes all classes, fields and methods that are not reachable from a number of entrypoints given by a nested [keep]() element.
-See the [examples]() explenation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting) section for information on this topic.
+See the [examples]() explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting) section for information on this topic.
 
 #### Attributes
 
@@ -647,7 +647,7 @@ This element is a child of the [rename](#the-rename-element) or [shrink](#the-sh
 #### Attributes
 
 The `keep` element provides a number of boolean attributes that determine whether debug information and annotations present in the input class files are to be retained in the output files. The default behavior of the `rename` and `shrink` elements for the respective attributes is explained in the table below.
-Note that a more fine-grained control over which attributes to keep for which class files is possible using the [attribute](#the-attribute-element) element. Also, the `attribute` element allows to define attributes to keep for both the rename and the shrinkelement in a common place.
+Note that a more fine-grained control over which attributes to keep for which class files is possible using the [attribute](#the-attribute-element) element. Also, the `attribute` element allows to define attributes to keep for both the rename and the shrink element in a common place.
 
 <table class="listing">
 <thead>
@@ -677,8 +677,8 @@ Note that a more fine-grained control over which attributes to keep for which cl
     original source code file should be included in the output class
     files.
     </td>
-    <td><code>remove</code> </td>
-    <td><code>remove</code> </td>
+    <td><code>remove</code></td>
+    <td><code>remove</code></td>
 </tr>
 <tr>
     <td><code>localvariabletable</code></td>
@@ -688,8 +688,8 @@ Note that a more fine-grained control over which attributes to keep for which cl
     used in the original source code file should be included in the
     output class files.
     </td>
-    <td><code>remove</code> </td>
-    <td><code>remove</code> </td>
+    <td><code>remove</code></td>
+    <td><code>remove</code></td>
 </tr>
 <tr>
     <td><code>localvariabletypetable</code></td>
@@ -699,8 +699,8 @@ Note that a more fine-grained control over which attributes to keep for which cl
     its generic type signature that has been used in the original source
     code file should be included in the output class files.
     </td>
-    <td><code>remove</code> </td>
-    <td><code>remove</code> </td>
+    <td><code>remove</code></td>
+    <td><code>remove</code></td>
 </tr>
 <tr>
     <td><code>runtimevisibleannotations</code></td>
@@ -709,8 +709,8 @@ Note that a more fine-grained control over which attributes to keep for which cl
     <code>RetentionPolicy.RUNTIME</code>should be included in the output
     class files.
     </td>
-    <td><code>keep</code> </td>
-    <td><code>keep</code> </td>
+    <td><code>keep<sup>1</sup></code></td>
+    <td><code>keep</code></td>
 </tr>
 <tr>
     <td><code>runtimevisibleparameterannotations</code></td>
@@ -719,8 +719,18 @@ Note that a more fine-grained control over which attributes to keep for which cl
     policy <code>RetentionPolicy.RUNTIME</code> should be included in
     the output class files.
     </td>
-    <td><code>keep</code> </td>
-    <td><code>keep</code> </td>
+    <td><code>keep<sup>1</sup></code></td>
+    <td><code>keep</code></td>
+</tr>
+<tr>
+    <td><code>runtimevisibletypeannotations</code></td>
+    <td>
+    Determines whether type annotations with the retention
+    policy <code>RetentionPolicy.RUNTIME</code> should be included in
+    the output class files.
+    </td>
+    <td><code>keep<sup>1</sup></code></td>
+    <td><code>keep</code></td>
 </tr>
 <tr>
     <td><code>runtimeinvisibleannotations</code></td>
@@ -729,22 +739,34 @@ Note that a more fine-grained control over which attributes to keep for which cl
     <code>RetentionPolicy.CLASS</code>should be included in the output
     class files.
     </td>
-    <td><code>keep</code> </td>
-    <td><code>remove</code> </td>
+    <td><code>keep<sup>1</sup></code></td>
+    <td><code>remove</code></td>
 </tr>
 <tr>
-    <td><code>runtimeinvisibleparameterannotations</code>
-    </td>
+    <td><code>runtimeinvisibleparameterannotations</code></td>
     <td>
     Determines whether method paramater annotations with the retention
     policy <code>RetentionPolicy.CLASS</code> should be included in the
     output class files.
     </td>
-    <td><code>keep</code> </td>
-    <td><code>remove</code> </td>
+    <td><code>keep<sup>1</sup></code></td>
+    <td><code>remove</code></td>
+</tr>
+<tr>
+    <td><code>runtimeinvisibletypeannotations</code></td>
+    <td>
+    Determines whether type annotations with the retention
+    policy <code>RetentionPolicy.CLASS</code> should be included in the
+    output class files.
+    </td>
+    <td><code>keep<sup>1</sup></code></td>
+    <td><code>remove</code></td>
 </tr>
 </tbody>
 </table>
+
+<sup>1</sup> `rename` always keeps annotations irrespective of its
+`runtime*annotations` attribute values.
 
 ## The `class` Element
 

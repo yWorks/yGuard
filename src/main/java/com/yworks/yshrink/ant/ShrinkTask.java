@@ -58,8 +58,8 @@ public class ShrinkTask extends YGuardBaseTask {
 
   @Override
   public void execute() throws BuildException {
-
     getProject().log(this,"yGuard Shrinker v" + Version.getVersion() + " - http://www.yworks.com/products/yguard", Project.MSG_INFO);
+
     super.execute();
 
     Logger xmlLogger = new XmlLogger( getLogWriter() );
@@ -103,49 +103,37 @@ public class ShrinkTask extends YGuardBaseTask {
 
       AttributeFilter attributeFilter = new AttributeFilter(getProject());
       if (entryPointsSection.isRiAnn()){
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_RuntimeInvisibleAnnotations);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_RuntimeInvisibleAnnotations);
       }
       if (entryPointsSection.isRiPann()){
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_RuntimeInvisibleParameterAnnotations);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_RuntimeInvisibleParameterAnnotations);
       }
       if (entryPointsSection.isRvAnn()){
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_RuntimeVisibleAnnotations);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_RuntimeVisibleAnnotations);
       }
-       if (entryPointsSection.isRvPann()){
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_RuntimeVisibleParameterAnnotations);
-        attributeFilter.addAttributesSection(as);
+      if (entryPointsSection.isRvPann()){
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_RuntimeVisibleParameterAnnotations);
+      }
+      if (entryPointsSection.isRvTypeAnn()){
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_RuntimeVisibleTypeAnnotations);
+      }
+      if (entryPointsSection.isRiTypeAnn()){
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations);
       }
       if (entryPointsSection.isSource()) {
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_SourceFile);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_SourceFile);
       }
       if (entryPointsSection.isLtable()) {
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_LineNumberTable);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_LineNumberTable);
       }
       if (entryPointsSection.isLttable()) {
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_LocalVariableTypeTable);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_LocalVariableTypeTable);
       }
       if (entryPointsSection.isVtable()) {
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_LocalVariableTable);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_LocalVariableTable);
       }
       if (entryPointsSection.isDebugExtension()) {
-        AttributesSection as = new AttributesSection();
-        as.setName(ClassConstants.ATTR_SourceDebug);
-        attributeFilter.addAttributesSection(as);
+        addAttributesSection(attributeFilter, ClassConstants.ATTR_SourceDebug);
       }
       epfs.addEntryPointFilter(attributeFilter);
 
@@ -383,5 +371,14 @@ public class ShrinkTask extends YGuardBaseTask {
   public void addConfiguredEntrypointjar( final EntryPointJar entrypointjar ) {
     if ( pairs == null ) pairs = new ArrayList<ShrinkBag>();
     pairs.add( entrypointjar );
+  }
+
+
+  private static void addAttributesSection(
+    final AttributeFilter attributeFilter, final String name
+  ) {
+    AttributesSection as = new AttributesSection();
+    as.setName(name);
+    attributeFilter.addAttributesSection(as);
   }
 }
