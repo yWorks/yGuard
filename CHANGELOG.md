@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added support for Java 17 sealed classes.
+- Added support for Java 17 class files.
 - Added support for Java 16 records.
 - Added support for Java 16 class files.
 - Support for obfuscating multi-release jars.

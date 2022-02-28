@@ -27,7 +27,7 @@ public interface  ClassConstants
   /**
    * The constant MAJOR_VERSION.
    */
-  public static final int MAJOR_VERSION     = 0x3C;
+  public static final int MAJOR_VERSION     = 0x3D;
 
   /**
    * The constant ACC_PUBLIC.
@@ -323,6 +323,9 @@ public interface  ClassConstants
   // new in java 16
   public static final String ATTR_Record = "Record";
 
+  // new in java 17
+  public static final String ATTR_PermittedSubclasses = "PermittedSubclasses";
+
   /**
    * The constant REF_getField.
    */
@@ -420,6 +423,7 @@ public interface  ClassConstants
     ATTR_ModuleMainClass,
     ATTR_NestHost,
     ATTR_NestMembers,
+    ATTR_PermittedSubclasses,
     ATTR_Record,
   };
 }

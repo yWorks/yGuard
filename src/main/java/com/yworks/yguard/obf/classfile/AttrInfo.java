@@ -173,6 +173,9 @@ public class AttrInfo implements ClassConstants
        else if (ATTR_Record.equals(attrName)) {
          ai = new RecordAttrInfo(cf, attrNameIndex, attrLength);
        }
+       else if (ATTR_PermittedSubclasses.equals(attrName)) {
+         ai = new PermittedSubclassesAttrInfo(cf, attrNameIndex, attrLength);
+       }
        else {
          if ( attrLength > 0 ) {
            Logger.getInstance().warning( "Unrecognized attribute '" + attrName + "' in " + Conversion.toJavaClass( cf.getName() ) );
