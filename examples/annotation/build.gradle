@@ -9,8 +9,8 @@ repositories {
 }
 
 dependencies {
-  compile 'com.yworks:yguard:3.0.0-SNAPSHOT'
-  compile 'com.yworks:annotation:3.0.0-SNAPSHOT'
+  compile 'com.yworks:yguard:3.1.0-SNAPSHOT'
+  compile 'com.yworks:annotation:3.1.0-SNAPSHOT'
 }
 
 task obfuscate {
