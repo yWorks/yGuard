@@ -244,7 +244,6 @@ public class OutputVisitor extends ClassVisitor {
       return new OutputAnnotationVisitor( delegate.visitParameterAnnotation( parameter, desc, visible ) );
     }
 
-    @Override
     public AnnotationVisitor visitInsnAnnotation(
       final int typeRef, final TypePath typePath, final String descriptor, final boolean visible
     ) {
@@ -260,7 +259,6 @@ public class OutputVisitor extends ClassVisitor {
       return new OutputAnnotationVisitor(delegate.visitInsnAnnotation(typeRef, typePath, descriptor, visible));
     }
 
-    @Override
     public AnnotationVisitor visitLocalVariableAnnotation(
       final int typeRef, final TypePath typePath, final Label[] start, final Label[] end, final int[] index, final String descriptor, final boolean visible
     ) {
