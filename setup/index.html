@@ -118,7 +118,7 @@
 <p>Depending on your build system, you will use <a href="http://maven.apache.org/plugins/maven-antrun-plugin/"><code>AntRun</code></a> or <code>Ant</code> directly to run <code>yGuard</code>.</p>
 <h3 id="setup-using-ant">Setup using <code>Ant</code></h3>
 <p>Download the bundle from the <a href="https://github.com/yWorks/yguard/releases/latest">Github release page</a>. After downloading and extracting the <code>jar</code> files, place them in a path near to your build script. You may use absolute paths, but our examples expect the jar file to lie in the same directory as your build file. Once extracted, you can use the <code>yguard</code> element like so:</p>
-<pre><code class="language-xml">&lt;property name=&quot;version&quot; value=&quot;3.0.0&quot;/&gt;
+<pre><code class="language-xml">&lt;property name=&quot;version&quot; value=&quot;3.1.0&quot;/&gt;
 
 &lt;target name=&quot;yguard&quot;&gt;
     &lt;taskdef name=&quot;yguard&quot; classname=&quot;com.yworks.yguard.YGuardTask&quot; classpath=&quot;${projectDir}/yguard-${version}.jar&quot;/&gt;
@@ -132,7 +132,7 @@
 <pre><code class="language-xml">&lt;dependency&gt;
     &lt;groupId&gt;com.yworks&lt;/groupId&gt;
     &lt;artifactId&gt;yguard&lt;/artifactId&gt;
-    &lt;version&gt;3.0.0&lt;/version&gt;
+    &lt;version&gt;3.1.0&lt;/version&gt;
     &lt;scope&gt;compile&lt;/scope&gt;
 &lt;/dependency&gt;
 </code></pre>
@@ -167,7 +167,7 @@
 }
 
 dependencies {
-  compile 'com.yworks:yguard:3.0.0'
+  compile 'com.yworks:yguard:3.1.0'
 }
 
 task yguard {
