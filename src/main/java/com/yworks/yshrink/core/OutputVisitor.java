@@ -117,10 +117,17 @@ public class OutputVisitor extends ClassVisitor {
     }
   }
 
+  public void visitNestHost( final String nestHost ) {
+    final ClassDescriptor cd = model.getClassDescriptor(nestHost);
+    if (!model.isObsolete(cd.getNode())) {
+      cv.visitNestHost(nestHost);
+    }
+  }
+
   public void visitNestMember( final String nestMember ) {
-    final ClassDescriptor cd = model.getClassDescriptor( nestMember );
-    if ( cd.getHasNestMembers() && !model.isObsolete( cd.getNode() )) {
-      cv.visitNestMember(  nestMember );
+    final ClassDescriptor cd = model.getClassDescriptor(nestMember);
+    if (!model.isObsolete(cd.getNode()) && currentClass.getHasNestMembers()) {
+      cv.visitNestMember(nestMember);
     }
   }
 
