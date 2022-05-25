@@ -24,7 +24,7 @@
 
     <target name="gson">
       <mkdir dir="lib"/>
-      <get src="https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar" dest="lib/gson.jar"/>
+      <get src="https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar" dest="lib/gson.jar"/>
     </target>
 
     <target name="compile" depends="-init, gson">

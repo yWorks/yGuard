@@ -31,7 +31,7 @@ configurations {
 
 dependencies {
   compile 'com.yworks:yguard:3.1.0-SNAPSHOT'
-  gson 'com.google.code.gson:gson:2.8.6'
+  gson 'com.google.code.gson:gson:2.8.9'
   implementation configurations.gson.dependencies
 }
 
