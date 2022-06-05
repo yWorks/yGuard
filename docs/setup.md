@@ -64,7 +64,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.yworks:yguard:3.1.0'
+  compileOnly 'com.yworks:yguard:3.1.0'
 }
 
 task yguard {
@@ -75,7 +75,7 @@ task yguard {
     ant.taskdef(
         name: 'yguard',
         classname: 'com.yworks.yguard.YGuardTask',
-        classpath: sourceSets.main.runtimeClasspath.asPath
+        classpath: sourceSets.main.compileClasspath.asPath
     )
 
     ant.yguard {
