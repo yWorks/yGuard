@@ -6,8 +6,8 @@ Using the `yGuard` Ant task, name obfuscation and code shrinking can be seamless
 
 The `yguard` task contains two nested elements that perform the name obfuscation and code shrinking separately:
 
-- The [shrink](#the-shrink-element) element removes all code elements that are not reachable from the entrypoints given in the nested [keep](#the-keep-element) element.
 - The [rename](#the-rename-element) element performs name-obfuscation, renaming all packages, classes, methods and fields according to a selectable name-mapping scheme. Elements can be excluded from the renaming process by annotating them with a certain annotation class in the source code or using a nested [keep](#the-keep-element) element.
+- The [shrink](#the-shrink-element) element removes all code elements that are not reachable from the entrypoints given in the nested [keep](#the-keep-element) element.
 
 ## Table of contents
 
@@ -34,7 +34,9 @@ The `yguard` task contains two nested elements that perform the name obfuscation
 
 ## The yguard Element
 
-The yguard task contains elements that define basic properties common to the nested `rename` and `shrink` tasks.
+The `yguard` task is a container element for the `rename` and `shrink` task elements as well as configuration elements that are common to `rename` and `shrink`.
+Being a container element only, the `yguard` task does not perform any actions on its own, but needs a `rename` and/or `shrink` child element for name obfuscating and/or code shrinking.
+
 Please see the [troubleshooting section](troubleshooting) to learn about common pitfalls when using name obfuscation and shrinking software.
 
 #### Attributes
@@ -51,7 +53,7 @@ The `yguard` element has no attributes.
 
 ### The `inoutpair` Element
 
-At least one `inoutpair` element or one non-empty `inoutpairs` element has to be specified in order to run the yguard tasks. This element specifies the paths to the input and output jar files.
+At least one `inoutpair` element or one non-empty `inoutpairs` element has to be specified in order to run the `yguard` tasks. This element specifies the paths to the input and output jar files.
 
 `inoutpair` also supports the usage of directories. This is detected by [File.isDirectory](https://docs.oracle.com/javase/7/docs/api/java/io/File.html#isDirectory()). However, in general you do not want to use directories for `inoutpairs` (advanced use cases).
 
