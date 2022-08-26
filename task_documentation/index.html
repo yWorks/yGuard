@@ -255,7 +255,8 @@
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Task documentation</li>
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Task documentation</li>
     <li class="wy-breadcrumbs-aside">
         <a href="https://github.com/yWorks/yGuard/edit/master/docs/task_documentation.md"
           class="icon icon-github"> Edit on GitHub</a>
@@ -263,7 +264,6 @@
   </ul>
   <hr/>
 </div>
-
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
@@ -272,8 +272,8 @@
 <p>Using the <code>yGuard</code> Ant task, name obfuscation and code shrinking can be seamlessly integrated into your deployment process.</p>
 <p>The <code>yguard</code> task contains two nested elements that perform the name obfuscation and code shrinking separately:</p>
 <ul>
-<li>The <a href="#the-shrink-element">shrink</a> element removes all code elements that are not reachable from the entrypoints given in the nested <a href="#the-keep-element">keep</a> element.</li>
 <li>The <a href="#the-rename-element">rename</a> element performs name-obfuscation, renaming all packages, classes, methods and fields according to a selectable name-mapping scheme. Elements can be excluded from the renaming process by annotating them with a certain annotation class in the source code or using a nested <a href="#the-keep-element">keep</a> element.</li>
+<li>The <a href="#the-shrink-element">shrink</a> element removes all code elements that are not reachable from the entrypoints given in the nested <a href="#the-keep-element">keep</a> element.</li>
 </ul>
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
@@ -307,8 +307,9 @@
 <li><a href="#dtd-used-for-ant-yguard">DTD used for Ant <code>&lt;yguard&gt;</code></a></li>
 </ul>
 <h2 id="the-yguard-element">The yguard Element</h2>
-<p>The yguard task contains elements that define basic properties common to the nested <code>rename</code> and <code>shrink</code> tasks.
-Please see the <a href="troubleshooting">troubleshooting section</a> to learn about common pitfalls when using name obfuscation and shrinking software.</p>
+<p>The <code>yguard</code> task is a container element for the <code>rename</code> and <code>shrink</code> task elements as well as configuration elements that are common to <code>rename</code> and <code>shrink</code>.
+Being a container element only, the <code>yguard</code> task does not perform any actions on its own, but needs a <code>rename</code> and/or <code>shrink</code> child element for name obfuscating and/or code shrinking.</p>
+<p>Please see the <a href="troubleshooting">troubleshooting section</a> to learn about common pitfalls when using name obfuscation and shrinking software.</p>
 <h4 id="attributes">Attributes</h4>
 <p>The <code>yguard</code> element has no attributes.</p>
 <h4 id="child-elements">Child Elements</h4>
@@ -320,7 +321,7 @@ Please see the <a href="troubleshooting">troubleshooting section</a> to learn ab
 <li><a href="#the-shrink-element">shrink</a></li>
 </ul>
 <h3 id="the-inoutpair-element">The <code>inoutpair</code> Element</h3>
-<p>At least one <code>inoutpair</code> element or one non-empty <code>inoutpairs</code> element has to be specified in order to run the yguard tasks. This element specifies the paths to the input and output jar files.</p>
+<p>At least one <code>inoutpair</code> element or one non-empty <code>inoutpairs</code> element has to be specified in order to run the <code>yguard</code> tasks. This element specifies the paths to the input and output jar files.</p>
 <p><code>inoutpair</code> also supports the usage of directories. This is detected by <a href="https://docs.oracle.com/javase/7/docs/api/java/io/File.html#isDirectory()">File.isDirectory</a>. However, in general you do not want to use directories for <code>inoutpairs</code> (advanced use cases).</p>
 <h4 id="attributes_1">Attributes</h4>
 <table>
