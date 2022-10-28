@@ -116,28 +116,4 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
     f.setAccessible(true);
     return (Model) f.get(wrapper);
   }
-
-
-
-  private static final class TypeStruct {
-    /**
-     * The File name.
-     */
-    final String fileName;
-    /**
-     * The Type name.
-     */
-    final String typeName;
-
-    /**
-     * Instantiates a new Type struct.
-     *
-     * @param fileName the file name
-     * @param typeName the type name
-     */
-    TypeStruct( final String fileName, final String typeName ) {
-      this.fileName = fileName;
-      this.typeName = typeName;
-    }
-  }
 }

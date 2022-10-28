@@ -106,21 +106,14 @@ class FileObjects {
     public CharSequence getCharContent(
             final boolean ignoreEncodingErrors
     ) throws IOException {
-      final StringBuffer sb = new StringBuffer();
+      final StringBuilder sb = new StringBuilder();
 
-      final int[] tail = new int[1];
-      final BufferedReader br = new BufferedReader(
-              Streams.newTail(openReader(ignoreEncodingErrors), tail));
-      try {
+      try (BufferedReader br = new BufferedReader(openReader(ignoreEncodingErrors))) {
+        String del = "";
         for (String line = br.readLine(); line != null; line = br.readLine()) {
-          sb.append(line).append('\n');
+          sb.append(del).append(line);
+          del = "\n";
         }
-      } finally {
-        br.close();
-      }
-
-      if (sb.length() > 0 && tail[0] != '\n') {
-        sb.setLength(sb.length() - 1);
       }
 
       return sb.toString();

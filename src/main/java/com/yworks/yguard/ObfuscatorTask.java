@@ -35,6 +35,7 @@ import com.yworks.yshrink.YShrinkInvoker;
 import com.yworks.yshrink.YShrinkModel;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Location;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.EnumeratedAttribute;
@@ -78,6 +79,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import javax.xml.parsers.ParserConfigurationException;
@@ -97,7 +99,7 @@ public class ObfuscatorTask extends YGuardBaseTask
   private boolean conserveManifest = false;
   private File logFile = new File("yguardlog.xml");
   protected ExposeSection expose = null;
-  protected List adjustSections = new ArrayList();
+  protected List<AdjustSection> adjustSections = new ArrayList<AdjustSection>();
   protected MapSection map = null;
   protected PatchSection patch = null;
   //private Path resourceClassPath;
@@ -339,24 +341,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-//  /**
-//   * Used by ant to handle the <code>inoutpair</code> element.
-//   */
-//  public static final class InOutPair{
-//    private File inFile;
-//    private File outFile;
-//    public void setIn(File file){
-//      this.inFile = file;
-//    }
-//    public void setOut(File file){
-//      this.outFile = file;
-//    }
-//
-//    public String toString(){
-//      return "in: "+inFile+"; out: "+outFile;
-//    }
-//  }
-
   /**
    * Used by ant to handle the <code>classes</code>,
    * <CODE>methods</CODE> and <CODE>fields</CODE> attributes.
@@ -415,12 +399,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     public void addConfiguredPackage( PackageSection ps){
       mappables.add(ps);
     }
-
-//    public ClassSection createClass() {
-//      ClassSection cs = new ClassSection(  );
-//      mappables.add( cs );
-//      return cs;
-//    }
 
     /**
      * Add configured class.
@@ -512,27 +490,36 @@ public class ObfuscatorTask extends YGuardBaseTask
   /**
    * Used by ant to handle the <code>adjust</code> element.
    */
-  public class AdjustSection extends ZipFileSet {
+  public static class AdjustSection extends ZipFileSet {
+    private static final int REPLACE_CONTENT = 1;
+    private static final int REPLACE_CONTENT_POLICY = 2;
+    private static final int REPLACE_CONTENT_SEPARATOR = 4;
+    private static final int REPLACE_NAME = 8;
+    private static final int REPLACE_PATH = 16;
+    private static final int REPLACE_PATH_POLICY = 32;
+    
     private boolean replaceName = false;
+    private boolean replacePath = true;
+    private ReplacePathPolicy replacePathPolicy;
     private boolean replaceContent = false;
     private String  replaceContentSeparator = "/";
-    private boolean replacePath = true;
+    private ReplaceContentPolicy replaceContentPolicy;
 
     private Set entries;
+    private int state;
 
     /**
      * Instantiates a new Adjust section.
      */
     public AdjustSection()
     {
-      setProject(ObfuscatorTask.this.getProject());
     }
 
     /**
-     * Contains boolean.
-     *
-     * @param name the name
-     * @return the boolean
+     * Determines if the jar entry with the given name has to be adjusted.
+     * @param name the name of the jar entry to check.
+     * @return <code>true</code> if the jar entry with the given name will be
+     * adjusted; <code>false</code> otherwise.
      */
     public boolean contains(String name)
     {
@@ -540,18 +527,19 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
 
     /**
-     * Set replace content.
-     *
-     * @param rc the rc
+     * Specifies if the contents of matched jar entries have to be adjusted.
+     * @param enabled if <code>true</code>, the contents of matched jar entries
+     * will be adjusted.
      */
-    public void setReplaceContent(boolean rc){
-      this.replaceContent = rc;
+    public void setReplaceContent(boolean enabled){
+      this.replaceContent = enabled;
+      this.state |= REPLACE_CONTENT;
     }
 
     /**
-     * Gets replace content.
-     *
-     * @return the replace content
+     * Determines if the contents of matched jar entries have to be adjusted.
+     * @return <code>true</code> if the contents of matched jar entries will be
+     * adjusted; <code>false</code> otherwise.
      */
     public boolean getReplaceContent()
     {
@@ -559,36 +547,69 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
 
     /**
-     * Sets replace content separator.
-     *
-     * @param separator the separator
+     * Specifies the policy for adjusting the content of matched jar entries.
+     * @param policy the policy that determines if and how to adjust the
+     * content of matched jar entries.
      */
-    public void setReplaceContentSeparator(String separator) {
-      this.replaceContentSeparator = separator;
+    public void setReplaceContentPolicy( final ReplaceContentPolicy policy ) {
+      this.replaceContentPolicy = policy;
+      this.state |= REPLACE_CONTENT_POLICY;
     }
 
     /**
-     * Gets replace content separator.
-     *
-     * @return the replace content separator
+     * Returns the policy for adjusting the content of matched jar entries.
+     * @return the policy that determines if and how to adjust the
+     * content of matched jar entries.
+     */
+    public ReplaceContentPolicy getReplaceContentPolicy() {
+      return replaceContentPolicy;
+    }
+
+    /**
+     * Specifies the separator character for finding content class or
+     * package identifiers of matched jar entries that have to be adjusted.
+     * @param separator either <code>/</code> or <code>.</code>.
+     */
+    public void setReplaceContentSeparator(String separator) {
+      this.replaceContentSeparator = separator;
+      this.state |= REPLACE_CONTENT_SEPARATOR;
+    }
+
+    /**
+     * Returns the separator character for finding content class or
+     * package identifiers of matched jar entries that have to be adjusted.
+     * @return either <code>/</code> or <code>.</code>.
      */
     public String getReplaceContentSeparator() {
       return replaceContentSeparator;
     }
 
     /**
-     * Set replace path.
-     *
-     * @param rp the rp
+     * Specifies if the path of matched jar entries whose path and name match
+     * the qualified name of a renamed class will be adjusted to match the
+     * package name of the renamed class.
+     * This property can only be used to prevent adjusting the path of
+     * matched jar entries whose name is changed because of
+     * {@link #setReplaceName(boolean)}.
+     * @param enabled if <code>false</code>, the path of jar entries that are
+     * renamed will not be changed.
+     * @see #setReplaceName(boolean)
      */
-    public void setReplacePath(boolean rp){
-      this.replacePath = rp;
+    public void setReplacePath(boolean enabled){
+      this.replacePath = enabled;
+      this.state |= REPLACE_PATH;
     }
 
     /**
-     * Gets replace path.
-     *
-     * @return the replace path
+     * Determines if the path of matched jar entries whose path and name match
+     * the qualified name of a renamed class will be adjusted to match the
+     * package name of the renamed class.
+     * This property can only be used to prevent adjusting the path of
+     * matched jar entries whose name is changed because of
+     * {@link #getReplaceName()}.
+     * @return <code>false</code> if the path of jar entries that are
+     * renamed will not be changed; <code>true</code> otherwise.
+     * @see #getReplaceName()
      */
     public boolean getReplacePath()
     {
@@ -596,9 +617,16 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
 
     /**
-     * Gets replace name.
-     *
-     * @return the replace name
+     * Determines if the path and name of matched jar entries whose path and name
+     * match the qualified name of a renamed class will be adjusted to match the
+     * qualified name of the renamed class.
+     * @return <code>true</code> if the path and name of matched jar entries
+     * will be adjusted.
+     * <p>
+     * To adjust only the name of matched entries, but not their path,
+     * set {@link #getReplacePath()} to <code>false</code>.
+     * </p>
+     * @see #getReplacePath()
      */
     public boolean getReplaceName()
     {
@@ -606,19 +634,51 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
 
     /**
-     * Set replace name.
-     *
-     * @param rn the rn
+     * Specifies if the path and name of matched jar entries whose path and name
+     * match the qualified name of a renamed class will be adjusted to match the
+     * qualified name of the renamed class.
+     * <p>
+     * To adjust only the name of matched entries, but not their path,
+     * set {@link #setReplacePath(boolean)} to <code>false</code>.
+     * </p>
+     * @param enabled if <code>true</code>, the path and name of matched jar
+     * entries will be adjusted.
+     * @see #setReplacePath(boolean)
      */
-    public void setReplaceName(boolean rn){
-      this.replaceName = rn;
+    public void setReplaceName(boolean enabled){
+      this.replaceName = enabled;
+      this.state |= REPLACE_NAME;
     }
 
     /**
-     * Create entries.
-     *
-     * @param srcJars the src jars
-     * @throws IOException the io exception
+     * Specifies the policy for adjusting the path to and name of matched jar
+     * entries.
+     * @param policy the policy that determines if and how to adjust the path
+     * to and name of matched jar entries.
+     */
+    public void setReplacePathPolicy( final ReplacePathPolicy policy ) {
+      this.replacePathPolicy = policy;
+      this.state |= REPLACE_PATH_POLICY;
+    }
+
+    /**
+     * Returns the policy for adjusting the path to and name of matched jar
+     * entries.
+     * @return the policy that determines if and how to adjust the path
+     * to and name of matched jar entries.
+     */
+    public ReplacePathPolicy getReplacePathPolicy() {
+      return replacePathPolicy;
+    }
+
+    /**
+     * Initialize the set of jar entries that are matched by this adjust
+     * section.
+     * <p>
+     * This method has to be called before {@link #contains(String)} can be
+     * used.
+     * </p>
+     * @param srcJars the set of jar entries to check for matches.
      */
     public void createEntries(Collection srcJars) throws IOException
     {
@@ -637,15 +697,114 @@ public class ObfuscatorTask extends YGuardBaseTask
         }
       }
     }
-  }
 
-//  public Path createExternalClasses(){
-//    if (this.resourceClassPath != null){
-//        throw new IllegalArgumentException("Only one externalclasses element allowed!");
-//    }
-//    this.resourceClassPath = new Path(getProject());
-//    return this.resourceClassPath;
-//  }
+    void prepare( final ObfuscatorTask task ) {
+      prepareContentPolicy(task);
+      prepareContentSeparator();
+      preparePathPolicy(task);
+    }
+
+    private void prepareContentPolicy( final ObfuscatorTask task ) {
+      final int state = this.state;
+      final boolean newContent = isSet(state, REPLACE_CONTENT_POLICY);
+      final boolean oldContent = isSet(state, REPLACE_CONTENT);
+      if (newContent) {
+        if (oldContent) {
+          throw new BuildException(
+            "Invalid adjust configuration, cannot use replaceContent and " +
+            "replaceContentPolicy together. Use replaceContentPolicy only.",
+            getLocation());
+        }
+      } else {
+        if (oldContent) {
+          info(task,
+               "replaceContent is deprecated, use replaceContentPolicy instead.");
+        }
+        setReplaceContentPolicy(getReplaceContent()
+          ? ReplaceContentPolicy.lenient : ReplaceContentPolicy.none);
+      }
+    }
+
+    private void prepareContentSeparator() {
+      final ReplaceContentPolicy cp = getReplaceContentPolicy();
+      if (ReplaceContentPolicy.none != cp) {
+        final String sep = getReplaceContentSeparator();
+        if ("/.".equals(sep)) {
+          setReplaceContentSeparator("./");
+        } else if (!".".equals(sep) && !"/".equals(sep) && !"./".equals(sep)) {
+          throw new BuildException(
+            "Invalid adjust replaceContentSeparator: " + sep, getLocation());
+        }
+      }
+    }
+
+    private void preparePathPolicy( final ObfuscatorTask task ) {
+      final int state = this.state;
+      final boolean newPath = isSet(state, REPLACE_PATH_POLICY);
+      final boolean oldPath = isSet(state, REPLACE_PATH);
+      final boolean oldName = isSet(state, REPLACE_NAME);
+      if (newPath) {
+        if (oldPath) {
+          throw new BuildException(
+            "Invalid adjust configuration, cannot use replacePath and " +
+            "replacePathPolicy together. Use replacePathPolicy only.",
+            getLocation());
+        }
+        if (oldName) {
+          throw new BuildException(
+            "Invalid adjust configuration, cannot use replaceName and " +
+            "replacePathPolicy together. Use replacePathPolicy only.",
+            getLocation());
+        }
+      } else {
+        if (oldPath) {
+          info(task,
+               "replacePath is deprecated, use replacePathPolicy instead.");
+        }
+        if (oldName) {
+          info(task,
+               "replaceName is deprecated, use replacePathPolicy instead.");
+        }
+
+        if (getReplacePath()) {
+          if (getReplaceName()) {
+            setReplacePathPolicy(ReplacePathPolicy.file);
+          } else {
+            setReplacePathPolicy(ReplacePathPolicy.path);
+          }
+        } else {
+          if (getReplaceName()) {
+            setReplacePathPolicy(ReplacePathPolicy.name);
+          } else {
+            setReplacePathPolicy(ReplacePathPolicy.none);
+          }
+        }
+      }
+    }
+
+    private static boolean isSet( final int mask, final int flag ) {
+      return (mask & flag) == flag;
+    }
+
+    private void info( final ObfuscatorTask task, final String msg ) {
+      task.getProject().log(task, addLocation(msg), Project.MSG_VERBOSE);
+    }
+
+    private String addLocation( final String msg ) {
+      String _msg = "adjust";
+      final int ln = getLineNumber();
+      if (ln > 0) {
+        _msg += ":" + ln;
+      }
+      _msg += ": " + msg;
+      return _msg;
+    }
+
+    private int getLineNumber() {
+      final Location l = getLocation();
+      return l == null ? 0 : l.getLineNumber();
+    }
+  }
 
   /**
    * Used by ant to handle the nested <code>expose</code> element.
@@ -836,13 +995,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   }
 
 
-//  /** Used by ant to handle the nested <code>adjust</code> element.
-//   */
-//  public void addConfiguredAdjust(AdjustSection adjust){
-//    adjustSections.add(adjust);
-//    System.out.println("addConfiguredAdjust");
-//  }
-
   /**
    * Used by ant to handle the <code>logfile</code> attribute.
    *
@@ -875,11 +1027,24 @@ public class ObfuscatorTask extends YGuardBaseTask
    */
   public void execute() throws BuildException
   {
-    getProject().log(this,"yGuard Obfuscator v" + Version.getVersion() + " - http://www.yworks.com/products/yguard", Project.MSG_INFO);
+    final String msg =
+      "yGuard Obfuscator v" +
+      Version.getVersion() +
+      " - https://www.yworks.com/products/yguard";
+    getProject().log(this, msg, Project.MSG_INFO);
 
 
     if ( mode == MODE_STANDALONE ) {
       getProject().log( this, DEPRECATED, Project.MSG_WARN );
+    }
+
+
+    try {
+      for (AdjustSection section : adjustSections) {
+        section.prepare(this);
+      }
+    } catch (BuildException be) {
+      throw new BuildException(be.getMessage(), be.getLocation());
     }
 
     TaskLogger taskLogger = new TaskLogger();
@@ -1008,9 +1173,8 @@ public class ObfuscatorTask extends YGuardBaseTask
         rules.addAll(mapEntries);
       }
 
-      for(Iterator iter = adjustSections.iterator(); iter.hasNext(); )
+      for (AdjustSection as : adjustSections)
       {
-        AdjustSection as = (AdjustSection)iter.next();
         as.createEntries(inFilesList);
       }
 
@@ -1311,14 +1475,6 @@ public class ObfuscatorTask extends YGuardBaseTask
      * The Db.
      */
     protected final GuardDB db;
-    /**
-     * The Map.
-     */
-    protected final Map map;
-    /**
-     * The Content replacer.
-     */
-    StringReplacer contentReplacer = null;
 
     /**
      * Instantiates a new Resource adjuster.
@@ -1326,132 +1482,154 @@ public class ObfuscatorTask extends YGuardBaseTask
      * @param db the db
      */
     protected ResourceAdjuster(final GuardDB db)
-     {
-       this.db = db;
-       map = new HashMap() {
-         public Object get(Object key)
-         {
-           return db.translateJavaClass(key.toString());
-         }
-       };
-     }
+    {
+      this.db = db;
+    }
 
-     public boolean filterName(String inName, StringBuffer outName)
-     {
-       boolean rp = true;
-       boolean rn = false;
+    public boolean filterName( final String inName, final StringBuffer outName ) {
+      for(AdjustSection as : adjustSections) {
+        if (as.contains(inName)) {
+          filterNameImpl(inName, outName, as);
+          return true;
+        }
+      }
+      return false;
+    }
 
-       for(Iterator iter = adjustSections.iterator(); iter.hasNext();)
-       {
-         AdjustSection as = (AdjustSection)iter.next();
-         if(as.contains(inName))
-         {
-           if(as.getReplaceName()) rn = true;
-           if(!as.getReplacePath()) rp = false;
-         }
-       }
+    private void filterNameImpl(
+      final String inName, final StringBuffer outName, final AdjustSection as
+    ) {
+      outName.setLength(0);
+      final ReplacePathPolicy policy = as.getReplacePathPolicy();
+      if (ReplacePathPolicy.file == policy || ReplacePathPolicy.name == policy) {
+        translateImpl(
+          inName, outName,
+          ResourceAdjusterUtils.newTranslateServiceFile(db, true),
+          ResourceAdjusterUtils.newTranslateJavaFile(db, true));
 
-       if(rn)
-       {
-         outName.setLength(0);
-         final String servicesPrefix = "META-INF/services/";
-         if (inName.startsWith(servicesPrefix)) {
-           // the file name of a service is a fully qualified class name
-           final String cn = inName.substring(servicesPrefix.length());
-           outName.append(servicesPrefix);
-           // translateJavaFile returns a path name, replacing file separators
-           // with dots converts that path name back into a qualified class
-           // name (which is the required file name for a service)
-           outName.append(db.translateJavaFile(cn).replace('/', '.'));
-         } else {
-           int index = 0;
-           if (inName.endsWith(".properties")) {
-             index = inName.indexOf('_');
-           }
-           if (index <= 0) {
-             index = inName.indexOf('.');
-           }
-           String prefix = inName.substring(0, index);
-           prefix = db.translateJavaFile(prefix);
-           outName.append(prefix);
-           outName.append(inName.substring(index));
-         }
-       }
-       else
-       {
-         outName.append(inName);
-       }
+        if (ReplacePathPolicy.name == policy) {
+          String outPath = inName.substring(0,inName.lastIndexOf('/')+1);
+          String outFile = outName.toString();
+          outFile = outFile.substring(outFile.lastIndexOf('/')+1);
+          outName.setLength(0);
+          outName.append(outPath);
+          outName.append(outFile);
+        }
+      } else {
+        if (ReplacePathPolicy.fileorpath == policy) {
+        translateImpl(
+          inName, outName,
+          ResourceAdjusterUtils.newTranslateServiceFile(db, true),
+          ResourceAdjusterUtils.newTranslateJavaFileOrPath(db));
+        } else if (ReplacePathPolicy.path == policy) {
+          outName.append(db.getOutName(inName));
+        } else if (ReplacePathPolicy.lenient == policy) {
+          translateImpl(
+            inName, outName,
+            ResourceAdjusterUtils.newTranslateServiceFile(db, false),
+            ResourceAdjusterUtils.newTranslateJavaFile(db, false));
+        } else {
+          outName.append(inName);
+        }
+      }
+    }
 
-       if(!rp)
-       {
-         String outPath = inName.substring(0,inName.lastIndexOf('/')+1);
-         String outFile = outName.toString();
-         outFile = outFile.substring(outFile.lastIndexOf('/')+1);
-         outName.setLength(0);
-         outName.append(outPath);
-         outName.append(outFile);
-       }
+    private void translateImpl(
+      final String inName,
+      final StringBuffer outName,
+      final Function<String, String> mapService,
+      final Function<String, String> mapOther
+    ) {
+      final String servicesPrefix = "META-INF/services/";
+      if (inName.startsWith(servicesPrefix)) {
+        // the file name of a service is a fully qualified class name
+        final String cn = inName.substring(servicesPrefix.length());
+        outName.append(servicesPrefix);
+        // translateJavaFile returns a path name, replacing file separators
+        // with dots converts that path name back into a qualified class
+        // name (which is the required file name for a service)
+        outName.append(mapService.apply(cn));
+      } else {
+        int index = 0;
+        if (inName.endsWith(".properties")) {
+          index = inName.indexOf('_');
+        }
+        if (index <= 0) {
+          index = inName.indexOf('.');
+        }
+        String prefix = inName.substring(0, index);
+        prefix = mapOther.apply(prefix);
+        outName.append(prefix);
+        outName.append(inName.substring(index));
+      }
+    }
 
-       return rn || !rp;
-     }
-
-
-     public boolean filterContent(InputStream in, OutputStream out, String resourceName) throws IOException
-     {
-       for(Iterator iter = adjustSections.iterator(); iter.hasNext();)
-       {
-         AdjustSection as = (AdjustSection)iter.next();
-         if(filterContentImpl(in, out, resourceName, as))
-         {
-           return true;
-         }
-       }
-       return false;
-     }
-
-     /**
-      * Performs the content filtering for one Adjust section,
-      * subclasses may provide custom implementations.
-      *
-      * @return  {@code true} to terminate filtering once filtering performed
-      */
-     protected boolean filterContentImpl(InputStream in, OutputStream out, String resourceName, AdjustSection as) throws IOException
-     {
-       if(as.contains(resourceName) && as.getReplaceContent())
-       {
-         Writer writer = new OutputStreamWriter(out);
-         getContentReplacer().replace(new InputStreamReader(in), writer, db, as.replaceContentSeparator);
-         writer.flush();
-         return true;
-       }
-       return false;
-     }
-
-    public String filterString(String in, String resourceName) throws IOException {
-      StringBuffer result =new StringBuffer(in.length());
-      getContentReplacer().replace(in, result, map);
-      return result.toString();
+    public boolean filterContent(InputStream in, OutputStream out, String resourceName) throws IOException
+    {
+      for(AdjustSection as : adjustSections)
+      {
+        if(filterContentImpl(in, out, resourceName, as))
+        {
+          return true;
+        }
+      }
+      return false;
     }
 
     /**
-     * Gets content replacer.
+     * Performs the content filtering for one Adjust section,
+     * subclasses may provide custom implementations.
      *
-     * @return the content replacer
+     * @return  {@code true} to terminate filtering once filtering performed
      */
-    protected StringReplacer getContentReplacer()
-     {
-       if(contentReplacer == null)
-       {
-         contentReplacer = new StringReplacer("(?:\\w|[$])+((?:\\.|\\/)(?:\\w|[$])+)+");
-       }
-       return contentReplacer;
-     }
+    protected boolean filterContentImpl(InputStream in, OutputStream out, String resourceName, AdjustSection as) throws IOException
+    {
+      final ReplaceContentPolicy policy = as.getReplaceContentPolicy();
+      if(as.contains(resourceName) && ReplaceContentPolicy.none != policy)
+      {
+        final String sep = as.getReplaceContentSeparator();
+        final Function<String, String> map =
+          newTranslateMapping(db, sep, ReplaceContentPolicy.strict == policy);
+
+        Writer writer = new OutputStreamWriter(out);
+        newContentReplacer(sep).replace(new InputStreamReader(in), writer, map);
+        writer.flush();
+        return true;
+      }
+      return false;
+    }
+
+    public String filterString(String in, String resourceName) throws IOException {
+      StringBuffer result = new StringBuffer(in.length());
+      newContentReplacer(".").replace(in, result, newTranslateJavaClass(db));
+      return result.toString();
+    }
+
+    protected StringReplacer newContentReplacer( final String separator ) {
+      return new StringReplacer(newContentPattern(separator));
+    }
   };
 
+  private static Function<String, String> newTranslateJavaClass( final GuardDB db ) {
+    return ResourceAdjusterUtils.newTranslateJavaClass(db);
+  }
 
-  //accepts classes and their inner classes
+  private static Function<String, String> newTranslateMapping(
+    final GuardDB db, final String sep, final boolean strict
+  ) {
+    return ResourceAdjusterUtils.newTranslateMapping(db, sep, strict);
+  }
+
+  private static String newContentPattern( final String separator ) {
+    return ResourceAdjusterUtils.newContentPattern(separator);
+  }
+
+
+  /**
+   * Accepts classes and their nested classes.
+   */
   private static final class ClassFileFilter implements Filter{
-    private com.yworks.util.Filter parent;
+    private final com.yworks.util.Filter parent;
 
     /**
      * Instantiates a new Class file filter.
@@ -1464,7 +1642,7 @@ public class ObfuscatorTask extends YGuardBaseTask
 
     public boolean accepts(Object o)
     {
-      String s= (String) o;
+      String s = (String) o;
       if (s.endsWith(".class") && s.indexOf('$') != -1)
       {
         s = s.substring(0, s.indexOf('$')) + ".class";
@@ -1516,7 +1694,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
   }
 
-  // Write a header out to the log file
   private void writeLogHeader(PrintWriter log, File[] inFile, File[] outFile)
   {
     log.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -2292,24 +2469,8 @@ public class ObfuscatorTask extends YGuardBaseTask
       } else {
         counter = j;
       }
-//      checkIdentifier(result);
       return result;
     }
-
-//    private static final void checkIdentifier(String s){
-//      if (s.length() < 1)// throw new RuntimeException("Identifer must be longer than 0");
-//        System.err.println("Identifer must be longer than 0");
-//      if (!Character.isJavaIdentifierStart(s.charAt(0))){
-//        //throw new RuntimeException("Identifer must start legally! "+s );
-//        System.err.println("Identifer must start legally! "+s);
-//      }
-//      for (int i = 1; i< s.length(); i++){
-//        if (!Character.isJavaIdentifierPart(s.charAt(i))){
-//          //throw new RuntimeException("Identifer must continue legally at! "+i+" "+s );
-//          System.err.println("Identifer must continue legally at! "+i+" "+s );
-//        }
-//      }
-//    }
 
     /**
      * Generate name string.
@@ -2516,13 +2677,6 @@ public class ObfuscatorTask extends YGuardBaseTask
           }
         }
       }
-//      for (int i = 0; i < 10000; i++) {
-//        System.out.println("scramble " + i + " " + scramble(i));
-//        if (unscramble(scramble(i)) != i){
-//          throw new RuntimeException();
-//        }
-//      }
-//      System.out.println("all is well");
     }
 
     /**
@@ -2563,35 +2717,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     new LineNumberScrambler(2000, 234432);
   }
 
-//  public static void main(String[] args) throws Exception{
-//    Project project = new Project();
-//    File base =new File("/home/muellese/job/localcvs/yguard/deploy");
-//    project.setBaseDir(base);
-//    project.init();
-//    ObfuscatorTask os = new ObfuscatorTask();
-//    os.setProject(project);
-//    ObfuscatorTask.InOutPair iop = new ObfuscatorTask.InOutPair();
-//    iop.setIn(new File(base, "test.jar"));
-//    iop.setOut(new File(base, "testobf.jar"));
-//    os.setLogFile(new File(base,"testobflog.xml.gz"));
-//    ObfuscatorTask.Property pop = new ObfuscatorTask.Property();
-//    pop.setName("expose-attributes");
-//    pop.setValue("Deprecated");
-//    os.addConfiguredProperty(pop);
-//    ObfuscatorTask.ExposeSection eps = os.createExpose();
-//    ObfuscatorTask.ClassSection sec = new ObfuscatorTask.ClassSection();
-//    PatternSet patternSet = new PatternSet();
-//    patternSet.setProject(project);
-//    patternSet.setIncludes("com.yworks.yguard.ObfuscatorTask*");
-//    sec.addConfiguredPatternSet(patternSet);
-//    ObfuscatorTask.Modifiers mm = new ObfuscatorTask.Modifiers();
-//    mm.setValue("protected");
-//    sec.setClasses(mm);
-//    eps.addConfiguredClass(sec);
-//    os.addConfiguredInOutPair(iop);
-//    os.execute();
-//  }
-
   private String annotationClass;
 
   /**
@@ -2610,5 +2735,82 @@ public class ObfuscatorTask extends YGuardBaseTask
    */
   public void setAnnotationClass(String annotationClass) {
     this.annotationClass = annotationClass;
+  }
+
+  /*
+   * IMPORTANT: Do not change the casing of the enum values.
+   * These names are used as XML attribute names and should be all lowercase.
+   */
+  public enum ReplaceContentPolicy {
+    /**
+     * No content adjustment at all.
+     */
+    none,
+    /**
+     * If class obfuscation yields
+     *   com.yworks.SampleClass -> A.A.A
+     * then text in resource files will be adjusted as follows
+     *   com.yworks.SampleStuff -> A.A.SampleStuff
+     *   com.other.OtherStuff -> A.other.OtherStuff
+     */
+    lenient,
+    /**
+     * If class obfuscation yields
+     *   com.yworks.SampleClass -> A.A.A
+     * then text in resource files will be adjusted as follows
+     *   com.yworks.SampleClass -> A.A.A
+     */
+    strict;
+  }
+
+  /*
+   * IMPORTANT: Do not change the casing of the enum values.
+   * These names are used as XML attribute names and should be all lowercase.
+   */
+  public enum ReplacePathPolicy {
+    /**
+     * No path adjustment at all.
+     */
+    none, // replaceName = false, replacePath = false
+    /**
+     * If class obfuscation yields
+     *   com.yworks.SampleClass -> A.A.A
+     * then resource files will be renamed as follows
+     *   com/yworks/SampleStuff.properties -> A/A/SampleStuff.properties
+     *   com/other/OtherStuff.properties -> com/other/OtherStuff.properties
+     */
+    path, // replaceName = false, replacePath = true, default
+    /**
+     * If class obfuscation yields
+     *   com.yworks.SampleClass -> A.A.A
+     * then resource files will be renamed as follows
+     *   com/yworks/SampleStuff.properties -> com/yworks/A.properties
+     *   com/other/OtherStuff.properties -> com/other/OtherStuff.properties
+     */
+    name, // replaceName = true, replacePath = false
+    /**
+     * If class obfuscation yields
+     *   com.yworks.SampleClass -> A.A.A
+     * then resource files will be renamed as follows
+     *   com/yworks/SampleStuff.properties -> A/A/A.properties
+     *   com/other/OtherStuff.properties -> com/other/OtherStuff.properties
+     */
+    file, // replaceName = true, replacePath = true
+    /**
+     * If class obfuscation yields
+     *   com.yworks.SampleClass -> A.A.A
+     * then resource files will be renamed as follows
+     *   com/yworks/SampleStuff.properties -> A/A/A.properties
+     *   com/yworks/OtherStuff.properties -> A/A/OtherStuff.properties
+     */
+    fileorpath,
+    /**
+     * If class obfuscation yields
+     *   com.yworks.SampleClass -> A.A.A
+     * then resource files will be renamed as follows
+     *   com/yworks/SampleStuff.properties -> A/A/A.properties
+     *   com/other/OtherStuff.properties -> A/other/OtherStuff.properties
+     */
+    lenient
   }
 }

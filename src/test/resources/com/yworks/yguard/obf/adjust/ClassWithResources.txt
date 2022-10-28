@@ -1,0 +1,6 @@
+package com.yworks.yguard.obf;
+
+public class ClassWithResources {
+  public static class NestedClass {
+  }
+}

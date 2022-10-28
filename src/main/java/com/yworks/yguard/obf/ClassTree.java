@@ -213,7 +213,7 @@ public class ClassTree implements NameMapper
     return null;
   }
 
-  private TreeItem findSubItem(TreeItem parent, String childName){
+  public TreeItem findSubItem(TreeItem parent, String childName){
     if (parent instanceof Pk){
       for (Enumeration enumeration = ((Pk)parent).getPackageEnum(); enumeration.hasMoreElements();){
         Pk subPk = (Pk) enumeration.nextElement();
@@ -248,51 +248,43 @@ public class ClassTree implements NameMapper
      */
     public String getOutName(String inName)
     {
-        try
-        {
-            TreeItem ti = root;
-            StringBuffer sb = new StringBuffer();
-            for (Enumeration nameEnum = getNameEnum(inName); nameEnum.hasMoreElements(); )
-            {
-                Cons nameSegment = (Cons)nameEnum.nextElement();
-                char tag = ((Character)nameSegment.car).charValue();
-                String name = (String)nameSegment.cdr;
-                switch (tag)
-                {
-                case PACKAGE_LEVEL:
-                    if (ti != null)
-                    {
-                        ti = ((Pk)ti).getPackage(name);
-                        if (ti != null)
-                        {
-                            sb.append(ti.getOutName());
-                        }
-                        else
-                        {
-                            sb.append(name);
-                        }
-                    }
-                    else
-                    {
-                        sb.append(name);
-                    }
-                    sb.append(PACKAGE_LEVEL);
-                    break;
+      try
+      {
+        TreeItem ti = root;
+        String del = "";
+        StringBuffer sb = new StringBuffer();
+        for (Enumeration nameEnum = getNameEnum(inName); nameEnum.hasMoreElements();) {
+          sb.append(del);
 
-                case CLASS_LEVEL:
-                    sb.append(name);
-                    return sb.toString();
-
-                default:
-                    throw new RuntimeException("Internal error: illegal package/class name tag");
+          Cons nameSegment = (Cons)nameEnum.nextElement();
+          char tag = ((Character)nameSegment.car).charValue();
+          String name = (String)nameSegment.cdr;
+          switch (tag) {
+            case PACKAGE_LEVEL:
+              if (ti != null) {
+                ti = ((Pk)ti).getPackage(name);
+                if (ti != null) {
+                  sb.append(ti.getOutName());
+                } else {
+                  sb.append(name);
                 }
-            }
+              } else {
+                sb.append(name);
+              }
+              del = "" + PACKAGE_LEVEL;
+              break;
+            case CLASS_LEVEL:
+              sb.append(name);
+              del = "" + CLASS_LEVEL;
+              break;
+            default:
+              throw new RuntimeException("Internal error: illegal package/class name tag");
+          }
         }
-        catch (Exception e)
-        {
-            // Just drop through and return the original name
-        }
+        return sb.toString();
+      } catch (Exception e) {
         return inName;
+      }
     }
 
     /**

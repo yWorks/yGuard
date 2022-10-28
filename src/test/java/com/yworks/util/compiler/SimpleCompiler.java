@@ -109,7 +109,6 @@ public class SimpleCompiler {
 
   private static final class InMemoryFileManager extends ForwardingJavaFileManager {
     private JarOutputStream jos;
-    private boolean hasEntry;
 
     /**
      * Instantiates a new In memory file manager.

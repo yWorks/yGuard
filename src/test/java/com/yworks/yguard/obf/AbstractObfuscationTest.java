@@ -1,10 +1,22 @@
 package com.yworks.yguard.obf;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
+import com.yworks.util.Compiler;
+import com.yworks.util.InMemoryArchive;
+import com.yworks.util.abstractjar.Archive;
 import org.junit.Test;
+
+import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -19,6 +31,54 @@ public class AbstractObfuscationTest {
   @Test
   public void satisfyTestRunner() {
     assertTrue("This is a volkswagen defeat device.", true);
+  }
+
+  Archive newArchive(
+    final String name,
+    final Iterable<TypeStruct> sourceFiles,
+    final Iterable<EntryStruct> otherFiles
+  ) throws IOException {
+    return newArchiveImpl(name, sourceFiles, otherFiles);
+  }
+
+  private Archive newArchiveImpl(
+   final String name,
+   final Iterable<TypeStruct> sourceFiles,
+   final Iterable<EntryStruct> otherFiles
+  ) throws IOException {
+    final Class<?> resolver = getClass();
+
+    final Compiler compiler = Compiler.newCompiler();
+
+    final ArrayList<Object> sources = new ArrayList<Object>();
+    for (TypeStruct struct : sourceFiles) {
+      final URL url = resolver.getResource(struct.fileName);
+      assertNotNull("Could not resolve " + struct.fileName + '.', url);
+
+      sources.add(compiler.newUrlSource(struct.typeName, url));
+    }
+
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    compiler.compile(sources, baos);
+
+    final InMemoryArchive archive = new InMemoryArchive(name);
+    archive.addAll(baos.toByteArray());
+
+    for (EntryStruct struct : otherFiles) {
+      if (struct.fileName == null) {
+        archive.add(struct.entryName, new ByteArrayInputStream(new byte[0]));
+      } else {
+        final URL url = resolver.getResource(struct.fileName);
+        assertNotNull("Could not resolve " + struct.fileName + '.', url);
+
+        try (InputStream is = url.openStream()) {
+          archive.add(struct.entryName, is);
+        }
+      }
+    }
+
+    archive.freeze();
+    return archive;
   }
 
   /**
@@ -82,4 +142,25 @@ public class AbstractObfuscationTest {
 //      return Integer.compare(pc1, pc2);
 //    }
 //  }
+
+
+  static final class EntryStruct {
+    final String fileName;
+    final String entryName;
+
+    EntryStruct( final String fileName, final String entryName ) {
+      this.fileName = fileName;
+      this.entryName = entryName;
+    }
+  }
+
+  static final class TypeStruct {
+    final String fileName;
+    final String typeName;
+
+    TypeStruct( final String fileName, final String typeName ) {
+      this.fileName = fileName;
+      this.typeName = typeName;
+    }
+  }
 }

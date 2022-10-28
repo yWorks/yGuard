@@ -30,7 +30,6 @@ import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.Manifest;
@@ -441,16 +441,7 @@ public class GuardDB implements ClassConstants
               }
               else
               {
-                // This is a "workaround" because classTree is not supposed
-                // to work with resource files and "chops off" everything after $ into a new segment.
-                // For resource files however this behaviour is wrong.
-                // NOTE: It may be better to investigate getOutName but this works like a charm
-                String appendName = "";
-                if (inName.contains("$")) appendName = inName.substring(inName.lastIndexOf("/"));
                 outName = classTree.getOutName(inName);
-                if (appendName.length() > 0) {
-                  outName = outName.replace(outName.substring(outName.lastIndexOf("/")), appendName);
-                }
               }
 
               if(resourceHandler == null || !resourceHandler.filterContent(inStream, dataOutputStream, inName))
@@ -992,39 +983,72 @@ public class GuardDB implements ClassConstants
   }
 
   /**
-   * Tries to translate as many parts of items as possible.
-   * E.g if com.yworks.example.test.Invalid cannot be resolved it will resolve in order
-   * - com.yworks.example.test.Invalid
-   * - com.yworks.example.test
-   * - com.yworks.example
-   * - com.yworks
-   * - com
-   * Depending on the number of items you can infer which parts have been remapped and which have not.
-   *
-   * @param items list of unmapped items
-   * @return list of mapped items
+   * Translates the given class or package identifier.
+   * @param identifier a qualified class name or a jar entry name.
+   * @param strict if <code>true</code>, translate the whole identifier only;
+   * otherwise translate as much of the given identifier as possible.
+   * @return the mapped identifier.
    */
-  public List<String> translateItem(String[] items) {
-    List<String> mapped = new ArrayList<>();
-    List<String> partialItems = Arrays.asList(items);
-    TreeItem item = classTree.findTreeItem(items);
-    while ((partialItems.size() > 0) && item == null) {
-      partialItems = partialItems.subList(0, partialItems.size() - 1);
-      String[] partialItemsArray = new String[partialItems.size()];
-      partialItems.toArray(partialItemsArray);
-      item = classTree.findTreeItem(partialItemsArray);
+  public String translateItem(
+    final String identifier, final char seperator, final boolean strict
+  ) {
+    final int n = identifier.length();
+    final int lios = identifier.lastIndexOf(seperator);
+    final char nestedSep = '$';
+    final String nested = Character.toString(nestedSep);
+    final StringBuilder sb = new StringBuilder(n);
+
+    TreeItem item = classTree.getRoot();
+
+    int offset = 0;
+    String del = "";
+    String sep = lios > -1 ? Character.toString(seperator) : nested;
+    boolean nestedItem = false;
+    for (StringTokenizer st = new StringTokenizer(identifier, sep);
+         st.hasMoreTokens();) {
+      final String t;
+      if (offset == lios) {
+        sep = nested;
+        // because the delimiter is changed here, the next token will start with
+        // the old delimiter which needs to be stripped away
+        t = st.nextToken(sep).substring(1);
+      } else {
+        t = st.nextToken();
+      }
+
+      item = classTree.findSubItem(item, t);
+      if (item == null) {
+        break;
+      } else {
+        if (strict) {
+          // in strict mode, dot and slash may not be used to separate
+          // nested classes from enclosing classes
+          if (nestedItem && nestedSep != identifier.charAt(offset)) {
+            break;
+          }
+
+          nestedItem = item instanceof Cl;
+        }
+
+        sb.append(del).append(item.getOutName());
+      }
+
+      offset += t.length() + del.length();
+      del = sep;
     }
-    while (item != null) {
-      mapped.add(item.getOutName());
-      item = item.parent;
+
+    if (offset < n) {
+      // only prefix fragments were translated, ...
+      if (strict) {
+        // ... since fragments are not allow, do not translate anything
+        return identifier;
+      } else {
+        // ... since fragment are allowed, append the untranslated rest
+        sb.append(identifier.substring(offset));
+      }
     }
-    if (mapped.size() > 0) {
-      // Ignore root node which is always empty
-      mapped = mapped.subList(0, mapped.size() - 1);
-      // Reverse insertion order
-      Collections.reverse(mapped);
-    }
-    return mapped;
+
+    return sb.toString();
   }
 
   /**
