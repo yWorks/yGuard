@@ -1228,7 +1228,7 @@ This will keep scrambled line numbers for all classes found in and below the `co
 ## The `adjust` Element
 Using the `adjust` element one can specify resource files whose names and/or contents should be adjusted by the rename engine to reflect the obfuscated class names.
 
-**Note**: This will only adjust files that are part of the *inoutpair* jars! _I.e._ the fileset's root directory is the combined root of all jars that are passed to yGuard via the `inoutpair` elements. yGuard will not modify any of the files on disk, except for the out-jar!
+**Note**: This will only adjust files that are part of the *inoutpair* jars! I.e. the fileset's root directory is the combined root of all jars that are passed to yGuard via the `inoutpair` elements. yGuard will not modify any of the files on disk, except for the out-jar!
 
 #### Attributes
 
@@ -1242,17 +1242,19 @@ Using the `adjust` element one can specify resource files whose names and/or con
 </thead>
 
 <tr>
-    <td><code>replaceName</code></td>
+    <td><code>replaceContentPolicy</code></td>
     <td>
-    Specifies whether or not the names of the specified resources should
-    be adjusted.
+    Specifies if and how the content of resource files should be adjusted.
+    See <a href="#the-replacecontentpolicy-attribute">replaceContentPolicy</a>
+    for supported values.
     </td>
-    <td>No, defaults to <code>false</code>
+    <td>No, defaults to <code>none</code>
     </td>
 </tr>
 <tr>
     <td><code>replaceContent</code></td>
     <td>
+    <em>Deprecated</em> - use <code>replaceContentPolicy</code> instead.<br>
     Specifies whether or not the contents of resource files should be
     adjusted.
     </td>
@@ -1262,40 +1264,294 @@ Using the `adjust` element one can specify resource files whose names and/or con
 <tr>
     <td><code>replaceContentSeparator</code></td>
     <td>
-    Specifies which separator is used to replace strings in content.
+    Specifies which separator is used to replace text in content.
+    Supports <code>.</code>, <code>/</code>, and <code>./</code>.
     </td>
     <td>No, defaults to <code>/</code>
     </td>
 </tr>
 <tr>
+    <td><code>replacePathPolicy</code></td>
+    <td>
+    Specifies if and how the file names of resource files should be adjusted.
+    See <a href="#the-replacepathpolicy-attribute">replacePathPolicy</a>
+    for supported values.
+    </td>
+    <td>No, defaults to <code>path</code>
+    </td>
+</tr>
+<tr>
     <td><code>replacePath</code></td>
     <td>
+    <em>Deprecated</em> - use <code>replacePathPolicy</code> instead.<br>
     Specifies whether or not the paths to the resource files should be
     adjusted.
     </td>
     <td>No, defaults to <code>true</code></td>
 </tr>
+<tr>
+    <td><code>replaceName</code></td>
+    <td>
+    <em>Deprecated</em> - use <code>replacePathPolicy</code> instead.<br>
+    Specifies whether or not the names of the specified resources should
+    be adjusted.
+    </td>
+    <td>No, defaults to <code>false</code>
+    </td>
+</tr>
 </table>
+
+#### The replaceContentPolicy Attribute
+
+<p class="plain-label">
+Specifies if and how the content of resource files should be adjusted.
+Supported values are:
+</p>
+<dl class="plain-dl">
+<dt class="plain-dt"><code>none</code></dt>
+<dd class="plain-dd">
+  <p>
+  The content of resource files is not adjusted.
+  </p>
+</dd>
+<dt class="plain-dt"><code>lenient</code></dt>
+<dd class="plain-dd">
+  <p>
+  Text that is recognized as qualifed class or package name is replaced.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceContent="true"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>strict</code></dt>
+<dd class="plain-dd">
+  <p>
+  Text that is recognized as qualifed class name is replaced.
+  <br>
+  This policy matches the yGuard 2.x behavior for
+  <br>
+  <code>replaceContent="true"</code>
+  </p>
+</dd>
+</dl>
+
+#### The replacePathPolicy Attribute
+
+<p class="plain-label">
+Specifies if and how the file names of resource files should be adjusted.
+Supported values are:
+</p>
+<dl class="plain-dl">
+<dt class="plain-dt"><code>none</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to and names of resource files are not adjusted.
+  <br>
+  The names of service provider configuration files are not adjusted.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="false" replacePath="false"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>path</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to resource files are adjusted, if they match the package name of a
+  renamed package.
+  The names of resource files are not adjusted.
+  <br>
+  The names of service provider configuration files are not adjusted.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="false" replacePath="true"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>name</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to resource files are not adjusted.
+  The names of resource files are adjusted, if the path to and the name of
+  the resource file match the qualified name of a renamed class.
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="true" replacePath="false"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>file</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to and names of resource files are adjusted, if they match the
+  qualified name of a renamed class.
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="true" replacePath="true"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>fileorpath</code></dt>
+<dd class="plain-dd">
+  <p>
+  Combines policies <code>file</code> and <code>path</code>.
+  <br>
+  I.e. if the path to and name of a resource file match the qualified name
+  of a renamed class, both path and name are adjusted accordingly.
+  If the path and name do not match the qualified name of a renamed class,
+  but the path matches the package name of a renamed package, the path is
+  adjusted accordingly.
+  If the path does not match the package name of a renamed package, but
+  path fragments match the package name of a renamed package,
+  those path fragments are adjusted accordingly.
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  </p>
+</dd>
+<dt class="plain-dt"><code>lenient</code></dt>
+<dd class="plain-dd">
+  <p>
+  Tries to adjust as much of the paths to and names of resource and service
+  provider configuration files as possible.
+  <br>
+  For paths to and names of resource files, this policy is the same as
+  <code>fileorpath</code>. 
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  If the name does not match the qualified name of a renamed class, but
+  name fragments match the package name of a renamed package,
+  those name fragments are adjusted accordingly.
+  </p>
+</dd>
+</dl>
+
+#### Explanation
+
+<p class="plain-label">
+Suppose yGuard's input set consists of the following files
+</p>
+<pre><code class="language-plaintext">com/mycompany/myproduct/MyClass.class
+com/mycompany/myproduct/MyClass.properties
+com/mycompany/myproduct/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/com.mycompany.myproduct.MyClass
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+<p class="plain-label">
+and <code>rename</code> changes the name of class
+<code class="plain-code">com.mycompany.myproduct.MyClass</code> to
+<code class="plain-code">A.A.A.A</code>.
+<br>
+In this case, the individual <code>replacePathPolicy</code> polices will result
+in the following path and name adjustments:
+</p>
+<dl class="plain-dl">
+<dt class="plain-dt"><code>path</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/MyClass.properties
+A/A/A/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/com.mycompany.myproduct.MyClass
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path <code class="plain-code">com/mycompany/shared</code> does not match
+  any package name in the code base and thus is not changed.
+  <br>
+  The two service provider configuration files are not adjusted.
+  </p>
+</dd>
+<dt class="plain-dt"><code>name</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">com/mycompany/myproduct/A.properties
+com/mycompany/myproduct/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path to and name of the second and third resource files do not match any
+  qualified class name in the code base and thus are not changed. 
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name and thus is not changed.
+  </p>
+</dd>
+<dt class="plain-dt"><code>file</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/A.properties
+com/mycompany/myproduct/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path to and name of the second and third resource files do not match any
+  qualified class name in the code base and thus are not changed. 
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name and thus is not changed.
+  </p>
+</dd>
+<dt class="plain-dt"><code>fileorpath</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/A.properties
+A/A/A/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path <code class="plain-code">com/mycompany/shared</code> does not match
+  any package name in the code base and thus is not changed.
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name and thus is not changed.
+  </p>
+</dd>
+<dt class="plain-dt"><code>lenient</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/A.properties
+A/A/A/SomeResource.txt
+A/A/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/A.A.shared.SharedService</code></pre>
+  <p>
+  The path <code class="plain-code">com/mycompany/shared</code> does
+  not match any package name, but its path fragments
+  <code class="plain-code">com/mycompany</code> match the package name
+  <code class="plain-code">com.mycompany</code> and thus are changed.
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name, but its name fragments
+  <code class="plain-code">com.mycompany</code> match the package name
+  <code class="plain-code">com.mycompany</code> and thus are changed.
+  </p>
+</dd>
+</dl>
 
 #### Child Elements
 
-The adjust element can be used just like the standard Ant [`ZipFileSet`](http://ant.apache.org/manual/Types/zipfileset.html) element.
+The `adjust` element can be used just like the standard Ant [`ZipFileSet`](http://ant.apache.org/manual/Types/zipfileset.html) element.
 
 #### Examples
 
 ```xml
 <!-- adjust the names of all java property files in the jars -->
-<adjust replaceName="true">
+<adjust replacePathPolicy="file">
   <include name="**/*.properties"/>
 </adjust>
 
 <!-- adjust the classnames specified within a single XML file in the jar -->
-<adjust file="plugins.xml" replaceContent="true" />
+<adjust file="plugins.xml" replaceContentPolicy="strict" replaceContentSeparator="."/>
 
-<!-- suppress the adjustment of the resource path
-com/mycompany/myapp/resource in the jar. -->
+<!-- suppress the adjustment of the resource path com/mycompany/myapp/resource in the jar. -->
 <!-- the package com.mycompany.myapp still gets obfuscated. -->
-<adjust replacePath="false">
+<adjust replacePathPolicy="none">
   <include name="com/mycompany/myapp/resource/*"/>
 </adjust>
 ```
