@@ -2748,17 +2748,17 @@ public class ObfuscatorTask extends YGuardBaseTask
     none,
     /**
      * If class obfuscation yields
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      * then text in resource files will be adjusted as follows
-     *   com.yworks.SampleStuff -> A.A.SampleStuff
-     *   com.other.OtherStuff -> A.other.OtherStuff
+     *   com.yworks.SampleStuff -&gt; A.A.SampleStuff
+     *   com.other.OtherStuff -&gt; A.other.OtherStuff
      */
     lenient,
     /**
      * If class obfuscation yields
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      * then text in resource files will be adjusted as follows
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      */
     strict;
   }
@@ -2774,42 +2774,42 @@ public class ObfuscatorTask extends YGuardBaseTask
     none, // replaceName = false, replacePath = false
     /**
      * If class obfuscation yields
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      * then resource files will be renamed as follows
-     *   com/yworks/SampleStuff.properties -> A/A/SampleStuff.properties
-     *   com/other/OtherStuff.properties -> com/other/OtherStuff.properties
+     *   com/yworks/SampleStuff.properties -&gt; A/A/SampleStuff.properties
+     *   com/other/OtherStuff.properties -&gt; A/other/OtherStuff.properties
      */
     path, // replaceName = false, replacePath = true, default
     /**
      * If class obfuscation yields
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      * then resource files will be renamed as follows
-     *   com/yworks/SampleStuff.properties -> com/yworks/A.properties
-     *   com/other/OtherStuff.properties -> com/other/OtherStuff.properties
+     *   com/yworks/SampleStuff.properties -&gt; com/yworks/A.properties
+     *   com/other/OtherStuff.properties -&gt; com/other/OtherStuff.properties
      */
     name, // replaceName = true, replacePath = false
     /**
      * If class obfuscation yields
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      * then resource files will be renamed as follows
-     *   com/yworks/SampleStuff.properties -> A/A/A.properties
-     *   com/other/OtherStuff.properties -> com/other/OtherStuff.properties
+     *   com/yworks/SampleStuff.properties -&gt; A/A/A.properties
+     *   com/other/OtherStuff.properties -&gt; com/other/OtherStuff.properties
      */
     file, // replaceName = true, replacePath = true
     /**
      * If class obfuscation yields
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      * then resource files will be renamed as follows
-     *   com/yworks/SampleStuff.properties -> A/A/A.properties
-     *   com/yworks/OtherStuff.properties -> A/A/OtherStuff.properties
+     *   com/yworks/SampleStuff.properties -&gt; A/A/A.properties
+     *   com/other/OtherStuff.properties -&gt; A/other/OtherStuff.properties
      */
     fileorpath,
     /**
      * If class obfuscation yields
-     *   com.yworks.SampleClass -> A.A.A
+     *   com.yworks.SampleClass -&gt; A.A.A
      * then resource files will be renamed as follows
-     *   com/yworks/SampleStuff.properties -> A/A/A.properties
-     *   com/other/OtherStuff.properties -> A/other/OtherStuff.properties
+     *   com/yworks/SampleStuff.properties -&gt; A/A/A.properties
+     *   com/other/OtherStuff.properties -&gt; A/other/OtherStuff.properties
      */
     lenient
   }
