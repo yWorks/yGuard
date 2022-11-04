@@ -1631,12 +1631,14 @@ in the following path and name adjustments:
 <dd class="plain-dd">
   <pre><code class="language-plaintext">A/A/A/MyClass.properties
 A/A/A/SomeResource.txt
-com/mycompany/shared/SharedResource.txt
+A/A/shared/SharedResource.txt
 META-INF/services/com.mycompany.myproduct.MyClass
 META-INF/services/com.mycompany.shared.SharedService</code></pre>
   <p>
   The path <code class="plain-code">com/mycompany/shared</code> does not match
-  any package name in the code base and thus is not changed.
+  any package name, but its path fragments
+  <code class="plain-code">com/mycompany</code> match the package name
+  <code class="plain-code">com.mycompany</code> and thus are changed.
   <br>
   The two service provider configuration files are not adjusted.
   </p>
@@ -1675,12 +1677,14 @@ META-INF/services/com.mycompany.shared.SharedService</code></pre>
 <dd class="plain-dd">
   <pre><code class="language-plaintext">A/A/A/A.properties
 A/A/A/SomeResource.txt
-com/mycompany/shared/SharedResource.txt
+A/A/shared/SharedResource.txt
 META-INF/services/A.A.A.A
 META-INF/services/com.mycompany.shared.SharedService</code></pre>
   <p>
   The path <code class="plain-code">com/mycompany/shared</code> does not match
-  any package name in the code base and thus is not changed.
+  any package name, but its path fragments
+  <code class="plain-code">com/mycompany</code> match the package name
+  <code class="plain-code">com.mycompany</code> and thus are changed.
   <br>
   The name <code class="plain-code">com.mycompany.shared.SharedService</code>
   does not match any qualified class name and thus is not changed.
@@ -1694,8 +1698,8 @@ A/A/shared/SharedResource.txt
 META-INF/services/A.A.A.A
 META-INF/services/A.A.shared.SharedService</code></pre>
   <p>
-  The path <code class="plain-code">com/mycompany/shared</code> does
-  not match any package name, but its path fragments
+  The path <code class="plain-code">com/mycompany/shared</code> does not match
+  any package name, but its path fragments
   <code class="plain-code">com/mycompany</code> match the package name
   <code class="plain-code">com.mycompany</code> and thus are changed.
   <br>
