@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
     <title>Compatibility - yGuard Documentation</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="stylesheets/extra.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -17,9 +18,9 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <script src="js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
+      <script src="js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script> 
@@ -31,9 +32,9 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> yGuard Documentation
+          <a href="index.html" class="icon icon-home"> yGuard Documentation
         </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
@@ -41,13 +42,15 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">yGuard</a>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">yGuard</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Compatibility</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="compatibility.html">Compatibility</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#technical-requirements">Technical requirements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#java-14-java-17-compatibility">Java 14 - Java 17 Compatibility</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#java-11-java-13-compatibility">Java 11 - Java 13 Compatibility</a>
     </li>
@@ -65,19 +68,19 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../setup/">Setup</a>
+                <li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../task_documentation/">Task documentation</a>
+                <li class="toctree-l1"><a class="reference internal" href="task_documentation.html">Task documentation</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../troubleshooting/">Troubleshooting</a>
+                <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a>
                 </li>
               </ul>
       </div>
@@ -87,13 +90,13 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">yGuard Documentation</a>
+          <a href="index.html">yGuard Documentation</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>Compatibility</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/yWorks/yGuard/edit/master/docs/compatibility.md" class="icon icon-github"> Edit on GitHub</a>
@@ -107,8 +110,11 @@
                 <h1 id="compatibility">Compatibility</h1>
 <h2 id="technical-requirements">Technical requirements</h2>
 <p>yGuard requires JDK 1.7.x or greater and Ant 1.5 or greater installed on your system. It may work with earlier versions of these pieces of software as well, however this has not been tested thoroughly. yGuard 1.3.x and upwards works together with Ant 1.6.</p>
+<h2 id="java-14-java-17-compatibility">Java 14 - Java 17 Compatibility</h2>
+<p>Beginning with version 3.1.0, yGuard supports obfuscation of Java class files that contain <code>record</code> or <code>permittedsubclasses</code> attributes which were introduced with the Java 16 and Java 17 <code>.class</code> file formats.</p>
 <h2 id="java-11-java-13-compatibility">Java 11 - Java 13 Compatibility</h2>
-<p>Beginning with version 2.10, yGuard supports obfuscation of Java class files that contain <code>nesthost</code> or <code>nestmembers</code> attributes which were introduced with the Java 11 <code>.class</code> file format. Further yGuard does support obfuscating <code>dynamic</code> instructions which were introduced with the Java 11 <code>.class</code> file format.</p>
+<p>Beginning with version 2.10, yGuard supports obfuscation of Java class files that contain <code>nesthost</code> or <code>hestmembers</code> attributes which were introduced with the Java 11 <code>.class</code> file format.</p>
+<p>yGuard does <strong>not</strong> support obfuscating <code>dynamic</code> instructions which were introduced with the Java 11 <code>.class</code> file format.</p>
 <p>Please read the notes regarding 3rd party JVM support if you intend to use yGuard with something other than Java.</p>
 <h2 id="java-9-java-10-compatibility">Java 9 / Java 10 Compatibility</h2>
 <p>Beginning with version 2.7, yGuard supports obfuscation of Java class files that contain module information which was introduced with the Java 9 <code>.class</code> file format. yGuard does not change module names, though.</p>
@@ -152,8 +158,8 @@ Implementing such a factory requires in-depth knowledge of the underlying mechan
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="yGuard"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../license/" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="yGuard"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="license.html" class="btn btn-neutral float-right" title="License">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -180,17 +186,17 @@ Implementing such a factory requires in-depth knowledge of the underlying mechan
         </span>
     
     
-      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../license/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="license.html" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
     <script defer>
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);

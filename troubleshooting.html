@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
     <title>Troubleshooting - yGuard Documentation</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="stylesheets/extra.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -17,9 +18,9 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <script src="js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
+      <script src="js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script> 
@@ -31,9 +32,9 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> yGuard Documentation
+          <a href="index.html" class="icon icon-home"> yGuard Documentation
         </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
@@ -41,27 +42,27 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">yGuard</a>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">yGuard</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../compatibility/">Compatibility</a>
+                <li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../setup/">Setup</a>
+                <li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../task_documentation/">Task documentation</a>
+                <li class="toctree-l1"><a class="reference internal" href="task_documentation.html">Task documentation</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Troubleshooting</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="troubleshooting.html">Troubleshooting</a>
     <ul class="current">
     </ul>
                 </li>
@@ -73,13 +74,13 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">yGuard Documentation</a>
+          <a href="index.html">yGuard Documentation</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>Troubleshooting</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/yWorks/yGuard/edit/master/docs/troubleshooting.md" class="icon icon-github"> Edit on GitHub</a>
@@ -95,10 +96,10 @@
 The weakest part of an application considering name obfuscation and code shrinking is code that uses reflection to dynamically load classes, invoke methods etc. Therefore, you have to be especially careful when using the yguard task on applications that rely on reflection.
 The most important facts to keep in mind when using yGuard are described here briefly:</p>
 <ul>
-<li>If you use the <code>rename</code> task, code in the form of <code>MyApplication.class</code> will break if <code>MyApplication</code> will be obfuscated by name and the obfuscation switch <a href="task/#the-rename-element">replaceClassNameStrings</a> is set to <code>false</code>. The <code>shrink</code> task will currently recognize code in the form of <code>MyApplication.class</code> only if the java files were compiled using an arbitrary version of the standard javac compiler (although the shrinking engine might recognize the <code>.class</code> construct also if the classes were compiled using a compiler that generates similar bytecode).</li>
-<li>Automatic introspection and reflection will break in most cases, when you decide to obfuscate the corresponding methods and fields. If you use the <code>shrink</code> task and your application uses reflection you should explicitly designate all entities loaded per reflection as code entrypoints using the <a href="task/#the-keep-element">keep</a> element.
-If your application is broken after using the <code>shrink</code> task, consider using the <a href="task/#the-shrink-element">createStubs</a> attribute of the <code>shrink</code> task to find out which additional entities you need to include in the keep element.</li>
-<li><code>Class.forName(className)</code> will not work when using the <code>rename</code> task unless you use the obfuscated name string in your variable or the String is a local constant and <a href="task/#the-keep-element">replaceClassNameStrings</a> is not set or set to <code>true</code>. If you use the <code>shrink</code> task, <code>className</code> should be contained in the list of entrypoints using the <code>keep</code> element.</li>
+<li>If you use the <code>rename</code> task, code in the form of <code>MyApplication.class</code> will break if <code>MyApplication</code> will be obfuscated by name and the obfuscation switch <a href="task_documentation.html#the-rename-element">replaceClassNameStrings</a> is set to <code>false</code>. The <code>shrink</code> task will currently recognize code in the form of <code>MyApplication.class</code> only if the java files were compiled using an arbitrary version of the standard javac compiler (although the shrinking engine might recognize the <code>.class</code> construct also if the classes were compiled using a compiler that generates similar bytecode).</li>
+<li>Automatic introspection and reflection will break in most cases, when you decide to obfuscate the corresponding methods and fields. If you use the <code>shrink</code> task and your application uses reflection you should explicitly designate all entities loaded per reflection as code entrypoints using the <a href="task_documentation.html#the-keep-element">keep</a> element.
+If your application is broken after using the <code>shrink</code> task, consider using the <a href="task_documentation.html#the-shrink-element">createStubs</a> attribute of the <code>shrink</code> task to find out which additional entities you need to include in the keep element.</li>
+<li><code>Class.forName(className)</code> will not work when using the <code>rename</code> task unless you use the obfuscated name string in your variable or the String is a local constant and <a href="task_documentation.html#the-keep-element">replaceClassNameStrings</a> is not set or set to <code>true</code>. If you use the <code>shrink</code> task, <code>className</code> should be contained in the list of entrypoints using the <code>keep</code> element.</li>
 <li>The customized serialization mechanism will not work if you obfuscated or shrinked the writeObject and readObject methods as well as the serializationUID field.</li>
 <li>Simple bean introspection will not work, if you decide to obfuscate your public accessor methods, since it makes use of reflection.</li>
 <li>If you do not set the <code>-Xmx</code> property for the Java virtual machine, the <code>yguard</code> Ant task might fail due to a <code>java.lang.OutOfMemoryError</code>.
@@ -112,7 +113,7 @@ cshell&gt; setenv ANT_OPTS &quot;-Xmx512M&quot;
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../task_documentation/" class="btn btn-neutral float-left" title="Task documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="task_documentation.html" class="btn btn-neutral float-left" title="Task documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -139,15 +140,15 @@ cshell&gt; setenv ANT_OPTS &quot;-Xmx512M&quot;
         </span>
     
     
-      <span><a href="../task_documentation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="task_documentation.html" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
     <script defer>
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);

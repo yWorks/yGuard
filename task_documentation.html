@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
     <title>Task documentation - yGuard Documentation</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="stylesheets/extra.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -17,9 +18,9 @@
         var mkdocs_page_url = null;
       </script>
     
-    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <script src="js/jquery-3.6.0.min.js" defer></script>
     <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
+      <script src="js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script> 
@@ -31,9 +32,9 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> yGuard Documentation
+          <a href="index.html" class="icon icon-home"> yGuard Documentation
         </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
       <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
@@ -41,23 +42,23 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">yGuard</a>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">yGuard</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../compatibility/">Compatibility</a>
+                <li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../license/">License</a>
+                <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../setup/">Setup</a>
+                <li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a>
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Task documentation</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="task_documentation.html">Task documentation</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#preamble">Preamble</a>
     </li>
@@ -203,6 +204,12 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#attributes_13">Attributes</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#the-replacecontentpolicy-attribute">The replaceContentPolicy Attribute</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#the-replacepathpolicy-attribute">The replacePathPolicy Attribute</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#explanation_1">Explanation</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#child-elements_14">Child Elements</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#examples_4">Examples</a>
@@ -239,7 +246,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../troubleshooting/">Troubleshooting</a>
+                <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a>
                 </li>
               </ul>
       </div>
@@ -249,13 +256,13 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">yGuard Documentation</a>
+          <a href="index.html">yGuard Documentation</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li>
       <li>Task documentation</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/yWorks/yGuard/edit/master/docs/task_documentation.md" class="icon icon-github"> Edit on GitHub</a>
@@ -1399,7 +1406,7 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 <p>This will keep scrambled line numbers for all classes found in and below the <code>com.mycompany.myapp</code> packages. The scrambling algorithm will use the given <em>"salt"</em> value to use a predefined scrambling scheme. In order to see the scrambled line numbers, a <a href="#the-sourcefile-element">sourcefile</a> element is used on the same patternset, which is referenced by its previously declared reference id, to rename the source files to <em>"y"</em>.</p>
 <h2 id="the-adjust-element">The <code>adjust</code> Element</h2>
 <p>Using the <code>adjust</code> element one can specify resource files whose names and/or contents should be adjusted by the rename engine to reflect the obfuscated class names.</p>
-<p><strong>Note</strong>: This will only adjust files that are part of the <em>inoutpair</em> jars! <em>I.e.</em> the fileset's root directory is the combined root of all jars that are passed to yGuard via the <code>inoutpair</code> elements. yGuard will not modify any of the files on disk, except for the out-jar!</p>
+<p><strong>Note</strong>: This will only adjust files that are part of the <em>inoutpair</em> jars! I.e. the fileset's root directory is the combined root of all jars that are passed to yGuard via the <code>inoutpair</code> elements. yGuard will not modify any of the files on disk, except for the out-jar!</p>
 <h4 id="attributes_13">Attributes</h4>
 <table class="listing">
 <thead>
@@ -1411,17 +1418,19 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 </thead>
 
 <tr>
-    <td><code>replaceName</code></td>
+    <td><code>replaceContentPolicy</code></td>
     <td>
-    Specifies whether or not the names of the specified resources should
-    be adjusted.
+    Specifies if and how the content of resource files should be adjusted.
+    See <a href="#the-replacecontentpolicy-attribute">replaceContentPolicy</a>
+    for supported values.
     </td>
-    <td>No, defaults to <code>false</code>
+    <td>No, defaults to <code>none</code>
     </td>
 </tr>
 <tr>
     <td><code>replaceContent</code></td>
     <td>
+    <em>Deprecated</em> - use <code>replaceContentPolicy</code> instead.<br>
     Specifies whether or not the contents of resource files should be
     adjusted.
     </td>
@@ -1431,36 +1440,287 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 <tr>
     <td><code>replaceContentSeparator</code></td>
     <td>
-    Specifies which separator is used to replace strings in content.
+    Specifies which separator is used to replace text in content.
+    Supports <code>.</code>, <code>/</code>, and <code>./</code>.
     </td>
     <td>No, defaults to <code>/</code>
     </td>
 </tr>
 <tr>
+    <td><code>replacePathPolicy</code></td>
+    <td>
+    Specifies if and how the file names of resource files should be adjusted.
+    See <a href="#the-replacepathpolicy-attribute">replacePathPolicy</a>
+    for supported values.
+    </td>
+    <td>No, defaults to <code>path</code>
+    </td>
+</tr>
+<tr>
     <td><code>replacePath</code></td>
     <td>
+    <em>Deprecated</em> - use <code>replacePathPolicy</code> instead.<br>
     Specifies whether or not the paths to the resource files should be
     adjusted.
     </td>
     <td>No, defaults to <code>true</code></td>
 </tr>
+<tr>
+    <td><code>replaceName</code></td>
+    <td>
+    <em>Deprecated</em> - use <code>replacePathPolicy</code> instead.<br>
+    Specifies whether or not the names of the specified resources should
+    be adjusted.
+    </td>
+    <td>No, defaults to <code>false</code>
+    </td>
+</tr>
 </table>
 
+<h4 id="the-replacecontentpolicy-attribute">The replaceContentPolicy Attribute</h4>
+<p class="plain-label">
+Specifies if and how the content of resource files should be adjusted.
+Supported values are:
+</p>
+<dl class="plain-dl">
+<dt class="plain-dt"><code>none</code></dt>
+<dd class="plain-dd">
+  <p>
+  The content of resource files is not adjusted.
+  </p>
+</dd>
+<dt class="plain-dt"><code>lenient</code></dt>
+<dd class="plain-dd">
+  <p>
+  Text that is recognized as qualifed class or package name is replaced.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceContent="true"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>strict</code></dt>
+<dd class="plain-dd">
+  <p>
+  Text that is recognized as qualifed class name is replaced.
+  <br>
+  This policy matches the yGuard 2.x behavior for
+  <br>
+  <code>replaceContent="true"</code>
+  </p>
+</dd>
+</dl>
+
+<h4 id="the-replacepathpolicy-attribute">The replacePathPolicy Attribute</h4>
+<p class="plain-label">
+Specifies if and how the file names of resource files should be adjusted.
+Supported values are:
+</p>
+<dl class="plain-dl">
+<dt class="plain-dt"><code>none</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to and names of resource files are not adjusted.
+  <br>
+  The names of service provider configuration files are not adjusted.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="false" replacePath="false"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>path</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to resource files are adjusted, if they match the package name of a
+  renamed package.
+  The names of resource files are not adjusted.
+  <br>
+  The names of service provider configuration files are not adjusted.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="false" replacePath="true"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>name</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to resource files are not adjusted.
+  The names of resource files are adjusted, if the path to and the name of
+  the resource file match the qualified name of a renamed class.
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="true" replacePath="false"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>file</code></dt>
+<dd class="plain-dd">
+  <p>
+  The paths to and names of resource files are adjusted, if they match the
+  qualified name of a renamed class.
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  <br>
+  This policy matches the yGuard 3.x behavior for
+  <br>
+  <code>replaceName="true" replacePath="true"</code>
+  </p>
+</dd>
+<dt class="plain-dt"><code>fileorpath</code></dt>
+<dd class="plain-dd">
+  <p>
+  Combines policies <code>file</code> and <code>path</code>.
+  <br>
+  I.e. if the path to and name of a resource file match the qualified name
+  of a renamed class, both path and name are adjusted accordingly.
+  If the path and name do not match the qualified name of a renamed class,
+  but the path matches the package name of a renamed package, the path is
+  adjusted accordingly.
+  If the path does not match the package name of a renamed package, but
+  path fragments match the package name of a renamed package,
+  those path fragments are adjusted accordingly.
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  </p>
+</dd>
+<dt class="plain-dt"><code>lenient</code></dt>
+<dd class="plain-dd">
+  <p>
+  Tries to adjust as much of the paths to and names of resource and service
+  provider configuration files as possible.
+  <br>
+  For paths to and names of resource files, this policy is the same as
+  <code>fileorpath</code>. 
+  <br>
+  The names of service provider configuration files are adjusted, if the name of
+  the configuration file matches the qualified name of a renamed class.
+  If the name does not match the qualified name of a renamed class, but
+  name fragments match the package name of a renamed package,
+  those name fragments are adjusted accordingly.
+  </p>
+</dd>
+</dl>
+
+<h4 id="explanation_1">Explanation</h4>
+<p class="plain-label">
+Suppose yGuard's input set consists of the following files
+</p>
+<pre><code class="language-plaintext">com/mycompany/myproduct/MyClass.class
+com/mycompany/myproduct/MyClass.properties
+com/mycompany/myproduct/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/com.mycompany.myproduct.MyClass
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+<p class="plain-label">
+and <code>rename</code> changes the name of class
+<code class="plain-code">com.mycompany.myproduct.MyClass</code> to
+<code class="plain-code">A.A.A.A</code>.
+<br>
+In this case, the individual <code>replacePathPolicy</code> polices will result
+in the following path and name adjustments:
+</p>
+<dl class="plain-dl">
+<dt class="plain-dt"><code>path</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/MyClass.properties
+A/A/A/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/com.mycompany.myproduct.MyClass
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path <code class="plain-code">com/mycompany/shared</code> does not match
+  any package name in the code base and thus is not changed.
+  <br>
+  The two service provider configuration files are not adjusted.
+  </p>
+</dd>
+<dt class="plain-dt"><code>name</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">com/mycompany/myproduct/A.properties
+com/mycompany/myproduct/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path to and name of the second and third resource files do not match any
+  qualified class name in the code base and thus are not changed. 
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name and thus is not changed.
+  </p>
+</dd>
+<dt class="plain-dt"><code>file</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/A.properties
+com/mycompany/myproduct/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path to and name of the second and third resource files do not match any
+  qualified class name in the code base and thus are not changed. 
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name and thus is not changed.
+  </p>
+</dd>
+<dt class="plain-dt"><code>fileorpath</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/A.properties
+A/A/A/SomeResource.txt
+com/mycompany/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/com.mycompany.shared.SharedService</code></pre>
+  <p>
+  The path <code class="plain-code">com/mycompany/shared</code> does not match
+  any package name in the code base and thus is not changed.
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name and thus is not changed.
+  </p>
+</dd>
+<dt class="plain-dt"><code>lenient</code></dt>
+<dd class="plain-dd">
+  <pre><code class="language-plaintext">A/A/A/A.properties
+A/A/A/SomeResource.txt
+A/A/shared/SharedResource.txt
+META-INF/services/A.A.A.A
+META-INF/services/A.A.shared.SharedService</code></pre>
+  <p>
+  The path <code class="plain-code">com/mycompany/shared</code> does
+  not match any package name, but its path fragments
+  <code class="plain-code">com/mycompany</code> match the package name
+  <code class="plain-code">com.mycompany</code> and thus are changed.
+  <br>
+  The name <code class="plain-code">com.mycompany.shared.SharedService</code>
+  does not match any qualified class name, but its name fragments
+  <code class="plain-code">com.mycompany</code> match the package name
+  <code class="plain-code">com.mycompany</code> and thus are changed.
+  </p>
+</dd>
+</dl>
+
 <h4 id="child-elements_14">Child Elements</h4>
-<p>The adjust element can be used just like the standard Ant <a href="http://ant.apache.org/manual/Types/zipfileset.html"><code>ZipFileSet</code></a> element.</p>
+<p>The <code>adjust</code> element can be used just like the standard Ant <a href="http://ant.apache.org/manual/Types/zipfileset.html"><code>ZipFileSet</code></a> element.</p>
 <h4 id="examples_4">Examples</h4>
 <pre><code class="language-xml">&lt;!-- adjust the names of all java property files in the jars --&gt;
-&lt;adjust replaceName=&quot;true&quot;&gt;
+&lt;adjust replacePathPolicy=&quot;file&quot;&gt;
   &lt;include name=&quot;**/*.properties&quot;/&gt;
 &lt;/adjust&gt;
 
 &lt;!-- adjust the classnames specified within a single XML file in the jar --&gt;
-&lt;adjust file=&quot;plugins.xml&quot; replaceContent=&quot;true&quot; /&gt;
+&lt;adjust file=&quot;plugins.xml&quot; replaceContentPolicy=&quot;strict&quot; replaceContentSeparator=&quot;.&quot;/&gt;
 
-&lt;!-- suppress the adjustment of the resource path
-com/mycompany/myapp/resource in the jar. --&gt;
+&lt;!-- suppress the adjustment of the resource path com/mycompany/myapp/resource in the jar. --&gt;
 &lt;!-- the package com.mycompany.myapp still gets obfuscated. --&gt;
-&lt;adjust replacePath=&quot;false&quot;&gt;
+&lt;adjust replacePathPolicy=&quot;none&quot;&gt;
   &lt;include name=&quot;com/mycompany/myapp/resource/*&quot;/&gt;
 &lt;/adjust&gt;
 </code></pre>
@@ -1679,8 +1939,8 @@ if the &lt;method&gt; element is nested inside an &lt;rename&gt; element.
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../setup/" class="btn btn-neutral float-left" title="Setup"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../troubleshooting/" class="btn btn-neutral float-right" title="Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="setup.html" class="btn btn-neutral float-left" title="Setup"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -1707,17 +1967,17 @@ if the &lt;method&gt; element is nested inside an &lt;rename&gt; element.
         </span>
     
     
-      <span><a href="../setup/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="setup.html" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../troubleshooting/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="troubleshooting.html" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme_extra.js" defer></script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
     <script defer>
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);

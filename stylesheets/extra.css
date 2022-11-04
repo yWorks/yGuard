@@ -1,0 +1,21 @@
+.plain-label {
+  margin-bottom: 12px;
+}
+
+.rst-content dl.plain-dl > dt.plain-dt {
+  background: none;
+  border-top: none;
+  padding: 0;
+}
+
+.rst-content dl.plain-dl code {
+  font-weight: normal;
+}
+
+.rst-content dd.plain-dd > pre {
+  line-height: initial;
+}
+
+.rst-content code.plain-code {
+  color: initial;
+}
