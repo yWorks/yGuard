@@ -56,13 +56,6 @@
                             <pathelement path="${runtime_classpath}"/>
                           </externalclasses>
 
-                          <shrink logfile="${project.build.directory}/yshrink.log.xml">
-                            <keep>
-                              <!-- main method -->
-                              <method name="void main(java.lang.String[])" class="${mainclass}" />
-                            </keep>
-                          </shrink>
-
                           <rename mainclass="${mainclass}" logfile="${project.build.directory}/yguard.log.xml">
                             <property name="error-checking" value="pedantic"/>
                           </rename>
