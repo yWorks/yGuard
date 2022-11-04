@@ -1,7 +1,7 @@
 <project>
     <property name="projectDir" value="."/>
     <property name="libraryDir" value="lib"/>
-    <property name="version" value="3.1.0-SNAPSHOT"/>
+    <property name="version" value="4.0.0"/>
 
     <property name="project_name" value="HelloWorld"/>
     <property name="jar" value="build/jar/${project_name}.jar"/>

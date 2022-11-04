@@ -4,10 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [4.0.0]
+
+### Added
+- Added `replaceContentPolicy` and `replacePathPolicy` configuration options for adjusting resource files.
+  With these policies it is possible to choose between the lenient behavior from yGuard 3.x and the strict behavior from yGuard 2.x.
 
 ### Fixed
 - Fixed treatment of NestHost and NestMembers attributes when shrinking.
+
+### Changed
+- Updated gson dependency in examples from 2.8.6 to 2.8.9
 
 ## [3.1.0]
 
@@ -343,7 +350,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented more robust handling of Manifest files. Implementation now makes use of `java.util.jar.Manifest`.
 - The `conserveManifest` attribute of the obfuscate task now conserves the manifest in a better way.
 
-[Unreleased]: https://github.com/yworks/yguard/compare/3.1.0...HEAD
+[Unreleased]: https://github.com/yworks/yguard/compare/4.0.0...HEAD
+[4.0.0]: https://github.com/yworks/yguard/compare/3.1.0...4.0.0
 [3.1.0]: https://github.com/yworks/yguard/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/yworks/yguard/compare/2.10.0...3.0.0
 [2.10.0]: https://github.com/yworks/yguard/compare/2.9.2...2.10.0
