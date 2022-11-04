@@ -1307,7 +1307,7 @@ Using the `adjust` element one can specify resource files whose names and/or con
 Specifies if and how the content of resource files should be adjusted.
 Supported values are:
 </p>
-<dl class="plain-dl">
+<dl class="option-list plain-dl">
 <dt class="plain-dt"><code>none</code></dt>
 <dd class="plain-dd">
   <p>
@@ -1342,7 +1342,7 @@ Supported values are:
 Specifies if and how the file names of resource files should be adjusted.
 Supported values are:
 </p>
-<dl class="plain-dl">
+<dl class="option-list plain-dl">
 <dt class="plain-dt"><code>none</code></dt>
 <dd class="plain-dd">
   <p>
@@ -1453,7 +1453,7 @@ and <code>rename</code> changes the name of class
 In this case, the individual <code>replacePathPolicy</code> polices will result
 in the following path and name adjustments:
 </p>
-<dl class="plain-dl">
+<dl class="option-list plain-dl">
 <dt class="plain-dt"><code>path</code></dt>
 <dd class="plain-dd">
   <pre><code class="language-plaintext">A/A/A/MyClass.properties
