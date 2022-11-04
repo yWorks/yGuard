@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+ xmlns="http://maven.apache.org/POM/4.0.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -16,9 +18,21 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<mainclass>com.yworks.example.HelloWorld.HelloWorldApplication</mainclass>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.yworks</groupId>
+			<artifactId>yguard</artifactId>
+			<version>3.1.0-SNAPSHOT</version>
+			<!--
+			  prevent the spring boot plug-in from bundling yGuard and its
+			  dependencies into the project jar / project build artefact
+			  --> 
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -42,6 +56,122 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!--
+			  obfuscate BOOT-INF/classes:
+			  1. backup original project jar / project build artefact
+			  2. extract BOOT-INF/classes to separate jar and strip away the
+			     "BOOT-INF/classes" path prefix in the new jar
+			  3. obfuscate extracted classes from the new jar
+			  4. merge original project jar / project build artefact with obfuscated
+			     classes
+			  -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<id>obfuscate</id>
+						<configuration>
+							<tasks>
+                <property
+                 name="project.build.prefix"
+                 value="${project.build.directory}/${project.build.finalName}"/>
+								<property
+								 name="project.jar"
+								 value="${project.build.prefix}.jar"/>
+
+								<!--
+								  check if the project jar / project build artefact already
+								  exists
+								  -->
+								<available
+								 file="${project.jar}"
+								 property="project.jar.exists"/>
+								<fail unless="project.jar.exists">${project.jar} does not exist.</fail>
+
+								<!-- backup the project jar -->
+								<property
+								 name="project.jar.unobf"
+								 value="${project.build.prefix}_unobf.jar"/>
+								<move
+								 file="${project.jar}"
+								 tofile="${project.jar.unobf}"
+								 verbose="true"/>
+
+								<!-- extract the project classes for obfuscation -->
+								<property
+								 name="project.classes.unobf"
+								 value="${project.build.prefix}_classes_unobf.jar"/>
+								<jar destfile="${project.classes.unobf}">
+									<mappedresources>
+										<zipfileset src="${project.jar.unobf}">
+											<include name="BOOT-INF/classes/**"/>
+										</zipfileset>
+										<mapper
+										 type="glob"
+										 from="BOOT-INF/classes/*"
+										 to="*"/>
+									</mappedresources>
+								</jar>
+
+								<!-- obfuscate the project classes -->
+                <property
+                 name="runtime.classpath"
+                 refid="maven.runtime.classpath"/>
+								<property
+								 name="project.classes.obf"
+								 value="${project.build.prefix}_classes_obf.jar"/>
+								<taskdef
+								 name="yguard"
+								 classname="com.yworks.yguard.YGuardTask"
+								 classpathref="maven.test.classpath"/>
+								<yguard>
+									<inoutpair
+									 in="${project.classes.unobf}"
+									 out="${project.classes.obf}"/>
+
+                  <externalclasses>
+                    <pathelement path="${runtime.classpath}"/>
+                  </externalclasses>
+
+									<rename
+									 mainclass="${mainclass}"
+									 logfile="${project.build.directory}/yguard.log.xml">
+										<property
+										 name="error-checking"
+										 value="pedantic"/>
+									</rename>
+								</yguard>
+
+								<!--
+								  recreate the project jar / project build artefact
+								  use the zip task for easy copying of the manifest file from
+								  the original project jar / project build artefact 
+								  -->
+								<zip
+								 compress="false"
+								 destfile="${project.jar}">
+									<zipfileset src="${project.jar.unobf}">
+										<include name="**"/>
+										<exclude name="BOOT-INF/classes/**"/>
+									</zipfileset>
+									<zipfileset
+									 src="${project.classes.obf}"
+									 prefix="BOOT-INF/classes">
+										<include name="**"/>
+										<exclude name="META-INF/**"/>
+									</zipfileset>
+								</zip>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
