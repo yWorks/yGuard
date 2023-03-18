@@ -47,7 +47,7 @@ The `assembleBundleDist` task comes with a optional parameter to copy documentat
 In order to build the documentation you will need [mkdocs](https://www.mkdocs.org/):
 
 ```
-pip3 install mkdocs # or use a virtual environment if you prefer
+pip3 install mkdocs mkdocs-material # or use a virtual environment if you prefer
 mkdocs build
 ``` 
 
