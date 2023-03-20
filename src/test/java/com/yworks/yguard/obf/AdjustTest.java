@@ -106,19 +106,23 @@ public class AdjustTest extends AbstractObfuscationTest {
       // input: com.yworks.yguard.obf.ClassWithResources$NestedClass
       "A.A.A.A.A$_A");
 
+    // ignored values
     expected.setProperty("javaresourcename",
-      // input: com.yworks.yguard.obf.GlobalResources
       "com.yworks.yguard.obf.GlobalResources");
 
-    // ignored values
+    expected.setProperty("javapackagename",
+      "com.yworks.yguard.obf");
+
     expected.setProperty("javaclassname3",
-      // input: com.yworks.yguard.obf.ClassWithResources.NestedClass
       "com.yworks.yguard.obf.ClassWithResources.NestedClass");
 
     expected.setProperty("pathclassname1",
      "com/yworks/yguard/obf/ClassWithResources");
     expected.setProperty("pathclassname2",
      "com/yworks/yguard/obf/ClassWithResources$NestedClass");
+
+    expected.setProperty("pathpackagename",
+      "com/yworks/yguard/obf");
 
     expected.setProperty("pathresourcename1",
       "com/yworks/yguard/obf/ClassWithResources.properties");
@@ -150,6 +154,10 @@ public class AdjustTest extends AbstractObfuscationTest {
       // input: com.yworks.yguard.obf.ClassWithResources.NestedClass
       "A.A.A.A.A._A");
 
+    expected.setProperty("javapackagename",
+      // input: com.yworks.yguard.obf
+      "A.A.A.A");
+
     expected.setProperty("javaresourcename",
       // input: com.yworks.yguard.obf.GlobalResources
       "A.A.A.A.GlobalResources");
@@ -159,6 +167,9 @@ public class AdjustTest extends AbstractObfuscationTest {
       "com/yworks/yguard/obf/ClassWithResources");
     expected.setProperty("pathclassname2",
       "com/yworks/yguard/obf/ClassWithResources$NestedClass");
+
+    expected.setProperty("pathpackagename",
+      "com/yworks/yguard/obf");
 
     expected.setProperty("pathresourcename1",
       "com/yworks/yguard/obf/ClassWithResources.properties");
@@ -183,9 +194,17 @@ public class AdjustTest extends AbstractObfuscationTest {
       "com.yworks.yguard.obf.ClassWithResources");
     expected.setProperty("javaclassname2",
       "com.yworks.yguard.obf.ClassWithResources$NestedClass");
+    expected.setProperty("javaclassname3",
+      "com.yworks.yguard.obf.ClassWithResources.NestedClass");
+
+    expected.setProperty("javapackagename",
+      "com.yworks.yguard.obf");
 
     expected.setProperty("javaresourcename",
       "com.yworks.yguard.obf.GlobalResources");
+
+    expected.setProperty("pathpackagename",
+      "com/yworks/yguard/obf");
 
     expected.setProperty("pathresourcename3",
       // input: com/yworks/yguard/obf/GlobalResources
@@ -224,6 +243,11 @@ public class AdjustTest extends AbstractObfuscationTest {
       "com.yworks.yguard.obf.ClassWithResources");
     expected.setProperty("javaclassname2",
       "com.yworks.yguard.obf.ClassWithResources$NestedClass");
+    expected.setProperty("javaclassname3",
+      "com.yworks.yguard.obf.ClassWithResources.NestedClass");
+
+    expected.setProperty("javapackagename",
+      "com.yworks.yguard.obf");
 
     expected.setProperty("javaresourcename",
       "com.yworks.yguard.obf.GlobalResources");
@@ -235,6 +259,10 @@ public class AdjustTest extends AbstractObfuscationTest {
     expected.setProperty("pathclassname2",
       // input: com/yworks/yguard/obf/ClassWithResources$NestedClass
       "A/A/A/A/A$_A");
+
+    expected.setProperty("pathpackagename",
+      // input: com/yworks/yguard/obf
+      "A/A/A/A");
 
     expected.setProperty("pathresourcename1",
       // input: com/yworks/yguard/obf/ClassWithResources.properties

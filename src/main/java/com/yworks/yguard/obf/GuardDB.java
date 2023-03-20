@@ -1043,12 +1043,16 @@ public class GuardDB implements ClassConstants
         // ... since fragments are not allow, do not translate anything
         return identifier;
       } else {
-        // ... since fragment are allowed, append the untranslated rest
+        // ... since fragments are allowed, append the untranslated rest
         sb.append(identifier.substring(offset));
       }
     }
 
-    return sb.toString();
+    // in strict mode, only qualified class names may be translated but not
+    // package names
+    return strict && !nestedItem
+      ? identifier
+      : sb.toString();
   }
 
   /**
