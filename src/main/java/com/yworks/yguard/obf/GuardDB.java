@@ -379,7 +379,7 @@ public class GuardDB implements ClassConstants
           {
             if (fileFilter == null || fileFilter.accepts(inName)){
               // Write the obfuscated version of the class to the output Jar
-              ClassFile cf = ClassFile.create(inStream);
+              ClassFile cf = ClassFile.create(inStream, inName.startsWith(GuardDB.MULTI_RELEASE_PREFIX));
               fireObfuscatingClass(Conversion.toJavaClass(cf.getName()));
               cf.remap(classTree, replaceClassNameStrings, log);
               String outName = createClassFileName(inName, cf) + CLASS_EXT;
@@ -697,7 +697,7 @@ public class GuardDB implements ClassConstants
     classTree.setPedantic(isPedantic());
     classTree.setReplaceClassNameStrings(replaceClassNameStrings);
     ClassFile.resetDangerHeader();
-    
+
     Map parsedClasses = new HashMap();
     for(int i = 0; i < inJar.length; i++)
     {
@@ -718,7 +718,7 @@ public class GuardDB implements ClassConstants
           ClassFile cf = null;
           try
           {
-            cf = ClassFile.create(inStream);
+            cf = ClassFile.create(inStream, name.startsWith(GuardDB.MULTI_RELEASE_PREFIX));
           }
           catch (Exception e)
           {

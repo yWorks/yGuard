@@ -147,11 +147,11 @@ public class ClassFile implements ClassConstants
      * @return the class file
      * @throws IOException if class file is corrupt or incomplete
      */
-    public static ClassFile create(DataInput din) throws IOException
+    public static ClassFile create(DataInput din, boolean multiReleaseClass) throws IOException
     {
         if (din == null) throw new NullPointerException("No input stream was provided.");
         ClassFile cf = new ClassFile();
-        cf.read(din);
+        cf.read(din, multiReleaseClass);
         return cf;
     }
 
@@ -338,7 +338,7 @@ public class ClassFile implements ClassConstants
     private ClassFile() {}
 
     // Import the class data to internal representation.
-    private void read(DataInput din) throws IOException
+    private void read(DataInput din, boolean multiReleaseClass) throws IOException
     {
         // Read the class file
         u4magic = din.readInt();
@@ -350,7 +350,7 @@ public class ClassFile implements ClassConstants
         {
             throw new IOException("Invalid magic number in class file.");
         }
-        if (u2majorVersion > MAJOR_VERSION)
+        if (!multiReleaseClass && u2majorVersion > MAJOR_VERSION)
         {
             throw new IOException("Incompatible version number for class file format: " + u2majorVersion+"."+u2minorVersion);
         }
@@ -464,7 +464,7 @@ public class ClassFile implements ClassConstants
     }
 
     // Convert a CP index to a class name.
-    private String toName(int u2index) 
+    private String toName(int u2index)
     {
         CpInfo classEntry = getCpEntry(u2index);
         if (classEntry instanceof ClassCpInfo)
@@ -624,13 +624,13 @@ public class ClassFile implements ClassConstants
                 log.println(LOG_DANGER_HEADER1);
                 log.println(LOG_DANGER_HEADER2);
                 log.println(LOG_DANGER_HEADER3);
-                
+
                 Logger logger = Logger.getInstance();
                 logger.warning(LOG_DANGER_HEADER1+'\n'+
                                LOG_DANGER_HEADER2+'\n'+
                                LOG_DANGER_HEADER3+'\n'+
                                "See the logfile for a list of these classes and methods.");
-                
+
                 log.println("-->");
                 hasHeader = true;
             }
@@ -704,7 +704,7 @@ public class ClassFile implements ClassConstants
                     o instanceof AbstractDynamicCpInfo)
                 {
                     ((CpInfo)o).markNTRefs(pool);
-                } 
+                }
             }
         }
         catch (ArrayIndexOutOfBoundsException e)
@@ -783,7 +783,7 @@ public class ClassFile implements ClassConstants
         }
         return map;
     }
-    
+
     private boolean containsDotClassMethodReference(){
       // Need only check CONSTANT_Methodref entries of constant pool since
         // dangerous methods belong to classes 'Class' and 'ClassLoader', not to interfaces.
@@ -809,7 +809,7 @@ public class ClassFile implements ClassConstants
         }
         return false;
     }
-    
+
     private boolean containsClassMethodReference(String cName, String des){
       // Need only check CONSTANT_Methodref entries of constant pool since
         // dangerous methods belong to classes 'Class' and 'ClassLoader', not to interfaces.
@@ -889,7 +889,7 @@ public class ClassFile implements ClassConstants
                 }
             } else if (attrInfo instanceof EnclosingMethodAttrInfo){
               EnclosingMethodAttrInfo eam = (EnclosingMethodAttrInfo) attrInfo;
-              
+
               // get the class name of the enclosing file:
               CpInfo cpi = getCpEntry(eam.getClassIndex());
               if (cpi instanceof ClassCpInfo){
@@ -1011,7 +1011,7 @@ public class ClassFile implements ClassConstants
                 final String methodName = methods[i].getName();
                 final String descriptor = methods[i].getDescriptor();
                 AttrInfo attrInfo = methods[i].attributes[j];
-                
+
                 if (attrInfo instanceof AnnotationDefaultAttrInfo){
                   remapAnnotationDefault((AnnotationDefaultAttrInfo)attrInfo, nm);
                 } else if (attrInfo instanceof RuntimeVisibleAnnotationsAttrInfo){
@@ -1120,7 +1120,7 @@ public class ClassFile implements ClassConstants
                 remapTypeAnnotations((RuntimeVisibleTypeAnnotationsAttrInfo) attrInfo, nm);
               } else if (attrInfo instanceof SignatureAttrInfo){
                 remapSignature(nm, (SignatureAttrInfo) attrInfo);
-              } 
+              }
             }
 
             // Remap field 'descriptor'
@@ -1144,9 +1144,9 @@ public class ClassFile implements ClassConstants
             String remapDesc = nm.mapDescriptor(descUtf.getString());
             method.setDescriptorIndex(constantPool.remapUtf8To(remapDesc, method.getDescriptorIndex()));
         }
-        
+
         // check whether .class constructs of Class.forName calls reside in the code..
-        if (replaceClassNameStrings && nm instanceof ClassTree) 
+        if (replaceClassNameStrings && nm instanceof ClassTree)
 //          && 
 //          (containsClassMethodReference("java/lang/Class","forName(Ljava/lang/String;)Ljava/lang/Class;")) ||
 //          (containsClassMethodReference("java/lang/Class","forName(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;")) ||
@@ -1264,7 +1264,7 @@ public class ClassFile implements ClassConstants
 
                     // Get the current N&T reference and its 'name' and 'descriptor' utf's
                     int ntIndex = ((RefCpInfo)cpInfo).getNameAndTypeIndex();
-                    
+
                     NameAndTypeCpInfo nameTypeInfo = (NameAndTypeCpInfo)getCpEntry(ntIndex);
                     Utf8CpInfo refUtf = (Utf8CpInfo)getCpEntry(nameTypeInfo.getNameIndex());
                     Utf8CpInfo descUtf = (Utf8CpInfo)getCpEntry(nameTypeInfo.getDescriptorIndex());
@@ -1274,7 +1274,7 @@ public class ClassFile implements ClassConstants
                     if (cpInfo instanceof FieldrefCpInfo)
                     {
                         remapRef = nm.mapField(className, refUtf.getString());
-                        
+
                         // check if this is a compiler generated field
                         // supporting the JDK1.2-or-later '.class' construct
                         if (refUtf.getString().startsWith("class$"))
@@ -1286,12 +1286,12 @@ public class ClassFile implements ClassConstants
                             String map = nm.mapClass(internalClassName);
                             if (map != null && !internalClassName.equals(map)){
                               String warning = realClassName +
-                                          " shouldn't be obfuscated: it is most likely referenced as " + realClassName + ".class from " + 
+                                          " shouldn't be obfuscated: it is most likely referenced as " + realClassName + ".class from " +
                                           Conversion.toJavaClass(thisClassName);
                               Logger.getInstance().warning(warning);
                               log.println("<!-- WARNING: " + warning + " -->");
                             }
-                          } 
+                          }
                         }
                     }
                     else
@@ -1300,7 +1300,7 @@ public class ClassFile implements ClassConstants
                     }
                     String remapDesc = nm.mapDescriptor(descUtf.getString());
                     ((RefCpInfo)cpInfo).setNameAndTypeIndex(remapNT(refUtf, remapRef, descUtf, remapDesc, nameTypeInfo, ((RefCpInfo)cpInfo).getNameAndTypeIndex()));
-                } 
+                }
             }
         }
 
@@ -1398,11 +1398,11 @@ public class ClassFile implements ClassConstants
     private void remapAnnotationDefault(AnnotationDefaultAttrInfo annotationDefault, NameMapper nm){
       remapElementValue(annotationDefault.elementValue, nm);
     }
-    
+
     private void remapAnnotations(RuntimeVisibleAnnotationsAttrInfo annotation, NameMapper nm){
       remapAnnotationInfoImpl(annotation.getAnnotations(), nm);
     }
-    
+
     private void remapParameterAnnotations(RuntimeVisibleParameterAnnotationsAttrInfo annotation, NameMapper nm){
       final ParameterAnnotationInfo[] annotations = annotation.getParameterAnnotations();
       if (annotations != null){
@@ -1452,7 +1452,7 @@ public class ClassFile implements ClassConstants
         }
       }
     }
-    
+
     private void remapElementValue(ElementValueInfo elementValue, NameMapper nm){
       switch (elementValue.u1Tag)
       {
@@ -1499,7 +1499,7 @@ public class ClassFile implements ClassConstants
           throw new RuntimeException("Unknown type tag in annotation!");
       }
     }
-    
+
     private void remapSignature(NameMapper nm, SignatureAttrInfo signature){
       CpInfo cpInfo = getCpEntry(signature.getSignatureIndex());
       if (cpInfo instanceof Utf8CpInfo){
@@ -1512,7 +1512,7 @@ public class ClassFile implements ClassConstants
         }
       }
     }
-    
+
     private int remapNT(Utf8CpInfo refUtf, String remapRef, Utf8CpInfo descUtf, String remapDesc, NameAndTypeCpInfo nameTypeInfo, int nameAndTypeIndex){
       // If a remap is required, make a new N&T (increment ref count on 'name' and
       // 'descriptor', decrement original N&T's ref count, set new N&T ref count to 1),
@@ -1529,20 +1529,20 @@ public class ClassFile implements ClassConstants
         {
           // Create the new N&T info
           newNameTypeInfo = (NameAndTypeCpInfo)nameTypeInfo.clone();
-          
+
           // Adjust its reference counts of its utf's
           ((CpInfo)getCpEntry(newNameTypeInfo.getNameIndex())).incRefCount();
           ((CpInfo)getCpEntry(newNameTypeInfo.getDescriptorIndex())).incRefCount();
-          
+
           // Append it to the Constant Pool, and
           // point the RefCpInfo entry to the new N&T data
           nameAndTypeIndex = constantPool.addEntry(newNameTypeInfo);
-          
+
           // Adjust reference counts from RefCpInfo
           newNameTypeInfo.incRefCount();
           nameTypeInfo.decRefCount();
         }
-        
+
         // Remap the 'name' and 'descriptor' utf's in N&T
         newNameTypeInfo.setNameIndex(constantPool.remapUtf8To(remapRef, newNameTypeInfo.getNameIndex()));
         newNameTypeInfo.setDescriptorIndex(constantPool.remapUtf8To(remapDesc, newNameTypeInfo.getDescriptorIndex()));
@@ -1750,5 +1750,12 @@ public class ClassFile implements ClassConstants
       }
     }
     return "";
+  }
+  public int getMajorVersion() {
+    return u2majorVersion;
+  }
+
+  public int getMinorVersion() {
+    return u2minorVersion;
   }
 }
