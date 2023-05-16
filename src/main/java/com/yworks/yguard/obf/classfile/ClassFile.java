@@ -1751,12 +1751,4 @@ public class ClassFile implements ClassConstants
     }
     return "";
   }
-
-  public int getMajorVersion() {
-    return u2majorVersion;
-  }
-
-  public int getMinorVersion() {
-    return u2minorVersion;
-  }
 }
