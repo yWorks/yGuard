@@ -144,14 +144,15 @@ public class ClassFile implements ClassConstants
      * stream.
      *
      * @param din the din
+     * @param classVersionChecking check or not class file version (default true)
      * @return the class file
      * @throws IOException if class file is corrupt or incomplete
      */
-    public static ClassFile create(DataInput din, boolean multiReleaseClass) throws IOException
+    public static ClassFile create(DataInput din, boolean classVersionChecking) throws IOException
     {
         if (din == null) throw new NullPointerException("No input stream was provided.");
         ClassFile cf = new ClassFile();
-        cf.read(din, multiReleaseClass);
+        cf.read(din, classVersionChecking);
         return cf;
     }
 
@@ -338,7 +339,7 @@ public class ClassFile implements ClassConstants
     private ClassFile() {}
 
     // Import the class data to internal representation.
-    private void read(DataInput din, boolean multiReleaseClass) throws IOException
+    private void read(DataInput din, boolean classVersionChecking) throws IOException
     {
         // Read the class file
         u4magic = din.readInt();
@@ -350,9 +351,16 @@ public class ClassFile implements ClassConstants
         {
             throw new IOException("Invalid magic number in class file.");
         }
-        if (!multiReleaseClass && u2majorVersion > MAJOR_VERSION)
+        if (u2majorVersion > MAJOR_VERSION)
         {
-            throw new IOException("Incompatible version number for class file format: " + u2majorVersion+"."+u2minorVersion);
+            if (classVersionChecking)
+            {
+                throw new IOException("Incompatible version number for class file format: " + u2majorVersion+"."+u2minorVersion);
+            }
+            else
+            {
+                Logger.getInstance().warning("Incompatible version number for class file format: " + u2majorVersion+"."+u2minorVersion);
+            }
         }
 
 

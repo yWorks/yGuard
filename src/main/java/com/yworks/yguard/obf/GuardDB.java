@@ -83,6 +83,8 @@ public class GuardDB implements ClassConstants
   /** Holds value of property pedantic. */
   private boolean pedantic;
 
+  private boolean classVersionChecking;
+
   private ResourceHandler resourceHandler;
   private String[] digestStrings;
 
@@ -379,7 +381,7 @@ public class GuardDB implements ClassConstants
           {
             if (fileFilter == null || fileFilter.accepts(inName)){
               // Write the obfuscated version of the class to the output Jar
-              ClassFile cf = ClassFile.create(inStream, inName.startsWith(GuardDB.MULTI_RELEASE_PREFIX));
+              ClassFile cf = ClassFile.create(inStream, isClassVersionChecking());
               fireObfuscatingClass(Conversion.toJavaClass(cf.getName()));
               cf.remap(classTree, replaceClassNameStrings, log);
               String outName = createClassFileName(inName, cf) + CLASS_EXT;
@@ -718,7 +720,7 @@ public class GuardDB implements ClassConstants
           ClassFile cf = null;
           try
           {
-            cf = ClassFile.create(inStream, name.startsWith(GuardDB.MULTI_RELEASE_PREFIX));
+            cf = ClassFile.create(inStream, isClassVersionChecking());
           }
           catch (Exception e)
           {
@@ -749,7 +751,7 @@ public class GuardDB implements ClassConstants
               } else {
                 if (pedantic){
                   throw new IOException(warning + "\nMake sure these files are of the same version!");
-                } 
+                }
               }
             } else {
               parsedClasses.put(key, new Object[]{new Integer(i), name});
@@ -941,6 +943,13 @@ public class GuardDB implements ClassConstants
     Cl.setPedantic(pedantic);
   }
 
+  public boolean isClassVersionChecking() {
+    return this.classVersionChecking;
+  }
+
+  public void setClassVersionChecking( boolean classVersionChecking ) {
+    this.classVersionChecking = classVersionChecking;
+  }
 
   /**
    * Returns the obfuscated file name of the java class.

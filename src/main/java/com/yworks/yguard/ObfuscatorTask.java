@@ -1107,6 +1107,17 @@ public class ObfuscatorTask extends YGuardBaseTask
         pedantic = true;
       }
     }
+
+    boolean classVersionChecking = true;
+    if (properties.containsKey("class-version-checking")) {
+      String versionCheck = (String) properties.get("class-version-checking");
+      if ("false".equals(versionCheck)) {
+        getProject().log(this, "Class version checking disabled.", Project.MSG_WARN);
+        getProject().log(this, "It's possible cause serious problem in obfuscated result.", Project.MSG_WARN);
+        classVersionChecking = false;
+      }
+    }
+
     getProject().log(this,"Using NameMakerFactory: "+NameMakerFactory.getInstance(), Project.MSG_VERBOSE);
 
     if (pairs == null){
@@ -1219,6 +1230,7 @@ public class ObfuscatorTask extends YGuardBaseTask
 
         db.setResourceHandler(newResourceAdjuster(db));
         db.setPedantic(pedantic);
+        db.setClassVersionChecking(classVersionChecking);
         db.setReplaceClassNameStrings(replaceClassNameStrings);
         db.addListener(listener);
         db.retain(rules, log);
