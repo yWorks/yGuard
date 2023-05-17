@@ -50,8 +50,7 @@ import java.util.jar.Manifest;
  *
  * @author Mark Welsh
  */
-public class GuardDB implements ClassConstants
-{
+public class GuardDB implements ClassConstants {
   // Constants -------------------------------------------------------------
   private static final String STREAM_NAME_MANIFEST = "META-INF/MANIFEST.MF";
   private static final String MANIFEST_NAME_TAG = "Name";
@@ -74,13 +73,19 @@ public class GuardDB implements ClassConstants
   private ClassTree classTree;    // Tree of packages, classes. methods, fields
   private boolean hasMap = false;
 
-  /** Utility field holding list of Listeners. */
+  /**
+   * Utility field holding list of Listeners.
+   */
   private transient java.util.ArrayList listenerList;
 
-  /** Holds value of property replaceClassNameStrings. */
+  /**
+   * Holds value of property replaceClassNameStrings.
+   */
   private boolean replaceClassNameStrings;
 
-  /** Holds value of property pedantic. */
+  /**
+   * Holds value of property pedantic.
+   */
   private boolean pedantic;
 
   private boolean classVersionChecking;
@@ -100,16 +105,17 @@ public class GuardDB implements ClassConstants
    * @param inFile the in file
    * @throws IOException the io exception
    */
-  public GuardDB(File[] inFile) throws java.io.IOException
-  {
+  public GuardDB( File[] inFile ) throws java.io.IOException {
     inJar = new Archive[inFile.length];
-    for(int i = 0; i < inFile.length; i++)
+    for (int i = 0; i < inFile.length; i++) {
       inJar[i] = Factory.newArchive(inFile[i]);
+    }
   }
 
-  /** Close input JAR file and log-file at GC-time. */
-  protected void finalize() throws java.io.IOException
-  {
+  /**
+   * Close input JAR file and log-file at GC-time.
+   */
+  protected void finalize() throws java.io.IOException {
     close();
   }
 
@@ -118,8 +124,7 @@ public class GuardDB implements ClassConstants
    *
    * @param handler the handler
    */
-  public void setResourceHandler(ResourceHandler handler)
-  {
+  public void setResourceHandler( ResourceHandler handler ) {
     resourceHandler = handler;
   }
 
@@ -129,8 +134,7 @@ public class GuardDB implements ClassConstants
    * @param inName the in name
    * @return the out name
    */
-  public String getOutName(String inName)
-  {
+  public String getOutName( String inName ) {
     return classTree.getOutName(inName);
   }
 
@@ -142,12 +146,10 @@ public class GuardDB implements ClassConstants
    * @param log        the log
    * @throws IOException the io exception
    */
-  public void retain(Collection rgsEntries, PrintWriter log)throws java.io.IOException
-  {
+  public void retain( Collection rgsEntries, PrintWriter log ) throws java.io.IOException {
 
     // Build database if not already done, or if a mapping has already been generated
-    if (classTree == null || hasMap)
-    {
+    if (classTree == null || hasMap) {
       hasMap = false;
       buildClassTree(log);
     }
@@ -161,18 +163,18 @@ public class GuardDB implements ClassConstants
   }
 
   private void retainByAnnotation() {
-    classTree.walkTree(new TreeAction(){
+    classTree.walkTree(new TreeAction() {
 
-      private ObfuscationConfig getApplyingObfuscationConfig(Cl cl){
+      private ObfuscationConfig getApplyingObfuscationConfig( Cl cl ) {
         ObfuscationConfig obfuscationConfig = cl.getObfuscationConfig();
-        if (cl.getObfuscationConfig() != null && obfuscationConfig.applyToMembers){
+        if (cl.getObfuscationConfig() != null && obfuscationConfig.applyToMembers) {
           return obfuscationConfig;
         }
         Cl currentCl = cl;
         // walk to the first class in the parent hierarchy that has applyToMembers set
-        while (currentCl.isInnerClass()){
+        while (currentCl.isInnerClass()) {
           TreeItem parent = currentCl.getParent();
-          if (parent instanceof Cl){
+          if (parent instanceof Cl) {
             currentCl = (Cl) parent;
             ObfuscationConfig parentConfig = currentCl.getObfuscationConfig();
             if (parentConfig != null && parentConfig.applyToMembers) {
@@ -188,20 +190,20 @@ public class GuardDB implements ClassConstants
       }
 
       @Override
-      public void classAction(Cl cl) {
+      public void classAction( Cl cl ) {
         super.classAction(cl);
 
         // iterate over the annotations of the class to see if one specifies the obfuscation
         ObfuscationConfig config = cl.getObfuscationConfig();
 
         if (config != null) {
-          if (config.exclude){
+          if (config.exclude) {
             classTree.retainClass(cl.getFullInName(), YGuardRule.LEVEL_PRIVATE, YGuardRule.LEVEL_NONE, YGuardRule.LEVEL_NONE, true);
           }
         } else {
           // no annotation, check parent hierarchy
           ObfuscationConfig parentConfig = getApplyingObfuscationConfig(cl);
-          if (parentConfig != null && parentConfig.exclude){
+          if (parentConfig != null && parentConfig.exclude) {
             // a parent has annotation that applies his config to members which is: exclude
             classTree.retainClass(cl.getFullInName(), YGuardRule.LEVEL_PRIVATE, YGuardRule.LEVEL_NONE, YGuardRule.LEVEL_NONE, true);
           }
@@ -209,20 +211,20 @@ public class GuardDB implements ClassConstants
       }
 
       @Override
-      public void methodAction(Md md) {
+      public void methodAction( Md md ) {
         super.methodAction(md);
         // iterate over the annotations of the method to see if one specifies the obfuscation
         ObfuscationConfig config = md.getObfuscationConfig();
 
         // annotation at method overrides parent annotation
-        if (config != null){
+        if (config != null) {
           if (config.exclude) {
             classTree.retainMethod(md.getFullInName(), md.getDescriptor());
           }
         } else {
           // no annotation, check parent hierarchy
           ObfuscationConfig parentConfig = getApplyingObfuscationConfig((Cl) md.getParent());
-          if (parentConfig != null && parentConfig.exclude){
+          if (parentConfig != null && parentConfig.exclude) {
             // a parent has annotation that applies his config to members which is: exclude
             classTree.retainMethod(md.getFullInName(), md.getDescriptor());
           }
@@ -230,20 +232,20 @@ public class GuardDB implements ClassConstants
       }
 
       @Override
-      public void fieldAction(Fd fd) {
+      public void fieldAction( Fd fd ) {
         super.fieldAction(fd);
         // iterate over the annotations of the field to see if one specifies the obfuscation
         ObfuscationConfig config = fd.getObfuscationConfig();
 
         // annotation at field overrides parent annotation
-        if (config != null){
+        if (config != null) {
           if (config.exclude) {
             classTree.retainField(fd.getFullInName());
           }
         } else {
           // no annotation, check parent hierarchy
           ObfuscationConfig parentConfig = getApplyingObfuscationConfig((Cl) fd.getParent());
-          if (parentConfig != null && parentConfig.exclude){
+          if (parentConfig != null && parentConfig.exclude) {
             // a parent has annotation that applies his config to members which is: exclude
             classTree.retainField(fd.getFullInName());
           }
@@ -252,16 +254,13 @@ public class GuardDB implements ClassConstants
     });
   }
 
-  private void retainByRule(Collection rgsEntries, PrintWriter log) {
-    for (Iterator it = rgsEntries.iterator(); it.hasNext();)
-    {
-      YGuardRule entry = (YGuardRule)it.next();
-      try
-      {
-        switch (entry.type)
-        {
+  private void retainByRule( Collection rgsEntries, PrintWriter log ) {
+    for (Iterator it = rgsEntries.iterator(); it.hasNext(); ) {
+      YGuardRule entry = (YGuardRule) it.next();
+      try {
+        switch (entry.type) {
           case YGuardRule.TYPE_LINE_NUMBER_MAPPER:
-            classTree.retainLineNumberTable(entry.name,  entry.lineNumberTableMapper);
+            classTree.retainLineNumberTable(entry.name, entry.lineNumberTableMapper);
             break;
           case YGuardRule.TYPE_SOURCE_ATTRIBUTE_MAP:
             classTree.retainSourceFileAttributeMap(entry.name, entry.obfName);
@@ -292,7 +291,7 @@ public class GuardDB implements ClassConstants
             break;
           case YGuardRule.TYPE_METHOD_MAP:
             classTree.retainMethodMap(entry.name, entry.descriptor,
-            entry.obfName);
+                                      entry.obfName);
             break;
           case YGuardRule.TYPE_FIELD_MAP:
             classTree.retainFieldMap(entry.name, entry.obfName);
@@ -300,9 +299,7 @@ public class GuardDB implements ClassConstants
           default:
             throw new ParseException("Illegal type: " + entry.type);
         }
-      }
-      catch (RuntimeException e)
-      {
+      } catch (RuntimeException e) {
         // DEBUG
         // e.printStackTrace();
         log.println(WARNING_SCRIPT_ENTRY_ABSENT + entry.name + " -->");
@@ -320,21 +317,18 @@ public class GuardDB implements ClassConstants
    * @throws IOException            the io exception
    * @throws ClassNotFoundException the class not found exception
    */
-  public void remapTo(File[] out,
-    Filter fileFilter,
-    PrintWriter log,
-    boolean conserveManifest
-    ) throws java.io.IOException, ClassNotFoundException
-  {
+  public void remapTo( File[] out,
+                       Filter fileFilter,
+                       PrintWriter log,
+                       boolean conserveManifest
+  ) throws java.io.IOException, ClassNotFoundException {
     // Build database if not already done
-    if (classTree == null)
-    {
+    if (classTree == null) {
       buildClassTree(log);
     }
 
     // Generate map table if not already done
-    if (!hasMap)
-    {
+    if (!hasMap) {
       createMap(log);
     }
 
@@ -348,38 +342,33 @@ public class GuardDB implements ClassConstants
     ArchiveWriter outJar = null;
     // Open the entry and prepare to process it
     DataInputStream inStream = null;
-    for(int i = 0; i < inJar.length; i++)
-    {
+    for (int i = 0; i < inJar.length; i++) {
       outJar = null;
       //store the whole jar in memory, I known this might be alot, but anyway
       //this is the best option, if you want to create correct jar files...
       List jarEntries = new ArrayList();
-      try
-      {
+      try {
         // Go through the input Jar, removing attributes and remapping the Constant Pool
         // for each class file. Other files are copied through unchanged, except for manifest
         // and any signature files - these are deleted and the manifest is regenerated.
         Enumeration<Entry> entries = inJar[i].getEntries();
         fireObfuscatingJar(inJar[i].getName(), out[i].getName());
         ByteArrayOutputStream baos = new ByteArrayOutputStream(2048);
-        while (entries.hasMoreElements())
-        {
+        while (entries.hasMoreElements()) {
           // Get the next entry from the input Jar
           Entry inEntry = (Entry) entries.nextElement();
 
           // Ignore directories
-          if (inEntry.isDirectory())
-          {
+          if (inEntry.isDirectory()) {
             continue;
           }
 
           inStream = new DataInputStream(
-            new BufferedInputStream(
-            inJar[i].getInputStream(inEntry)));
+                  new BufferedInputStream(
+                          inJar[i].getInputStream(inEntry)));
           String inName = inEntry.getName();
-          if (inName.endsWith(CLASS_EXT))
-          {
-            if (fileFilter == null || fileFilter.accepts(inName)){
+          if (inName.endsWith(CLASS_EXT)) {
+            if (fileFilter == null || fileFilter.accepts(inName)) {
               // Write the obfuscated version of the class to the output Jar
               ClassFile cf = ClassFile.create(inStream, isClassVersionChecking());
               fireObfuscatingClass(Conversion.toJavaClass(cf.getName()));
@@ -388,7 +377,7 @@ public class GuardDB implements ClassConstants
               JarEntry outEntry = new JarEntry(outName);
 
               DataOutputStream classOutputStream;
-              if (digestStrings == null){
+              if (digestStrings == null) {
                 digestStrings = new String[]{"SHA-1", "MD5"};
               }
               MessageDigest[] digests = new MessageDigest[digestStrings.length];
@@ -403,23 +392,18 @@ public class GuardDB implements ClassConstants
               // Now update the manifest entry for the class with new name and new digests
               updateManifest(i, inName, outName, digests);
             }
-          }
-          else if (STREAM_NAME_MANIFEST.equals(inName.toUpperCase()) ||
-            (inName.length() > (SIGNATURE_PREFIX.length() + 1 + SIGNATURE_EXT.length()) &&
-            inName.indexOf(SIGNATURE_PREFIX) != -1 &&
-            inName.substring(inName.length() - SIGNATURE_EXT.length(), inName.length()).equals(SIGNATURE_EXT)))
-          {
+          } else if (STREAM_NAME_MANIFEST.equals(inName.toUpperCase()) ||
+                     (inName.length() > (SIGNATURE_PREFIX.length() + 1 + SIGNATURE_EXT.length()) &&
+                      inName.indexOf(SIGNATURE_PREFIX) != -1 &&
+                      inName.substring(inName.length() - SIGNATURE_EXT.length(), inName.length()).equals(SIGNATURE_EXT))) {
             // Don't pass through the manifest or signature files
             continue;
-          }
-          else
-          {
+          } else {
             // Copy the non-class entry through unchanged
             long size = inEntry.getSize();
-            if (size != -1)
-            {
+            if (size != -1) {
 
-              if (digestStrings == null){
+              if (digestStrings == null) {
                 digestStrings = new String[]{"SHA-1", "MD5"};
               }
               MessageDigest[] digests = new MessageDigest[digestStrings.length];
@@ -429,34 +413,27 @@ public class GuardDB implements ClassConstants
 
               StringBuffer outNameBuffer = new StringBuffer(80);
 
-              if(resourceHandler != null && resourceHandler.filterName(inName, outNameBuffer))
-              {
+              if (resourceHandler != null && resourceHandler.filterName(inName, outNameBuffer)) {
                 outName = outNameBuffer.toString();
-                if(!outName.equals(inName))
-                {
+                if (!outName.equals(inName)) {
                   replaceNameLog.append("  <resource name=\"");
                   replaceNameLog.append(ClassTree.toUtf8XmlString(inName));
                   replaceNameLog.append("\" map=\"");
                   replaceNameLog.append(ClassTree.toUtf8XmlString(outName));
                   replaceNameLog.append("\"/>\n");
                 }
-              }
-              else
-              {
+              } else {
                 outName = classTree.getOutName(inName);
               }
 
-              if(resourceHandler == null || !resourceHandler.filterContent(inStream, dataOutputStream, inName))
-              {
-                byte[] bytes = new byte[(int)size];
+              if (resourceHandler == null || !resourceHandler.filterContent(inStream, dataOutputStream, inName)) {
+                byte[] bytes = new byte[(int) size];
                 inStream.readFully(bytes);
 
                 // outName = classTree.getOutName(inName);
                 // Dump the data, while creating the digests
                 dataOutputStream.write(bytes, 0, bytes.length);
-              }
-              else
-              {
+              } else {
                 replaceContentsLog.append("  <resource name=\"");
                 replaceContentsLog.append(ClassTree.toUtf8XmlString(inName));
                 replaceContentsLog.append("\"/>\n");
@@ -469,12 +446,12 @@ public class GuardDB implements ClassConstants
               jarEntries.add(new Object[]{outEntry, baos.toByteArray()});
               baos.reset();
               // Now update the manifest entry for the entry with new name and new digests
-              updateManifest(i , inName, outName, digests);
+              updateManifest(i, inName, outName, digests);
             }
           }
         }
 
-        if (conserveManifest){
+        if (conserveManifest) {
           outJar = Factory.newArchiveWriter(out[i], oldManifest[i]);
         } else {
           outJar = Factory.newArchiveWriter(out[i], newManifest[i]);
@@ -484,8 +461,8 @@ public class GuardDB implements ClassConstants
         }
 
         // sort the entries in ascending order
-        Collections.sort(jarEntries, new Comparator(){
-          public int compare(Object a, Object b){
+        Collections.sort(jarEntries, new Comparator() {
+          public int compare( Object a, Object b ) {
             Object[] array1 = (Object[]) a;
             JarEntry entry1 = (JarEntry) array1[0];
             Object[] array2 = (Object[]) b;
@@ -495,16 +472,16 @@ public class GuardDB implements ClassConstants
         });
         // Finally, write the big bunch of data
         Set directoriesWritten = new HashSet();
-        for (int j = 0; j < jarEntries.size(); j++){
+        for (int j = 0; j < jarEntries.size(); j++) {
           Object[] array = (Object[]) jarEntries.get(j);
           JarEntry entry = (JarEntry) array[0];
           String name = entry.getName();
           // make sure the directory entries are written to the jar file
-          if (!entry.isDirectory()){
+          if (!entry.isDirectory()) {
             int index = 0;
-            while ((index = name.indexOf("/", index + 1))>= 0){
-              String directory = name.substring(0, index+1);
-              if (!directoriesWritten.contains(directory)){
+            while ((index = name.indexOf("/", index + 1)) >= 0) {
+              String directory = name.substring(0, index + 1);
+              if (!directoriesWritten.contains(directory)) {
                 directoriesWritten.add(directory);
                 outJar.addDirectory(directory);
               }
@@ -514,47 +491,38 @@ public class GuardDB implements ClassConstants
           outJar.addFile(entry.getName(), (byte[]) array[1]);
         }
 
-      }
-      catch (Exception e)
-      {
+      } catch (Exception e) {
         // Log exceptions before exiting
         log.println();
         log.println("<!-- An exception has occured.");
-        if (e instanceof java.util.zip.ZipException){
+        if (e instanceof java.util.zip.ZipException) {
           log.println("This is most likely due to a duplicate .class file in your jar!");
           log.println("Please check that there are no out-of-date or backup duplicate .class files in your jar!");
         }
         log.println(e.toString());
         e.printStackTrace(log);
         log.println("-->");
-        throw new IOException("An error ('"+e.getMessage()+"') occured during the remapping! See the log!)");
-      }
-      finally
-      {
+        throw new IOException("An error ('" + e.getMessage() + "') occured during the remapping! See the log!)");
+      } finally {
         inJar[i].close();
-        if (inStream != null)
-        {
+        if (inStream != null) {
           inStream.close();
         }
-        if (outJar != null)
-        {
+        if (outJar != null) {
           outJar.close();
         }
       }
     }
     // Write the mapping table to the log file
     classTree.dump(log);
-    if(replaceContentsLog.length() > 0 || replaceNameLog.length() > 0)
-    {
+    if (replaceContentsLog.length() > 0 || replaceNameLog.length() > 0) {
       log.println("<!--");
-      if(replaceNameLog.length() > 0)
-      {
+      if (replaceNameLog.length() > 0) {
         log.println("\n<adjust replaceName=\"true\">");
         log.print(replaceNameLog);
         log.println("</adjust>");
       }
-      if(replaceContentsLog.length() > 0)
-      {
+      if (replaceContentsLog.length() > 0) {
         log.println("\n<adjust replaceContents=\"true\">");
         log.print(replaceContentsLog);
         log.println("</adjust>");
@@ -564,7 +532,7 @@ public class GuardDB implements ClassConstants
 
   }
 
-  private DataOutputStream fillDigests(ByteArrayOutputStream baos, String[] digestStrings, MessageDigest[] digests) throws NoSuchAlgorithmException {
+  private DataOutputStream fillDigests( ByteArrayOutputStream baos, String[] digestStrings, MessageDigest[] digests ) throws NoSuchAlgorithmException {
 
     OutputStream stream = baos;
 
@@ -582,12 +550,9 @@ public class GuardDB implements ClassConstants
    *
    * @throws IOException the io exception
    */
-  public void close() throws java.io.IOException
-  {
-    for(int i = 0; i < inJar.length; i++)
-    {
-      if (inJar[i] != null)
-      {
+  public void close() throws java.io.IOException {
+    for (int i = 0; i < inJar.length; i++) {
+      if (inJar[i] != null) {
         inJar[i].close();
         inJar[i] = null;
       }
@@ -595,15 +560,13 @@ public class GuardDB implements ClassConstants
   }
 
   // Parse the RFC822-style MANIFEST.MF file
-  private void parseManifest()throws java.io.IOException
-  {
-    for(int i = 0; i < oldManifest.length; i++)
-    {
+  private void parseManifest() throws java.io.IOException {
+    for (int i = 0; i < oldManifest.length; i++) {
       // The manifest file is the first in the jar and is called
       // (case insensitively) 'MANIFEST.MF'
       oldManifest[i] = inJar[i].getManifest();
 
-      if (oldManifest[i] == null){
+      if (oldManifest[i] == null) {
         oldManifest[i] = new Manifest();
       }
 
@@ -611,7 +574,7 @@ public class GuardDB implements ClassConstants
       newManifest[i] = new Manifest();
 
       // copy all main attributes
-      for (Iterator it = oldManifest[i].getMainAttributes().entrySet().iterator(); it.hasNext();) {
+      for (Iterator it = oldManifest[i].getMainAttributes().entrySet().iterator(); it.hasNext(); ) {
         Map.Entry entry = (Map.Entry) it.next();
         Attributes.Name name = (Attributes.Name) entry.getKey();
         String value = (String) entry.getValue();
@@ -626,19 +589,18 @@ public class GuardDB implements ClassConstants
 
       // copy all directory entries
       for (Iterator it = oldManifest[i].getEntries().entrySet().iterator();
-            it.hasNext();){
-         Map.Entry entry = (Map.Entry) it.next();
-         String name = (String) entry.getKey();
-         if (name.endsWith("/")){
-           newManifest[i].getEntries().put(name, (Attributes) entry.getValue());
-         }
+           it.hasNext(); ) {
+        Map.Entry entry = (Map.Entry) it.next();
+        String name = (String) entry.getKey();
+        if (name.endsWith("/")) {
+          newManifest[i].getEntries().put(name, (Attributes) entry.getValue());
+        }
       }
     }
   }
 
   // Update an entry in the manifest file
-  private void updateManifest(int manifestIndex, String inName, String outName, MessageDigest[] digests)
-  {
+  private void updateManifest( int manifestIndex, String inName, String outName, MessageDigest[] digests ) {
     // Create fresh section for entry, and enter "Name" header
 
     Manifest nm = newManifest[manifestIndex];
@@ -649,28 +611,26 @@ public class GuardDB implements ClassConstants
     //newAtts.putValue(MANIFEST_NAME_TAG, outName);
 
     // copy over non-name and none digest entries
-    if (oldAtts != null){
-      for(Iterator it = oldAtts.entrySet().iterator(); it.hasNext();){
+    if (oldAtts != null) {
+      for (Iterator it = oldAtts.entrySet().iterator(); it.hasNext(); ) {
         Map.Entry entry = (Map.Entry) it.next();
         Object key = entry.getKey();
         String name = key.toString();
         if (!name.equalsIgnoreCase(MANIFEST_NAME_TAG) &&
-            name.indexOf("Digest") == -1){
+            name.indexOf("Digest") == -1) {
           newAtts.remove(name);
-          newAtts.putValue(name, (String)entry.getValue());
+          newAtts.putValue(name, (String) entry.getValue());
         }
       }
     }
 
     // Create fresh digest entries in the new section
-    if (digests != null && digests.length > 0)
-    {
+    if (digests != null && digests.length > 0) {
       // Digest-Algorithms header
       StringBuffer sb = new StringBuffer();
-      for (int i = 0; i < digests.length; i++)
-      {
+      for (int i = 0; i < digests.length; i++) {
         sb.append(digests[i].getAlgorithm());
-        if (i < digests.length -1){
+        if (i < digests.length - 1) {
           sb.append(", ");
         }
       }
@@ -678,8 +638,7 @@ public class GuardDB implements ClassConstants
       newAtts.putValue(MANIFEST_DIGESTALG_TAG, sb.toString());
 
       // *-Digest headers
-      for (int i = 0; i < digests.length; i++)
-      {
+      for (int i = 0; i < digests.length; i++) {
         newAtts.remove(digests[i].getAlgorithm() + "-Digest");
         newAtts.putValue(digests[i].getAlgorithm() + "-Digest", Tools.toBase64(digests[i].digest()));
       }
@@ -692,8 +651,7 @@ public class GuardDB implements ClassConstants
   }
 
   // Create a classfile database.
-  private void buildClassTree(PrintWriter log)throws java.io.IOException
-  {
+  private void buildClassTree( PrintWriter log ) throws java.io.IOException {
     // Go through the input Jar, adding each class file to the database
     classTree = new ClassTree();
     classTree.setPedantic(isPedantic());
@@ -701,55 +659,47 @@ public class GuardDB implements ClassConstants
     ClassFile.resetDangerHeader();
 
     Map parsedClasses = new HashMap();
-    for(int i = 0; i < inJar.length; i++)
-    {
+    for (int i = 0; i < inJar.length; i++) {
       Enumeration entries = inJar[i].getEntries();
       fireParsingJar(inJar[i].getName());
-      while (entries.hasMoreElements())
-      {
+      while (entries.hasMoreElements()) {
         // Get the next entry from the input Jar
-        Entry inEntry = (Entry)entries.nextElement();
+        Entry inEntry = (Entry) entries.nextElement();
         String name = inEntry.getName();
-        if (name.endsWith(CLASS_EXT))
-        {
+        if (name.endsWith(CLASS_EXT)) {
           fireParsingClass(Conversion.toJavaClass(name));
           // Create a full internal representation of the class file
           DataInputStream inStream = new DataInputStream(
-          new BufferedInputStream(
-          inJar[i].getInputStream(inEntry)));
+                  new BufferedInputStream(
+                          inJar[i].getInputStream(inEntry)));
           ClassFile cf = null;
-          try
-          {
+          try {
             cf = ClassFile.create(inStream, isClassVersionChecking());
-          }
-          catch (Exception e)
-          {
+          } catch (Exception e) {
             log.println(ERROR_CORRUPT_CLASS + createJarName(inJar[i], name) + " -->");
             e.printStackTrace(log);
-            throw new ParseException( e );
-          }
-          finally
-          {
+            throw new ParseException(e);
+          } finally {
             inStream.close();
           }
 
-          if (cf != null){
+          if (cf != null) {
             final String cfn = cf.getName();
             final String key = "module-info".equals(cfn)
-              ? createModuleKey(cf) : createClassFileName(name, cf);
+                               ? createModuleKey(cf) : createClassFileName(name, cf);
 
             Object[] old = (Object[]) parsedClasses.get(key);
-            if (old != null){
-              int jarIndex = ((Integer)old[0]).intValue();
+            if (old != null) {
+              int jarIndex = ((Integer) old[0]).intValue();
               String warning = "yGuard detected a duplicate class definition " +
-                "for \n    " + Conversion.toJavaClass(cfn) +
-              "\n    [" + createJarName(inJar[jarIndex], old[1].toString()) + "] in \n    [" +
-                createJarName(inJar[i], name) + "]";
+                               "for \n    " + Conversion.toJavaClass(cfn) +
+                               "\n    [" + createJarName(inJar[jarIndex], old[1].toString()) + "] in \n    [" +
+                               createJarName(inJar[i], name) + "]";
               log.write("<!-- \n" + warning + "\n-->\n");
-              if (jarIndex == i){
+              if (jarIndex == i) {
                 throw new IOException(warning + "\nPlease remove inappropriate duplicates first!");
               } else {
-                if (pedantic){
+                if (pedantic) {
                   throw new IOException(warning + "\nMake sure these files are of the same version!");
                 }
               }
@@ -768,12 +718,9 @@ public class GuardDB implements ClassConstants
 
     // set the java access modifiers from the containing class (muellese)
     final ClassTree ct = classTree;
-    ct.walkTree(new TreeAction()
-    {
-      public void classAction(Cl cl)
-      {
-        if (cl.isInnerClass())
-        {
+    ct.walkTree(new TreeAction() {
+      public void classAction( Cl cl ) {
+        if (cl.isInnerClass()) {
           Cl parent = (Cl) cl.getParent();
           cl.access = parent.getInnerClassModifier(cl.getInName());
         }
@@ -781,12 +728,12 @@ public class GuardDB implements ClassConstants
     });
   }
 
-  private static String createJarName(Archive jar, String name){
-    return "jar:"+jar.getName() + "|" + name;
+  private static String createJarName( Archive jar, String name ) {
+    return "jar:" + jar.getName() + "|" + name;
   }
 
   private static String createClassFileName(
-    final String jarEntryName, final ClassFile cf
+          final String jarEntryName, final ClassFile cf
   ) {
     final String prefix = GuardDB.MULTI_RELEASE_PREFIX;
     if (jarEntryName.startsWith(prefix)) {
@@ -802,8 +749,7 @@ public class GuardDB implements ClassConstants
   }
 
   // Generate a mapping table for obfuscation.
-  private void createMap(PrintWriter log) throws ClassNotFoundException
-  {
+  private void createMap( PrintWriter log ) throws ClassNotFoundException {
     // Traverse the class tree, generating obfuscated names within
     // package and class namespaces
     classTree.generateNames();
@@ -830,10 +776,12 @@ public class GuardDB implements ClassConstants
    *
    * @param jar the jar
    */
-  protected void fireParsingJar(String jar){
-    if (listenerList == null) return;
-    for (int i = 0, j = listenerList.size(); i < j; i++){
-      ((ObfuscationListener)listenerList.get(i)).parsingJar(jar);
+  protected void fireParsingJar( String jar ) {
+    if (listenerList == null) {
+      return;
+    }
+    for (int i = 0, j = listenerList.size(); i < j; i++) {
+      ((ObfuscationListener) listenerList.get(i)).parsingJar(jar);
     }
   }
 
@@ -842,10 +790,12 @@ public class GuardDB implements ClassConstants
    *
    * @param className the class name
    */
-  protected void fireParsingClass(String className){
-    if (listenerList == null) return;
-    for (int i = 0, j = listenerList.size(); i < j; i++){
-      ((ObfuscationListener)listenerList.get(i)).parsingClass(className);
+  protected void fireParsingClass( String className ) {
+    if (listenerList == null) {
+      return;
+    }
+    for (int i = 0, j = listenerList.size(); i < j; i++) {
+      ((ObfuscationListener) listenerList.get(i)).parsingClass(className);
     }
   }
 
@@ -855,10 +805,12 @@ public class GuardDB implements ClassConstants
    * @param inJar  the in jar
    * @param outJar the out jar
    */
-  protected void fireObfuscatingJar(String inJar, String outJar){
-    if (listenerList == null) return;
-    for (int i = 0, j = listenerList.size(); i < j; i++){
-      ((ObfuscationListener)listenerList.get(i)).obfuscatingJar(inJar, outJar);
+  protected void fireObfuscatingJar( String inJar, String outJar ) {
+    if (listenerList == null) {
+      return;
+    }
+    for (int i = 0, j = listenerList.size(); i < j; i++) {
+      ((ObfuscationListener) listenerList.get(i)).obfuscatingJar(inJar, outJar);
     }
   }
 
@@ -867,10 +819,12 @@ public class GuardDB implements ClassConstants
    *
    * @param className the class name
    */
-  protected void fireObfuscatingClass(String className){
-    if (listenerList == null) return;
-    for (int i = 0, j = listenerList.size(); i < j; i++){
-      ((ObfuscationListener)listenerList.get(i)).obfuscatingClass(className);
+  protected void fireObfuscatingClass( String className ) {
+    if (listenerList == null) {
+      return;
+    }
+    for (int i = 0, j = listenerList.size(); i < j; i++) {
+      ((ObfuscationListener) listenerList.get(i)).obfuscatingClass(className);
     }
   }
 
@@ -879,10 +833,8 @@ public class GuardDB implements ClassConstants
    *
    * @param listener The listener to register.
    */
-  public synchronized void addListener(com.yworks.yguard.ObfuscationListener listener)
-  {
-    if (listenerList == null )
-    {
+  public synchronized void addListener( com.yworks.yguard.ObfuscationListener listener ) {
+    if (listenerList == null) {
       listenerList = new java.util.ArrayList();
     }
     listenerList.add(listener);
@@ -893,10 +845,8 @@ public class GuardDB implements ClassConstants
    *
    * @param listener The listener to remove.
    */
-  public synchronized void removeListener(com.yworks.yguard.ObfuscationListener listener)
-  {
-    if (listenerList != null )
-    {
+  public synchronized void removeListener( com.yworks.yguard.ObfuscationListener listener ) {
+    if (listenerList != null) {
       listenerList.remove(listener);
     }
   }
@@ -906,8 +856,7 @@ public class GuardDB implements ClassConstants
    *
    * @return Value of property replaceClassNameStrings.
    */
-  public boolean isReplaceClassNameStrings()
-  {
+  public boolean isReplaceClassNameStrings() {
     return this.replaceClassNameStrings;
   }
 
@@ -916,8 +865,7 @@ public class GuardDB implements ClassConstants
    *
    * @param replaceClassNameStrings New value of property replaceClassNameStrings.
    */
-  public void setReplaceClassNameStrings(boolean replaceClassNameStrings)
-  {
+  public void setReplaceClassNameStrings( boolean replaceClassNameStrings ) {
     this.replaceClassNameStrings = replaceClassNameStrings;
   }
 
@@ -927,8 +875,7 @@ public class GuardDB implements ClassConstants
    *
    * @return Value of property pedantic.
    */
-  public boolean isPedantic()
-  {
+  public boolean isPedantic() {
     return this.pedantic;
   }
 
@@ -937,8 +884,7 @@ public class GuardDB implements ClassConstants
    *
    * @param pedantic New value of property pedantic.
    */
-  public void setPedantic(boolean pedantic)
-  {
+  public void setPedantic( boolean pedantic ) {
     this.pedantic = pedantic;
     Cl.setPedantic(pedantic);
   }
@@ -958,15 +904,11 @@ public class GuardDB implements ClassConstants
    * @param javaClass the fully qualified name of an unobfuscated class.
    * @return the string
    */
-  public String translateJavaFile(String javaClass)
-  {
-    Cl cl = classTree.findClassForName(javaClass.replace('/','.'));
-    if(cl != null)
-    {
+  public String translateJavaFile( String javaClass ) {
+    Cl cl = classTree.findClassForName(javaClass.replace('/', '.'));
+    if (cl != null) {
       return cl.getFullOutName();
-    }
-    else
-    {
+    } else {
       return javaClass;
     }
   }
@@ -978,28 +920,25 @@ public class GuardDB implements ClassConstants
    * @param javaClass the java class
    * @return the string
    */
-  public String translateJavaClass(String javaClass)
-  {
+  public String translateJavaClass( String javaClass ) {
     Cl cl = classTree.findClassForName(javaClass);
-    if(cl != null)
-    {
+    if (cl != null) {
       return cl.getFullOutName().replace('/', '.');
-    }
-    else
-    {
+    } else {
       return javaClass;
     }
   }
 
   /**
    * Translates the given class or package identifier.
+   *
    * @param identifier a qualified class name or a jar entry name.
-   * @param strict if <code>true</code>, translate the whole identifier only;
-   * otherwise translate as much of the given identifier as possible.
+   * @param strict     if <code>true</code>, translate the whole identifier only;
+   *                   otherwise translate as much of the given identifier as possible.
    * @return the mapped identifier.
    */
   public String translateItem(
-    final String identifier, final char seperator, final boolean strict
+          final String identifier, final char seperator, final boolean strict
   ) {
     final int n = identifier.length();
     final int lios = identifier.lastIndexOf(seperator);
@@ -1014,7 +953,7 @@ public class GuardDB implements ClassConstants
     String sep = lios > -1 ? Character.toString(seperator) : nested;
     boolean nestedItem = false;
     for (StringTokenizer st = new StringTokenizer(identifier, sep);
-         st.hasMoreTokens();) {
+         st.hasMoreTokens(); ) {
       final String t;
       if (offset == lios) {
         sep = nested;
@@ -1060,8 +999,8 @@ public class GuardDB implements ClassConstants
     // in strict mode, only qualified class names may be translated but not
     // package names
     return strict && !nestedItem
-      ? identifier
-      : sb.toString();
+           ? identifier
+           : sb.toString();
   }
 
   /**
@@ -1069,7 +1008,7 @@ public class GuardDB implements ClassConstants
    *
    * @param digestStrings the digest strings
    */
-  public void setDigests(String[] digestStrings) {
+  public void setDigests( String[] digestStrings ) {
     this.digestStrings = digestStrings;
   }
 
@@ -1078,7 +1017,7 @@ public class GuardDB implements ClassConstants
    *
    * @param annotationClass the annotation class
    */
-  public void setAnnotationClass(String annotationClass) {
+  public void setAnnotationClass( String annotationClass ) {
     ObfuscationConfig.annotationClassName = annotationClass;
   }
 }
