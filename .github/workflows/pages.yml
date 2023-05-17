@@ -15,7 +15,7 @@ jobs:
           python-version: '3.x'
       - name: Install and Build
         run: |
-          pip3 install mkdocs
+          pip3 install mkdocs mkdocs-material
           mkdocs build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3

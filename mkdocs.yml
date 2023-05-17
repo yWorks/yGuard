@@ -1,7 +1,10 @@
 site_name: yGuard Documentation
-theme: readthedocs
 repo_url: https://github.com/yWorks/yGuard/
 site_description: The open-source Java obfuscation tool working with Ant and Gradle by yWorks - the diagramming experts
-use_directory_urls: false
-extra_css:
-  - stylesheets/extra.css
+theme:
+  name: material
+  logo: img/yguard-logo.svg
+  favicon: img/favicon.ico
+plugins:
+  - offline
+  - search
