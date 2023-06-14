@@ -17,7 +17,7 @@
         <link rel="next" href="troubleshooting.html">
       
       <link rel="icon" href="img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.15">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.26e3688c.min.css">
       
       
 
@@ -2471,17 +2471,14 @@ If no <code>name</code>, <code>extends</code> or <code>implements</code> attribu
 </code></pre>
 <p>This will expose the <code>MainClass</code> class and all classes, which reside in packages like <code>org.w3c.sax1</code>, <code>org.w3c.sax2</code>, <code>org.w3c.saxb</code> except for inner classes. <code>'$'</code> is used as a separator between outer class names and inner class names. Since Ant uses <code>'$'</code> as an escape character, you have to use two consecutive <code>'$'s</code> (<code>'$$'</code>) if you want to pass one as an argument to the task.</p>
 <p><em>4)</em> Finally one can specify classes depending on their visibility, i.e. depending whether they have been declared <code>public</code>, <code>protected</code>, <code>package-private</code> or <code>private</code> (inner classes). This can be achieved by additionally specifying the classes attribute in the class element.</p>
-<p>```xml
- <class classes="protected">
-  <patternset>
-    <include name="com.mycompany.myapi."/>
-  </patternset>
-</class></p>
-<pre><code>
-This will keep all class names, that are either `public` or `protected` and which reside in one of the subpackages of `com.mycompany.myapi` (note the abbreviation: the trailing dot behaves like the trailing `'/'` in the usual patternset, i.e. it could be rewritten as `com.mycompany.myapi.**.*`)
-
-```xml
-&lt;class classes=&quot;protected&quot;
+<pre><code class="language-xml"> &lt;class classes=&quot;protected&quot;&gt;
+  &lt;patternset&gt;
+    &lt;include name=&quot;com.mycompany.myapi.&quot;/&gt;
+  &lt;/patternset&gt;
+&lt;/class&gt;
+</code></pre>
+<p>This will keep all class names, that are either <code>public</code> or <code>protected</code> and which reside in one of the subpackages of <code>com.mycompany.myapi</code> (note the abbreviation: the trailing dot behaves like the trailing <code>'/'</code> in the usual patternset, i.e. it could be rewritten as <code>com.mycompany.myapi.**.*</code>)</p>
+<pre><code class="language-xml">&lt;class classes=&quot;protected&quot;
   methods=&quot;protected&quot;
   fields=&quot;protected&quot;&gt;
   &lt;patternset&gt;
