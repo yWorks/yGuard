@@ -923,7 +923,7 @@ This will expose the `MainClass` class and all classes, which reside in packages
 _4)_ Finally one can specify classes depending on their visibility, i.e. depending whether they have been declared `public`, `protected`, `package-private` or `private` (inner classes). This can be achieved by additionally specifying the classes attribute in the class element.
  
 ```xml
- <class classes="protected">
+<class classes="protected">
   <patternset>
     <include name="com.mycompany.myapi."/>
   </patternset>
