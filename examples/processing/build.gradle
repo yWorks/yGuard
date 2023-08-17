@@ -1,0 +1,73 @@
+plugins {
+  id 'org.springframework.boot' version '2.2.5.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+  id 'java'
+}
+
+repositories {
+  mavenCentral()
+}
+
+configurations {
+  yguard
+}
+
+dependencies {
+  implementation('org.springframework.boot:spring-boot-starter')
+  yguard 'com.yworks:yguard:4.0.0'
+}
+
+task obfuscate {
+  dependsOn jar
+  group 'yGuard'
+  description 'Obfuscates the java archive.'
+
+  doLast {
+    def springBootJar = jar.archiveFile.get().asFile.path
+    def appUnobfJar = springBootJar.replace(".jar", "_classes_unobf.jar")
+    def appObfJar = springBootJar.replace(".jar", "_classes.jar")
+    def unobfJar = springBootJar.replace(".jar", "_unobf.jar")
+
+    // backup the project jar
+    ant.move(file: springBootJar, tofile: unobfJar, verbose: true)
+
+    // extract the application classes for obfuscation
+    ant.jar(destfile: appUnobfJar) {
+      mappedresources {
+        zipfileset(src: unobfJar) {
+          include(name: 'BOOT-INF/classes/**')
+        }
+        mapper(type: 'glob', from: 'BOOT-INF/classes/*', to: '*')
+      }
+    }
+
+    // obfuscate the application classes
+    ant.taskdef(
+      name: 'yguard',
+      classname: 'com.yworks.yguard.YGuardTask',
+      classpath: configurations.yguard.asPath
+    )
+    ant.yguard {
+      inoutpair(in: appUnobfJar, out: appObfJar)
+      externalclasses {
+        pathelement(path: sourceSets.main.compileClasspath.asPath)
+      }
+      rename(mainclass: 'com.yworks.example.HelloWorldApplication', logfile: "${buildDir}/${rootProject.name}_renamelog.xml")
+    }
+
+    // bundle the obfuscated application classes with together with the Spring
+    // Boot framework
+    ant.zip(compress: false, destfile: springBootJar) {
+      zipfileset(src: unobfJar) {
+        include(name: '**')
+        exclude(name: 'BOOT-INF/classes/**')
+      }
+      zipfileset(src: appObfJar, prefix: 'BOOT-INF/classes') {
+        include(name: '**')
+        exclude(name: 'META-INF/**')
+      }
+    }
+  }
+}
+
+assemble.dependsOn obfuscate

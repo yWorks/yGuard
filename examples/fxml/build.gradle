@@ -1,12 +1,15 @@
 plugins {
-  // Apply the java and library plugin to add support for Java
   id 'application'
   id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 application {
-  version = '11'
-  mainClassName = 'animations.Animations'
+  mainClassName = 'com.yworks.example.HelloWorld'
+}
+
+compileJava {
+  sourceCompatibility '1.8'
+  targetCompatibility '1.8'
 }
 
 jar {
@@ -22,37 +25,54 @@ javafx {
 }
 
 repositories {
-  mavenLocal()
   mavenCentral()
 }
 
+configurations {
+  yguard
+}
+
 dependencies {
-  compile 'com.yworks:yguard:4.0.0'
-  compile 'com.yworks:annotation:4.0.0'
+  yguard 'com.yworks:yguard:4.0.0'
 }
 
 task obfuscate {
   dependsOn jar
   group 'yGuard'
-  description 'Obfuscates and shrinks the java archive.'
+  description 'Obfuscates the java archive.'
 
   doLast {
-    ant.taskdef(
-            name: 'yguard',
-            classname: 'com.yworks.yguard.YGuardTask',
-            classpath: sourceSets.main.runtimeClasspath.asPath
-    )
-
     def archivePath = jar.archiveFile.get().asFile.path
+    def unobfJar = archivePath.replace(".jar", "_unobf.jar")
+    def controller = 'com.yworks.example.HelloWorldController'
+
+    ant.move(file: archivePath, tofile: unobfJar, verbose: true)
+
+    ant.taskdef(
+      name: 'yguard',
+      classname: 'com.yworks.yguard.YGuardTask',
+      classpath: configurations.yguard.asPath
+    )
     ant.yguard {
-      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
-      rename(mainclass: application.mainClassName, logfile: "${buildDir}/yguard.log.xml") {
-        property(name: "error-checking", value: "pedantic")
-        keep {
-          method(name: "void handleButtonAction(javafx.event.ActionEvent)", 'class': "animations.SpinnerController")
-        }
+      inoutpair(in: unobfJar, out: archivePath)
+      rename(logfile: "${buildDir}/${rootProject.name}_renamelog.xml") {
+        // Adjust the qualified name of the controller class used in FXML files.
         adjust(replaceContent: true, replaceContentSeparator: ".", includes: "**/*.fxml")
+        keep {
+          // FXML bindings are based on reflection.
+          // While yGuard is able to adjust qualified class names in resource
+          // files (like e.g. *.fxml files), it is not able to recognize and
+          // adjust member names in such files. Thus, field and method names
+          // that are used in *.fxml files have to be excluded from obfuscation.
+          field(name: 'clickCountLabel', class: controller)
+          method(name: 'void onClicked(javafx.event.ActionEvent)', class: controller)
+
+          method(name: 'void main(java..lang.String[])', class: application.mainClassName)
+        }
       }
     }
   }
 }
+
+distTar.dependsOn obfuscate
+distZip.dependsOn obfuscate

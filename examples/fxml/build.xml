@@ -1,0 +1,76 @@
+<project>
+  <property name="project.dir" value="${basedir}/../.."/>
+  <property name="source.dir" value="${basedir}/src"/>
+  <property name="target.dir" value="${basedir}/build"/>
+  <property name="yguard.version" value="4.0.0"/>
+
+  <property name="project.name" value="fxml"/>
+  <property name="project.jar.unobf" value="${target.dir}/jar/${project.name}_unobf.jar"/>
+  <property name="project.jar" value="${target.dir}/jar/${project.name}.jar"/>
+  <property name="project.rename.log" value="${target.dir}/${project.name}_renamelog.xml"/>
+  <property name="mainclass" value="com.yworks.example.HelloWorld"/>
+
+  <target name="clean">
+    <delete dir="${target.dir}"/>
+  </target>
+
+  <target name="-check-for-javafx">
+    <available
+     classname="javafx.scene.paint.Color"
+     property="javafx.available"/>
+
+    <fail unless="javafx.available">Could not load JavaFX classes. Run build with a Java development kit that includes JavaFX.</fail>
+  </target>
+
+  <target name="compile" depends="-check-for-javafx">
+    <mkdir dir="${target.dir}/classes"/>
+    <javac includeantruntime="false" srcdir="${source.dir}" destdir="${target.dir}/classes"/>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${target.dir}/jar"/>
+    <jar destfile="${project.jar.unobf}">
+      <fileset dir="${target.dir}/classes"/>
+      <fileset dir="${source.dir}/main/resources"/>
+      <manifest>
+        <attribute name="Main-Class" value="${mainclass}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="obfuscate" depends="jar">
+    <property name="controller" value="com.yworks.example.HelloWorldController"/>
+
+    <taskdef
+     name="yguard"
+     classname="com.yworks.yguard.YGuardTask"
+     classpath="${project.dir}/lib/yguard-${yguard.version}.jar"/>
+    <yguard>
+      <inoutpair in="${project.jar.unobf}" out="${project.jar}"/>
+
+      <rename logfile="${project.rename.log}">
+        <!--
+          Adjust the qualified name of the controller class used in FXML files.
+          -->
+        <adjust replaceContent="true" replaceContentSeparator="." includes="**/*.fxml"/>
+        <keep>
+          <!--
+            FXML bindings are based on reflection.
+            While yGuard is able to adjust qualified class names in resource
+            files (like e.g. *.fxml files), it is not able to recognize and
+            adjust member names in such files. Thus, field and method names
+            that are used in *.fxml files have to be excluded from obfuscation.
+            -->
+          <field name="clickCountLabel" class="${controller}"/>
+          <method name="void onClicked(javafx.event.ActionEvent)" class="${controller}"/>
+
+          <method name="void main(java.lang.String[])" class="${mainclass}"/>
+        </keep>
+      </rename>
+    </yguard>
+  </target>
+
+  <target name="run" depends="obfuscate">
+    <java jar="${project.jar}" fork="true"/>
+  </target>
+</project>

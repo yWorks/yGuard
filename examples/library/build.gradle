@@ -1,57 +1,42 @@
 plugins {
-  // Apply the java and library plugin to add support for Java
-  id 'application'
-}
-
-application {
-  mainClassName = 'com.yworks.example.HelloWorld'
-}
-
-compileJava {
-  sourceCompatibility '1.7'
-  targetCompatibility '1.7'
-}
-
-jar {
-  manifest {
-    attributes(
-      'Main-Class': application.mainClassName
-    )
-  }
+  id 'java'
 }
 
 repositories {
-  mavenLocal()
   mavenCentral()
 }
 
+configurations {
+  yguard
+}
+
 dependencies {
-  compile 'com.yworks:yguard:4.0.0'
+  yguard 'com.yworks:yguard:4.0.0'
 }
 
 task obfuscate   {
   dependsOn jar
   group 'yGuard'
-  description 'Obfuscates and shrinks the java archive.'
+  description 'Obfuscates the java archive.'
 
   doLast {
-    ant.taskdef(
-            name: 'yguard',
-            classname: 'com.yworks.yguard.YGuardTask',
-            classpath: sourceSets.main.runtimeClasspath.asPath
-    )
-
     def archivePath = jar.archiveFile.get().asFile.path
+    def unobfJar = archivePath.replace(".jar", "_unobf.jar")
+
+    ant.move(file: archivePath, tofile: unobfJar, verbose: true)
+
+    ant.taskdef(
+      name: 'yguard',
+      classname: 'com.yworks.yguard.YGuardTask',
+      classpath: configurations.yguard.asPath
+    )
     ant.yguard {
-      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
-      // don't let the obfuscator remove the "Deprecated" attributes from the .class file entries
+      inoutpair(in: unobfJar, out: archivePath)
+
+      // Prevent yGuard from removing "Deprecated" attributes from .class files.
       attribute(name: "Deprecated")
-      shrink(logfile: "${buildDir}/yshrink.log.xml") {
-        keep {
-          'class'(classes: 'protected', methods: 'protected', fields: 'protected')
-        }
-      }
-      rename(mainclass: application.mainClassName, logfile: "${buildDir}/yguard.log.xml") {
+
+      rename(logfile: "${buildDir}/${rootProject.name}_renamelog.xml") {
         keep {
           'class'(classes: 'protected', methods: 'protected', fields: 'protected')
         }
@@ -59,3 +44,5 @@ task obfuscate   {
     }
   }
 }
+
+assemble.dependsOn obfuscate

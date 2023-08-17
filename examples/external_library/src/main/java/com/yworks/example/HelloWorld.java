@@ -6,9 +6,15 @@ import java.util.Arrays;
 
 public class HelloWorld {
   public static void main(String[] args) {
-    String document = "[\"hello\",\"world\",\"using\",\"a\",\"JSON\",\"deserializer\"]";
+    new HelloWorld().process("[\"Hello\",\"World\",\"using\",\"a\",\"JSON\",\"deserializer\"]");
+  }
+
+  private void process(String document) {
+    System.out.println(Arrays.asList(parseJson(document)));
+  }
+
+  private String[] parseJson(String document) {
     Gson gson = new Gson();
-    String[] elements = gson.fromJson(document, String[].class);
-    System.out.println(Arrays.asList(elements));
+    return gson.fromJson(document, String[].class);
   }
 }

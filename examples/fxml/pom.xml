@@ -1,0 +1,150 @@
+<project
+ xmlns="http://maven.apache.org/POM/4.0.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yworks.example</groupId>
+  <artifactId>fxml</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>fxml</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <mainclass>com.yworks.example.HelloWorld</mainclass>
+    <javafx.version>11.0.2</javafx.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.yworks</groupId>
+      <artifactId>yguard</artifactId>
+      <version>4.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-base</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-graphics</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>${javafx.version}</version>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>${mainclass}}</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <id>obfuscate</id>
+            <configuration>
+              <tasks>
+                <property name="controller" value="com.yworks.example.HelloWorldController"/>
+
+                <property
+                 name="project.jar"
+                 value="${project.build.directory}/${project.build.finalName}.jar"/>
+                <property
+                 name="project.jar.unobf"
+                 value="${project.build.directory}/${project.build.finalName}_unobf.jar"/>
+                <move
+                 file="${project.jar}"
+                 tofile="${project.jar.unobf}"
+                 verbose="true"/>
+
+                <property
+                 name="runtime_classpath"
+                 refid="maven.runtime.classpath"/>
+                <taskdef
+                 name="yguard"
+                 classname="com.yworks.yguard.YGuardTask"
+                 classpath="${runtime_classpath}"/>
+                <yguard>
+                  <inoutpair in="${project.jar.unobf}" out="${project.jar}" />
+
+                  <rename logfile="${project.build.directory}/${project.build.finalName}_renamelog.xml">
+                    <!--
+                      Adjust the qualified name of the controller class used in FXML files.
+                      -->
+                    <adjust replaceContent="true" replaceContentSeparator="." includes="**/*.fxml"/>
+                    <keep>
+                      <!--
+                        FXML bindings are based on reflection.
+                        While yGuard is able to adjust qualified class names in resource
+                        files (like e.g. *.fxml files), it is not able to recognize and
+                        adjust member names in such files. Thus, field and method names
+                        that are used in *.fxml files have to be excluded from obfuscation.
+                        -->
+                      <field name="clickCountLabel" class="${controller}"/>
+                      <method name="void onClicked(javafx.event.ActionEvent)" class="${controller}"/>
+
+                      <method name="void main(java.lang.String[])" class="${mainclass}"/>
+                    </keep>
+                  </rename>
+                </yguard>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>${mainclass}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

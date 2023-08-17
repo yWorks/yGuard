@@ -1,1 +1,7 @@
+if (!JavaVersion.current().isJava11Compatible()) {
+  throw new GradleException(
+    "Java version ${JavaVersion.current()} is not supported. " +
+    "Run build with Java version 11 or higher.")
+}
+
 rootProject.name = 'fxml'

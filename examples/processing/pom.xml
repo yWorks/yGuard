@@ -11,14 +11,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.yworks.example</groupId>
-	<artifactId>HelloWorld</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>HelloWorld</name>
+	<artifactId>processing</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>processing</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<mainclass>com.yworks.example.HelloWorld.HelloWorldApplication</mainclass>
+		<mainclass>com.yworks.example.HelloWorldApplication</mainclass>
 	</properties>
 
 	<dependencies>
@@ -33,23 +33,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+  </dependencies>
 
 	<build>
 		<plugins>
@@ -104,7 +92,7 @@
 								 tofile="${project.jar.unobf}"
 								 verbose="true"/>
 
-								<!-- extract the project classes for obfuscation -->
+								<!-- extract the application classes for obfuscation -->
 								<property
 								 name="project.classes.unobf"
 								 value="${project.build.prefix}_classes_unobf.jar"/>
@@ -120,7 +108,7 @@
 									</mappedresources>
 								</jar>
 
-								<!-- obfuscate the project classes -->
+								<!-- obfuscate the application classes -->
                 <property
                  name="runtime.classpath"
                  refid="maven.runtime.classpath"/>
@@ -142,10 +130,7 @@
 
 									<rename
 									 mainclass="${mainclass}"
-									 logfile="${project.build.directory}/yguard.log.xml">
-										<property
-										 name="error-checking"
-										 value="pedantic"/>
+									 logfile="${project.build.directory}/${project.build.finalName}_renamelog.xml">
 									</rename>
 								</yguard>
 

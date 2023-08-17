@@ -1,5 +1,4 @@
 plugins {
-  // Apply the java and library plugin to add support for Java
   id 'application'
 }
 
@@ -16,47 +15,45 @@ jar {
 }
 
 repositories {
-  mavenLocal()
   mavenCentral()
 }
 
+configurations {
+  yguard
+}
+
 dependencies {
-  compile 'com.yworks:yguard:4.0.0'
+  yguard 'com.yworks:yguard:4.0.0'
 }
 
 task obfuscate {
   dependsOn jar
   group 'yGuard'
-  description 'Obfuscates and shrinks the java archive.'
+  description 'Obfuscates the java archive.'
 
   doLast {
-    ant.taskdef(
-            name: 'yguard',
-            classname: 'com.yworks.yguard.YGuardTask',
-            classpath: sourceSets.main.runtimeClasspath.asPath
-    )
-
     def archivePath = jar.archiveFile.get().asFile.path
+    def unobfJar = archivePath.replace(".jar", "_unobf.jar")
+
+    ant.move(file: archivePath, tofile: unobfJar, verbose: true)
+
+    ant.taskdef(
+      name: 'yguard',
+      classname: 'com.yworks.yguard.YGuardTask',
+      classpath: configurations.yguard.asPath
+    )
     ant.yguard {
-      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
-      shrink(logfile: "${buildDir}/yshrink.log.xml") {
+      inoutpair(in: unobfJar, out: archivePath)
+      rename(logfile: "${buildDir}/${rootProject.name}_renamelog.xml") {
         keep {
-          method(name: "void main(java.lang.String[])", "class": application.mainClassName)
-          // serializable classes
-          'class'(implements: "java.io.Serializable", classes: "private", methods: "private", fields: "private")
-          // menu items loaded per reflection
-          'class'(extends: "com.yworks.example.MyMenuItem", classes: "friendly", methods: "public", fields: "public")
+          'class'(implements: 'java.io.Serializable', methods: 'private', fields: 'private')
+
+          method(name: 'void main(java.lang.String[])', class: application.mainClassName)
         }
-      }
-      rename(mainclass: application.mainClassName, logfile: "${buildDir}/yguard.log.xml") {
-        keep {
-          method(name: "void readObject(java.io.ObjectInputStream)")
-          method(name: "void writeObject(java.io.ObjectInputStream)")
-          field(name: "serialVersionUID")
-          'class'(extends: "com.yworks.example.MyMenuItem", classes: "friendly", methods: "public", fields: "public")
-        }
-        property(name: "error-checking", value: "pedantic")
       }
     }
   }
 }
+
+distTar.dependsOn obfuscate
+distZip.dependsOn obfuscate

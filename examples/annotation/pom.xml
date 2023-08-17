@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yworks.example</groupId>
-  <artifactId>HelloWorld</artifactId>
+  <artifactId>annotation</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>HelloWorld</name>
+  <name>annotation</name>
   <url>http://maven.apache.org</url>
   <properties>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -28,42 +28,44 @@
   <build>
     <plugins>
       <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
-          <executions>
-              <execution>
-                  <phase>package</phase>
-                  <goals>
-                    <goal>run</goal>
-                  </goals>
-                  <id>obfuscate</id>
-                  <configuration>
-                      <tasks>
-                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
-                        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${runtime_classpath}"/>
-                        <yguard>
-                            <inoutpair in="${project.build.directory}/${project.build.finalName}.jar" out="${project.build.directory}/${project.build.finalName}_obfuscated.jar" />
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <id>obfuscate</id>
+            <configuration>
+              <tasks>
+                <property
+                 name="project.jar"
+                 value="${project.build.directory}/${project.build.finalName}.jar"/>
+                <property
+                 name="project.jar.unobf"
+                 value="${project.build.directory}/${project.build.finalName}_unobf.jar"/>
+                <move
+                 file="${project.jar}"
+                 tofile="${project.jar.unobf}"
+                 verbose="true"/>
 
-                            <rename logfile="${project.build.directory}/yguard.log.xml">
-                                <property name="error-checking" value="pedantic"/>
-                            </rename>
-                        </yguard>
-                      </tasks>
-                  </configuration>
-              </execution>
-          </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifest>
-          <mainClass>com.yworks.example.HelloWorld</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
+                <property
+                 name="runtime_classpath"
+                 refid="maven.runtime.classpath"/>
+                <taskdef
+                 name="yguard"
+                 classname="com.yworks.yguard.YGuardTask"
+                 classpath="${runtime_classpath}"/>
+                <yguard>
+                  <inoutpair in="${project.jar.unobf}" out="${project.jar}" />
+
+                  <rename logfile="${project.build.directory}/${project.build.finalName}_renamelog.xml"/>
+                </yguard>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

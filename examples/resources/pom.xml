@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yworks.example</groupId>
-  <artifactId>HelloWorld</artifactId>
+  <artifactId>resources</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>HelloWorld</name>
+  <name>resources</name>
   <url>http://maven.apache.org</url>
   <properties>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -23,51 +23,60 @@
   <build>
     <plugins>
       <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
-          <executions>
-              <execution>
-                  <phase>package</phase>
-                  <goals>
-                    <goal>run</goal>
-                  </goals>
-                  <id>obfuscate</id>
-                  <configuration>
-                      <tasks>
-                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
-                        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${runtime_classpath}"/>
-                        <yguard>
-                            <inoutpair in="${project.build.directory}/${project.build.finalName}.jar" out="${project.build.directory}/${project.build.finalName}_obfuscated.jar" />
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <id>obfuscate</id>
+            <configuration>
+              <tasks>
+                <property
+                 name="project.jar"
+                 value="${project.build.directory}/${project.build.finalName}.jar"/>
+                <property
+                 name="project.jar.unobf"
+                 value="${project.build.directory}/${project.build.finalName}_unobf.jar"/>
+                <move
+                 file="${project.jar}"
+                 tofile="${project.jar.unobf}"
+                 verbose="true"/>
 
-                            <shrink logfile="${project.build.directory}/yshrink.log.xml">
-                                <keep>
-                                    <!-- main method -->
-                                    <method name="void main(java.lang.String[])" class="${mainclass}" />
-                                </keep>
-                            </shrink>
+                <property
+                 name="runtime_classpath"
+                 refid="maven.runtime.classpath"/>
+                <taskdef
+                 name="yguard"
+                 classname="com.yworks.yguard.YGuardTask"
+                 classpath="${runtime_classpath}"/>
+                <yguard>
+                  <inoutpair in="${project.jar.unobf}" out="${project.jar}" />
 
-                            <rename mainclass="${mainclass}" logfile="${project.build.directory}/yguard.log.xml">
-                              <adjust replaceContent="true">
-                                <!-- plain-text class names in the config files will -->
-                                <!-- be replaced with the obfuscated name versions -->
-                                <include name="**/*.properties"/>
-                              </adjust>
-                              <adjust replacePath="false">
-                                <!-- keep the complete path to the resources even if -->
-                                <!-- package com.yworks.example gets obfuscated by name -->
-                                <include name="com/yworks/example/resources/*"/>
-                              </adjust>
-                              <adjust replaceName="true">
-                                <!-- Replace the .properties files' names with the obfuscated -->
-                                <!-- versions if the corresponding .class files get obfuscated -->
-                                <include name="**/*.properties"/>
-                              </adjust>
-                            </rename>
-                        </yguard>
-                      </tasks>
-                  </configuration>
-              </execution>
-          </executions>
+                  <rename logfile="${project.build.directory}/${project.build.finalName}_renamelog.xml">
+                    <adjust replacePath="false">
+                      <!-- keep the complete path to the resources even if -->
+                      <!-- package com.yworks.example gets obfuscated by name -->
+                      <include name="com/yworks/example/resources/*"/>
+                    </adjust>
+                    <adjust replaceContent="true" replaceContentSeparator="." replaceName="true">
+                      <!-- plain-text class names in the config files will -->
+                      <!-- be replaced with the obfuscated name versions -->
+                      <!-- replace the .properties files' names with the obfuscated -->
+                      <!-- versions if the corresponding .class files get obfuscated -->
+                      <include name="**/*.properties"/>
+                    </adjust>
+                    <keep>
+                      <method name="void main(java.lang.String[])" class="${mainclass}"/>
+                    </keep>
+                  </rename>
+                </yguard>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -76,7 +85,7 @@
         <configuration>
           <archive>
             <manifest>
-          <mainClass>com.yworks.example.HelloWorld</mainClass>
+              <mainClass>com.yworks.example.HelloWorld</mainClass>
             </manifest>
           </archive>
         </configuration>

@@ -1,36 +1,41 @@
 plugins {
-  // Apply the java and library plugin to add support for Java
-  id 'application'
+  id 'java'
 }
 
 repositories {
-  mavenLocal()
   mavenCentral()
 }
 
+configurations {
+  yguard
+}
+
 dependencies {
-  compile 'com.yworks:yguard:4.0.0'
+  yguard 'com.yworks:yguard:4.0.0'
   compile 'com.yworks:annotation:4.0.0'
 }
 
 task obfuscate {
   dependsOn jar
   group 'yGuard'
-  description 'Obfuscates and shrinks the java archive.'
+  description 'Obfuscates the java archive.'
 
   doLast {
-    ant.taskdef(
-            name: 'yguard',
-            classname: 'com.yworks.yguard.YGuardTask',
-            classpath: sourceSets.main.runtimeClasspath.asPath
-    )
-
     def archivePath = jar.archiveFile.get().asFile.path
+    def unobfJar = archivePath.replace(".jar", "_unobf.jar")
+
+    ant.move(file: archivePath, tofile: unobfJar, verbose: true)
+
+    ant.taskdef(
+      name: 'yguard',
+      classname: 'com.yworks.yguard.YGuardTask',
+      classpath: configurations.yguard.asPath
+    )
     ant.yguard {
-      inoutpair(in: archivePath, out: archivePath.replace(".jar", "_obf.jar"))
-      rename(logfile: "${buildDir}/yguard.log.xml") {
-        property(name: "error-checking", value: "pedantic")
-      }
+      inoutpair(in: unobfJar, out: archivePath)
+      rename(logfile: "${buildDir}/${rootProject.name}_renamelog.xml")
     }
   }
 }
+
+assemble.dependsOn obfuscate

@@ -1,47 +1,54 @@
-linked_library
+Linked Library
 --------------
 
-```
+```xml
 <yguard>
 
   <inoutpair in="myapp.jar" out="myapp_obf.jar"/>
-  <inoutpair in="lib/thirdpartylib.jar" out="lib/thirdpartylib_obf.jar"/>
+  <inoutpair in="lib/dep_to_obfuscate.jar" out="lib/dep_to_obfuscate_obf.jar"/>
 
   <externalclasses>
-    <pathelement location="lib/external.jar"/>
+    <pathelement location="lib/dep_to_keep_as_is.jar"/>
   </externalclasses>
 
-  <!-- Keep all of the attributes for debugging, e.g. -->
-  <attribute name="Deprecated, SourceFile, LineNumberTable, LocalVariableTable>
+  <patternset id="myopenapp">
+    <include name="org.myorg.myapp.**"/>
+    <exclude name="org.myorg.myapp.mylibconnector.**"/>
+  </patternset>
+
+  <!-- Keep the attributes that provide debugging information. -->
+  <attribute name="Deprecated, SourceFile, LineNumberTable, LocalVariableTable">
     <patternset refid="myopenapp"/>
   </attribute>
 
   <rename mainclass="org.myorg.myapp.Main" logfile="renamelog.xml">
-
-    <property name="error-checking" value="pedantic"/>
-
     <keep>
-    <!-- Tell the obfuscator to only adjust my classes -->
-    <!-- to work with the obfuscated 3rd party library -->
-    <!-- but leave them virtually unmodified otherwise -->
-    <!-- The libconnector package however will be -->
-    <!-- obfuscated as much as possible -->
-    <class classes="private" methods="private" fields="private">
-      <patternset id="myopenapp">
-        <include name="org.myorg.myapp.**"/>
-        <exclude name="org.myorg.myapp.mylibconnector.**"/>
-      </patternset>
-    </class>
-
+      <!--
+        Configure the obfuscator to exclude (most) classes in myapp from
+        renaming, but to adjust them as needed to work with the renamed
+        dep_to_obfuscate third-party library.
+        The libconnector package in myapp will be obfuscated as much as
+        possible, though.
+        -->
+      <class classes="private" methods="private" fields="private">
+        <patternset refid="myopenapp"/>
+      </class>
     </keep>
   </rename>
 
 </yguard>
 ```
 
-This example demonstrates almost no _method_, _class_, and _field_ obfuscation for a program, that has external dependencies and additionally depends on a third party library jar which has to be obfuscated before deployment.
+This example demonstrates how to configure obfuscation for an application that
+depends on external libraries, some of which need to be obfuscated and some not.
 
-Only those parts that actually interface with the third party _jar_ in the `mylibconnector` package are being obfuscated. Nothing in the third party library jar will be exposed in the final application, everything will be obfuscated and the code in the open application that makes use of the third party jar will be adjusted. 
+The classes in dependency `dep_to_obfuscate` will be completely obfuscated.  
+The classes in dependency `dep_to_keep_as_is` will not be changed at all.  
+The classes in the application will be adjusted for the renamings applied to
+`dep_to_obfuscate`, but the names of the application classes and their members
+are not obfuscated (except for the classes in the `mylibconnector` package
+and sub-packages thereof) due to the exclusion rules in the `keep` element.
 
-Note that the public part of the application will still be debuggable since all of the crucial attributes will be exposed for the open application part.
-The dependencies are specified in the `externalclasses` element using standard [Ant path](http://ant.apache.org/manual/using.html#path) specification mechanisms. Classes residing in `lib/external.jar` will be used to resolve external dependencies during the obfuscation run. This is not strictly necessary in this case since the public API will be fully exposed, i.e. no methods which have been declared by interfaces or super class in external classes will be renamed.
+The `attribute` element ensures that debugging information is retained for
+exactly those classes in the application that are excluded from obfuscation as
+well.

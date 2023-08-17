@@ -3,34 +3,34 @@ package com.yworks.example;
 import java.util.List;
 
 /**
- * Offers functional utilities based on list folding
- * 
-		 * @param <T> - a number type to fold
- * @deprecated You should use java.util.functional and stream.reduce in Java 8
+ * Offers functional utilities for folding lists.
+ * @deprecated Use {@link java.util.stream.Stream#reduce} instead.
  */
 @Deprecated
-public class Functional<T extends Number> {
-  protected T fold( Reducible<T> func, List<T> list) {
-    if (list.size() > 1) {
-      return func.call(list.get(0), fold(func, list.subList(1, list.size() - 1)));
+public class Functional {
+  protected Double fold(Reducible<Double> func, List<Double> list) {
+    return foldImpl(func, list, 0);
+  }
+
+  private Double foldImpl(Reducible<Double> func, List<Double> list, int idx ) {
+    if (idx < list.size()) {
+      return func.call(list.get(idx), foldImpl(func, list, idx + 1));
     } else {
-      return list.get(0);
+      return Double.valueOf(0);
     }
   }
 
-  // This will be obfuscated
-  private double addDouble(double a, double b) {
-    return a+b;
+  protected Double sum(List<Double> list) {
+    return fold(new SumReducible(), list);
   }
 
-  protected T sum(List<T> list) {
-    class SumReducible<T extends Number> implements Reducible<T> {
-      public T call(T a, T b) {
-        Double sum = addDouble(a.doubleValue(), b.doubleValue());
-        return (T) sum;
-      }
+  private static class SumReducible implements Reducible<Double> {
+    public Double call(Double a, Double b) {
+      return Double.valueOf(addDouble(a.doubleValue(), b.doubleValue()));
     }
 
-    return fold(new SumReducible<T>(), list);
+    private double addDouble(double a, double b) {
+      return a+b;
+    }
   }
 }

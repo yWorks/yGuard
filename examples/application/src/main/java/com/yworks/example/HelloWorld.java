@@ -6,6 +6,6 @@ public class HelloWorld {
     }
 
     public static void main(String[] args) {
-        System.out.println(String.format("Hello %s", companyName()));
+        System.out.println("Hello World from " + companyName() + '.');
     }
 }

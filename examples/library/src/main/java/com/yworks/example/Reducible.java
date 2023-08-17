@@ -1,11 +1,9 @@
 package com.yworks.example;
 
-
 /**
- * A Callable of type T that takes two T as an argument and reduces them
- *
-		 * @param <T> - the type to apply callable to
- * @deprecated java.util.function should be used instead if Java 8 is available
+ * A a binary operator for two {@link Double} values.
+ * @param <T> the type of the operator's operands and return value.
+ * @deprecated Use {@link java.util.stream.Stream#reduce} instead.
  */
 @Deprecated
 public interface Reducible<T> {

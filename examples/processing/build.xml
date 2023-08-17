@@ -1,0 +1,158 @@
+<project>
+  <!--
+    This build file and its <obfuscate> target are primarily meant to
+    demonstrate how to obfuscate application classes in an existing Spring Boot
+    jar.
+    Thus, <obfuscate> first extracts the application classes from the Spring
+    Boot jar, then obfuscates the extracted classes, and finally rebundles
+    the Spring Boot framework classes and libraries with the obfuscated
+    application classes.
+
+    If ANT is indeed used to build a Spring Boot application from scratch, this
+    approach can be simplified:
+    1. Compile and bundle your application classes into a regular jar
+       (i.e. not Spring Boot framework related files).
+    2. Obfuscate the application classes in the regular jar.
+    3. Bundle the obfuscated classes together with Spring Boot framework files
+       into a new Spring Boot jar. 
+    -->
+
+  <property name="project.dir" value="${basedir}/../.."/>
+  <property name="libraryDir" value="${basedir}/lib"/>
+  <property name="source.dir" value="${basedir}/src"/>
+  <property name="target.dir" value="${basedir}/build"/>
+  <property name="bundleDir" value="${target.dir}/jar"/>
+  <property name="yguard.version" value="4.0.0"/>
+
+  <property name="project.name" value="processing"/>
+  <property name="project.jar.unobf" value="${bundleDir}/${project.name}_unobf.jar"/>
+  <property name="project.jar" value="${target.dir}/jar/${project.name}.jar"/>
+  <property name="project.rename.log" value="${target.dir}/${project.name}_renamelog.xml"/>
+  <property name="mainclass" value="com.yworks.example.HelloWorldApplication"/>
+
+  <target name="clean">
+    <delete dir="${target.dir}"/>
+  </target>
+
+  <target name="get-spring">
+    <property name="maven.base.url" value="https://repo1.maven.org/maven2"/>
+    <property name="maven.spring.url" value="${maven.base.url}/org/springframework"/>
+
+    <mkdir dir="${libraryDir}"/>
+    <get dest="${libraryDir}" skipexisting="true">
+      <url url="${maven.base.url}/jakarta/annotation/jakarta.annotation-api/1.3.5/jakarta.annotation-api-1.3.5.jar"/>
+      <url url="${maven.base.url}/org/slf4j/jul-to-slf4j/1.7.30/jul-to-slf4j-1.7.30.jar"/>
+      <url url="${maven.base.url}/org/apache/logging/log4j/log4j-api/2.12.1/log4j-api-2.12.1.jar"/>
+      <url url="${maven.base.url}/org/apache/logging/log4j/log4j-to-slf4j/2.12.1/log4j-to-slf4j-2.12.1.jar"/>
+      <url url="${maven.base.url}/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar"/>
+      <url url="${maven.base.url}/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar"/>
+      <url url="${maven.base.url}/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar"/>
+      <url url="${maven.base.url}/org/yaml/snakeyaml/1.25/snakeyaml-1.25.jar"/>
+      <url url="${maven.spring.url}/spring-aop/5.2.4.RELEASE/spring-aop-5.2.4.RELEASE.jar"/>
+      <url url="${maven.spring.url}/spring-beans/5.2.4.RELEASE/spring-beans-5.2.4.RELEASE.jar"/>
+      <url url="${maven.spring.url}/boot/spring-boot/2.2.5.RELEASE/spring-boot-2.2.5.RELEASE.jar"/>
+      <url url="${maven.spring.url}/boot/spring-boot-autoconfigure/2.2.5.RELEASE/spring-boot-autoconfigure-2.2.5.RELEASE.jar"/>
+      <url url="${maven.spring.url}/boot/spring-boot-loader/2.2.5.RELEASE/spring-boot-loader-2.2.5.RELEASE.jar"/>
+      <url url="${maven.spring.url}/boot/spring-boot-starter/2.2.5.RELEASE/spring-boot-starter-2.2.5.RELEASE.jar"/>
+      <url url="${maven.spring.url}/boot/spring-boot-starter-logging/2.2.5.RELEASE/spring-boot-starter-logging-2.2.5.RELEASE.jar"/>
+      <url url="${maven.spring.url}/spring-context/5.2.4.RELEASE/spring-context-5.2.4.RELEASE.jar"/>
+      <url url="${maven.spring.url}/spring-core/5.2.4.RELEASE/spring-core-5.2.4.RELEASE.jar"/>
+      <url url="${maven.spring.url}/spring-expression/5.2.4.RELEASE/spring-expression-5.2.4.RELEASE.jar"/>
+      <url url="${maven.spring.url}/spring-jcl/5.2.4.RELEASE/spring-jcl-5.2.4.RELEASE.jar"/>
+    </get>
+  </target>
+
+  <target name="compile" depends="get-spring">
+    <mkdir dir="${target.dir}/classes"/>
+    <javac includeantruntime="false" srcdir="${source.dir}" destdir="${target.dir}/classes">
+      <classpath>
+        <fileset dir="${libraryDir}"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${bundleDir}"/>
+    <jar destfile="${project.jar.unobf}" keepcompression="true">
+      <zipfileset src="${libraryDir}/spring-boot-loader-2.2.5.RELEASE.jar">
+        <include name="**"/>
+        <exclude name="META-INF/**"/>
+      </zipfileset>
+      <manifest>
+        <attribute name="Implementation-Title" value="${project.name}"/>
+        <attribute name="Implementation-Version" value="1.0-SNAPSHOT"/>
+        <attribute name="Start-Class" value="${mainclass}"/>
+        <attribute name="Spring-Boot-Classes" value="BOOT-INF/classes/"/>
+        <attribute name="Spring-Boot-Lib" value="BOOT-INF/lib/"/>
+        <attribute name="Spring-Boot-Version" value="2.2.5.RELEASE"/>
+        <attribute name="Main-Class" value="org.springframework.boot.loader.JarLauncher"/>
+      </manifest>
+    </jar>
+    <jar destfile="${project.jar.unobf}" compress="false" update="true">
+      <zipfileset prefix="BOOT-INF/classes" dir="${target.dir}/classes"/>
+      <zipfileset prefix="BOOT-INF/classes" dir="${source.dir}/main/resources"/>
+      <zipfileset prefix="BOOT-INF/lib" dir="${libraryDir}">
+        <include name="*.jar"/>
+        <exclude name="spring-boot-loader-2.2.5.RELEASE.jar"/>
+      </zipfileset>
+    </jar>
+  </target>
+
+  <target name="obfuscate" depends="jar">
+    <!-- extract the application classes for obfuscation -->
+    <jar destfile="${bundleDir}/${project.name}_classes_unobf.jar">
+      <mappedresources>
+        <zipfileset src="${project.jar.unobf}">
+          <include name="BOOT-INF/classes/**"/>
+        </zipfileset>
+        <mapper
+         type="glob"
+         from="BOOT-INF/classes/*"
+         to="*"/>
+      </mappedresources>
+    </jar>
+
+
+    <!-- obfuscate the application classes -->
+    <taskdef
+     name="yguard"
+     classname="com.yworks.yguard.YGuardTask"
+     classpath="${project.dir}/lib/yguard-${yguard.version}.jar"/>
+
+    <yguard>
+      <inoutpair
+       in="${bundleDir}/${project.name}_classes_unobf.jar"
+       out="${bundleDir}/${project.name}_classes.jar"/>
+
+      <externalclasses>
+        <fileset dir="${libraryDir}"/>
+      </externalclasses>
+
+      <rename mainclass="${mainclass}" logfile="${project.rename.log}"/>
+    </yguard>
+
+
+    <!--
+      bundle the obfuscated application classes with together with the Spring
+      Boot framework
+      -->
+    <zip
+     compress="false"
+     destfile="${project.jar}">
+      <zipfileset src="${project.jar.unobf}">
+        <include name="**"/>
+        <exclude name="BOOT-INF/classes/**"/>
+      </zipfileset>
+      <zipfileset
+       src="${bundleDir}/${project.name}_classes.jar"
+       prefix="BOOT-INF/classes">
+        <include name="**"/>
+        <exclude name="META-INF/**"/>
+      </zipfileset>
+    </zip>
+  </target>
+
+  <target name="run" depends="obfuscate">
+    <java jar="${project.jar}" fork="true"/>
+  </target>
+</project>

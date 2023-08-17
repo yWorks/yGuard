@@ -3,46 +3,48 @@ examples
 
 This folder contains various examples for setting up `yGuard` in different scenarios.
 
-- [application](application/) (a very basic setup. Simple program with one main method and no other exposed functionality.)
-- [library](library/) (library example, illustrating how to expose specific parts of a library)
-- [external_library](external_library/) (shows how to embed an external program into obfuscation)
-- [resources](resources/)  (shows how to embed resources, such a `.properties` files)
-- [linked_library](recipes/LINKED_LIBRARY.md) (shows how to obfuscate a third party library)
-- [serializable_exclusion](serializable_exclusion/) (shows how to exclude serializable elements using `implements` and `extends`)
-- [annotation](annotation/) (shows how to use annotations to exlude items from obfuscation) 
-- [processing](processing/) (shows how to use yGuard as a intermediate processing step. Demonstrated with Spring Boot.)
+| Example Name                                      | Description                                                                                                 |
+|---------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| [application](application/)                       | Shows how to obfuscates everything but an application's `main` method.<br/>The most basic example there is. |
+| [library](library/)                               | Shows how to obfuscate a Java library without changing its public API.                                      |
+| [fxml](recipes/LINKED_LIBRARY.md)                 | Shows how to obfuscate a JavaFX application that uses FXML markup.                                          |
+| [external_library](external_library/)             | Shows how to obfuscate an application that depends on external libraries.                                   |
+| [annotation](annotation/)                         | Shows how to use annotations to exlude types and members from obfuscation.                                  |
+| [serializable_exclusion](serializable_exclusion/) | Shows how to use `implements` (and `extends`) to exclude type hierarchies from obfuscation.                 |               
+| [processing](processing/)                         | Shows how to obfuscate a Spring Boot application.                                                           |
+| [resources](resources/)                           | Shows how to configure `rename` to adjust resource files when renaming classes.                             |
 
-## Building a example
+## Building an example
 
-All examples can be built using all major build systems. Build instructions cane be found below, depending on your build system of choice.
+All examples can be built using all major build systems. Build instructions can be found below, depending on your build system of choice.
 
 ### Compiling with `Gradle`
 
 ```
-cd examples/example
-gradle build obfuscate
+cd examples/[example name]
+gradle build
 cd build/libs/
-java -jar example.jar
-java -jar example_obf.jar # behaves identically
+java -jar example_unobf.jar
+java -jar example.jar # behaves identically
 ```
 
 ### Compiling with `Maven`
 
 ```
-cd examples/example
-mvn compile package
+cd examples/[example name]
+mvn package
 cd target/
-java -jar HelloWorld-1.0-SNAPSHOT.jar
-java -jar HelloWorld-1.0-SNAPSHOT_obfuscated.jar # behaves identically
+java -jar example-1.0-SNAPSHOT_unobf.jar
+java -jar example-1.0-SNAPSHOT.jar # behaves identically
 ```
 
 ### Compiling with `Ant`
 
 
 ```
-cd examples/example
-# copy the lib folder to the example including ALL of its dependencies
-# adjust the version in the build.xml
-ant -p  # for a list of available commands
-ant run # will directly run the obfuscated version
+cd examples/[example name]
+ant obfuscate
+cd build/jar/
+java -jar example_unobf.jar
+java -jar example.jar # behaves identically
 ```

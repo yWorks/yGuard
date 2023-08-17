@@ -1,82 +1,73 @@
 <project>
-    <property name="projectDir" value="."/>
-    <property name="libraryDir" value="lib"/>
-    <property name="version" value="4.0.0"/>
+  <property name="project.dir" value="${basedir}/../.."/>
+  <property name="libraryDir" value="${basedir}/lib"/>
+  <property name="source.dir" value="${basedir}/src"/>
+  <property name="target.dir" value="${basedir}/build"/>
+  <property name="yguard.version" value="4.0.0"/>
 
-    <property name="project_name" value="HelloWorld"/>
-    <property name="jar" value="build/jar/${project_name}.jar"/>
-    <property name="obfjar" value="build/jar/${project_name}_obf.jar"/>
-    <property name="renamelog" value="${project_name}_renamelog.xml"/>
-    <property name="shrinklog" value="${project_name}_shrinklog.xml"/>
+  <property name="project.name" value="external_library"/>
+  <property name="project.jar.unobf" value="${target.dir}/jar/${project.name}_unobf.jar"/>
+  <property name="project.jar" value="${target.dir}/jar/${project.name}.jar"/>
+  <property name="project.rename.log" value="${target.dir}/${project.name}_renamelog.xml"/>
+  <property name="mainclass" value="com.yworks.example.HelloWorld"/>
 
-    <target name="clean">
-        <delete dir="${projectDir}/build"/>
-        <delete dir="${projectDir}/lib/"/>
-        <delete file="${shrinklog}" />
-        <delete file="${renamelog}" />
-    </target>
+  <target name="clean">
+    <delete dir="${target.dir}"/>
+  </target>
 
-    <target name="-init">
-      <path id="gson-path">
-        <pathelement path="lib/gson.jar"/>
-      </path>
-    </target>
+  <target name="gson">
+    <property name="gsonVersion" value="2.8.9"/>
+    <property name="gsonJar" value="gson-${gsonVersion}.jar"/>
+    <mkdir dir="${libraryDir}"/>
+    <get dest="${libraryDir}" skipexisting="true">
+      <url url="https://repo1.maven.org/maven2/com/google/code/gson/gson/${gsonVersion}/${gsonJar}"/>
+    </get>
+  </target>
 
-    <target name="gson">
-      <mkdir dir="lib"/>
-      <get src="https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.9/gson-2.8.9.jar" dest="lib/gson.jar"/>
-    </target>
+  <target name="compile" depends="gson">
+    <path id="gson-path">
+      <pathelement path="${libraryDir}/${gsonJar}"/>
+    </path>
 
-    <target name="compile" depends="-init, gson">
-        <mkdir dir="build/classes"/>
-      <javac srcdir="src" destdir="build/classes" target="1.7" source="1.7">
-        <classpath refid="gson-path"/>
-      </javac>
-    </target>
+    <mkdir dir="${target.dir}/classes"/>
+    <javac includeantruntime="false" srcdir="src" destdir="${target.dir}/classes">
+      <classpath refid="gson-path"/>
+    </javac>
+  </target>
 
-    <target name="jar" depends="compile">
-        <mkdir dir="build/jar"/>
-        <jar destfile="${jar}" basedir="build/classes">
-            <manifest>
-                <attribute name="Main-Class" value="com.yworks.example.HelloWorld"/>
-            </manifest>
-        </jar>
-    </target>
+  <target name="jar" depends="compile">
+    <mkdir dir="${target.dir}/jar"/>
+    <jar destfile="${project.jar.unobf}" basedir="${target.dir}/classes">
+      <manifest>
+        <attribute name="Main-Class" value="${mainclass}"/>
+        <attribute name="Class-Path" value="./${gsonJar}"/>
+      </manifest>
+    </jar>
+  </target>
 
-    <target name="yguard" depends="jar">
-        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${projectDir}/lib/yguard-${version}.jar"/>
-        <yguard>
+  <target name="obfuscate" depends="jar">
+    <taskdef
+     name="yguard"
+     classname="com.yworks.yguard.YGuardTask"
+     classpath="${project.dir}/lib/yguard-${yguard.version}.jar"/>
 
-          <inoutpair in="${jar}" out="${obfjar}"/>
+    <yguard>
+    <inoutpair in="${project.jar.unobf}" out="${project.jar}"/>
 
-          <externalclasses>
-            <pathelement location="${projectDir}/lib/gson.jar"/>
-          </externalclasses>
+      <externalclasses>
+        <pathelement location="${libraryDir}/${gsonJar}"/>
+      </externalclasses>
 
-          <shrink logfile="shrinklog.xml">
-            <property name="error-checking" value="pedantic"/>
-            <keep>
-              <method name="void main(java.lang.String[])" class="com.yworks.example.HelloWorld" />
-              <class classes="public"/>
-            </keep>
-          </shrink>
+      <rename logfile="${project.rename.log}">
+        <keep>
+          <method name="void main(java.lang.String[])" class="${mainclass}"/>
+        </keep>
+      </rename>
+    </yguard>
+  </target>
 
-          <rename mainclass="com.yworks.example.HelloWorld" logfile="obflog.xml">
-            <property name="error-checking" value="pedantic"/>
-            <keep>
-              <class classes="public"/>
-            </keep>
-          </rename>
-
-        </yguard>
-    </target>
-
-    <target name="run" depends="yguard, -init">
-      <java classname="com.yworks.example.HelloWorld" fork="true">
-        <classpath>
-          <path refid="gson-path"/>
-          <pathelement location="${obfjar}"/>
-        </classpath>
-      </java>
-    </target>
+  <target name="run" depends="obfuscate">
+    <copy file="${libraryDir}/${gsonJar}" todir="${target.dir}/jar"/>
+    <java jar="${project.jar}" fork="true"/>
+  </target>
 </project>

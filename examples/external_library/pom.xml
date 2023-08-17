@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yworks.example</groupId>
-  <artifactId>HelloWorld</artifactId>
+  <artifactId>external_library</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>HelloWorld</name>
+  <name>external_library</name>
   <url>http://maven.apache.org</url>
   <properties>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -19,7 +19,6 @@
       <version>4.0.0</version>
       <scope>compile</scope>
     </dependency>
-    <!--  Gson: Java to Json conversion -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
@@ -30,46 +29,70 @@
   <build>
     <plugins>
       <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.8</version>
-          <executions>
-              <execution>
-                  <phase>package</phase>
-                  <goals>
-                    <goal>run</goal>
-                  </goals>
-                  <id>obfuscate</id>
-                  <configuration>
-                      <tasks>
-                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
-                        <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${runtime_classpath}"/>
-                        <yguard>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <id>obfuscate</id>
+            <configuration>
+              <tasks>
+                <property
+                 name="project.jar"
+                 value="${project.build.directory}/${project.build.finalName}.jar"/>
+                <property
+                 name="project.jar.unobf"
+                 value="${project.build.directory}/${project.build.finalName}_unobf.jar"/>
+                <move
+                 file="${project.jar}"
+                 tofile="${project.jar.unobf}"
+                 verbose="true"/>
 
-                          <inoutpair in="${project.build.directory}/${project.build.finalName}.jar" out="${project.build.directory}/${project.build.finalName}_obfuscated.jar" />
+                <property
+                 name="runtime_classpath"
+                 refid="maven.runtime.classpath"/>
+                <taskdef
+                 name="yguard"
+                 classname="com.yworks.yguard.YGuardTask"
+                 classpath="${runtime_classpath}"/>
+                <yguard>
+                  <inoutpair in="${project.jar.unobf}" out="${project.jar}" />
 
-                          <externalclasses>
-                            <pathelement location="${maven.dependency.com.google.code.gson.gson.jar.path}"/>
-                          </externalclasses>
+                  <externalclasses>
+                    <pathelement location="${maven.dependency.com.google.code.gson.gson.jar.path}"/>
+                  </externalclasses>
 
-                          <shrink logfile="${project.build.directory}/yshrink.log.xml">
-                            <property name="error-checking" value="pedantic"/>
-                            <keep>
-                              <method name="void main(java.lang.String[])" class="com.yworks.example.HelloWorld" />
-                              <class classes="public"/>
-                            </keep>
-                          </shrink>
-
-                          <rename mainclass="com.yworks.example.HelloWorld" logfile="${project.build.directory}/yguard.log.xml">
-                            <property name="error-checking" value="pedantic"/>
-                            <keep>
-                              <class classes="public"/>
-                            </keep>
-                          </rename>
-                        </yguard>
-                      </tasks>
-                  </configuration>
-              </execution>
-          </executions>
+                  <rename logfile="${project.build.directory}/${project.build.finalName}_renamelog.xml">
+                    <keep>
+                      <method name="void main(java.lang.String[])" class="${mainclass}"/>
+                    </keep>
+                  </rename>
+                </yguard>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <id>copy-dependencies</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeGroupIds>com.google.code.gson</includeGroupIds>
+              <outputDirectory>${project.build.directory}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -77,33 +100,13 @@
         <version>2.4</version>
         <configuration>
           <archive>
-            <manifest>
-              <mainClass>com.yworks.example.HelloWorld</mainClass>
-              <!--<addClasspath>true</addClasspath>-->
-            </manifest>
+            <manifestEntries>
+              <Main-Class>${mainclass}</Main-Class>
+              <Class-Path>./gson-2.8.9.jar</Class-Path>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
-      <!--<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.1.1</version>
-        <executions>
-          <execution>
-            <id>copy-dependencies</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
-              <overWriteReleases>false</overWriteReleases>
-              <overWriteSnapshots>false</overWriteSnapshots>
-              <overWriteIfNewer>true</overWriteIfNewer>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>-->
     </plugins>
   </build>
 </project>
