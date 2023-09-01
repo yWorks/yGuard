@@ -3,6 +3,7 @@ package com.yworks.util.abstractjar.impl;
 import com.yworks.util.abstractjar.Entry;
 
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * The type File entry wrapper.
@@ -44,5 +45,13 @@ public class FileEntryWrapper implements Entry {
    */
   public File getFile() {
     return file;
+  }
+
+  /**
+   * Creates an entry instance for the given file relative to the given directory.
+   */
+  static FileEntryWrapper newRelativeInstance( final File directory, final Path file ) {
+    final String relative = directory.toPath().relativize(file).toString();
+    return new FileEntryWrapper(file.toFile(), relative.replace(File.separatorChar, '/'));
   }
 }

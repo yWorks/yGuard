@@ -41,7 +41,7 @@ public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive
   @Override
   public FileVisitResult visitFile( final Path path, final BasicFileAttributes attrs ) throws IOException {
     if ( attrs.isRegularFile() ) {
-      entries.put(new FileEntryWrapper(path.toFile(), directory.toPath().relativize( path ).toString()), path.toFile());
+      entries.put(FileEntryWrapper.newRelativeInstance(directory, path), path.toFile());
     }
     return FileVisitResult.CONTINUE;
   }
