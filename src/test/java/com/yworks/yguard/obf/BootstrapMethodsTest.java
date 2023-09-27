@@ -40,70 +40,13 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
   @Test
   public void testLambdaMetaFactory() throws Exception {
     // LambdaMetaFactory bootstrap methods are used only in Java 8 and newer
-    final String testTypeName = "com.yworks.yguard.obf.LambdaMetaFactoryTest";
     assertTrue("Invalid Java version", 8 <= getMajorVersion());
 
-    final String testMethodName = "void run(java.io.PrintStream)";
-
-    // look for java source code that will be compiled with StringConcatFactory
-    // bootstrap methods
-    final String fileName = "LambdaMetaFactoryTest.txt";
-    final URL source = getClass().getResource(fileName);
-    assertNotNull("Could not resolve " + fileName + '.', source);
-
-    // compile the java source code
-    final com.yworks.util.Compiler compiler = Compiler.newCompiler();
-
-    final ArrayList sources = new ArrayList();
-    sources.add(compiler.newUrlSource(testTypeName, source));
-
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    compiler.compile(sources, baos);
-
-
-    // store resulting bytecode in temporary files and ...
-    final File inTmp = File.createTempFile(name.getMethodName() + "_in_", ".jar");
-    final File outTmp = File.createTempFile(name.getMethodName() + "_out_", ".jar");
-
-    try {
-      write(baos.toByteArray(), inTmp);
-
-      // ... run obfuscator
-      final StringWriter log = new StringWriter();
-      final GuardDB db = new GuardDB(new File[]{inTmp});
-      db.setDigests(new String[0]);
-      db.remapTo(new File[] {outTmp}, null, new PrintWriter(log), false);
-      db.close();
-
-
-      // finally check if the obfuscated class(es) still work(s) as intended
-      //   determine obfuscated names
-      final Mapper mapper = Mapper.newInstance(log.toString());
-
-      final String mtn = mapper.getTypeName(testTypeName);
-      assertNotNull("Could not find mapping for class " + testTypeName, mtn);
-
-      final String mmn = mapper.getMethodName(testTypeName, testMethodName);
-      assertNotNull("Could not find mapping for method " + testTypeName + '#' + testMethodName, mmn);
-
-      //   load obfuscated class and run test method
-      final ByteArrayOutputStream output = new ByteArrayOutputStream();
-      final ClassLoader cl = URLClassLoader.newInstance(new URL[]{outTmp.toURI().toURL()});
-      final Class obfType = Class.forName(mtn, true, cl);
-      final Method run = obfType.getMethod(mmn, PrintStream.class);
-      run.invoke(null, new PrintStream(output));
-
-      //   check test method output
-      assertEquals(
-              "Wrong test output",
-              String.format("implementation%n", System.lineSeparator()),
-              new String(output.toByteArray(), "UTF-8"));
-    } finally {
-
-      // clean up and remove temporary files
-      inTmp.delete();
-      outTmp.delete();
-    }
+    runBootstrapMethodsTest(
+      "com.yworks.yguard.obf.LambdaMetaFactoryTest",
+      "void run(java.io.PrintStream)",
+      "LambdaMetaFactoryTest.txt",
+      String.format("implementation%n"));
   }
 
   /**
@@ -116,14 +59,36 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
     // StringConcatFactory bootstrap methods are used only in Java 11 and newer
     assertTrue("Invalid Java version", 11 <= getMajorVersion());
 
+    runBootstrapMethodsTest(
+      "com.yworks.yguard.obf.StringConcatFactoryTest",
+      "void run(java.io.PrintStream)",
+      "StringConcatFactoryTest.txt",
+      String.format("Hello world!%n1 < 2%n"));
+  }
 
-    final String testTypeName = "com.yworks.yguard.obf.StringConcatFactoryTest";
-    final String testMethodName = "void run(java.io.PrintStream)";
+  @Test
+  public void testSwitchBootstraps_enumSwitch() throws Exception {
+    // SwitchBootstraps.enumSwitch bootstrap method is used only in Java 21 and
+    // newer
+    if (21 <= getMajorVersion()) {
+      runBootstrapMethodsTest(
+        "com.yworks.yguard.obf.SwitchBootstraps_enumSwitch",
+        "void run(java.io.PrintStream)",
+        "SwitchBootstraps_enumSwitch.txt",
+        String.format("It is heads.%n"));
+    } else {
+      System.err.println("Run test with Java 21 or newer.");
+    }
+  }
 
 
-    // look for java source code that will be compiled with StringConcatFactory
-    // bootstrap methods
-    final String fileName = "StringConcatFactoryTest.txt";
+  private void runBootstrapMethodsTest(
+    final String testTypeName,
+    final String testMethodName,
+    final String fileName,
+    final String expected
+  ) throws Exception {
+    // look for java source code that will be compiled with bootstrap methods
     final URL source = getClass().getResource(fileName);
     assertNotNull("Could not resolve " + fileName + '.', source);
 
@@ -138,7 +103,7 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
     compiler.compile(sources, baos);
 
 
-    // store resulting bytecode in temporary files and ...
+    // store the resulting bytecode in temporary files and ...
     final File inTmp = File.createTempFile(name.getMethodName() + "_in_", ".jar");
     final File outTmp = File.createTempFile(name.getMethodName() + "_out_", ".jar");
 
@@ -153,7 +118,7 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
       db.close();
 
 
-      // finally check if the obfuscated class(es) still work(s) as intended
+      // finally, check if the obfuscated class(es) still work(s) as intended
       //   determine obfuscated names
       final Mapper mapper = Mapper.newInstance(log.toString());
 
@@ -172,9 +137,9 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
 
       //   check test method output
       assertEquals(
-              "Wrong test output",
-              String.format("Hello world!%1$s1 < 2%1$s", System.lineSeparator()),
-              new String(output.toByteArray(), "UTF-8"));
+        "Wrong test output",
+        expected,
+        new String(output.toByteArray(), "UTF-8"));
     } finally {
 
       // clean up and remove temporary files

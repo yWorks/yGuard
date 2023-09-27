@@ -1,0 +1,26 @@
+package com.yworks.yguard.obf;
+
+import java.io.PrintStream;
+
+public class SwitchBootstraps_enumSwitch {
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+
+  public static void run( final PrintStream out ) {
+    out.println(flip(Coin.HEADS));
+  }
+
+  private static String flip( final Coin coin ) {
+    return switch (coin) {
+      case Coin c when c == Coin.HEADS -> "It is heads.";
+      case Coin c when c == Coin.TAILS -> "It is tails.";
+      default -> "Error";
+    };
+  }
+
+  public enum Coin {
+    HEADS,
+    TAILS
+  }
+}
