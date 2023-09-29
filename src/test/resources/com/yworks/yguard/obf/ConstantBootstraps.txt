@@ -1,0 +1,26 @@
+package com.yworks.yguard.obf;
+
+import java.io.PrintStream;
+
+public class ConstantBootstraps {
+  public static void main( String[] args ) {
+    System.err.println("com.yworks.yguard.obf.ConstantBootstraps$Coin");
+    run(System.out);
+  }
+
+  public static void run( final PrintStream out ) {
+    out.println(check(Coin.HEADS));
+  }
+
+  private static String check( final Object o ) {
+    return switch (o) {
+      case Coin.HEADS -> "yes";
+      case String s when s.equalsIgnoreCase("NO") -> "no";
+      default -> "Error";
+    };
+  }
+
+  public enum Coin {
+    HEADS, TAILS
+  }
+}

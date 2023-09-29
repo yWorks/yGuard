@@ -1,0 +1,21 @@
+package com.yworks.yguard.obf;
+
+import java.io.PrintStream;
+
+public class SwitchBootstraps_typeSwitch {
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+
+  public static void run( final PrintStream out ) {
+    out.println(check("y"));
+  }
+
+  private static String check( final Object o ) {
+    return switch (o) {
+      case String s when s.equals("y") -> "yes";
+      case String s when s.equals("n") -> "no";
+      default -> "Error";
+    };
+  }
+}

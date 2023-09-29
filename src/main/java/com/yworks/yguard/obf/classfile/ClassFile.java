@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -82,6 +83,14 @@ public class ClassFile implements ClassConstants
     private static final String LOG_DANGER_CLASSLOADER_MID = " calls the java.lang.ClassLoader method ";
 
     /**
+     * {@link java.lang.invoke.ConstantBootstraps#invoke}
+     */
+    private static final int BM_TYPE_CBI = 6;
+    /**
+     * {@link java.lang.runtime.SwitchBootstraps#typeSwitch} method. 
+     */
+    private static final int BM_TYPE_SBTS = 5;
+    /**
      * {@link java.lang.runtime.SwitchBootstraps#enumSwitch} method. 
      */
     private static final int BM_TYPE_SBES = 4;
@@ -101,6 +110,19 @@ public class ClassFile implements ClassConstants
      * Unknown bootstrap method, throw exception.
      */
     private static final int BM_TYPE_UNKNOWN = 0;
+
+    /**
+     * {@link java.lang.Enum.EnumDesc#of} method.
+     */
+    private static final int MH_EDO = 2;
+    /**
+     * {@link java.lang.constant.ClassDesc#of} method.
+     */
+    private static final int MH_CDO = 1;
+    /**
+     * Unknown method handle, throw exception.
+     */
+    private static final int MH_UNKNOWN = 0;
 
     // Fields ----------------------------------------------------------------
     private int u4magic;
@@ -371,10 +393,6 @@ public class ClassFile implements ClassConstants
                 (cpInfo[i] instanceof DoubleCpInfo))
             {
                 i++;
-            }
-            // todo: remove once remapping CONSTANT_Dynamic_info is supported
-            else if (cpInfo[i] instanceof DynamicCpInfo) {
-                throw new IOException("Unsupported tag type in constant pool: dynamic");
             }
         }
         constantPool = new ConstantPool(this, cpInfo);
@@ -1159,56 +1177,22 @@ public class ClassFile implements ClassConstants
             this.replaceConstantPoolStrings((ClassTree)nm);
         }
 
-      final LinkedHashSet ombIndicies = new LinkedHashSet();
-      int currentCpLength = constantPool.length(); // constant pool can be extended (never contracted) during loop
+        final LinkedHashSet ombIndicies = new LinkedHashSet();
+        int currentCpLength = constantPool.length(); // constant pool can be extended (never contracted) during loop
         for (int i = 0; i < currentCpLength; i++) {
           CpInfo cpInfo = getCpEntry(i);
           if (cpInfo != null) {
             // If this is an entry that references Descriptors and/or names, adjust them correspondingly
-            if (cpInfo instanceof InvokeDynamicCpInfo) {
-              InvokeDynamicCpInfo id = (InvokeDynamicCpInfo) cpInfo;
-
-              final BootstrapMethod bm = getBootstrapMethod(id);
-              switch (getType(bm)) {
-                case BM_TYPE_LMF: {
-                  final int idx = id.getNameAndTypeIndex();
-
-                  NameAndTypeCpInfo ntInfo = (NameAndTypeCpInfo) getCpEntry(idx);
-                  Utf8CpInfo refUtf = (Utf8CpInfo) getCpEntry(ntInfo.getNameIndex());
-                  Utf8CpInfo descUtf = (Utf8CpInfo) getCpEntry(ntInfo.getDescriptorIndex());
-
-                  final String descriptor = descUtf.getString();
-                  String className = descriptor.substring(descriptor.indexOf(")L") + 2, descriptor.length() - 1);
-
-                  // find out the method descriptor of the method
-                  MethodTypeCpInfo methodTypeInfo = (MethodTypeCpInfo) getCpEntry(bm.getBootstrapArguments()[0]);
-                  Utf8CpInfo samMethodDescriptor = (Utf8CpInfo) getCpEntry(methodTypeInfo.getU2descriptorIndex());
-                  // now find the mapping of the method
-                  String remapName = nm.mapMethod(className, refUtf.getString(), samMethodDescriptor.getString());
-                  String remapDesc = nm.mapDescriptor(descUtf.getString());
-
-                  id.setNameAndTypeIndex(remapNT(refUtf, remapName, descUtf, remapDesc, ntInfo, idx));
-                } break;
-                case BM_TYPE_SCF: {
-                  remapInvokeDynamic(nm, id);
-                } break;
-                case BM_TYPE_OM: {
-                  ombIndicies.add(Integer.valueOf(id.getBootstrapMethodAttrIndex()));
-                  remapInvokeDynamic(nm, id);
-                } break;
-                case BM_TYPE_SBES: {
-                  // java.lang.runtime.SwitchBootstraps#enumSwitch
-                  if (isSupportedSbes(bm)) {
-                    remapInvokeDynamic(nm, id);
-                  } else {
-                    final String sig = getBootstrapMethodSignature(bm);
-                    throw new IllegalArgumentException("Unsupported bootstrap method: " + sig);
-                  }
-                } break;
-                default:
-                  final String sig = getBootstrapMethodSignature(bm);
-                  throw new IllegalArgumentException("Unrecognized bootstrap method: " + sig);
+            try {
+              if (cpInfo instanceof InvokeDynamicCpInfo) {
+                remapInvokeDynamic(nm, (InvokeDynamicCpInfo) cpInfo, ombIndicies);
+              } else if (cpInfo instanceof DynamicCpInfo) {
+                remapDynamic(nm, (DynamicCpInfo) cpInfo, !replaceClassNameStrings);
               }
+            } catch (MapException me) {
+              final String msg = me.getMessage();
+              final int idx = ((AbstractDynamicCpInfo) cpInfo).getBootstrapMethodAttrIndex();
+              throw new IllegalArgumentException(msg + ": " + thisClassName + ':' + idx);
             }
           }
         }
@@ -1218,10 +1202,9 @@ public class ClassFile implements ClassConstants
             final BootstrapMethod bm = attr.getBootstrapMethods()[((Integer) it.next()).intValue()];
 
             final StringCpInfo namesInfo = (StringCpInfo) getCpEntry(bm.getBootstrapArguments()[1]);
-            final Utf8CpInfo names = (Utf8CpInfo) getCpEntry(namesInfo.getStringIndex());
             final StringBuilder sb = new StringBuilder();
             final String delim = ";";
-            for (StringTokenizer st = new StringTokenizer(names.getString(), delim, true); st.hasMoreTokens();) {
+            for (StringTokenizer st = new StringTokenizer(getText(namesInfo), delim, true); st.hasMoreTokens();) {
               final String origName = st.nextToken();
               if (delim.equals(origName)) {
                 sb.append(delim);
@@ -1329,7 +1312,53 @@ public class ClassFile implements ClassConstants
         }
     }
 
-    private boolean isSupportedSbes( final BootstrapMethod bm ) {
+    private void remapInvokeDynamic(NameMapper nm, InvokeDynamicCpInfo id, Set ombIndicies) throws MapException {
+      final BootstrapMethod bm = getBootstrapMethod(id);
+      switch (getType(bm)) {
+        case BM_TYPE_LMF: {
+          final int idx = id.getNameAndTypeIndex();
+
+          NameAndTypeCpInfo ntInfo = (NameAndTypeCpInfo) getCpEntry(idx);
+          Utf8CpInfo refUtf = (Utf8CpInfo) getCpEntry(ntInfo.getNameIndex());
+          Utf8CpInfo descUtf = (Utf8CpInfo) getCpEntry(ntInfo.getDescriptorIndex());
+
+          final String descriptor = descUtf.getString();
+          String className = descriptor.substring(descriptor.indexOf(")L") + 2, descriptor.length() - 1);
+
+          // find out the method descriptor of the method
+          MethodTypeCpInfo methodTypeInfo = (MethodTypeCpInfo) getCpEntry(bm.getBootstrapArguments()[0]);
+          Utf8CpInfo samMethodDescriptor = (Utf8CpInfo) getCpEntry(methodTypeInfo.getU2descriptorIndex());
+          // now find the mapping of the method
+          String remapName = nm.mapMethod(className, refUtf.getString(), samMethodDescriptor.getString());
+          String remapDesc = nm.mapDescriptor(descUtf.getString());
+
+          id.setNameAndTypeIndex(remapNT(refUtf, remapName, descUtf, remapDesc, ntInfo, idx));
+        } break;
+        case BM_TYPE_SCF: {
+          remapInvokeDynamicDescriptor(nm, id);
+        } break;
+        case BM_TYPE_OM: {
+          ombIndicies.add(Integer.valueOf(id.getBootstrapMethodAttrIndex()));
+          remapInvokeDynamicDescriptor(nm, id);
+        } break;
+        case BM_TYPE_SBES: {
+          // java.lang.runtime.SwitchBootstraps#enumSwitch
+          if (isSupportedSbes(bm)) {
+            remapInvokeDynamicDescriptor(nm, id);
+          } else {
+            throw new MapException("Unsupported bootstrap method invocation");
+          }
+        } break;
+        case BM_TYPE_SBTS: {
+          // java.lang.runtime.SwitchBootstraps#typeSwitch
+          remapInvokeDynamicDescriptor(nm, id);
+        } break;
+        default:
+          throw new MapException("Unrecognized bootstrap method");
+      }
+    }
+
+    private boolean isSupportedSbes(BootstrapMethod bm) {
       final int[] bootstrapArguments = bm.getBootstrapArguments();
       for (int j = 0; j < bootstrapArguments.length; ++j) {
         if (!(getCpEntry(bootstrapArguments[j]) instanceof ClassCpInfo)) {
@@ -1339,7 +1368,7 @@ public class ClassFile implements ClassConstants
       return true;
     }
 
-    private void remapInvokeDynamic( NameMapper nm, InvokeDynamicCpInfo id) {
+    private void remapInvokeDynamicDescriptor(NameMapper nm, InvokeDynamicCpInfo id) {
       final int idx = id.getNameAndTypeIndex();
 
       final NameAndTypeCpInfo ntInfo = (NameAndTypeCpInfo) getCpEntry(idx);
@@ -1351,6 +1380,104 @@ public class ClassFile implements ClassConstants
       id.setNameAndTypeIndex(remapNT(refUtf, refUtf.getString(), descUtf, remapDesc, ntInfo, idx));
     }
 
+    private void remapDynamic(
+      NameMapper nm, DynamicCpInfo info, boolean remap
+    ) throws MapException {
+      final BootstrapMethod bm = getBootstrapMethod(info);
+      if (getType(bm) == BM_TYPE_CBI) {
+        switch (getMethodHandleType(bm.getBootstrapArguments()[0])) {
+          case MH_EDO: // java.lang.Enum$EnumDesc.of
+            // nothing to do
+            // the second argument is a bootstrap method that creates the
+            // java.lang.constant.ClassDesc for the enum class to be used
+            // the third argument is a string with the name of the enum
+            // value to be used
+            // since Enum.valueOf works with the *original* names of enum values
+            // the value of this third argument has to be the original enum
+            // value name as well and may not be changed
+            return;
+          case MH_CDO: // java.lang.constant.ClassDesc.of
+            remapClassDescOf(nm, bm, remap);
+            return;
+          default:
+            throw new MapException("Unsupported bootstrap method invocation");
+        }
+      } else {
+        throw new MapException("Unrecognized bootstrap method");
+      }
+    }
+
+    private void remapClassDescOf(
+      NameMapper nm, BootstrapMethod bm, boolean remap
+    ) throws MapException {
+      final int[] bootstrapArguments = bm.getBootstrapArguments();
+      switch (bootstrapArguments.length) {
+        case 3: {
+          String pkgName = null;
+          String typeName = null;
+
+          final CpInfo pkgNameInfo = getCpEntry(bootstrapArguments[2]);
+          if (pkgNameInfo instanceof StringCpInfo) {
+            pkgName = getText((StringCpInfo) pkgNameInfo);
+          }
+
+          final CpInfo typeNameInfo = getCpEntry(bootstrapArguments[2]);
+          if (typeNameInfo instanceof StringCpInfo) {
+            typeName = getText((StringCpInfo) typeNameInfo);
+          }
+
+          if (pkgName != null && typeName != null) {
+            if (pkgName.length() > 0) {
+              final String qualifiedName = pkgName + '.' + typeName;
+              final String remapPkg = nm.mapPackage(toInternal(pkgName));
+              final String remapQualified = nm.mapClass(toInternal(qualifiedName));
+              final String remapType = remapQualified.substring(remapPkg.length() + 1);
+
+              bootstrapArguments[1] = addStringEntry(translate(remapPkg));
+              bootstrapArguments[2] = addStringEntry(translate(remapType));
+              // since the qualified name string is split into package name
+              // and type name, replaceConstantPoolStrings does not recognize
+              // the two fragments as a class name and consequently the two
+              // fragments have to be replaced no matter what
+            } else {
+              if (remap) {
+                final String remapName = nm.mapClass(toInternal(typeName));
+                bootstrapArguments[2] = addStringEntry(translate(remapName));
+              }
+              // else
+              //   remap == false means replaceClassNameStrings == true 
+              //   in this case, the class name string used for ClassDesc.of
+              //   is renamed in replaceConstantPoolStrings
+            }
+
+            return;
+          }
+        } break;
+        case 2: {
+          final CpInfo typeNameInfo = getCpEntry(bootstrapArguments[1]);
+          if (typeNameInfo instanceof StringCpInfo) {
+            if (remap) {
+              final String typeName = getText((StringCpInfo) typeNameInfo);
+              final String remapName = nm.mapClass(toInternal(typeName));
+              bootstrapArguments[1] = addStringEntry(translate(remapName));
+            }
+            // else
+            //   remap == false means replaceClassNameStrings == true 
+            //   in this case, the class name string used for ClassDesc.of
+            //   is renamed in replaceConstantPoolStrings
+
+            return;
+          }
+        } break;
+      }
+
+      throw new MapException("Unsupported bootstrap method invocation");
+    }
+
+    private static String toInternal( final String name ) {
+      return name.replace('.', '/');
+    }
+
     private BootstrapMethodsAttrInfo getBootstrapMethodAttribute() {
       for (int i = 0; i < attributes.length; i++) {
         AttrInfo attribute = attributes[i];
@@ -1359,6 +1486,17 @@ public class ClassFile implements ClassConstants
         }
       }
       throw new RuntimeException("No BootstrapMethod attribute in class file");
+    }
+
+    private int getMethodHandleType(int methodHandleIdx) {
+      final String sig = getMethodHandleSignature(methodHandleIdx);
+      if ("java/lang/Enum$EnumDesc#of(...)Ljava/lang/Enum$EnumDesc;".equals(sig)) {
+        return MH_EDO;
+      } else if ("java/lang/constant/ClassDesc#of(...)Ljava/lang/constant/ClassDesc;".equals(sig)) {
+        return MH_CDO;
+      } else {
+        return MH_UNKNOWN;
+      }
     }
 
     private int getType(BootstrapMethod method) {
@@ -1375,12 +1513,16 @@ public class ClassFile implements ClassConstants
         return BM_TYPE_OM;
       } else if ("java/lang/runtime/SwitchBootstraps#enumSwitch(...)".equals(sig)) {
         return BM_TYPE_SBES;
+      } else if ("java/lang/runtime/SwitchBootstraps#typeSwitch(...)".equals(sig)) {
+        return BM_TYPE_SBTS;
+      } else if ("java/lang/invoke/ConstantBootstraps#invoke(...)".equals(sig)) {
+        return BM_TYPE_CBI; 
       } else {
         return BM_TYPE_UNKNOWN;
       }
     }
 
-    private BootstrapMethod getBootstrapMethod(InvokeDynamicCpInfo info) {
+    private BootstrapMethod getBootstrapMethod(AbstractDynamicCpInfo info) {
       BootstrapMethodsAttrInfo bmInfo = getBootstrapMethodAttribute();
       return bmInfo.getBootstrapMethods()[info.getBootstrapMethodAttrIndex()];
     }
@@ -1389,11 +1531,42 @@ public class ClassFile implements ClassConstants
       final int mhIdx = method.getBootstrapMethodRef();
       final MethodHandleCpInfo mhInfo = (MethodHandleCpInfo) getCpEntry(mhIdx);
       final RefCpInfo mrInfo = (RefCpInfo) getCpEntry(mhInfo.getReferenceIndex());
-      final ClassCpInfo cpInfo = (ClassCpInfo) getCpEntry(mrInfo.getClassIndex());
-      final String className = getUtf8(cpInfo.getNameIndex());
+      final String className = getClassName(mrInfo.getClassIndex());
       final NameAndTypeCpInfo ntInfo = (NameAndTypeCpInfo) getCpEntry(mrInfo.getNameAndTypeIndex());
       final String memberName = getUtf8(ntInfo.getNameIndex());
       return className + '#' + memberName + getReferenceKindSuffix(mhInfo.getReferenceKind());
+    }
+
+    private String getMethodHandleSignature(int idx) {
+      final MethodHandleCpInfo mhInfo = (MethodHandleCpInfo) getCpEntry(idx);
+      switch (mhInfo.getReferenceKind()) {
+        case REF_invokeVirtual:
+        case REF_invokeStatic:
+        case REF_invokeSpecial:
+        case REF_newInvokeSpecial:
+        case REF_invokeInterface:
+          final RefCpInfo mrInfo = (RefCpInfo) getCpEntry(mhInfo.getReferenceIndex());
+          final String className = getClassName(mrInfo.getClassIndex());
+          final String signature = getMethodSignature(mrInfo.getNameAndTypeIndex());
+          return className + '#' + signature;
+        default:
+          return "";
+      }
+    }
+
+    private String getClassName(int idx) {
+      final ClassCpInfo cpInfo = (ClassCpInfo) getCpEntry(idx);
+      return getUtf8(cpInfo.getNameIndex());
+    }
+
+    private String getMethodSignature(int idx) {
+      final NameAndTypeCpInfo ntInfo = (NameAndTypeCpInfo) getCpEntry(idx);
+      // remove parameter list from descriptor to support overloads with
+      // same return type, see e.g. java.lang.constant.ClassDesc#of
+      final String desc = getUtf8(ntInfo.getDescriptorIndex());
+      final int endIdx = desc.indexOf(')');
+      final String returnType = endIdx > -1 ? desc.substring(endIdx + 1) : "";
+      return getUtf8(ntInfo.getNameIndex()) + "(...)" + returnType;
     }
 
     private static String getReferenceKindSuffix(int referenceKind) {
@@ -1414,6 +1587,17 @@ public class ClassFile implements ClassConstants
         default:
           throw new IllegalArgumentException("Invalid reference kind: " + referenceKind);
       }
+    }
+
+    private String getText(StringCpInfo info) {
+      return getUtf8(info.getStringIndex());
+    }
+
+    private int addStringEntry(String text) {
+      final int remapIndex = constantPool.addUtf8Entry(text);
+      final StringCpInfo remapInfo = new StringCpInfo();
+      remapInfo.setStringIndex(remapIndex);
+      return constantPool.addEntry(remapInfo);
     }
 
     private void remapAnnotationDefault(AnnotationDefaultAttrInfo annotationDefault, NameMapper nm){
@@ -1771,5 +1955,12 @@ public class ClassFile implements ClassConstants
       }
     }
     return "";
+  }
+
+
+  private static final class MapException extends Exception {
+    MapException(String message) {
+      super(message);
+    }
   }
 }

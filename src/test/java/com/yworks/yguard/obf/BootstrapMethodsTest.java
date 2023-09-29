@@ -81,6 +81,36 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
     }
   }
 
+  @Test
+  public void testSwitchBootstraps_typeSwitch() throws Exception {
+    // SwitchBootstraps.typeSwitch bootstrap method is used only in Java 21 and
+    // newer
+    if (21 <= getMajorVersion()) {
+      runBootstrapMethodsTest(
+        "com.yworks.yguard.obf.SwitchBootstraps_typeSwitch",
+        "void run(java.io.PrintStream)",
+        "SwitchBootstraps_typeSwitch.txt",
+        String.format("yes%n"));
+    } else {
+      System.err.println("Run test with Java 21 or newer.");
+    }
+  }
+
+  @Test
+  public void testConstantBootstraps() throws Exception {
+    // ConstantBootstraps.invoke bootstrap method is used only in Java 21 and
+    // newer
+    if (21 <= getMajorVersion()) {
+      runBootstrapMethodsTest(
+        "com.yworks.yguard.obf.ConstantBootstraps",
+        "void run(java.io.PrintStream)",
+        "ConstantBootstraps.txt",
+        String.format("yes%n"));
+    } else {
+      System.err.println("Run test with Java 21 or newer.");
+    }
+  }
+
 
   private void runBootstrapMethodsTest(
     final String testTypeName,
@@ -114,6 +144,7 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
       final StringWriter log = new StringWriter();
       final GuardDB db = new GuardDB(new File[]{inTmp});
       db.setDigests(new String[0]);
+//      db.setReplaceClassNameStrings(true);
       db.remapTo(new File[] {outTmp}, null, new PrintWriter(log), false);
       db.close();
 
@@ -130,10 +161,14 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
 
       //   load obfuscated class and run test method
       final ByteArrayOutputStream output = new ByteArrayOutputStream();
-      final ClassLoader cl = URLClassLoader.newInstance(new URL[]{outTmp.toURI().toURL()});
-      final Class obfType = Class.forName(mtn, true, cl);
-      final Method run = obfType.getMethod(mmn, PrintStream.class);
-      run.invoke(null, new PrintStream(output));
+      final URLClassLoader cl = URLClassLoader.newInstance(new URL[]{outTmp.toURI().toURL()});
+      try {
+        final Class obfType = Class.forName(mtn, true, cl);
+        final Method run = obfType.getMethod(mmn, PrintStream.class);
+        run.invoke(null, new PrintStream(output));
+      } finally {
+        cl.close();
+      }
 
       //   check test method output
       assertEquals(
