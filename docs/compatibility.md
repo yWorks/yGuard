@@ -4,6 +4,12 @@
 
 yGuard requires JDK 1.7.x or greater and Ant 1.5 or greater installed on your system. It may work with earlier versions of these pieces of software as well, however this has not been tested thoroughly. yGuard 1.3.x and upwards works together with Ant 1.6.
 
+## Java 18 - Java 21 Compatibility
+
+Beginning with version 4.1.0, yGuard supports obfuscation of Java class files that use `ClassDesc`, `Enum.EnumDesc`, and `SwitchBootstraps` bootstrap method factories which were introduced in Java 12 and Java 21.
+
+(This also means yGuard now supports obfuscating `dynamic` instructions which were introduced with the Java 11 `.class` file format.)
+
 ## Java 14 - Java 17 Compatibility
 
 Beginning with version 3.1.0, yGuard supports obfuscation of Java class files that contain `record` or `permittedsubclasses` attributes which were introduced with the Java 16 and Java 17 `.class` file formats.
@@ -31,9 +37,8 @@ While yGuard does fully support obfuscating `invokedynamic` instructions and the
 ## Compatibility to 3rd party JVM
 
 Obfuscating `dynamic` and `invokedynamic` instructions is a task that is theoretically infeasible. An obfuscation program cannot determine the type and parameters of such instructions in a generic way.
-A trade-off solution for this is supporting known `MetaFactory` objects by their signature.
-The `JRE` makes this task quite trivial. 
-`yGuard` supports the built-in `LambdaMetafactory` and `StringConcatFactory`.
+A trade-off solution for this is supporting known bootstrap method factories by their signature. 
+`yGuard` supports Java's built-in `LambdaMetafactory`, `StringConcatFactory`, `SwitchBootstraps`, `Enum.EnumDesc`, and `ClassDesc` bootstrap method factory classes. 
 
 This trade-off however means `yGuard` offers only limited support for instruction sets based on `invokedynamic` or `dynamic`.
 In particular, supporting new `JVM` targets, such as Scala, might require manual work.
@@ -45,18 +50,21 @@ Below is a documentation on the design process involved in supporting the `Lambd
 
 To check that JVM compatibility is ensured in new releases, we verified that there are no differences in the class file format in JVM >= 11.
 This can be checked in the documentation of the [class file format](https://docs.oracle.com/javase/specs/jvms/se13/html/jvms-4.html).
-The JRE ships two targets for the `invokedynamic` and `dynamic` instruction sets. These are:
+The JRE ships several targets for the `invokedynamic` and `dynamic` instruction sets. These are:
 
-- `LambdaMetafactory`
-- `StringConcatFactory`
+- `LambdaMetafactory`,
+- `StringConcatFactory`,
+- `SwitchBootstraps`,
+- `Enum.EnumDesc`, and
+- `ClassDesc`
 
-We can recognise these factories in the obfuscation and shrinking steps using their signature. 
-Looking at the [documentation](https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/invoke/LambdaMetafactory.html) tells us that we should cover two signatures for `LambdaMetaFactory`:
+We can recognise these factories in the obfuscation steps using their signature. 
+Looking at the [documentation](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/invoke/LambdaMetafactory.html) tells us that we should cover two signatures for `LambdaMetaFactory`:
 
 - `java/lang/invoke/LambdaMetafactory#metafactory`
 - `java/lang/invoke/LambdaMetafactory#altMetafactory`
 
-`yFiles` recognises these methods [during renaming](https://github.com/yWorks/yGuard/blob/master/retroguard/src/main/java/com/yworks/yguard/obf/classfile/ClassFile.java#L1189).
+`yGuard` recognises these methods [during renaming](https://github.com/yWorks/yGuard/blob/master/retroguard/src/main/java/com/yworks/yguard/obf/classfile/ClassFile.java#L1189).
 In order to obfuscate lambdas, these steps are performed:
 
 - if an instance of `InvokeDynamicCpInfo` is found [while parsing the constant pool](https://github.com/yWorks/yGuard/blob/master/retroguard/src/main/java/com/yworks/yguard/obf/classfile/ClassFile.java#L1041), check its signature

@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0]
+
+### Added
+- Added support for obfuscating Java 21 class files.
+
+### Changed
+- Updated and improved examples. 
+
+### Fixed
+- Stand-alone package names in resource files are no longer adjusted when using `replaceContentPolicy` `strict`.
+
 ## [4.0.0]
 
 ### Added
@@ -26,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for obfuscating multi-release jars.
   (Shrinking multi-release jars is not supported.)
 
-### Improved
+### Changed
 - Improved support for type annotations.
 
 ### Fixed

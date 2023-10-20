@@ -30,7 +30,7 @@ configurations {
 }
 
 dependencies {
-  yguard 'com.yworks:yguard:4.0.0'
+  yguard 'com.yworks:yguard:4.1.0'
   gson 'com.google.code.gson:gson:2.8.9'
   implementation configurations.gson.dependencies
 }
