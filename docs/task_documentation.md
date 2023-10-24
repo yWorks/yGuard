@@ -37,7 +37,7 @@ The `yguard` task contains two nested elements that perform the name obfuscation
 The `yguard` task is a container element for the `rename` and `shrink` task elements as well as configuration elements that are common to `rename` and `shrink`.
 Being a container element only, the `yguard` task does not perform any actions on its own, but needs a `rename` and/or `shrink` child element for name obfuscating and/or code shrinking.
 
-Please see the [troubleshooting section](troubleshooting) to learn about common pitfalls when using name obfuscation and shrinking software.
+Please see the [troubleshooting section](troubleshooting.md) to learn about common pitfalls when using name obfuscation and shrinking software.
 
 #### Attributes
 
@@ -240,7 +240,7 @@ This will retain the attributes named _"SourceFile"_, _"LineNumberTable"_, and _
 
 ## The `shrink` Element
 The `shrink` task removes all classes, fields and methods that are not reachable from a number of entrypoints given by a nested [keep]() element.
-See the [examples]() explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting) section for information on this topic.
+See the [examples]() explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting.md) section for information on this topic.
 
 #### Attributes
 
@@ -332,7 +332,7 @@ The `entrypointjar` element has no child elements.
 ```
 
 ## The `rename` Element
-The basic idea is, that all elements will be renamed by this task. There are different use cases, where you sometimes want to exclude or simply just have to exclude some elements from name obfuscation, i.e. **not** rename them but keep in the API as is. See the [examples]() for explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting) section for information on this topic. Excluding elements can be achieved by using the [keep](#the-keep-element) element, the `mainclass` attribute of the `rename` element and by annotating elements in the source code with the annotation that is specified in the `annotationClass` attribute of the `rename` element. Using the nested `keep` element, you have to specify all classes, methods, fields, and attributes that should be excluded from name obfuscation. Another way is to [annotate the elements directly in the source code](#annotate) that should be obfuscated or excluded. You can use the yFiles obfuscation annotation `com.yworks.util.annotation.Obfuscation` for that or specify your own annotation in the `annotationClass` attribute of this element.
+The basic idea is, that all elements will be renamed by this task. There are different use cases, where you sometimes want to exclude or simply just have to exclude some elements from name obfuscation, i.e. **not** rename them but keep in the API as is. See the [examples]() for explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting.md) section for information on this topic. Excluding elements can be achieved by using the [keep](#the-keep-element) element, the `mainclass` attribute of the `rename` element and by annotating elements in the source code with the annotation that is specified in the `annotationClass` attribute of the `rename` element. Using the nested `keep` element, you have to specify all classes, methods, fields, and attributes that should be excluded from name obfuscation. Another way is to [annotate the elements directly in the source code](#annotate) that should be obfuscated or excluded. You can use the yFiles obfuscation annotation `com.yworks.util.annotation.Obfuscation` for that or specify your own annotation in the `annotationClass` attribute of this element.
 
 <table class="listing">
 <thead>
