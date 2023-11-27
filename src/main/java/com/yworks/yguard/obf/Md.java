@@ -84,8 +84,8 @@ public class Md extends MdFd
      * @return the boolean
      */
     public boolean isNRWildcardMatch(String namePattern, String descPattern) {
-        return 
-            isNRMatch(namePattern, getFullInName()) &&
+        return
+                isNonRecursiveWildcardMatch(namePattern, getFullInName()) &&
             isMatch(descPattern, getDescriptor());
     }
 }

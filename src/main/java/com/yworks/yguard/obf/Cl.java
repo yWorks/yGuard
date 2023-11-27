@@ -314,7 +314,7 @@ public class Cl extends PkCl implements NameListUp, NameListDown
      * @return the boolean
      */
     public boolean isNRWildcardMatch(String pattern) {
-        return isNRMatch(pattern, getFullInName());
+        return isNonRecursiveWildcardMatch(pattern, getFullInName());
     }
 
     /**

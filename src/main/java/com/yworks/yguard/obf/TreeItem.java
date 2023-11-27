@@ -23,65 +23,65 @@ import com.yworks.yguard.obf.classfile.*;
  *
  * @author Mark Welsh
  */
-public class TreeItem
-{
+public class TreeItem {
     // Constants -------------------------------------------------------------
-
 
     // Fields ----------------------------------------------------------------
     /**
      * The Is synthetic.
      */
-    protected boolean isSynthetic;  // Is a method or field Synthetic?
+    protected boolean isSynthetic; // Is a method or field Synthetic?
     /**
      * The Access.
      */
-    protected int access;  // Access level (interpret using java.lang.reflect.Modifier)
+    protected int access; // Access level (interpret using java.lang.reflect.Modifier)
     /**
      * The Class tree.
      */
-    protected ClassTree classTree = null;   // Our owner
+    protected ClassTree classTree = null; // Our owner
     /**
      * The Parent.
      */
-    protected TreeItem parent = null;       // Our immediate parent
+    protected TreeItem parent = null; // Our immediate parent
     /**
      * The Sep.
      */
     protected String sep = ClassFile.SEP_REGULAR; // Separator preceeding this level's name
-    private String inName = null;         // Original name of this item
-    private String outName = null;        // Output name of this item
+    private String inName = null; // Original name of this item
+    private String outName = null; // Output name of this item
     private boolean isFixed = false; // Has the name been fixed in some way?
     private boolean isFromScript = false; // Is this script constrained?
     private boolean isFromScriptMap = false; // Is this script_map constrained?
 
-
     // Class Methods ---------------------------------------------------------
-
     /**
-     * Do a non-package-recursive wildcard String match.
+     * Checks if two strings match using a non-package-recursive wildcard string
+     * pattern.
      *
-     * @param pattern the pattern
-     * @param string  the string
-     * @return the boolean
+     * @param wildcardPattern The wildcard pattern to match against.
+     * @param inputString     The input string to compare.
+     * @return True if the input string matches the wildcard pattern, false
+     *         otherwise.
      */
-    public static boolean isNRMatch(String pattern, String string) {
-        Enumeration enum1, enum2;
+    public static boolean isNonRecursiveWildcardMatch(String wildcardPattern, String inputString) {
+        Enumeration patternEnum, stringEnum;
         try {
-            for (enum1 = ClassTree.getNameEnum(pattern),
-                     enum2 = ClassTree.getNameEnum(string);
-                 enum1.hasMoreElements() && enum2.hasMoreElements(); ) {
-                Cons nameSegment1 = (Cons)enum1.nextElement();
-                char tag1 = ((Character)nameSegment1.car).charValue();
-                String name1 = (String)nameSegment1.cdr;
-                Cons nameSegment2 = (Cons)enum2.nextElement();
-                char tag2 = ((Character)nameSegment2.car).charValue();
-                String name2 = (String)nameSegment2.cdr;
-                if (tag1 != tag2 || !isMatch(name1, name2)) {
+            for (patternEnum = ClassTree.getNameEnum(wildcardPattern), stringEnum = ClassTree
+                    .getNameEnum(inputString); patternEnum.hasMoreElements() && stringEnum.hasMoreElements();) {
+
+                Cons patternSegment = (Cons) patternEnum.nextElement();
+                char patternTag = ((Character) patternSegment.car).charValue();
+                String patternName = (String) patternSegment.cdr;
+
+                Cons stringSegment = (Cons) stringEnum.nextElement();
+                char stringTag = ((Character) stringSegment.car).charValue();
+                String stringName = (String) stringSegment.cdr;
+
+                if (patternTag != stringTag || !isMatch(patternName, stringName)) {
                     return false;
                 }
             }
-            if (enum1.hasMoreElements() || enum2.hasMoreElements()) {
+            if (patternEnum.hasMoreElements() || stringEnum.hasMoreElements()) {
                 return false;
             }
         } catch (Exception e) {
@@ -103,7 +103,7 @@ public class TreeItem
             return false;
         }
 
-        //System.out.println("1) Pattern: " + pattern + " String: " + string);
+        // System.out.println("1) Pattern: " + pattern + " String: " + string);
 
         // Not really a wildcard, then check for exact match
         if (pattern.indexOf('*') == -1) {
@@ -126,7 +126,7 @@ public class TreeItem
             }
         }
 
-        //System.out.println("2) Pattern: " + pattern + " String: " + string);
+        // System.out.println("2) Pattern: " + pattern + " String: " + string);
 
         // Check for match of tail
         if (pattern.charAt(pattern.length() - 1) != '*') {
@@ -143,22 +143,22 @@ public class TreeItem
             }
         }
 
-        //System.out.println("3) Pattern: " + pattern + " String: " + string);
+        // System.out.println("3) Pattern: " + pattern + " String: " + string);
 
         // Split the pattern at the wildcard positions
         Vector section = new Vector();
         pos = pattern.indexOf('*');
         int rpos = -1;
-        while ((rpos = pattern.indexOf('*', pos+1)) != -1) {
+        while ((rpos = pattern.indexOf('*', pos + 1)) != -1) {
             if (rpos != pos + 1) {
                 section.addElement(pattern.substring(pos + 1, rpos));
             }
             pos = rpos;
         }
         // Check each section for a non-overlapping match in the string
-        for (Enumeration enumeration = section.elements(); enumeration.hasMoreElements(); ) {
-            String chunk = (String)enumeration.nextElement();
-            //System.out.println("Section: " + chunk + " String: " + string);
+        for (Enumeration enumeration = section.elements(); enumeration.hasMoreElements();) {
+            String chunk = (String) enumeration.nextElement();
+            // System.out.println("Section: " + chunk + " String: " + string);
             pos = string.indexOf(chunk);
             if (pos == -1) {
                 return false;
@@ -168,7 +168,6 @@ public class TreeItem
         return true;
     }
 
-
     // Instance Methods ------------------------------------------------------
 
     /**
@@ -177,12 +176,10 @@ public class TreeItem
      * @param parent the parent
      * @param name   the name
      */
-    public TreeItem(TreeItem parent, String name)
-    {
+    public TreeItem(TreeItem parent, String name) {
         this.parent = parent;
         this.inName = name;
-        if (parent != null)
-        {
+        if (parent != null) {
             classTree = parent.classTree;
         }
     }
@@ -192,27 +189,31 @@ public class TreeItem
      *
      * @return the modifiers
      */
-    public int getModifiers() {return access;}
+    public int getModifiers() {
+        return access;
+    }
 
     /**
      * Return the original name of the entry.
      *
      * @return the in name
      */
-    public String getInName() {return inName;}
+    public String getInName() {
+        return inName;
+    }
 
     /**
      * Set the output name of the entry.
      *
      * @param outName the out name
      */
-    public void setOutName(String outName)
-    {
+    public void setOutName(String outName) {
         // DEBUG
-        //if (isFixed) 
-        //{
-        //    System.out.println("BIG TROUBLE: " + inName + " -> " + this.outName + " -> " + outName);
-        //}
+        // if (isFixed)
+        // {
+        // System.out.println("BIG TROUBLE: " + inName + " -> " + this.outName + " -> "
+        // + outName);
+        // }
         this.outName = outName;
         isFixed = true;
     }
@@ -222,84 +223,99 @@ public class TreeItem
      *
      * @return the out name
      */
-    public String getOutName() {return outName != null ? outName : inName;}
+    public String getOutName() {
+        return outName != null ? outName : inName;
+    }
 
     /**
      * Return the obfuscated name of the entry.
      *
      * @return the obf name
      */
-    public String getObfName() {return outName;}
+    public String getObfName() {
+        return outName;
+    }
 
     /**
      * Signal that this constraint came from a user script line.
      */
-    public void setFromScript() {isFromScript = true;}
+    public void setFromScript() {
+        isFromScript = true;
+    }
 
     /**
      * Signal that this constraint came from a map script line.
      */
-    public void setFromScriptMap() {isFromScriptMap = true;}
+    public void setFromScriptMap() {
+        isFromScriptMap = true;
+    }
 
     /**
      * Has the entry been fixed already?
      *
      * @return the boolean
      */
-    public boolean isFixed() {return isFixed;}
+    public boolean isFixed() {
+        return isFixed;
+    }
 
     /**
      * Is this constrained by a user script line?
      *
      * @return the boolean
      */
-    public boolean isFromScript() {return isFromScript;}
+    public boolean isFromScript() {
+        return isFromScript;
+    }
 
     /**
      * Is this constrained by a map script line?
      *
      * @return the boolean
      */
-    public boolean isFromScriptMap() {return isFromScriptMap;}
+    public boolean isFromScriptMap() {
+        return isFromScriptMap;
+    }
 
     /**
      * Is a method or field Synthetic?
      *
      * @return the boolean
      */
-    public boolean isSynthetic() {return isSynthetic;}
+    public boolean isSynthetic() {
+        return isSynthetic;
+    }
 
     /**
-     * Set the parent in the tree -- used when stitching in a Cl to replace a PlaceholderCl.
+     * Set the parent in the tree -- used when stitching in a Cl to replace a
+     * PlaceholderCl.
      *
      * @param parent the parent
      */
-    public void setParent(TreeItem parent) {this.parent = parent;}
+    public void setParent(TreeItem parent) {
+        this.parent = parent;
+    }
 
     /**
      * Get the parent in the tree.
      *
      * @return the parent
      */
-    public TreeItem getParent() {return parent;}
+    public TreeItem getParent() {
+        return parent;
+    }
 
     /**
      * Construct and return the full original name of the entry.
      *
      * @return the full in name
      */
-    public String getFullInName()
-    {
-        if (parent == null)
-        {
+    public String getFullInName() {
+        if (parent == null) {
             return "";
-        }
-        else if (parent.parent == null)
-        {
+        } else if (parent.parent == null) {
             return getInName();
-        }
-        else
-        {
+        } else {
             return parent.getFullInName() + sep + getInName();
         }
     }
@@ -309,18 +325,12 @@ public class TreeItem
      *
      * @return the full out name
      */
-    public String getFullOutName()
-    {
-        if (parent == null)
-        {
+    public String getFullOutName() {
+        if (parent == null) {
             return "";
-        }
-        else if (parent.parent == null)
-        {
+        } else if (parent.parent == null) {
             return getOutName();
-        }
-        else
-        {
+        } else {
             return parent.getFullOutName() + sep + getOutName();
         }
     }
