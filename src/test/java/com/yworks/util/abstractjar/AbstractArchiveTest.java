@@ -38,14 +38,21 @@ abstract class AbstractArchiveTest extends TestCase {
 
       Collections.sort(entries, new EntryComparator());
 
+      String e1 = entries.get(0).getName();
+      e1 = e1.replace('\\','/');
+
+      String e2 = entries.get(1).getName();
+      e2 = e2.replace('\\','/');
+
       Assert.assertEquals(
-        "Wrong entry name",
-        JarFile.MANIFEST_NAME,
-        entries.get(0).getName());
+              "Wrong entry name",
+              JarFile.MANIFEST_NAME,
+              e1);
       Assert.assertEquals(
-        "Wrong entry name",
-        tempFileName,
-        entries.get(1).getName());
+              "Wrong entry name",
+              tempFileName,
+              e2);
+
     } finally {
 
       Utils.delete(archive);
