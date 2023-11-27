@@ -43,54 +43,62 @@ public class ClassFilter extends PatternMatchedFilter {
     return false;
   }
 
-  private boolean matches( final ClassSection cs, final Model model, final ClassDescriptor cd ) {
-
+  private boolean matches(final ClassSection cs, final Model model, final ClassDescriptor cd) {
     String className = cd.getName();
+    boolean result = true;
 
-    boolean r = true;
+    result &= checkClassAccess(cs, cd);
+    result &= checkClassName(cs, className);
+    result &= checkExtends(cs, cd,model);
+    result &= checkImplements(cs, cd, model);
 
-    // name, access
-//    r &= isEntryPointClass( model, cd );
+    return result;
+  }
 
-    // access
-    if ( null != cs.getClassAccess() && ( cs.getName() == null || cs.getName() == "" ) && ( !cs.getClassAccess().equals( PatternMatchedSection.Access.NONE ) ) )
-    {
-      r &= cs.getClassAccess().isAccessLevel( cd.getAccess() );
+  private boolean checkClassAccess(ClassSection cs, ClassDescriptor cd) {
+    if (cs.getClassAccess() != null && (cs.getName() == null || cs.getName().isEmpty())
+        && !cs.getClassAccess().equals(PatternMatchedSection.Access.NONE)) {
+      return cs.getClassAccess().isAccessLevel(cd.getAccess());
     }
+    return true;
+  }
 
-    // name
+  private boolean checkClassName(ClassSection cs, String className) {
     String entryClassName = cs.getName();
-    if ( null == entryClassName || entryClassName.length() == 0 ) {
-      r &= ( match( TypePatternSet.Type.NAME, Util.toJavaClass( className ), cs )
-              ||
-              match( TypePatternSet.Type.NAME, className, cs ) );
+    if (entryClassName == null || entryClassName.isEmpty()) {
+      return match(TypePatternSet.Type.NAME, Util.toJavaClass(className), cs)
+             || match(TypePatternSet.Type.NAME, className, cs);
     } else {
-      r &= entryClassName.equals( className );
+      return entryClassName.equals(className);
     }
+  }
 
-    // extends
-    if ( null != cs.getExtends() ) {
-      boolean self = cs.getExtends().equals( cd.getName() );
-      if ( !self ) {
-        Collection<String> ancestors = cd.getAllAncestorClasses( model );
-        r &= ancestors.contains( cs.getExtends() );
+  private boolean checkExtends(ClassSection cs, ClassDescriptor cd,  final Model model) {
+    String extendsName = cs.getExtends();
+    if (extendsName != null) {
+      boolean self = extendsName.equals(cd.getName());
+      if (!self) {
+        Collection<String> ancestors = cd.getAllAncestorClasses(model);
+        return ancestors.contains(extendsName);
       } else {
-        r &= self;
+        return self;
       }
     }
+    return true; // If no specific extends provided, assume it's a match
+  }
 
-    // implements
-    if ( null != cs.getImplements() ) {
-      boolean self = cs.getImplements().equals( cd.getName() );
-      if ( !self ) {
-        Collection<String> interfaces = cd.getAllImplementedInterfaces( model );
-        r &= interfaces.contains( cs.getImplements() );
+  private boolean checkImplements(ClassSection cs, ClassDescriptor cd, final Model model) {
+    String implementsName = cs.getImplements();
+    if (implementsName != null) {
+      boolean self = implementsName.equals(cd.getName());
+      if (!self) {
+        Collection<String> interfaces = cd.getAllImplementedInterfaces(model);
+        return interfaces.contains(implementsName);
       } else {
-        r &= self;
+        return self;
       }
     }
-
-    return r;
+    return true;
   }
 
   private List<ClassSection> getAllMatchingClassSections( final Model model, final ClassDescriptor cd ) {
