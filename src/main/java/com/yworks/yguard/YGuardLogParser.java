@@ -1,5 +1,6 @@
 package com.yworks.yguard;
 
+import com.yworks.util.Version;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -7,19 +8,20 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import javax.swing.Icon;
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeNode;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,10 +37,167 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
+
+
 /**
  * The type Y guard log parser.
  */
 public class YGuardLogParser {
+
+  LogParserView logParserView = new LogParserView();
+
+  static void show( final File initialPath ) {
+    final JTree tree = new JTree(new DefaultTreeModel(new DefaultMutableTreeNode()));
+    tree.setCellRenderer(new TreeCellRenderer() {
+      DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
+      public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+        JComponent c = (JComponent) dtcr.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+        DefaultMutableTreeNode dmtr = (DefaultMutableTreeNode) value;
+        if (dmtr.getUserObject() != null) {
+          dtcr.setIcon(((Mapped)dmtr.getUserObject()).getIcon());
+        }
+        return c;
+      }
+    });
+    tree.setRootVisible(false);
+    tree.setShowsRootHandles(true);
+
+
+    final JPanel textPanel = new JPanel(new BorderLayout());
+    final JTextArea textArea = new JTextArea();
+    textArea.setMinimumSize(new Dimension(600, 200));
+    final JScrollPane textScrollPane = new JScrollPane(textArea);
+    textScrollPane.getViewport().setPreferredSize(new Dimension(400, 200));
+    textPanel.add(textScrollPane, BorderLayout.CENTER);
+    final JButton button = new JButton("Deobfuscate!");
+    button.setMnemonic('D');
+    textPanel.add(button, BorderLayout.SOUTH);
+    button.addActionListener(new ActionListener() {
+      public void actionPerformed( ActionEvent e) {
+        LogParserView.deobfuscate(LogParserView.getParser(tree), textArea);
+      }
+    });
+
+    final JPanel top = new JPanel(new BorderLayout());
+    top.add(new JScrollPane(tree), BorderLayout.CENTER);
+    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0,0));
+    buttonPanel.add(new JButton(new AbstractAction("Sort by Mapping") {
+      public void actionPerformed(ActionEvent e) {
+        final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+        LogParserView.sort(model, new LogParserView.MappedNameComparator());
+      }
+    }));
+    buttonPanel.add(new JButton(new AbstractAction("Sort by Names") {
+      public void actionPerformed(ActionEvent e) {
+        final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+        LogParserView.sort(model, new LogParserView.NameComparator());
+      }
+    }));
+    top.add(buttonPanel, BorderLayout.NORTH);
+
+
+    final JFrame frame = new JFrame(LogParserView.newTitle(initialPath.getAbsolutePath()));
+
+    final JMenu recent = new JMenu("Open Recent");
+
+    final JFileChooser jfc = new JFileChooser();
+    jfc.addChoosableFileFilter(new LogParserView.FileFilterImpl(".gz", "Compressed XML (*.gz)"));
+    jfc.addChoosableFileFilter(new LogParserView.FileFilterImpl(".xml", "XML (*.xml)"));
+    jfc.setAcceptAllFileFilterUsed(true);
+    jfc.setFileFilter(jfc.getAcceptAllFileFilter());
+
+    final File parent = initialPath.getParentFile();
+    if (parent != null) {
+      jfc.setCurrentDirectory(parent);
+    }
+
+    final LogParserView.UiContext ctx = new LogParserView.UiContext(frame, tree, textArea, recent, jfc);
+
+    try {
+      LogParserView.setParser(tree, LogParserView.newParser(initialPath));
+      LogParserView.addRecent(ctx, initialPath);
+    } catch (Exception ex) {
+      LogParserView.setParser(tree, new YGuardLogParser());
+
+      frame.setTitle("Element Mapping - yGuard " + Version.getVersion());
+
+      final String msg = LogParserView.toErrorMessage(initialPath, ex);
+      frame.addComponentListener(new ComponentAdapter() {
+        public void componentShown( final ComponentEvent e ) {
+          frame.removeComponentListener(this);
+          EventQueue.invokeLater(new Runnable() {
+            public void run() {
+              LogParserView.showErrorMessage(msg, tree);
+            }
+          });
+        }
+      });
+    }
+
+    final JMenu file = new JMenu("File");
+    file.add(new LogParserView.AbstractOpenAction(ctx, "Open") {
+      public void actionPerformed( final ActionEvent e ) {
+        final JFileChooser jfc = context.fileChooser;
+        if (jfc.showOpenDialog(top) == JFileChooser.APPROVE_OPTION) {
+          open(jfc.getSelectedFile());
+        }
+      }
+
+      @Override
+      void onOpened( final LogParserView.UiContext context, final File path ) {
+        LogParserView.addRecent(context, path);
+        super.onOpened(context, path);
+      }
+    });
+    file.add(recent);
+    file.addSeparator();
+    file.add(new AbstractAction("Quit") {
+      public void actionPerformed( final ActionEvent e ) {
+        System.exit(0);
+      }
+    });
+
+    final JMenu help = new JMenu("?");
+    help.add(new AbstractAction("About") {
+      public void actionPerformed( final ActionEvent e ) {
+        final JLabel jl = new JLabel("Element Mapping - yGuard " + Version.getVersion());
+        JOptionPane.showMessageDialog(top, jl, "About", JOptionPane.PLAIN_MESSAGE);
+      }
+    });
+    final JMenuBar jmb = new JMenuBar();
+    jmb.add(file);
+    jmb.add(help);
+
+
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setJMenuBar(jmb);
+    frame.setContentPane(new JSplitPane(JSplitPane.VERTICAL_SPLIT, top, textPanel));
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+  }
+
   private DefaultTreeModel tree;
 
   private final MyContentHandler contentHandler = new MyContentHandler();
@@ -767,7 +926,7 @@ public class YGuardLogParser {
       EventQueue.invokeLater(new Runnable() {
         @Override
         public void run() {
-          (new LogParserView()).show(file);
+          show(file);
         }
       });
     } else {

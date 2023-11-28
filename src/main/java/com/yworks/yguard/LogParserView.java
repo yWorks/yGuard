@@ -60,136 +60,136 @@ class LogParserView {
    *
    * @param initialPath the initial path
    */
-  void show( final File initialPath ) {
-    final JTree tree = new JTree(new DefaultTreeModel(new DefaultMutableTreeNode()));
-    tree.setCellRenderer(new TreeCellRenderer() {
-      DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
-      public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
-        JComponent c = (JComponent) dtcr.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-        DefaultMutableTreeNode dmtr = (DefaultMutableTreeNode) value;
-        if (dmtr.getUserObject() != null) {
-          dtcr.setIcon(((Mapped)dmtr.getUserObject()).getIcon());
-        }
-        return c;
-      }
-    });
-    tree.setRootVisible(false);
-    tree.setShowsRootHandles(true);
-
-
-    final JPanel textPanel = new JPanel(new BorderLayout());
-    final JTextArea textArea = new JTextArea();
-    textArea.setMinimumSize(new Dimension(600, 200));
-    final JScrollPane textScrollPane = new JScrollPane(textArea);
-    textScrollPane.getViewport().setPreferredSize(new Dimension(400, 200));
-    textPanel.add(textScrollPane, BorderLayout.CENTER);
-    final JButton button = new JButton("Deobfuscate!");
-    button.setMnemonic('D');
-    textPanel.add(button, BorderLayout.SOUTH);
-    button.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        deobfuscate(getParser(tree), textArea);
-      }
-    });
-
-    final JPanel top = new JPanel(new BorderLayout());
-    top.add(new JScrollPane(tree), BorderLayout.CENTER);
-    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0,0));
-    buttonPanel.add(new JButton(new AbstractAction("Sort by Mapping") {
-      public void actionPerformed(ActionEvent e) {
-        final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-        sort(model, new MappedNameComparator());
-      }
-    }));
-    buttonPanel.add(new JButton(new AbstractAction("Sort by Names") {
-      public void actionPerformed(ActionEvent e) {
-        final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-        sort(model, new NameComparator());
-      }
-    }));
-    top.add(buttonPanel, BorderLayout.NORTH);
-
-
-    final JFrame frame = new JFrame(newTitle(initialPath.getAbsolutePath()));
-
-    final JMenu recent = new JMenu("Open Recent");
-
-    final JFileChooser jfc = new JFileChooser();
-    jfc.addChoosableFileFilter(new FileFilterImpl(".gz", "Compressed XML (*.gz)"));
-    jfc.addChoosableFileFilter(new FileFilterImpl(".xml", "XML (*.xml)"));
-    jfc.setAcceptAllFileFilterUsed(true);
-    jfc.setFileFilter(jfc.getAcceptAllFileFilter());
-
-    final File parent = initialPath.getParentFile();
-    if (parent != null) {
-      jfc.setCurrentDirectory(parent);
-    }
-
-    final UiContext ctx = new UiContext(frame, tree, textArea, recent, jfc);
-
-    try {
-      setParser(tree, newParser(initialPath));
-      addRecent(ctx, initialPath);
-    } catch (Exception ex) {
-      setParser(tree, new YGuardLogParser());
-
-      frame.setTitle("Element Mapping - yGuard " + Version.getVersion());
-
-      final String msg = toErrorMessage(initialPath, ex);
-      frame.addComponentListener(new ComponentAdapter() {
-        public void componentShown( final ComponentEvent e ) {
-          frame.removeComponentListener(this);
-          EventQueue.invokeLater(new Runnable() {
-            public void run() {
-              showErrorMessage(msg, tree);
-            }
-          });
-        }
-      });
-    }
-
-    final JMenu file = new JMenu("File");
-    file.add(new AbstractOpenAction(ctx, "Open") {
-      public void actionPerformed( final ActionEvent e ) {
-        final JFileChooser jfc = context.fileChooser;
-        if (jfc.showOpenDialog(top) == JFileChooser.APPROVE_OPTION) {
-          open(jfc.getSelectedFile());
-        }
-      }
-
-      @Override
-      void onOpened( final UiContext context, final File path ) {
-        LogParserView.addRecent(context, path);
-        super.onOpened(context, path);
-      }
-    });
-    file.add(recent);
-    file.addSeparator();
-    file.add(new AbstractAction("Quit") {
-      public void actionPerformed( final ActionEvent e ) {
-        System.exit(0);
-      }
-    });
-
-    final JMenu help = new JMenu("?");
-    help.add(new AbstractAction("About") {
-      public void actionPerformed( final ActionEvent e ) {
-        final JLabel jl = new JLabel("Element Mapping - yGuard " + Version.getVersion());
-        JOptionPane.showMessageDialog(top, jl, "About", JOptionPane.PLAIN_MESSAGE);
-      }
-    });
-    final JMenuBar jmb = new JMenuBar();
-    jmb.add(file);
-    jmb.add(help);
-
-
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setJMenuBar(jmb);
-    frame.setContentPane(new JSplitPane(JSplitPane.VERTICAL_SPLIT, top, textPanel));
-    frame.pack();
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
-  }
+//  void show( final File initialPath ) {
+//    final JTree tree = new JTree(new DefaultTreeModel(new DefaultMutableTreeNode()));
+//    tree.setCellRenderer(new TreeCellRenderer() {
+//      DefaultTreeCellRenderer dtcr = new DefaultTreeCellRenderer();
+//      public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+//        JComponent c = (JComponent) dtcr.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+//        DefaultMutableTreeNode dmtr = (DefaultMutableTreeNode) value;
+//        if (dmtr.getUserObject() != null) {
+//          dtcr.setIcon(((Mapped)dmtr.getUserObject()).getIcon());
+//        }
+//        return c;
+//      }
+//    });
+//    tree.setRootVisible(false);
+//    tree.setShowsRootHandles(true);
+//
+//
+//    final JPanel textPanel = new JPanel(new BorderLayout());
+//    final JTextArea textArea = new JTextArea();
+//    textArea.setMinimumSize(new Dimension(600, 200));
+//    final JScrollPane textScrollPane = new JScrollPane(textArea);
+//    textScrollPane.getViewport().setPreferredSize(new Dimension(400, 200));
+//    textPanel.add(textScrollPane, BorderLayout.CENTER);
+//    final JButton button = new JButton("Deobfuscate!");
+//    button.setMnemonic('D');
+//    textPanel.add(button, BorderLayout.SOUTH);
+//    button.addActionListener(new ActionListener() {
+//      public void actionPerformed(ActionEvent e) {
+//        deobfuscate(getParser(tree), textArea);
+//      }
+//    });
+//
+//    final JPanel top = new JPanel(new BorderLayout());
+//    top.add(new JScrollPane(tree), BorderLayout.CENTER);
+//    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 0,0));
+//    buttonPanel.add(new JButton(new AbstractAction("Sort by Mapping") {
+//      public void actionPerformed(ActionEvent e) {
+//        final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+//        sort(model, new MappedNameComparator());
+//      }
+//    }));
+//    buttonPanel.add(new JButton(new AbstractAction("Sort by Names") {
+//      public void actionPerformed(ActionEvent e) {
+//        final DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+//        sort(model, new NameComparator());
+//      }
+//    }));
+//    top.add(buttonPanel, BorderLayout.NORTH);
+//
+//
+//    final JFrame frame = new JFrame(newTitle(initialPath.getAbsolutePath()));
+//
+//    final JMenu recent = new JMenu("Open Recent");
+//
+//    final JFileChooser jfc = new JFileChooser();
+//    jfc.addChoosableFileFilter(new FileFilterImpl(".gz", "Compressed XML (*.gz)"));
+//    jfc.addChoosableFileFilter(new FileFilterImpl(".xml", "XML (*.xml)"));
+//    jfc.setAcceptAllFileFilterUsed(true);
+//    jfc.setFileFilter(jfc.getAcceptAllFileFilter());
+//
+//    final File parent = initialPath.getParentFile();
+//    if (parent != null) {
+//      jfc.setCurrentDirectory(parent);
+//    }
+//
+//    final UiContext ctx = new UiContext(frame, tree, textArea, recent, jfc);
+//
+//    try {
+//      setParser(tree, newParser(initialPath));
+//      addRecent(ctx, initialPath);
+//    } catch (Exception ex) {
+//      setParser(tree, new YGuardLogParser());
+//
+//      frame.setTitle("Element Mapping - yGuard " + Version.getVersion());
+//
+//      final String msg = toErrorMessage(initialPath, ex);
+//      frame.addComponentListener(new ComponentAdapter() {
+//        public void componentShown( final ComponentEvent e ) {
+//          frame.removeComponentListener(this);
+//          EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//              showErrorMessage(msg, tree);
+//            }
+//          });
+//        }
+//      });
+//    }
+//
+//    final JMenu file = new JMenu("File");
+//    file.add(new AbstractOpenAction(ctx, "Open") {
+//      public void actionPerformed( final ActionEvent e ) {
+//        final JFileChooser jfc = context.fileChooser;
+//        if (jfc.showOpenDialog(top) == JFileChooser.APPROVE_OPTION) {
+//          open(jfc.getSelectedFile());
+//        }
+//      }
+//
+//      @Override
+//      void onOpened( final UiContext context, final File path ) {
+//        LogParserView.addRecent(context, path);
+//        super.onOpened(context, path);
+//      }
+//    });
+//    file.add(recent);
+//    file.addSeparator();
+//    file.add(new AbstractAction("Quit") {
+//      public void actionPerformed( final ActionEvent e ) {
+//        System.exit(0);
+//      }
+//    });
+//
+//    final JMenu help = new JMenu("?");
+//    help.add(new AbstractAction("About") {
+//      public void actionPerformed( final ActionEvent e ) {
+//        final JLabel jl = new JLabel("Element Mapping - yGuard " + Version.getVersion());
+//        JOptionPane.showMessageDialog(top, jl, "About", JOptionPane.PLAIN_MESSAGE);
+//      }
+//    });
+//    final JMenuBar jmb = new JMenuBar();
+//    jmb.add(file);
+//    jmb.add(help);
+//
+//
+//    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//    frame.setJMenuBar(jmb);
+//    frame.setContentPane(new JSplitPane(JSplitPane.VERTICAL_SPLIT, top, textPanel));
+//    frame.pack();
+//    frame.setLocationRelativeTo(null);
+//    frame.setVisible(true);
+//  }
 
   /**
    * Add recent.
@@ -422,7 +422,7 @@ class LogParserView {
     }
   }
 
-  private static class FileFilterImpl extends FileFilter {
+  public static class FileFilterImpl extends FileFilter {
     private final String suffix;
     private final String description;
 
@@ -447,7 +447,7 @@ class LogParserView {
   }
 
 
-  private static final class UiContext {
+  public static final class UiContext {
     /**
      * The Frame.
      */
@@ -493,7 +493,7 @@ class LogParserView {
     }
   }
 
-  private abstract static class AbstractOpenAction extends AbstractAction {
+  public abstract static class AbstractOpenAction extends AbstractAction {
     /**
      * The Context.
      */
