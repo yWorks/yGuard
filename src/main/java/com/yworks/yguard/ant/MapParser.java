@@ -14,6 +14,8 @@ import java.util.Collection;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ObfuscatorTask;
+import com.yworks.yguard.ant.ElementHandler;
+
 
 /**
  * The type Map parser.
@@ -27,6 +29,63 @@ public final class MapParser implements ContentHandler {
   private Map ownerProperties = new HashMap();
   private final ObfuscatorTask obfuscatorTask;
 
+
+  public class PackageHandler extends ElementHandler {
+    public PackageHandler(MapParser mapParser) {
+      super(mapParser);
+    }
+
+    @Override
+    public void handleElement(String str2, java.util.jar.Attributes attributes) throws SAXException{
+      PackageSection ps = new PackageSection();
+      ps.setName(attributes.getValue("name"));
+      ps.setMap(attributes.getValue("map"));
+      ps.addMapEntries(mapParser.getEntries());
+    }
+  }
+
+  public class ClassHandler extends ElementHandler {
+    public ClassHandler(MapParser mapParser) {
+      super(mapParser);
+    }
+
+    @Override
+    public void handleElement(String str2, java.util.jar.Attributes attributes) throws SAXException {
+      ClassSection cs = new ClassSection();
+      cs.setName(attributes.getValue("name"));
+      cs.setMap(attributes.getValue("map"));
+      cs.addMapEntries(mapParser.getEntries());
+    }
+  }
+
+  public class MethodHandler extends ElementHandler {
+    public MethodHandler(MapParser mapParser) {
+      super(mapParser);
+    }
+
+    @Override
+    public void handleElement(String str2, java.util.jar.Attributes attributes) throws SAXException {
+      MethodSection ms = new MethodSection();
+      ms.setClass( attributes.getValue( "class" ) );
+      ms.setName( attributes.getValue( "name" ) );
+      ms.setMap( attributes.getValue( "map" ) );
+      ms.addMapEntries( mapParser.getEntries() );
+    }
+  }
+  public class FieldHandler extends ElementHandler {
+    public FieldHandler(MapParser mapParser) {
+      super(mapParser);
+    }
+
+    @Override
+    public void handleElement(String str2, java.util.jar.Attributes attributes) throws SAXException {
+      FieldSection fs = new FieldSection();
+      fs.setClass(attributes.getValue("class"));
+      fs.setName(attributes.getValue("name"));
+      fs.setMap(attributes.getValue("map"));
+      fs.addMapEntries(mapParser.getEntries());
+    }
+  }
   /**
    * Instantiates a new Map parser.
    *
@@ -107,6 +166,7 @@ public final class MapParser implements ContentHandler {
 ////          state = 3;
 //        }
       break;
+
     case 1:
       if ("yguard".equals(str2)){
         String version = attributes.getValue("version");
@@ -120,35 +180,28 @@ public final class MapParser implements ContentHandler {
       }
       break;
     case 3:
-      if (str2.equals("package")){
-        PackageSection ps = new PackageSection();
-        ps.setName(attributes.getValue("name"));
-        ps.setMap(attributes.getValue("map"));
-        ps.addMapEntries(entries);
-      } else
-      if (str2.equals("class")){
-        ClassSection cs = new ClassSection();
-        cs.setName(attributes.getValue("name"));
-        cs.setMap(attributes.getValue("map"));
-        cs.addMapEntries(entries);
-      } else
-      if (str2.equals("method")) {
-        MethodSection ms = new MethodSection();
-        ms.setClass( attributes.getValue( "class" ) );
-        ms.setName( attributes.getValue( "name" ) );
-        ms.setMap( attributes.getValue( "map" ) );
-        ms.addMapEntries( entries );
-      } else
-      if (str2.equals("field")){
-        FieldSection fs = new FieldSection();
-        fs.setClass(attributes.getValue("class"));
-        fs.setName(attributes.getValue("name"));
-        fs.setMap(attributes.getValue("map"));
-        fs.addMapEntries(entries);
-      } else {
-        throw new SAXNotRecognizedException("Unknown child element "+str2+" in map element!");
-      }
+        ElementHandler handler = getHandler(str2);
+        if (handler != null) {
+          handler.handleElement(str2, (java.util.jar.Attributes) attributes);
+        } else {
+          throw new SAXNotRecognizedException("Unknown child element " + str2 + " in map element!");
+        }
       break;
+    }
+  }
+
+  private ElementHandler getHandler(String str2) {
+    switch (str2) {
+      case "package":
+        return new PackageHandler(this);
+      case "class":
+        return new ClassHandler(this);
+      case "method":
+        return new MethodHandler(this);
+      case "field":
+        return new FieldHandler(this);
+      default:
+        return null;
     }
   }
 
