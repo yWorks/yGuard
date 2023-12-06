@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.0e669242.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.fad675c6.min.css">
       
       
 
@@ -215,6 +215,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="index.html" class="md-nav__link">
         
@@ -231,6 +232,7 @@
     
       
       
+  
   
   
   
@@ -253,6 +255,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="license.html" class="md-nav__link">
         
@@ -272,6 +275,7 @@
   
   
     
+  
   
   
     <li class="md-nav__item md-nav__item--active">
@@ -316,7 +320,9 @@
       
         <li class="md-nav__item">
   <a href="#setup" class="md-nav__link">
-    Setup
+    <span class="md-ellipsis">
+      Setup
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Setup">
@@ -324,21 +330,27 @@
         
           <li class="md-nav__item">
   <a href="#setup-using-ant" class="md-nav__link">
-    Setup using Ant
+    <span class="md-ellipsis">
+      Setup using Ant
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#setup-using-maven" class="md-nav__link">
-    Setup using Maven
+    <span class="md-ellipsis">
+      Setup using Maven
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#setup-using-gradle" class="md-nav__link">
-    Setup using Gradle
+    <span class="md-ellipsis">
+      Setup using Gradle
+    </span>
   </a>
   
 </li>
@@ -361,6 +373,7 @@
   
   
   
+  
     <li class="md-nav__item">
       <a href="task_documentation.html" class="md-nav__link">
         
@@ -377,6 +390,7 @@
     
       
       
+  
   
   
   
@@ -420,7 +434,9 @@
       
         <li class="md-nav__item">
   <a href="#setup" class="md-nav__link">
-    Setup
+    <span class="md-ellipsis">
+      Setup
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="Setup">
@@ -428,21 +444,27 @@
         
           <li class="md-nav__item">
   <a href="#setup-using-ant" class="md-nav__link">
-    Setup using Ant
+    <span class="md-ellipsis">
+      Setup using Ant
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#setup-using-maven" class="md-nav__link">
-    Setup using Maven
+    <span class="md-ellipsis">
+      Setup using Maven
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#setup-using-gradle" class="md-nav__link">
-    Setup using Gradle
+    <span class="md-ellipsis">
+      Setup using Gradle
+    </span>
   </a>
   
 </li>
@@ -476,7 +498,7 @@
 <p>Depending on your build system, you will use <a href="http://maven.apache.org/plugins/maven-antrun-plugin/"><code>AntRun</code></a> or <code>Ant</code> directly to run <code>yGuard</code>.</p>
 <h3 id="setup-using-ant">Setup using <code>Ant</code></h3>
 <p>Download the bundle from the <a href="https://github.com/yWorks/yguard/releases/latest">Github release page</a>. After downloading and extracting the <code>jar</code> files, place them in a path near to your build script. You may use absolute paths, but our examples expect the jar file to lie in the same directory as your build file. Once extracted, you can use the <code>yguard</code> element like so:</p>
-<pre><code class="language-xml">&lt;property name=&quot;version&quot; value=&quot;4.0.0&quot;/&gt;
+<pre><code class="language-xml">&lt;property name=&quot;version&quot; value=&quot;4.1.0&quot;/&gt;
 
 &lt;target name=&quot;yguard&quot;&gt;
     &lt;taskdef name=&quot;yguard&quot; classname=&quot;com.yworks.yguard.YGuardTask&quot; classpath=&quot;${projectDir}/yguard-${version}.jar&quot;/&gt;
@@ -490,7 +512,7 @@
 <pre><code class="language-xml">&lt;dependency&gt;
     &lt;groupId&gt;com.yworks&lt;/groupId&gt;
     &lt;artifactId&gt;yguard&lt;/artifactId&gt;
-    &lt;version&gt;4.0.0&lt;/version&gt;
+    &lt;version&gt;4.1.0&lt;/version&gt;
     &lt;scope&gt;compile&lt;/scope&gt;
 &lt;/dependency&gt;
 </code></pre>
@@ -525,7 +547,7 @@
 }
 
 dependencies {
-  compileOnly 'com.yworks:yguard:4.0.0'
+  compileOnly 'com.yworks:yguard:4.1.0'
 }
 
 task yguard {
@@ -582,10 +604,11 @@ task yguard {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.78eede0e.min.js"></script>
+      <script src="assets/javascripts/bundle.cd18aaf1.min.js"></script>
       
     
   </body>
