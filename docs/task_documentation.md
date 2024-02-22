@@ -55,7 +55,8 @@ The `yguard` element has no attributes.
 
 At least one `inoutpair` element or one non-empty `inoutpairs` element has to be specified in order to run the `yguard` tasks. This element specifies the paths to the input and output jar files.
 
-`inoutpair` also supports the usage of directories. This is detected by [File.isDirectory](https://docs.oracle.com/javase/7/docs/api/java/io/File.html#isDirectory()). However, in general you do not want to use directories for `inoutpairs` (advanced use cases).
+Note that only regular jar files are supported.
+Enterprise archives (ear) or web archives (war) are not supported. Moreover, jar files with non-standard directory structures (like e.g. Spring boot archives that store application classes in a BOOT_INF directory) are not supported either.
 
 #### Attributes
 
@@ -118,10 +119,13 @@ At least one `inoutpair` element or one non-empty `inoutpairs` element has to be
 
 The `inoutpair` element has no child elements.
 
-If multiple jar files need to be obfuscated at once the `inoutpairs` element can be used alternatively.
+If multiple jar files need to be obfuscated at once the `inoutpairs` element can be used instead.
 
 ## The `inoutpairs` Elements
 Additionally or alternatively to `inoutpair` elements this element can be specified in order to specify the paths to the input and output jar files.
+
+Note that only regular jar files are supported. Enterprise archives (ear) or web archives (war) are not supported.
+Moreover, jar files with non-standard directory structures (like e.g. Spring boot archives that store application classes in a BOOT_INF directory) are not supported either.
 
 #### Attributes
 
