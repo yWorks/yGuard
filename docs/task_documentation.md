@@ -426,7 +426,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
             A boolean attribute (valid values: <code>true</code>/<code>false</code>)
             that determines whether the renaming engine should generate pseudorandom
             name mappings for each invocation. If set to <code>false</code> (the
-            default, for backward compatibility), each obfuscation will used a
+            default, for backward compatibility), each obfuscation will use a
             fixed map that generates names based on the order of the obfuscated
             elements. If nothing is changed, each obfuscation will generate the
             same obfuscated names for all elements. If set to <code>true</code>,

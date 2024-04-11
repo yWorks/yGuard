@@ -349,7 +349,7 @@ public class GuardDB implements ClassConstants
     for(int i = 0; i < inJar.length; i++)
     {
       outJar = null;
-      //store the whole jar in memory, I known this might be alot, but anyway
+      //store the whole jar in memory, I know this might be alot, but anyway
       //this is the best option, if you want to create correct jar files...
       List jarEntries = new ArrayList();
       try
