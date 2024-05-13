@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -25,7 +25,7 @@ public class JarFileWrapper implements Archive {
   /**
    * The Entries.
    */
-  Map<Entry, JarEntry> entries = new HashMap<>();
+  Map<Entry, JarEntry> entries = new LinkedHashMap<>();
 
   /**
    * Instantiates a new Jar file wrapper.
@@ -66,5 +66,4 @@ public class JarFileWrapper implements Archive {
   public void close() throws IOException {
     jarFile.close();
   }
-
 }

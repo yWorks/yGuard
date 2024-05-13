@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.1]
+
+### Fixed
+- Process files in the order they appear in the respective input archives or directories.
+  This fixes a regression that was introduced with directory support in version 3.0.0. 
+
 ## [4.1.0]
 
 ### Added
@@ -77,8 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support `ASM7` and Java 13 in both YShrink and YGuard
 
 ### Fixed
-
-- Use a empty manifest in `JarWriter` where the shrinker would previously crash when no manifest was present
+- Use an empty manifest in `JarWriter` where the shrinker would previously crash when no manifest was present
 - Use Gradle wrapper with Gradle version 5.6.4 for reproducible builds
 
 ## [2.9.2] - 2019-12-09

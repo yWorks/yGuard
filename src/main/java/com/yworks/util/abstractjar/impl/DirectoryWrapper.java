@@ -15,7 +15,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -25,7 +25,7 @@ import java.util.jar.Manifest;
  */
 public class DirectoryWrapper extends SimpleFileVisitor<Path> implements Archive {
   private File directory;
-  private Map<Entry, File> entries = new HashMap<>();
+  private Map<Entry, File> entries = new LinkedHashMap<>();
 
   /**
    * Instantiates a new Directory wrapper.
