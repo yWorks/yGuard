@@ -30,17 +30,9 @@ import static junit.framework.TestCase.assertTrue;
  * @author Thomas Behr
  */
 public class KeepExtendsTest extends AbstractObfuscationTest {
-  /**
-   * The Name.
-   */
   @Rule
   public TestName name = new TestName();
 
-  /**
-   * Test extends.
-   *
-   * @throws Exception the exception
-   */
   @Test
   public void testExtends() throws Exception {
     impl(new TypeStruct("asm/AbstractBaseClass.txt", "com.yworks.ext.test.AbstractBaseClass"),
@@ -49,14 +41,21 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
          new TypeStruct("asm/Sample.txt", "com.yworks.impl.test.Sample"));
   }
 
-  /**
-   * Test nests.
-   *
-   * @throws Exception the exception
-   */
   @Test
   public void testNests() throws Exception {
     impl(new TypeStruct("asm/OuterClass.txt", "com.yworks.yguard.obf.asm.OuterClass"));
+  }
+
+  @Test
+  public void testPermittedSubclasses() throws Exception {
+    // PermittedSubclasses attribute is used only in Java 17 and newer
+    if (17 <= getMajorVersion()) {
+      impl(new TypeStruct("asm/SealedClassImpl.txt", "com.yworks.yguard.obf.asm.SealedClassImpl"),
+           new TypeStruct("asm/SealedSerializableClass.txt", "com.yworks.yguard.obf.asm.SealedSerializableClass"),
+           new TypeStruct("asm/SimpleClass.txt", "com.yworks.yguard.obf.asm.SimpleClass"));
+    } else {
+      System.err.println("Run test with Java 17 or newer.");
+    }
   }
 
   private void impl( final TypeStruct... types ) throws Exception {

@@ -13,6 +13,7 @@ import org.objectweb.asm.*;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public class OutputVisitor extends ClassVisitor {
+  static final int OPCODES_ASM = Opcodes.ASM9;
 
   private ClassVisitor cv;
   private Model model;
@@ -33,7 +34,7 @@ public class OutputVisitor extends ClassVisitor {
    * @param createStubs the create stubs
    */
   public OutputVisitor( final ClassVisitor cv, final Model model, boolean createStubs ) {
-    super(Opcodes.ASM7);
+    super(OPCODES_ASM);
     this.createStubs = createStubs;
     this.cv = cv;
     this.model = model;
@@ -215,7 +216,7 @@ public class OutputVisitor extends ClassVisitor {
      * @param delegate the delegate
      */
     public OutputMethodVisitor( MethodVisitor delegate ) {
-      super(Opcodes.ASM7);
+      super(OPCODES_ASM);
       this.delegate = delegate;
     }
 
@@ -429,7 +430,7 @@ public class OutputVisitor extends ClassVisitor {
      * @param delegate the delegate
      */
     public OutputFieldVisitor(FieldVisitor delegate) {
-      super(Opcodes.ASM7);
+      super(OPCODES_ASM);
       this.delegate = delegate;
     }
 
@@ -487,7 +488,7 @@ public class OutputVisitor extends ClassVisitor {
      * @param visitStub the visit stub
      */
     public StubOutputMethodVisitor(MethodVisitor delegate, boolean visitStub) {
-      super(Opcodes.ASM7);
+      super(OPCODES_ASM);
       this.delegate = delegate;
       this.visitStub = visitStub;
     }
@@ -608,7 +609,7 @@ public class OutputVisitor extends ClassVisitor {
      * Instantiates a new Do nothing annotation visitor.
      */
     public DoNothingAnnotationVisitor() {
-      super(Opcodes.ASM7);
+      super(OPCODES_ASM);
     }
 
     public void visit( String name, Object value ) {
@@ -647,7 +648,7 @@ public class OutputVisitor extends ClassVisitor {
      * @param delegate the delegate
      */
     public OutputAnnotationVisitor( AnnotationVisitor delegate ) {
-      super(Opcodes.ASM7);
+      super(OPCODES_ASM);
       this.delegate = delegate;
     }
 

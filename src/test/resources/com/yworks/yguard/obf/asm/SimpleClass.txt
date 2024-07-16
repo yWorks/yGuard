@@ -1,0 +1,13 @@
+package com.yworks.yguard.obf.asm;
+
+public class SimpleClass {
+  private int data;
+
+  public SimpleClass( final int data ) {
+    this.data = data;
+  }
+
+  public int getData() {
+    return data;
+  }
+}

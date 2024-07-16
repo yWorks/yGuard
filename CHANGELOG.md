@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Process files in the order they appear in the respective input archives or directories.
   This fixes a regression that was introduced with directory support in version 3.0.0. 
+- Fixed `UnsupportedOperationException` that occurred for Java 17 class files when excluding classes from obfuscation
+  using the `extends` or `implements` attributes of the `rename.keep.class` element in the yGuard ANT task.
 
 ## [4.1.0]
 
@@ -117,7 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.7.2] - 2019-09-26
 ### Fixed
-- Fixed `UnsupportedOperationException` that occurred for Java 11 class files when excluding classes from obfuscation using the `extends` or `implements` attributes of the  `rename.keep.class` element in the yGuard ANT task.
+- Fixed `UnsupportedOperationException` that occurred for Java 11 class files when excluding classes from obfuscation using the `extends` or `implements` attributes of the `rename.keep.class` element in the yGuard ANT task.
 - Fixed yGuard's `language-conformity` mode `illegal` to no longer produce unqualified names that contain dots or spaces.
 
 ## [2.7.1] - 2019-02-26

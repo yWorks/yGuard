@@ -1,0 +1,15 @@
+package com.yworks.yguard.obf.asm;
+
+import java.io.Serializable;
+
+public sealed class SealedSerializableClass implements Serializable permits SealedClassImpl {
+  private int data;
+
+  public SealedSerializableClass( final int data ) {
+    this.data = data;
+  }
+
+  public int getData() {
+    return data;
+  }
+}

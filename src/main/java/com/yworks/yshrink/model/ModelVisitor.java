@@ -21,7 +21,7 @@ public class ModelVisitor extends ClassVisitor {
   /**
    * The Opcodes asm.
    */
-  static final int OPCODES_ASM = Opcodes.ASM7;
+  static final int OPCODES_ASM = Opcodes.ASM9;
 
   private Model model;
 

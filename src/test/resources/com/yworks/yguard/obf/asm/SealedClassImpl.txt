@@ -1,0 +1,7 @@
+package com.yworks.yguard.obf.asm;
+
+public final class SealedClassImpl extends SealedSerializableClass {
+  public SealedClassImpl() {
+    super(666);
+  }
+}
