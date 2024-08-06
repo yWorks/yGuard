@@ -3,7 +3,7 @@
   <property name="libraryDir" value="${basedir}/lib"/>
   <property name="source.dir" value="${basedir}/src"/>
   <property name="target.dir" value="${basedir}/build"/>
-  <property name="yguard.version" value="4.1.0"/>
+  <property name="yguard.version" value="4.1.1"/>
 
   <property name="project.name" value="external_library"/>
   <property name="project.jar.unobf" value="${target.dir}/jar/${project.name}_unobf.jar"/>

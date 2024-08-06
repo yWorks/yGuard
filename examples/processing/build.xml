@@ -22,7 +22,7 @@
   <property name="source.dir" value="${basedir}/src"/>
   <property name="target.dir" value="${basedir}/build"/>
   <property name="bundleDir" value="${target.dir}/jar"/>
-  <property name="yguard.version" value="4.1.0"/>
+  <property name="yguard.version" value="4.1.1"/>
 
   <property name="project.name" value="processing"/>
   <property name="project.jar.unobf" value="${bundleDir}/${project.name}_unobf.jar"/>
