@@ -1,0 +1,25 @@
+package com.yworks.yguard.obf;
+
+import java.io.PrintStream;
+
+public class SwitchBootstraps_enumSwitch_string {
+  public static void main( String[] args ) {
+    run(System.out);
+  }
+
+  public static void run( final PrintStream out ) {
+    Fruit fruit = Fruit.APPLE;
+    switch (fruit) {
+      case APPLE -> out.println("apple");
+      case BANANA -> out.println("banana");
+      case null -> out.println("null");
+      default -> out.println("default");
+    }
+  }
+
+  public enum Fruit {
+    APPLE,
+    BANANA,
+    CURRANT
+  }
+}

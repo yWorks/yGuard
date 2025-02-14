@@ -1360,8 +1360,22 @@ public class ClassFile implements ClassConstants
 
     private boolean isSupportedSbes(BootstrapMethod bm) {
       final int[] bootstrapArguments = bm.getBootstrapArguments();
-      for (int j = 0; j < bootstrapArguments.length; ++j) {
-        if (!(getCpEntry(bootstrapArguments[j]) instanceof ClassCpInfo)) {
+      final int n = bootstrapArguments.length;
+      if (n > 0) {
+        final CpInfo first = getCpEntry(bootstrapArguments[0]);
+        if (first instanceof ClassCpInfo) {
+          for (int j = 1; j < n; ++j) {
+            if (!(getCpEntry(bootstrapArguments[j]) instanceof ClassCpInfo)) {
+              return false;
+            }
+          }
+        } else if (first instanceof StringCpInfo) {
+          for (int j = 1; j < n; ++j) {
+            if (!(getCpEntry(bootstrapArguments[j]) instanceof StringCpInfo)) {
+              return false;
+            }
+          }
+        } else {
           return false;
         }
       }

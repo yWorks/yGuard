@@ -82,6 +82,21 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
   }
 
   @Test
+  public void testSwitchBootstraps_enumSwitch_string() throws Exception {
+    // SwitchBootstraps.enumSwitch bootstrap method is used only in Java 21 and
+    // newer
+    if (21 <= getMajorVersion()) {
+      runBootstrapMethodsTest(
+        "com.yworks.yguard.obf.SwitchBootstraps_enumSwitch_string",
+        "void run(java.io.PrintStream)",
+        "SwitchBootstraps_enumSwitch_string.txt",
+        String.format("apple%n"));
+    } else {
+      System.err.println("Run test with Java 21 or newer.");
+    }
+  }
+
+  @Test
   public void testSwitchBootstraps_typeSwitch() throws Exception {
     // SwitchBootstraps.typeSwitch bootstrap method is used only in Java 21 and
     // newer
