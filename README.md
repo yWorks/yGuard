@@ -2,6 +2,7 @@ yGuard
 ------
 
 ![Continous Integration for yGuard](https://github.com/yWorks/yGuard/workflows/Continous%20Integration%20for%20yGuard/badge.svg)
+[![libs.tech recommends](https://libs.tech/project/211860494/badge.svg)](https://libs.tech/project/211860494/yguard)
 
 `yGuard` is an open-source Java obfuscation tool. With `yGuard` it is easy as pie (🍰) to configure obfuscation through an extensive `ant` task.
 
