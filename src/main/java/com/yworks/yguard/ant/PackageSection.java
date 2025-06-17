@@ -68,29 +68,13 @@ public class PackageSection implements Mappable {
       DirectoryScanner scanner = zf.getDirectoryScanner(project);
       scanner.setIncludes(ObfuscatorTask.toNativePattern(ps.getIncludePatterns(project)));
       scanner.setExcludes(ObfuscatorTask.toNativePattern(ps.getExcludePatterns(project)));
-      String[] matches = ZipScannerTool.getMatches(zf, scanner);
-      for (int i = 0; i < matches.length; i++) {
-        String match = matches[i];
-        int slashIndex = match.lastIndexOf('/');
-        if (match.endsWith(".class") || match.endsWith("/") && slashIndex > 0) {
-          match = match.substring(0, slashIndex);
-          packages.add(match);
-        }
-      }
+      collectPackages(ZipScannerTool.getMatches(zf, scanner), packages);
     }
     if (patternSets.isEmpty() && allowMatchAllPatternSet && name == null) {
       DirectoryScanner scanner = zf.getDirectoryScanner(project);
       scanner.setIncludes(new String[]{"**/*.class"});
       scanner.setExcludes(new String[0]);
-      String[] matches = ZipScannerTool.getMatches(zf, scanner);
-      for (int i = 0; i < matches.length; i++) {
-        String match = matches[i];
-        int slashIndex = match.lastIndexOf('/');
-        if (match.endsWith(".class") || match.endsWith("/") && slashIndex > 0) {
-          match = match.substring(0, slashIndex);
-          packages.add(match);
-        }
-      }
+      collectPackages(ZipScannerTool.getMatches(zf, scanner), packages);
     }
 
     for (Iterator iterator = packages.iterator(); iterator.hasNext();) {
@@ -113,5 +97,16 @@ public class PackageSection implements Mappable {
     YGuardRule entry = new YGuardRule(YGuardRule.TYPE_PACKAGE_MAP, ObfuscatorTask.toNativeClass(name));
     entry.obfName = ObfuscatorTask.toNativeClass(mapTo);
     entries.add(entry);
+  }
+
+  private static void collectPackages( final String[] matches, final Set packages ) {
+    for (int i = 0; i < matches.length; ++i) {
+      String match = matches[i];
+      int slashIndex = match.lastIndexOf('/');
+      if ((match.endsWith(".class") || match.endsWith("/")) && slashIndex > 0) {
+        match = match.substring(0, slashIndex);
+        packages.add(match);
+      }
+    }
   }
 }
