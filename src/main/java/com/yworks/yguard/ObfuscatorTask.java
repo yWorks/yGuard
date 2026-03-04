@@ -119,7 +119,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   /** Holds value of property replaceClassNameStrings. */
   private boolean replaceClassNameStrings = true;
   private File[] tempJars;
-  private boolean needYShrinkModel;
 
   /**
    * Instantiates a new Obfuscator task.
@@ -282,15 +281,6 @@ public class ObfuscatorTask extends YGuardBaseTask
       nat.append(';');
     }
     return nat.toString();
-  }
-
-  /**
-   * Sets need y shrink model.
-   *
-   * @param b the b
-   */
-  public void setNeedYShrinkModel( boolean b ) {
-    this.needYShrinkModel = b;
   }
 
   /**
