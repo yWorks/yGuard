@@ -2,10 +2,7 @@ package com.yworks.yguard.obf;
 
 import com.yworks.util.Compiler;
 import com.yworks.yshrink.YShrinkModel;
-import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.InOutPair;
-import com.yworks.yshrink.YShrinkModelImpl;
-import com.yworks.yshrink.core.URLCpResolver;
 import com.yworks.yshrink.model.Model;
 import org.junit.Rule;
 import org.junit.Test;
@@ -93,14 +90,7 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
       final InOutPair pair = new InOutPair();
       pair.setIn(inTmp);
       pair.setOut(outTmp);
-      final ArrayList<ShrinkBag> bags = new ArrayList<ShrinkBag>();
-      bags.add(pair);
 
-      final YShrinkModel wrapper =  new YShrinkModelImpl();
-      final Model model = getModel(wrapper);
-      model.setClassResolver(new URLCpResolver(new URL[] {inTmp.toURI().toURL()}));
-
-      wrapper.createSimpleModel(bags);
     } finally {
 
       // clean up and remove temporary files

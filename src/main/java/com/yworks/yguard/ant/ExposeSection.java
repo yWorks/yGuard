@@ -300,11 +300,6 @@ public class ExposeSection extends Exclude {
       }
     }
 
-    if ( task instanceof ObfuscatorTask ) {
-      ((ObfuscatorTask)task).addInheritanceEntries( entries );
-    }
-
-
     return entries;
   }
 
