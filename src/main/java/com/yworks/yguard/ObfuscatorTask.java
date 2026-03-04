@@ -11,7 +11,6 @@ import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ant.PackageSection;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.AttributesSection;
-import com.yworks.common.ant.EntryPointsSection;
 import com.yworks.common.ant.Exclude;
 import com.yworks.common.ant.InOutPair;
 import com.yworks.common.ant.TypePatternSet;
@@ -104,7 +103,6 @@ public class ObfuscatorTask extends YGuardBaseTask
 
   // shrinking attributes
   private boolean doShrink = false;
-  protected EntryPointsSection entryPoints = null;
   private File shrinkLog = null;
   private boolean useExposeAsEntryPoints = true;
 
@@ -826,17 +824,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     return new ExposeSection( ot );
   }
 
-  /**
-   * Add excludes.
-   *
-   * @param entryPoints the entry points
-   */
-  public void addExcludes( EntryPointsSection entryPoints ) {
-    if ( null == this.expose ) {
-      createExpose();
-    }
-  }
-
   public Exclude createKeep() {
     return createExpose();
   }
@@ -888,37 +875,6 @@ public class ObfuscatorTask extends YGuardBaseTask
       throw new IllegalArgumentException("Only one expose element allowed!");
     }
     this.expose = ex;
-  }
-
-  /**
-   * Create entry points entry points section.
-   *
-   * @return the entry points section
-   */
-  public EntryPointsSection createEntryPoints() {
-    return newEntryPointsSection( this );
-  }
-
-  /**
-   * Instantiates an entry points section,
-   * subclasses may provide custom implementations.
-   *
-   * @return the new entry points section
-   */
-  protected EntryPointsSection newEntryPointsSection( YGuardBaseTask bt ) {
-    return new EntryPointsSection( bt );
-  }
-
-  /**
-   * Used by ant to handle the nested <code>entrypoints</code> element.
-   *
-   * @param eps the eps
-   */
-  public void addConfiguredEntryPoints( EntryPointsSection eps ) {
-    if ( this.entryPoints != null ) {
-      throw new IllegalArgumentException( "Only one entrypoints element allowed!" );
-    }
-    this.entryPoints = eps;
   }
 
   /**
