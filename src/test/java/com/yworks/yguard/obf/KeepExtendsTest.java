@@ -1,9 +1,7 @@
 package com.yworks.yguard.obf;
 
 import com.yworks.util.Compiler;
-import com.yworks.yshrink.YShrinkModel;
 import com.yworks.common.ant.InOutPair;
-import com.yworks.yshrink.model.Model;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -97,12 +95,5 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
       inTmp.delete();
       outTmp.delete();
     }
-  }
-
-  private static Model getModel( final YShrinkModel wrapper ) throws Exception {
-    final Class c = wrapper.getClass();
-    final Field f = c.getDeclaredField("model");
-    f.setAccessible(true);
-    return (Model) f.get(wrapper);
   }
 }

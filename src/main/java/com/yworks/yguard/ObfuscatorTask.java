@@ -31,7 +31,6 @@ import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.LineNumberInfo;
 import com.yworks.yguard.obf.classfile.LineNumberTableAttrInfo;
 import com.yworks.yguard.obf.classfile.Logger;
-import com.yworks.yshrink.YShrinkModel;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Location;
@@ -123,7 +122,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   private boolean replaceClassNameStrings = true;
   private File[] tempJars;
   private boolean needYShrinkModel;
-  private YShrinkModel yShrinkModel;
 
   /**
    * Instantiates a new Obfuscator task.
