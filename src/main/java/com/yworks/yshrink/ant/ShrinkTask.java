@@ -5,11 +5,9 @@ import com.yworks.common.ant.*;
 import com.yworks.common.ant.AttributesSection;
 import com.yworks.util.Version;
 import com.yworks.yguard.obf.classfile.ClassConstants;
-import com.yworks.yshrink.YShrink;
 import com.yworks.yshrink.ant.filters.*;
 import com.yworks.logging.Logger;
 import com.yworks.logging.XmlLogger;
-import com.yworks.yshrink.util.MultiReleaseException;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.PatternSet;
@@ -189,47 +187,13 @@ public class ShrinkTask extends YGuardBaseTask {
       }
     }
 
-    ResourceCpResolver resolver = null;
-
-    if ( resourceClassPath != null ) {
-      resolver = new ResourceCpResolver( resourceClassPath, this );
-    }
-
     if (properties.containsKey("digests")) {
       setDigests((String) properties.get("digests"));
     }
 
-    final YShrink yShrink = new YShrink( createStubs, digests );
-
     //epfs.addEntryPointFilter( new SerializationFilter( getProject() ) );
-
-    try {
-
-      yShrink.doShrinkPairs( pairs, epfs, resolver );
-    } catch ( MultiReleaseException mre ) {
-      throw mre;
-    } catch ( RuntimeException rte ) {
-      if ( rte.getMessage() != null ) {
-        Logger.err( rte.getMessage(), rte );
-      }
-      throw new BuildException( "yShrink encountered an unknown problem!", rte );
-    } catch ( Throwable e ) {
-      if ( e.getMessage() != null ) {
-        Logger.err( e.getMessage(), e );
-      } else {
-          Logger.err(e.getClass().getName(), e);
-      }
-      throw new BuildException( "yShrink encountered an unknown severe problem!", e );
-
-    } finally {
-      try {
-        resolver.close();
-      } catch (Exception e) {
-        // can't do nothing about it
-      }
-      xmlLogger.close();
-      antLogger.close();
-    }
+    xmlLogger.close();
+    antLogger.close();
   }
 
   private PrintWriter getLogWriter() {
