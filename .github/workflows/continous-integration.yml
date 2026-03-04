@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: actions/setup-java@v4
       with:
-        distribution: 'oracle'
+        distribution: 'temurin'
         java-version: 11
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v5
