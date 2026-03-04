@@ -29,10 +29,6 @@ public class ConsoleLogger extends Logger {
   public void doWarnToLog( String s ) {
   }
 
-  public void doShrinkLog( String s ) {
-    System.out.println( s );
-  }
-
   public void doErr( String s, Throwable ex ) {
     System.out.println( s );
     ex.printStackTrace();

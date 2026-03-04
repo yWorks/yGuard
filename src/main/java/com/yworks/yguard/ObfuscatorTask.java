@@ -9,7 +9,6 @@ import com.yworks.yguard.ant.MapParser;
 import com.yworks.yguard.ant.Mappable;
 import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ant.PackageSection;
-import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.AttributesSection;
 import com.yworks.common.ant.Exclude;
 import com.yworks.common.ant.InOutPair;
@@ -101,9 +100,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   protected PatchSection patch = null;
   //private Path resourceClassPath;
 
-  // shrinking attributes
-  private boolean doShrink = false;
-  private File shrinkLog = null;
   private boolean useExposeAsEntryPoints = true;
 
   private static final String LOG_TITLE_PRE_VERSION = "  yGuard Bytecode Obfuscator, v";
@@ -112,7 +108,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   private static final String LOG_INPUT_FILE =  "  Jar file to be obfuscated:           ";
   private static final String LOG_OUTPUT_FILE = "  Target Jar file for obfuscated code: ";
 
-  private static final String NO_SHRINKING_SUPPORT = "No shrinking support found.";
   private static final String DEPRECATED  = "The obfuscate task is deprecated. Please use the new com.yworks.yguard.YGuardTask instead.";
 
 
@@ -992,10 +987,6 @@ public class ObfuscatorTask extends YGuardBaseTask
 
     TaskLogger taskLogger = new TaskLogger();
 
-    if ( ! ( mode == MODE_STANDALONE ) ) {
-      doShrink = false;
-    }
-
     ResourceCpResolver resolver = null;
     if (resourceClassPath != null){
       resolver = new ResourceCpResolver(resourceClassPath, this);
@@ -1172,14 +1163,6 @@ public class ObfuscatorTask extends YGuardBaseTask
         db.close();
         Cl.setClassResolver(null);
 
-        if( doShrink ) {
-          for ( int i = 0; i < tempJars.length; i++ ) {
-            if ( null != tempJars[ i ] ) {
-              tempJars[ i ].delete();
-            }
-          }
-        }
-
         if ( !Logger.getInstance().isAllResolved() ) {
           Logger.getInstance().warning( "Not all dependencies could be resolved. Please see the logfile for details." );
         }
@@ -1237,29 +1220,6 @@ public class ObfuscatorTask extends YGuardBaseTask
    */
   protected ResourceAdjuster newResourceAdjuster(GuardDB db) {
     return new ResourceAdjuster(db);
-  }
-
-  /**
-   * Sets shrink.
-   *
-   * @param doShrink the do shrink
-   */
-  public void setShrink( boolean doShrink ) {
-    if ( mode == MODE_STANDALONE ) {
-      this.doShrink = doShrink;
-    } else {
-      throw new BuildException(
-          "The shrink attribute is not supported when the obfuscate task is nested inside a yguard task.\n Use a separate nested shrink task instead." );
-    }
-  }
-
-  /**
-   * Sets shrink log.
-   *
-   * @param shrinkLog the shrink log
-   */
-  public void setShrinkLog( File shrinkLog ) {
-    this.shrinkLog = shrinkLog;
   }
 
   /**

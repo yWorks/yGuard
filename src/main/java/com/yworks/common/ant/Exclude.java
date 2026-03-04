@@ -1,7 +1,7 @@
 package com.yworks.common.ant;
 
 /**
- * Stores which byte code attributes to keep when renaming or shrinking. 
+ * Stores which byte code attributes to keep when renaming.
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public abstract class Exclude {
