@@ -1053,8 +1053,6 @@ public class ObfuscatorTask extends YGuardBaseTask
       doShrink = false;
     }
 
-    if( doShrink ) doShrink();
-
     ResourceCpResolver resolver = null;
     if (resourceClassPath != null){
       resolver = new ResourceCpResolver(resourceClassPath, this);
@@ -1296,76 +1294,6 @@ public class ObfuscatorTask extends YGuardBaseTask
    */
   protected ResourceAdjuster newResourceAdjuster(GuardDB db) {
     return new ResourceAdjuster(db);
-  }
-
-  private void doShrink() {
-    YShrinkInvoker yShrinkInvoker = null;
-
-    try {
-       yShrinkInvoker = (YShrinkInvoker) Class.forName("com.yworks.yshrink.YShrinkInvokerImpl").newInstance();
-    } catch ( InstantiationException e ) {
-      throw new BuildException( NO_SHRINKING_SUPPORT, e );
-    } catch ( IllegalAccessException e ) {
-      throw new BuildException( NO_SHRINKING_SUPPORT, e );
-    } catch ( ClassNotFoundException e ) {
-      throw new BuildException( NO_SHRINKING_SUPPORT, e );
-    }
-
-    if ( null == yShrinkInvoker ) return;
-
-    yShrinkInvoker.setContext( (Task)this );
-
-    tempJars = new File[ pairs.size() ];
-    File[] outJars  = new File[ pairs.size() ];
-
-    for ( int i = 0; i < tempJars.length; i++ ) {
-      try {
-        tempJars[ i ] = File.createTempFile( "tempJar_", "_shrinked.jar", new File(((InOutPair) pairs.get( i )).getOut().getParent()));
-      } catch ( IOException e ) {
-        getProject().log( "Could not create tempfile for shrinking " + tempJars[ i ] + ".", Project.MSG_ERR );
-        tempJars[ i ] = null;
-      }
-
-      if ( null != tempJars[ i ] ) {
-        System.out.println( "temp-jar: " + tempJars[ i ] );
-        ShrinkBag pair = ((ShrinkBag) pairs.get( i ));
-        outJars[ i ] = pair.getOut();
-        pair.setOut( tempJars[ i ] );
-        yShrinkInvoker.addPair( pair );
-      }
-    }
-
-    yShrinkInvoker.setResourceClassPath( resourceClassPath );
-
-    if ( shrinkLog != null ) {
-      yShrinkInvoker.setLogFile( shrinkLog );
-    }
-
-    if ( null != entryPoints ) {
-      yShrinkInvoker.setEntyPoints( entryPoints );
-    }
-
-    if ( null != expose && useExposeAsEntryPoints ) {
-      for ( ClassSection cs : (List<ClassSection>) expose.getClasses()) {
-        yShrinkInvoker.addClassSection( cs );
-      }
-      for ( MethodSection ms : (List<MethodSection>) expose.getMethods()) {
-        yShrinkInvoker.addMethodSection( ms );
-      }
-      for ( FieldSection fs : (List<FieldSection>) expose.getFields() ) {
-        yShrinkInvoker.addFieldSection( fs );
-      }
-    }
-
-    yShrinkInvoker.execute();
-
-    for ( int i = 0; i < tempJars.length; i++ ) {
-      if( null != tempJars[ i ] ) {
-        InOutPair pair = ((InOutPair) pairs.get( i ));
-        pair.setIn( tempJars[ i ] );
-        pair.setOut( outJars[ i ] );
-      }
-    }
   }
 
   /**
