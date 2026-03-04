@@ -27,7 +27,7 @@ public interface  ClassConstants
   /**
    * The constant MAJOR_VERSION.
    */
-  public static final int MAJOR_VERSION     = 0x41;
+  public static final int MAJOR_VERSION     = 0x45;
 
   /**
    * The constant ACC_PUBLIC.
