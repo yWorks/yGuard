@@ -4,7 +4,6 @@ import com.yworks.yguard.obf.Cl;
 import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.*;
 import com.yworks.common.ant.AttributesSection;
-import com.yworks.yshrink.ant.ShrinkTask;
 import com.yworks.logging.Logger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -12,8 +11,6 @@ import org.apache.tools.ant.Task;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -63,23 +60,6 @@ public class YGuardTask extends YGuardBaseTask {
 //        }
 //      }
 //    }
-
-    // execute ShrinkTask first
-
-    
-
-    Collections.sort(
-        subTasks,
-        new Comparator<YGuardBaseTask>() {
-          public int compare( YGuardBaseTask o1, YGuardBaseTask o2 ) {
-            if ( o1 instanceof ShrinkTask ) {
-              return 0;
-            }
-            return 1;
-          }
-        }
-    );
-
 
     // execute
     int taskNum = 0;
@@ -146,28 +126,6 @@ public class YGuardTask extends YGuardBaseTask {
       Logger.err("could not create temp file for " + origFile, e);
       throw new BuildException( "could not create temp file for " + origFile );
     }
-  }
-
-  /**
-   * Create shrink shrink task.
-   *
-   * @return the shrink task
-   */
-  public ShrinkTask createShrink() {
-    ShrinkTask shrinkTask = newShrinkTask( YGuardBaseTask.MODE_NESTED );
-    configureSubTask(shrinkTask);
-    subTasks.add( shrinkTask );
-    return shrinkTask;
-  }
-
-  /**
-   * Instantiates a shrink task,
-   * subclasses may provide custom implementations.
-   *
-   * @return the new shrink task
-   */
-  protected ShrinkTask newShrinkTask( boolean mode ) {
-    return new ShrinkTask( mode );
   }
 
   /**
