@@ -23,30 +23,6 @@ public abstract class Exclude {
    */
   protected boolean lttable = false;
   /**
-   * Stores whether to keep the runtime visible annotations.
-   */
-  protected boolean rvAnn = true;
-  /**
-   * Stores whether to keep the runtime visible type annotations.
-   */
-  protected boolean rvTypeAnn = true;
-  /**
-   * Stores whether to keep the runtime invisible annotations.
-   */
-  protected boolean riAnn = false;
-  /**
-   * Stores whether to keep the runtime invisible type annotations.
-   */
-  protected boolean riTypeAnn = false;
-  /**
-   * Stores whether to keep the runtime visible parameter annotations.
-   */
-  protected boolean rvPann = true;
-  /**
-   * Stores whether to keep the runtime invisible parameter annotations.
-   */
-  protected boolean riPann = false;
-  /**
    * Stores whether to keep the source debug extension attribute.
    */
   protected boolean debugExtension = false;
@@ -89,60 +65,6 @@ public abstract class Exclude {
    */
   public void setLinenumbertable(boolean lt) {
     this.ltable = lt;
-  }
-
-  /**
-   * Sets whether to keep the runtime visible annotations.
-   * @param v if <code>true</code>, runtime visible annotations are
-   * kept when renaming or shrinking, otherwise they are removed.
-   */
-  public void setRuntimeVisibleAnnotations(boolean v) {
-    this.rvAnn = v;
-  }
-
-  /**
-   * Sets whether to keep the runtime visible type annotations.
-   * @param v if <code>true</code>, runtime visible type annotations are
-   * kept when renaming or shrinking, otherwise they are removed.
-   */
-  public void setRuntimeVisibleTypeAnnotations(boolean v) {
-    this.rvTypeAnn = v;
-  }
-
-  /**
-   * Sets whether to keep the runtime invisible annotations.
-   * @param v if <code>true</code>, runtime invisible annotations are
-   * kept when renaming or shrinking, otherwise they are removed.
-   */
-  public void setRuntimeInvisibleAnnotations(boolean v) {
-    this.riAnn = v;
-  }
-
-  /**
-   * Sets whether to keep the runtime invisible type annotations.
-   * @param v if <code>true</code>, runtime invisible type annotations are
-   * kept when renaming or shrinking, otherwise they are removed.
-   */
-  public void setRuntimeInvisibleTypeAnnotations(boolean v) {
-    this.riTypeAnn = v;
-  }
-
-  /**
-   * Sets whether to keep the runtime visible parameter annotations.
-   * @param v if <code>true</code>, runtime visible parameter annotations are
-   * kept when renaming or shrinking, otherwise they are removed.
-   */
-  public void setRuntimeVisibleParameterAnnotations(boolean v) {
-    this.rvPann = v;
-  }
-
-  /**
-   * Sets whether to keep the runtime invisible parameter annotations.
-   * @param v if <code>true</code>, runtime invisible parameter annotations are
-   * kept when renaming or shrinking, otherwise they are removed.
-   */
-  public void setRuntimeInvisibleParameterAnnotations(boolean v) {
-    this.riPann = v;
   }
 
   /**
@@ -197,60 +119,6 @@ public abstract class Exclude {
    */
   public boolean isLttable() {
     return lttable;
-  }
-
-  /**
-   * Determines whether to keep the runtime visible annotations.
-   * @return <code>true</code> if runtime visible annotations have to be
-   * kept when renaming or shrinking, <code>false</code> otherwise. 
-   */
-  public boolean isRvAnn() {
-    return rvAnn;
-  }
-
-  /**
-   * Determines whether to keep the runtime invisible annotations.
-   * @return <code>true</code> if runtime invisible annotations have to be
-   * kept when renaming or shrinking, <code>false</code> otherwise. 
-   */
-  public boolean isRiAnn() {
-    return riAnn;
-  }
-
-  /**
-   * Determines whether to keep the runtime visible parameter annotations.
-   * @return <code>true</code> if runtime visible parameter annotations have to
-   * be kept when renaming or shrinking, <code>false</code> otherwise. 
-   */
-  public boolean isRvPann() {
-    return rvPann;
-  }
-
-  /**
-   * Determines whether to keep the runtime invisible parameter annotations.
-   * @return <code>true</code> if runtime invisible parameter annotations have
-   * to be kept when renaming or shrinking, <code>false</code> otherwise. 
-   */
-  public boolean isRiPann() {
-    return riPann;
-  }
-
-  /**
-   * Determines whether to keep the runtime visible type annotations.
-   * @return <code>true</code> if runtime visible type annotations have
-   * to be kept when renaming or shrinking, <code>false</code> otherwise. 
-   */
-  public boolean isRvTypeAnn() {
-    return rvTypeAnn;
-  }
-
-  /**
-   * Determines whether to keep the runtime invisible type annotations.
-   * @return <code>true</code> if runtime invisible type annotations have
-   * to be kept when renaming or shrinking, <code>false</code> otherwise. 
-   */
-  public boolean isRiTypeAnn() {
-    return riTypeAnn;
   }
 
   /**
