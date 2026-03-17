@@ -44,10 +44,10 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
     assertTrue("Invalid Java version", 11 <= getMajorVersion());
 
     final TypeStruct[] types = {
-            new TypeStruct("asm/AbstractBaseClass.txt", "com.yworks.ext.test.AbstractBaseClass"),
-            new TypeStruct("asm/Impl.txt", "com.yworks.impl.test.Impl"),
-            new TypeStruct("asm/Main.txt", "com.yworks.impl.test.Main"),
-            new TypeStruct("asm/Sample.txt", "com.yworks.impl.test.Sample")
+      new TypeStruct("asm/AbstractBaseClass.txt", "com.yworks.ext.test.AbstractBaseClass"),
+      new TypeStruct("asm/Impl.txt", "com.yworks.impl.test.Impl"),
+      new TypeStruct("asm/Main.txt", "com.yworks.impl.test.Main"),
+      new TypeStruct("asm/Sample.txt", "com.yworks.impl.test.Sample")
     };
 
     final ByteArrayOutputStream baos = compile(getClass(), types);
@@ -58,19 +58,7 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
     try {
       write(baos.toByteArray(), inTmp);
 
-      final Project project = new Project();
-      project.init();
-      final Target target = new Target();
-
-      final YGuardTask task = new YGuardTask();
-      task.setProject(project);
-      task.setTaskType("yguard");
-      task.setTaskName("yguard");
-      task.setOwningTarget(target);
-
-      final ShrinkBag pair = task.createInOutPair();
-      pair.setIn(inTmp);
-      pair.setOut(outTmp);
+      final YGuardTask task = createTask(inTmp, outTmp);
 
       final ObfuscatorTask rename = task.createRename();
       final ExposeSection keep = (ExposeSection) rename.createKeep();
@@ -81,8 +69,7 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
 
       final List<String> entries = listClassEntries(outTmp);
       assertNotNull(entries);
-      assertTrue(
-        "com/yworks/ext/test/AbstractBaseClass.class should exist",
+      assertTrue("com/yworks/ext/test/AbstractBaseClass.class should exist",
         entries.contains("com/yworks/ext/test/AbstractBaseClass.class"));
       assertTrue("com/yworks/impl/test/Impl.class should exist",
         entries.contains("com/yworks/impl/test/Impl.class"));
@@ -90,6 +77,48 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
         entries.contains("com/yworks/impl/test/Main.class"));
       assertFalse("com/yworks/impl/test/Sample.class should not exist",
         entries.contains("com/yworks/impl/test/Sample.class"));
+    } finally {
+      // clean up and remove temporary files
+      inTmp.delete();
+      outTmp.delete();
+    }
+  }
+
+  @Test
+  public void testTaskKeepsImplements() throws Exception {
+    assertTrue("Invalid Java version", 11 <= getMajorVersion());
+
+    final TypeStruct[] types = {
+      new TypeStruct("asm/AnInterface.txt", "com.yworks.ext.test.AnInterface"),
+      new TypeStruct("asm/AnInterfaceImpl.txt", "com.yworks.impl.test.AnInterfaceImpl"),
+      new TypeStruct("asm/AnInterfaceUsage.txt", "com.yworks.impl.test.AnInterfaceUsage"),
+    };
+
+    final ByteArrayOutputStream baos = compile(getClass(), types);
+
+    final File inTmp = File.createTempFile(name.getMethodName() + "_in_", ".jar");
+    final File outTmp = File.createTempFile(name.getMethodName() + "_out_", ".jar");
+
+    try {
+      write(baos.toByteArray(), inTmp);
+
+      final YGuardTask task = createTask(inTmp, outTmp);
+
+      final ObfuscatorTask rename = task.createRename();
+      final ExposeSection keep = (ExposeSection) rename.createKeep();
+      final ClassSection keepClass = keep.createClass();
+      keepClass.setImplements("com.yworks.ext.test.AnInterface");
+
+      task.execute();
+
+      final List<String> entries = listClassEntries(outTmp);
+      assertNotNull(entries);
+      assertTrue("com/yworks/ext/test/AnInterface.class should exist",
+        entries.contains("com/yworks/ext/test/AnInterface.class"));
+      assertTrue("com/yworks/impl/test/AnInterfaceImpl.class should exist",
+        entries.contains("com/yworks/impl/test/AnInterfaceImpl.class"));
+      assertFalse("com/yworks/impl/test/AnInterfaceUsage.class should not exist",
+        entries.contains("com/yworks/impl/test/AnInterfaceUsage.class"));
     } finally {
       // clean up and remove temporary files
       inTmp.delete();
@@ -147,6 +176,23 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
       inTmp.delete();
       outTmp.delete();
     }
+  }
+
+  private static YGuardTask createTask( final File inTmp, final File outTmp ) {
+    final Project project = new Project();
+    project.init();
+
+    final YGuardTask task = new YGuardTask();
+    task.setProject(project);
+    task.setTaskType("yguard");
+    task.setTaskName("yguard");
+    task.setOwningTarget(new Target());
+
+    final ShrinkBag pair = task.createInOutPair();
+    pair.setIn(inTmp);
+    pair.setOut(outTmp);
+
+    return task;
   }
 
   private static List<String> listClassEntries( final File file ) throws Exception {
