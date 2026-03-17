@@ -69,7 +69,7 @@ dependencies {
 
 task yguard {
   group 'yGuard'
-  description 'Obfuscates and shrinks the java archive.'
+  description 'Obfuscates the java archive.'
 
   doLast {
     ant.taskdef(
