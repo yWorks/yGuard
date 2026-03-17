@@ -1,7 +1,14 @@
 package com.yworks.yguard;
 
-import com.yworks.util.CollectionFilter;
+import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.ZipScannerTool;
+import com.yworks.common.ant.AttributesSection;
+import com.yworks.common.ant.Exclude;
+import com.yworks.common.ant.InOutPair;
+import com.yworks.common.ant.TypePatternSet;
+import com.yworks.common.ant.YGuardBaseTask;
+import com.yworks.util.CollectionFilter;
+import com.yworks.util.Version;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.ExposeSection;
 import com.yworks.yguard.ant.FieldSection;
@@ -9,11 +16,6 @@ import com.yworks.yguard.ant.MapParser;
 import com.yworks.yguard.ant.Mappable;
 import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ant.PackageSection;
-import com.yworks.common.ant.AttributesSection;
-import com.yworks.common.ant.Exclude;
-import com.yworks.common.ant.InOutPair;
-import com.yworks.common.ant.TypePatternSet;
-import com.yworks.common.ant.YGuardBaseTask;
 import com.yworks.yguard.obf.Cl;
 import com.yworks.yguard.obf.Cl.ClassResolver;
 import com.yworks.yguard.obf.ClassTree;
@@ -24,11 +26,11 @@ import com.yworks.yguard.obf.NameMaker;
 import com.yworks.yguard.obf.NameMakerFactory;
 import com.yworks.yguard.obf.NoSuchMappingException;
 import com.yworks.yguard.obf.ResourceHandler;
-import com.yworks.util.Version;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.LineNumberInfo;
 import com.yworks.yguard.obf.classfile.LineNumberTableAttrInfo;
 import com.yworks.yguard.obf.classfile.Logger;
+import com.yworks.yshrink.YShrinkModel;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Location;
@@ -108,12 +110,15 @@ public class ObfuscatorTask extends YGuardBaseTask
   private static final String LOG_INPUT_FILE =  "  Jar file to be obfuscated:           ";
   private static final String LOG_OUTPUT_FILE = "  Target Jar file for obfuscated code: ";
 
+  private static final String NO_SHRINKING_SUPPORT = "No shrinking support found.";
   private static final String DEPRECATED  = "The obfuscate task is deprecated. Please use the new com.yworks.yguard.YGuardTask instead.";
 
 
   /** Holds value of property replaceClassNameStrings. */
   private boolean replaceClassNameStrings = true;
   private File[] tempJars;
+  private boolean needYShrinkModel;
+  private YShrinkModel yShrinkModel;
 
   /**
    * Instantiates a new Obfuscator task.
@@ -276,6 +281,15 @@ public class ObfuscatorTask extends YGuardBaseTask
       nat.append(';');
     }
     return nat.toString();
+  }
+
+  /**
+   * Sets need y shrink model.
+   *
+   * @param b the b
+   */
+  public void setNeedYShrinkModel( boolean b ) {
+    this.needYShrinkModel = b;
   }
 
   /**
@@ -1220,6 +1234,72 @@ public class ObfuscatorTask extends YGuardBaseTask
    */
   protected ResourceAdjuster newResourceAdjuster(GuardDB db) {
     return new ResourceAdjuster(db);
+  }
+
+  /**
+   * Add inheritance entries.
+   *
+   * @param entries the entries
+   * @throws IOException the io exception
+   */
+  public void addInheritanceEntries( Collection entries ) throws IOException {
+
+    if ( ! needYShrinkModel || expose == null ) return;
+
+    yShrinkModel = null;
+
+    try {
+      yShrinkModel = (YShrinkModel) Class.forName("com.yworks.yshrink.YShrinkModelImpl").newInstance();
+    } catch ( InstantiationException e ) {
+      throw new BuildException( NO_SHRINKING_SUPPORT, e );
+    } catch ( IllegalAccessException e ) {
+      throw new BuildException( NO_SHRINKING_SUPPORT, e );
+    } catch ( ClassNotFoundException e ) {
+      throw new BuildException( NO_SHRINKING_SUPPORT, e );
+    }
+
+    if ( null == yShrinkModel ) return;
+
+    if (this.resourceClassPath != null) {
+      yShrinkModel.setResourceClassPath(this.resourceClassPath,this);
+    }
+
+    yShrinkModel.createSimpleModel( (List<ShrinkBag>) pairs );
+
+    for ( String className : yShrinkModel.getAllClassNames() ) {
+
+      Set<String> allAncestorClasses = yShrinkModel.getAllAncestorClasses( className );
+      Set<String> allInterfaces = yShrinkModel.getAllImplementedInterfaces( className );
+
+      for ( ClassSection cs : (List<ClassSection>) expose.getClasses() ) {
+
+        if ( null != cs.getExtends() ) {
+          String extendsName = cs.getExtends();
+          if ( extendsName.equals( className ) ) {
+            //System.out.println( extendsName + " equals "+className );
+            cs.addEntries( entries, className );
+          } else {
+            if ( allAncestorClasses.contains( extendsName ) ) {
+              cs.addEntries( entries, className );
+              //System.out.println( extendsName + " extends "+className );
+            }
+          }
+        }
+
+        if ( null != cs.getImplements() ) {
+          String interfaceName = cs.getImplements();
+          if ( interfaceName.equals( className ) ) {
+            //System.out.println( interfaceName + " equals "+className );
+            cs.addEntries( entries, className );
+          } else {
+            if ( allInterfaces.contains( interfaceName ) ) {
+              cs.addEntries( entries, className );
+              //System.out.println( interfaceName + " implements "+className );
+            }
+          }
+        }
+      }
+    }
   }
 
   /**

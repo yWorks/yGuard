@@ -94,6 +94,10 @@ public class ClassSection extends PatternMatchedClassesSection implements Mappab
    */
   public void setExtends( String extendsType ) {
     this.extendsType = ObfuscatorTask.toNativeClass( extendsType );
+    if ( task instanceof ObfuscatorTask ) {
+      ( (ObfuscatorTask) task ).setNeedYShrinkModel( true );
+    }
+
   }
 
   /**
@@ -112,6 +116,9 @@ public class ClassSection extends PatternMatchedClassesSection implements Mappab
    */
   public void setImplements( String implementsType ) {
     this.implementsType = ObfuscatorTask.toNativeClass( implementsType );
+    if ( task instanceof ObfuscatorTask ) {
+      ( (ObfuscatorTask) task ).setNeedYShrinkModel( true );
+    }
   }
 
   /**

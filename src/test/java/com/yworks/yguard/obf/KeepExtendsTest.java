@@ -1,11 +1,15 @@
 package com.yworks.yguard.obf;
 
+import com.yworks.common.ShrinkBag;
+import com.yworks.common.ant.InOutPair;
 import com.yworks.yguard.ObfuscatorTask;
 import com.yworks.yguard.YGuardTask;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.ExposeSection;
-import com.yworks.common.ShrinkBag;
-import com.yworks.common.ant.InOutPair;
+import com.yworks.yshrink.YShrinkModel;
+import com.yworks.yshrink.YShrinkModelImpl;
+import com.yworks.yshrink.core.ClassResolver;
+import com.yworks.yshrink.model.Model;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
 import org.junit.Rule;
@@ -16,6 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -169,13 +174,27 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
       final InOutPair pair = new InOutPair();
       pair.setIn(inTmp);
       pair.setOut(outTmp);
+      final ArrayList<ShrinkBag> bags = new ArrayList<ShrinkBag>();
+      bags.add(pair);
 
+      final YShrinkModel wrapper =  new YShrinkModelImpl();
+      final Model model = getModel(wrapper);
+      model.setClassResolver(new UrlResolver(inTmp.toURI().toURL()));
+
+      wrapper.createSimpleModel(bags);
     } finally {
 
       // clean up and remove temporary files
       inTmp.delete();
       outTmp.delete();
     }
+  }
+
+  private static Model getModel( final YShrinkModel wrapper ) throws Exception {
+    final Class<?> c = wrapper.getClass();
+    final Field f = c.getDeclaredField("model");
+    f.setAccessible(true);
+    return (Model) f.get(wrapper);
   }
 
   private static YGuardTask createTask( final File inTmp, final File outTmp ) {
@@ -212,5 +231,35 @@ public class KeepExtendsTest extends AbstractObfuscationTest {
       }
     }
     return result;
+  }
+
+  private static final class UrlResolver implements ClassResolver {
+    private URLClassLoader urlClassLoader;
+
+    UrlResolver( final URL url ) {
+      urlClassLoader = URLClassLoader.newInstance(new URL[]{url});
+    }
+
+    @Override
+    public Class resolve( final String className ) throws ClassNotFoundException {
+      try {
+        return Class.forName( className, false, urlClassLoader );
+      } catch ( NoClassDefFoundError ncdfe ) {
+        String message = ncdfe.getMessage();
+        if ( message == null || message.equals( className ) ) {
+          message = className;
+        } else {
+          message = message + "[" + className + "]";
+        }
+        throw new ClassNotFoundException( message, ncdfe );
+      } catch ( LinkageError le ) {
+        throw new ClassNotFoundException( className, le );
+      }
+    }
+
+    @Override
+    public void close() throws Exception {
+      urlClassLoader.close();
+    }
   }
 }
