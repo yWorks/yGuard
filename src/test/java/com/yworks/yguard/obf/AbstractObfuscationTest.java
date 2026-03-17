@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import com.yworks.util.Compiler;
 import com.yworks.util.InMemoryArchive;
@@ -48,18 +48,7 @@ public class AbstractObfuscationTest {
   ) throws IOException {
     final Class<?> resolver = getClass();
 
-    final Compiler compiler = Compiler.newCompiler();
-
-    final ArrayList<Object> sources = new ArrayList<Object>();
-    for (TypeStruct struct : sourceFiles) {
-      final URL url = resolver.getResource(struct.fileName);
-      assertNotNull("Could not resolve " + struct.fileName + '.', url);
-
-      sources.add(compiler.newUrlSource(struct.typeName, url));
-    }
-
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    compiler.compile(sources, baos);
+    final ByteArrayOutputStream baos = compileImpl(resolver, sourceFiles);
 
     final InMemoryArchive archive = new InMemoryArchive(name);
     archive.addAll(baos.toByteArray());
@@ -79,6 +68,45 @@ public class AbstractObfuscationTest {
 
     archive.freeze();
     return archive;
+  }
+
+  static ByteArrayOutputStream compile(
+     final Class<?> resolver, final TypeStruct... types
+  ) {
+    return compileImpl(Compiler.newCompiler(), resolver, new ArrayIterable<>(types));
+  }
+
+  static ByteArrayOutputStream compile(
+    final Compiler compiler, final Class<?> resolver, final TypeStruct... types
+  ) {
+    return compileImpl(compiler, resolver, new ArrayIterable<>(types));
+  }
+
+  private static ByteArrayOutputStream compileImpl(
+    final Class<?> resolver, final Iterable<TypeStruct> types
+  ) {
+    return compileImpl(Compiler.newCompiler(), resolver, types);
+  }
+
+  private static ByteArrayOutputStream compileImpl(
+    final Compiler compiler, final Class<?> resolver, final Iterable<TypeStruct> types
+  ) {
+    // resolve java source code and create corresponding source model items
+    final ArrayList<Object> sources = new ArrayList<Object>();
+
+    for (final TypeStruct type : types) {
+      final URL source = resolver.getResource(type.fileName);
+      assertNotNull("Could not resolve " + type.fileName + '.', source);
+
+      sources.add(compiler.newUrlSource(type.typeName, source));
+    }
+
+
+    // compile the java source code
+    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    compiler.compile(sources, baos);
+
+    return baos;
   }
 
   /**
@@ -161,6 +189,47 @@ public class AbstractObfuscationTest {
     TypeStruct( final String fileName, final String typeName ) {
       this.fileName = fileName;
       this.typeName = typeName;
+    }
+  }
+
+  private static final class ArrayIterable<T> implements Iterable<T> {
+    private final T[] items;
+
+    ArrayIterable( T[] items ) {
+      this.items = items;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+      return new ArrayIterator<>(items);
+    }
+  }
+
+  private static final class ArrayIterator<T> implements Iterator<T> {
+    private final T[] items;
+    private int index;
+
+    ArrayIterator( final T[] items ) {
+      this.items = items;
+    }
+
+    @Override
+    public boolean hasNext() {
+      return index < items.length;
+    }
+
+    @Override
+    public T next() {
+      if (hasNext()) {
+        return items[index++];
+      } else {
+        throw new NoSuchElementException();
+      }
+    }
+
+    @Override
+    public void remove() {
+      throw new UnsupportedOperationException();
     }
   }
 }

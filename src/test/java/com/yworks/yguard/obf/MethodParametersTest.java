@@ -15,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -23,7 +22,6 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 
@@ -70,21 +68,12 @@ public class MethodParametersTest extends AbstractObfuscationTest {
 
     final String testTypeName = "com.yworks.yguard.obf.SimpleMethodParametersTest";
 
-    // look for java source code that will be compiled with MethodParameters
-    final String fileName = "SimpleMethodParametersTest.txt";
-    final URL source = getClass().getResource(fileName);
-    assertNotNull("Could not resolve " + fileName + '.', source);
-
 
     // compile the java source code
-    final com.yworks.util.Compiler compiler = Compiler.newCompiler();
+    final Compiler compiler = Compiler.newCompiler();
     compiler.addOption("-parameters");
-
-    final ArrayList sources = new ArrayList();
-    sources.add(compiler.newUrlSource(testTypeName, source));
-
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    compiler.compile(sources, baos);
+    final ByteArrayOutputStream baos = compile(compiler, getClass(),
+      new TypeStruct("SimpleMethodParametersTest.txt", testTypeName));
 
 
     // store resulting bytecode in temporary files and ...
