@@ -43,18 +43,4 @@ public interface ShrinkBag {
    * @return the boolean
    */
   boolean isEntryPointJar();
-
-  /**
-   * Sets resources.
-   *
-   * @param resourcesStr the resources str
-   */
-  void setResources( String resourcesStr );
-
-  /**
-   * Gets resources.
-   *
-   * @return the resources
-   */
-  ResourcePolicy getResources();
 }

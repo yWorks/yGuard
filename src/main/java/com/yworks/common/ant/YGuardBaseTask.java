@@ -1,7 +1,6 @@
 package com.yworks.common.ant;
 
 import com.yworks.common.ShrinkBag;
-import com.yworks.common.ResourcePolicy;
 import com.yworks.yguard.ant.Property;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.DirectoryScanner;
@@ -186,21 +185,6 @@ public abstract class YGuardBaseTask extends Task {
   public static final class InOutPairSection {
     private FileSet set;
     private Mapper mapper;
-    private ResourcePolicy resources = ResourcePolicy.COPY;
-
-    /**
-     * Sets resources.
-     *
-     * @param resourcesStr the resources str
-     */
-    public void setResources( String resourcesStr ) {
-
-      try {
-        resources = ResourcePolicy.valueOf( resourcesStr.trim().toUpperCase() );
-      } catch ( IllegalArgumentException e ) {
-        throw new BuildException( "Invalid resource policy: " + resourcesStr );
-      }
-    }
 
     /**
      * Instantiates a new In out pair section.
@@ -251,7 +235,6 @@ public abstract class YGuardBaseTask extends Task {
           throw new BuildException("Cannot obfuscate " + inFile +" using that mapping");
         }
         InOutPair pair = new InOutPair();
-        pair.resources = resources;
         pair.setIn(FileUtils.newFileUtils().resolveFile(directoryScanner.getBasedir(), inFile));
         pair.setOut(FileUtils.newFileUtils().resolveFile(directoryScanner.getBasedir(), outFile[0]));
         result.add(pair);
