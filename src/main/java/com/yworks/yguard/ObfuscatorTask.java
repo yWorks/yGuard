@@ -1,7 +1,14 @@
 package com.yworks.yguard;
 
-import com.yworks.util.CollectionFilter;
+import com.yworks.common.ShrinkBag;
 import com.yworks.common.ant.ZipScannerTool;
+import com.yworks.common.ant.AttributesSection;
+import com.yworks.common.ant.Exclude;
+import com.yworks.common.ant.InOutPair;
+import com.yworks.common.ant.TypePatternSet;
+import com.yworks.common.ant.YGuardBaseTask;
+import com.yworks.util.CollectionFilter;
+import com.yworks.util.Version;
 import com.yworks.yguard.ant.ClassSection;
 import com.yworks.yguard.ant.ExposeSection;
 import com.yworks.yguard.ant.FieldSection;
@@ -9,13 +16,6 @@ import com.yworks.yguard.ant.MapParser;
 import com.yworks.yguard.ant.Mappable;
 import com.yworks.yguard.ant.MethodSection;
 import com.yworks.yguard.ant.PackageSection;
-import com.yworks.common.ShrinkBag;
-import com.yworks.common.ant.AttributesSection;
-import com.yworks.common.ant.EntryPointsSection;
-import com.yworks.common.ant.Exclude;
-import com.yworks.common.ant.InOutPair;
-import com.yworks.common.ant.TypePatternSet;
-import com.yworks.common.ant.YGuardBaseTask;
 import com.yworks.yguard.obf.Cl;
 import com.yworks.yguard.obf.Cl.ClassResolver;
 import com.yworks.yguard.obf.ClassTree;
@@ -26,12 +26,10 @@ import com.yworks.yguard.obf.NameMaker;
 import com.yworks.yguard.obf.NameMakerFactory;
 import com.yworks.yguard.obf.NoSuchMappingException;
 import com.yworks.yguard.obf.ResourceHandler;
-import com.yworks.util.Version;
 import com.yworks.yguard.obf.YGuardRule;
 import com.yworks.yguard.obf.classfile.LineNumberInfo;
 import com.yworks.yguard.obf.classfile.LineNumberTableAttrInfo;
 import com.yworks.yguard.obf.classfile.Logger;
-import com.yworks.yshrink.YShrinkInvoker;
 import com.yworks.yshrink.YShrinkModel;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -104,10 +102,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   protected PatchSection patch = null;
   //private Path resourceClassPath;
 
-  // shrinking attributes
-  private boolean doShrink = false;
-  protected EntryPointsSection entryPoints = null;
-  private File shrinkLog = null;
   private boolean useExposeAsEntryPoints = true;
 
   private static final String LOG_TITLE_PRE_VERSION = "  yGuard Bytecode Obfuscator, v";
@@ -829,17 +823,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     return new ExposeSection( ot );
   }
 
-  /**
-   * Add excludes.
-   *
-   * @param entryPoints the entry points
-   */
-  public void addExcludes( EntryPointsSection entryPoints ) {
-    if ( null == this.expose ) {
-      createExpose();
-    }
-  }
-
   public Exclude createKeep() {
     return createExpose();
   }
@@ -891,37 +874,6 @@ public class ObfuscatorTask extends YGuardBaseTask
       throw new IllegalArgumentException("Only one expose element allowed!");
     }
     this.expose = ex;
-  }
-
-  /**
-   * Create entry points entry points section.
-   *
-   * @return the entry points section
-   */
-  public EntryPointsSection createEntryPoints() {
-    return newEntryPointsSection( this );
-  }
-
-  /**
-   * Instantiates an entry points section,
-   * subclasses may provide custom implementations.
-   *
-   * @return the new entry points section
-   */
-  protected EntryPointsSection newEntryPointsSection( YGuardBaseTask bt ) {
-    return new EntryPointsSection( bt );
-  }
-
-  /**
-   * Used by ant to handle the nested <code>entrypoints</code> element.
-   *
-   * @param eps the eps
-   */
-  public void addConfiguredEntryPoints( EntryPointsSection eps ) {
-    if ( this.entryPoints != null ) {
-      throw new IllegalArgumentException( "Only one entrypoints element allowed!" );
-    }
-    this.entryPoints = eps;
   }
 
   /**
@@ -1048,12 +1000,6 @@ public class ObfuscatorTask extends YGuardBaseTask
     }
 
     TaskLogger taskLogger = new TaskLogger();
-
-    if ( ! ( mode == MODE_STANDALONE ) ) {
-      doShrink = false;
-    }
-
-    if( doShrink ) doShrink();
 
     ResourceCpResolver resolver = null;
     if (resourceClassPath != null){
@@ -1231,14 +1177,6 @@ public class ObfuscatorTask extends YGuardBaseTask
         db.close();
         Cl.setClassResolver(null);
 
-        if( doShrink ) {
-          for ( int i = 0; i < tempJars.length; i++ ) {
-            if ( null != tempJars[ i ] ) {
-              tempJars[ i ].delete();
-            }
-          }
-        }
-
         if ( !Logger.getInstance().isAllResolved() ) {
           Logger.getInstance().warning( "Not all dependencies could be resolved. Please see the logfile for details." );
         }
@@ -1296,76 +1234,6 @@ public class ObfuscatorTask extends YGuardBaseTask
    */
   protected ResourceAdjuster newResourceAdjuster(GuardDB db) {
     return new ResourceAdjuster(db);
-  }
-
-  private void doShrink() {
-    YShrinkInvoker yShrinkInvoker = null;
-
-    try {
-       yShrinkInvoker = (YShrinkInvoker) Class.forName("com.yworks.yshrink.YShrinkInvokerImpl").newInstance();
-    } catch ( InstantiationException e ) {
-      throw new BuildException( NO_SHRINKING_SUPPORT, e );
-    } catch ( IllegalAccessException e ) {
-      throw new BuildException( NO_SHRINKING_SUPPORT, e );
-    } catch ( ClassNotFoundException e ) {
-      throw new BuildException( NO_SHRINKING_SUPPORT, e );
-    }
-
-    if ( null == yShrinkInvoker ) return;
-
-    yShrinkInvoker.setContext( (Task)this );
-
-    tempJars = new File[ pairs.size() ];
-    File[] outJars  = new File[ pairs.size() ];
-
-    for ( int i = 0; i < tempJars.length; i++ ) {
-      try {
-        tempJars[ i ] = File.createTempFile( "tempJar_", "_shrinked.jar", new File(((InOutPair) pairs.get( i )).getOut().getParent()));
-      } catch ( IOException e ) {
-        getProject().log( "Could not create tempfile for shrinking " + tempJars[ i ] + ".", Project.MSG_ERR );
-        tempJars[ i ] = null;
-      }
-
-      if ( null != tempJars[ i ] ) {
-        System.out.println( "temp-jar: " + tempJars[ i ] );
-        ShrinkBag pair = ((ShrinkBag) pairs.get( i ));
-        outJars[ i ] = pair.getOut();
-        pair.setOut( tempJars[ i ] );
-        yShrinkInvoker.addPair( pair );
-      }
-    }
-
-    yShrinkInvoker.setResourceClassPath( resourceClassPath );
-
-    if ( shrinkLog != null ) {
-      yShrinkInvoker.setLogFile( shrinkLog );
-    }
-
-    if ( null != entryPoints ) {
-      yShrinkInvoker.setEntyPoints( entryPoints );
-    }
-
-    if ( null != expose && useExposeAsEntryPoints ) {
-      for ( ClassSection cs : (List<ClassSection>) expose.getClasses()) {
-        yShrinkInvoker.addClassSection( cs );
-      }
-      for ( MethodSection ms : (List<MethodSection>) expose.getMethods()) {
-        yShrinkInvoker.addMethodSection( ms );
-      }
-      for ( FieldSection fs : (List<FieldSection>) expose.getFields() ) {
-        yShrinkInvoker.addFieldSection( fs );
-      }
-    }
-
-    yShrinkInvoker.execute();
-
-    for ( int i = 0; i < tempJars.length; i++ ) {
-      if( null != tempJars[ i ] ) {
-        InOutPair pair = ((InOutPair) pairs.get( i ));
-        pair.setIn( tempJars[ i ] );
-        pair.setOut( outJars[ i ] );
-      }
-    }
   }
 
   /**
@@ -1432,29 +1300,6 @@ public class ObfuscatorTask extends YGuardBaseTask
         }
       }
     }
-  }
-
-  /**
-   * Sets shrink.
-   *
-   * @param doShrink the do shrink
-   */
-  public void setShrink( boolean doShrink ) {
-    if ( mode == MODE_STANDALONE ) {
-      this.doShrink = doShrink;
-    } else {
-      throw new BuildException(
-          "The shrink attribute is not supported when the obfuscate task is nested inside a yguard task.\n Use a separate nested shrink task instead." );
-    }
-  }
-
-  /**
-   * Sets shrink log.
-   *
-   * @param shrinkLog the shrink log
-   */
-  public void setShrinkLog( File shrinkLog ) {
-    this.shrinkLog = shrinkLog;
   }
 
   /**

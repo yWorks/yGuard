@@ -1,0 +1,12 @@
+package com.yworks.impl.test;
+
+import com.yworks.ext.test.AnInterface;
+
+public class AnInterfaceImpl implements AnInterface {
+  public AnInterfaceImpl() {
+  }
+
+  public void doSomething() {
+    System.out.println("AnInterfaceImpl: Hello world.");
+  }
+}

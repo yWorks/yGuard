@@ -1,6 +1,5 @@
 package com.yworks.yguard.obf;
 
-import com.yworks.util.Compiler;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -13,7 +12,6 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
@@ -133,19 +131,8 @@ public class BootstrapMethodsTest extends AbstractObfuscationTest {
     final String fileName,
     final String expected
   ) throws Exception {
-    // look for java source code that will be compiled with bootstrap methods
-    final URL source = getClass().getResource(fileName);
-    assertNotNull("Could not resolve " + fileName + '.', source);
-
-
-    // compile the java source code
-    final com.yworks.util.Compiler compiler = Compiler.newCompiler();
-
-    final ArrayList sources = new ArrayList();
-    sources.add(compiler.newUrlSource(testTypeName, source));
-
-    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    compiler.compile(sources, baos);
+    final ByteArrayOutputStream baos = compile(
+     getClass(), new TypeStruct(fileName, testTypeName));
 
 
     // store the resulting bytecode in temporary files and ...

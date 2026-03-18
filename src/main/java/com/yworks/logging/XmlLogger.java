@@ -52,12 +52,7 @@ public class XmlLogger extends Logger {
     pw.println( "<!-- WARNING:" + s + " -->" );
   }
 
-  public void doShrinkLog( String s ) {
-    pw.println( s );
-  }
-
   public void close() {
-    pw.println("</yshrink>");
     pw.println();
     pw.close();
     unregister();

@@ -9,26 +9,6 @@ import java.util.ArrayList;
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
 public abstract class Logger {
-
-
-  /**
-   * The enum Shrink type.
-   */
-  public enum ShrinkType {
-    /**
-     * Class shrink type.
-     */
-    CLASS,
-    /**
-     * Method shrink type.
-     */
-    METHOD,
-    /**
-     * Field shrink type.
-     */
-    FIELD }
-
-
   private static List<Logger> instances;
 
   /**
@@ -118,19 +98,6 @@ public abstract class Logger {
   }
 
   /**
-   * Shrink log.
-   *
-   * @param s the s
-   */
-  public static void shrinkLog( final String s ) {
-    if ( null != instances ) {
-      for ( Logger logger : instances ) {
-        logger.doShrinkLog( s );
-      }
-    }
-  }
-
-  /**
    * Do log.
    *
    * @param s the s
@@ -157,13 +124,6 @@ public abstract class Logger {
    * @param s the s
    */
   public abstract void doWarnToLog( String s );
-
-  /**
-   * Do shrink log.
-   *
-   * @param s the s
-   */
-  public abstract void doShrinkLog( String s );
 
   /**
    * Do err.

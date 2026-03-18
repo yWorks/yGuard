@@ -1,7 +1,7 @@
 # yGuard
 
 `yGuard` is an open-source Java obfuscation tool. With `yGuard`, it is easy as pie (🍰) to configure obfuscation through an extensive ant task.
-This documentation explains how to use the `yGuard` Java obfuscation and shrinking software.
+This documentation explains how to use the `yGuard` Java obfuscation software.
 
 yGuard is brought to you by [yWorks GmbH](https://www.yworks.com/), creator of the family of graph and diagram visualization frameworks [yFiles](https://www.yworks.com/yfiles) and other excellent [products](https://www.yworks.com/products).
 

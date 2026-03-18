@@ -1,0 +1,5 @@
+package com.yworks.ext.test;
+
+public interface AnInterface {
+  public void doSomething();
+}

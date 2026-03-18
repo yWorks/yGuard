@@ -215,24 +215,6 @@ public class ExposeSection extends Exclude {
     if ( lttable ) {
       entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR_LocalVariableTypeTable ) );
     }
-    if ( rvAnn ) {
-      entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR_RuntimeVisibleAnnotations ) );
-    }
-    if ( rvTypeAnn ) {
-      entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR_RuntimeVisibleTypeAnnotations ) );
-    }
-    if ( riAnn ) {
-      entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR_RuntimeInvisibleAnnotations ) );
-    }
-    if ( riTypeAnn ) {
-      entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR_RuntimeInvisibleTypeAnnotations ) );
-    }
-    if ( rvPann ) {
-      entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR_RuntimeVisibleParameterAnnotations ) );
-    }
-    if ( riPann ) {
-      entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR_RuntimeInvisibleParameterAnnotations ) );
-    }
 //    if ( debugExtension ) {
 //      entries.add( new YGuardRule( YGuardRule.TYPE_ATTR, ClassConstants.ATTR))
 //    }

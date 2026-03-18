@@ -32,8 +32,6 @@ yGuard does **not** support obfuscating multi-release Java archives which were i
 
 Beginning with version 2.5, yGuard supports obfuscation of Java class files that contain the `invokedynamic` instruction, which was introduced with the Java 7 `.class` file format. JDK 7 does not contain any means of issuing this instruction, with JDK 8 it is being issued when using lambda expressions or default methods.
 
-While yGuard does fully support obfuscating `invokedynamic` instructions and therefore default methods and lambda expressions, shrinking of Java class files that contain this instruction is not supported yet.
-
 ## Compatibility to 3rd party JVM
 
 Obfuscating `dynamic` and `invokedynamic` instructions is a task that is theoretically infeasible. An obfuscation program cannot determine the type and parameters of such instructions in a generic way.

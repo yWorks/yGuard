@@ -1,0 +1,7 @@
+package com.yworks.impl.test;
+
+public class AnInterfaceUsage {
+  public static void main( String[] args ) {
+    new AnInterfaceImpl().doSomething();
+  }
+}

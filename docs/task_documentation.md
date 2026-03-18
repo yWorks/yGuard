@@ -2,12 +2,11 @@
 
 ## Preamble
 
-Using the `yGuard` Ant task, name obfuscation and code shrinking can be seamlessly integrated into your deployment process.
+Using the `yGuard` Ant task, name obfuscation can be seamlessly integrated into your deployment process.
 
-The `yguard` task contains two nested elements that perform the name obfuscation and code shrinking separately:
+The `yguard` task requires a element to perform name obfuscation:
 
 - The [rename](#the-rename-element) element performs name-obfuscation, renaming all packages, classes, methods and fields according to a selectable name-mapping scheme. Elements can be excluded from the renaming process by annotating them with a certain annotation class in the source code or using a nested [keep](#the-keep-element) element.
-- The [shrink](#the-shrink-element) element removes all code elements that are not reachable from the entrypoints given in the nested [keep](#the-keep-element) element.
 
 ## Table of contents
 
@@ -24,8 +23,6 @@ The `yguard` task contains two nested elements that perform the name obfuscation
             - [`class` element](#the-class-element)
             - [`method` element](#the-method-element)
             - [`field` element](#the-field-element)
-    - [`shrink` element](#the-shrink-element)
-        - [`entrypointjar` element](#the-entrypointjar-element)
     - [`keep` element](#the-keep-element)
 - [Controlling obfuscation exclusion with annotations](#controlling-obfuscation-exclusion-with-annotations)
 - [Generating patch JARs](#generating-patch-jars)
@@ -34,10 +31,10 @@ The `yguard` task contains two nested elements that perform the name obfuscation
 
 ## The yguard Element
 
-The `yguard` task is a container element for the `rename` and `shrink` task elements as well as configuration elements that are common to `rename` and `shrink`.
-Being a container element only, the `yguard` task does not perform any actions on its own, but needs a `rename` and/or `shrink` child element for name obfuscating and/or code shrinking.
+The `yguard` task is a container element for the `rename` task element as well as some configuration elements.
+Being a container element only, the `yguard` task does not perform any actions on its own, but needs a `rename` child element for name obfuscating.
 
-Please see the [troubleshooting section](troubleshooting.md) to learn about common pitfalls when using name obfuscation and shrinking software.
+Please see the [troubleshooting section](troubleshooting.md) to learn about common pitfalls when using name obfuscation software.
 
 #### Attributes
 
@@ -49,11 +46,10 @@ The `yguard` element has no attributes.
 - [externalclasses](#the-externalclasses-element)
 - [attribute](#the-attribute-element)
 - [rename](#the-rename-element)
-- [shrink](#the-shrink-element)
 
 ### The `inoutpair` Element
 
-At least one `inoutpair` element or one non-empty `inoutpairs` element has to be specified in order to run the `yguard` tasks. This element specifies the paths to the input and output jar files.
+At least one `inoutpair` element or one non-empty `inoutpairs` element has to be specified in order to run the `yguard` task. This element specifies the paths to the input and output jar files.
 
 Note that only regular jar files are supported.
 Enterprise archives (ear) or web archives (war) are not supported. Moreover, jar files with non-standard directory structures (like e.g. Spring boot archives that store application classes in a BOOT_INF directory) are not supported either.
@@ -68,12 +64,11 @@ Enterprise archives (ear) or web archives (war) are not supported. Moreover, jar
         <th width="10%"><b>Required</b></th>
     </tr>
 </thead>
-
 <tr>
     <td><code>in</code></td>
     <td>
-    Specifies an exisiting jar file, which contains the unshrinked and
-    unobfuscated .class files.
+    Specifies an exisiting jar file, which contains the unobfuscated .class
+    files.
     </td>
     <td>Yes</td>
 </tr>
@@ -81,37 +76,9 @@ Enterprise archives (ear) or web archives (war) are not supported. Moreover, jar
     <td><code>out</code></td>
     <td>
     Specifies a path to a jar file which will be created and used to
-    put the results of the shrinking and obfuscation process.
+    put the results of the obfuscation process.
     </td>
     <td>Yes</td>
-</tr>
-<tr>
-    <td><code>resources</code></td>
-    <td>
-    Will only be considered if the
-    <a href="#the-yguard-element"><code>yguard</code></a> element
-    contains a nested
-    <a href="#"><code>shrink</code></a> element.
-    <br>
-    Determines how the shrinking engine handles all non-.class files.
-    <br>
-    Currently the following three resource policies are supported:
-    <ul>
-        <li><code>copy</code><br>
-        the default, simply copies all resource files to the output jar.
-        </li>
-        <li><code>auto</code><br>
-        copies only those resource files that reside in a directory that
-        still contains one or more .class files after shrinking.
-        </li>
-        <li><code>none</code><br>
-        discards all resource files.
-        </li>
-    </ul>
-    </td>
-    <td>
-    No, defaults to <code>copy</code>.
-    </td>
 </tr>
 </table>
 
@@ -127,47 +94,6 @@ Additionally or alternatively to `inoutpair` elements this element can be specif
 Note that only regular jar files are supported. Enterprise archives (ear) or web archives (war) are not supported.
 Moreover, jar files with non-standard directory structures (like e.g. Spring boot archives that store application classes in a BOOT_INF directory) are not supported either.
 
-#### Attributes
-
-<table class="listing">
-<thead>
-<tr>
-    <th width="12%"><b>Attribute</b></th>
-    <th width="78%"><b>Description</b></th>
-    <th width="10%"><b>Required</b></th>
-</tr>
-</thead>
-
-<tr>
-    <td><code>resources</code></td>
-    <td>
-    Will only be considered if the
-    <a href="#yguard"><code>yguard</code></a> element
-    contains a nested
-    <a href="#shrink"><code>shrink</code></a> element.
-    <br>
-    Determines how the shrinking engine handles all non-.class files.
-    <br>
-    Currently the following three resource policies are supported:
-    <ul>
-        <li><code>copy</code><br>
-        the default, simply copies all resource files to the output jar.
-        </li>
-        <li><code>auto</code><br>
-        copies only those resource files that reside in a directory that
-        still contains one or more .class files after shrinking.
-        </li>
-        <li><code>none</code><br>
-        discards all resource files.
-        </li>
-    </ul>
-    </td>
-    <td>
-    No, defaults to <code>copy</code>.
-    </td>
-</tr>
-</table>
-
 #### Child Elements
 
 - [patternset](http://ant.apache.org/manual/Types/patternset.html)
@@ -177,7 +103,7 @@ Moreover, jar files with non-standard directory structures (like e.g. Spring boo
 
 ```xml
 <!-- use all jars in the input-lib-dir directory and obfuscate them to *_obf.jar -->
-<inoutpairs resources="auto">
+<inoutpairs>
   <fileset dir="${input-lib-dir}">
     <include name="myapp*.jar"/>
     <exclude name="*_obf.jar"/>
@@ -186,7 +112,7 @@ Moreover, jar files with non-standard directory structures (like e.g. Spring boo
 </inoutpairs>
 
 <!-- the above mapper is the default one so the following snippet does the same -->
-<inoutpairs resources="auto">
+<inoutpairs>
   <fileset dir="${input-lib-dir}">
     <include name="myapp*.jar"/>
     <exclude name="*_obf.jar"/>
@@ -195,8 +121,7 @@ Moreover, jar files with non-standard directory structures (like e.g. Spring boo
 ``` 
 
 ## The `externalclasses` Element
-If the jar to be processed by `yGuard` depends on external classes or libraries, this element can be used to specify classpaths to these entities. These libraries will neither be shrinked nor obfuscated. Use the `inoutpair` element for this purpose! See the `external_library` example for an example of when to use this element.
-In order to achieve a maximum shrinking effect by the `shrink` task, all external dependencies should be declared in the `externalclasses` element. Otherwise, all non-private methods of classes that inherit from unresolvable classes will not be shrinked.
+If the jar to be processed by `yGuard` depends on external classes or libraries, this element can be used to specify classpaths to these entities. These libraries will not be obfuscated. Use the `inoutpair` element for this purpose! See the `external_library` example for an example of when to use this element.
 
 The elements attributes and child elements can be seen on the [Ant documentation page about using path elements](http://ant.apache.org/manual/using.html#path).
 
@@ -207,20 +132,19 @@ See the `linked_example` for an example of when to use this element.
 
 #### Attributes
 
- <table class="listing">
-    <thead>
-        <tr>
-            <th width="12%"><b>Attribute</b></th>
-            <th width="78%"><b>Description</b></th>
-            <th width="10%"><b>Required</b></th>
-        </tr>
-    </thead>
+<table>
+<thead>
+    <tr>
+        <th width="12%"><b>Attribute</b></th>
+        <th width="78%"><b>Description</b></th>
+        <th width="10%"><b>Required</b></th>
+    </tr>
+</thead>
 <tr>
     <td><code>name</code></td>
-    <td>A comma-separated list of attribute names that are to
-    be retained in the shrinked and/or
-    obfuscated class
-    files.
+    <td>
+    A comma-separated list of attribute names that are to be retained in the
+    obfuscated class files.
     </td>
     <td>Yes</td>
 </tr>
@@ -242,103 +166,12 @@ See the `linked_example` for an example of when to use this element.
 
 This will retain the attributes named _"SourceFile"_, _"LineNumberTable"_, and _"LocalVariableTable"_ effectively enabling debugging information for all classes in the `com.mycompany.mylibrary` package and subpackages.
 
-## The `shrink` Element
-The `shrink` task removes all classes, fields and methods that are not reachable from a number of entrypoints given by a nested [keep]() element.
-See the [examples]() explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting.md) section for information on this topic.
-
-#### Attributes
-
-<table class="listing">
-<thead>
-<tr>
-    <th width="12%"><b>Attribute</b></th>
-    <th width="78%"><b>Description</b></th>
-    <th width="10%"><b>Required</b></th>
-</tr>
-</thead>
-<tr>
-    <td><code>logfile</code></td>
-    <td>Determines the name of the logfile that is generated
-    during the shrinking process. The logfile contains information about
-    the entrypoints the shrinking engine uses, the removed classes,
-    methods and fields as well as any warnings.
-    <br>
-    If the name ends with a ".gz", yGuard will automatically create a
-    gzipped version of the file which potentially saves a lot of disc
-    space.
-    </td>
-    <td>
-    No, defaults to<code>yshrinklog.xml</code>
-    </td>
-</tr>
-<tr>
-    <td>
-    <a name="createstubs"></a><code>createStubs</code>
-    </td>
-    <td>
-    Instead of removing methods completely, this attribute causes the
-    <code>shrink</code> task to insert a method
-    stub that throws a <code>java.lang.InternalError</code> if it is
-    called. This attribute is very useful if the shrinking process
-    causes your application to break and you are uncertain about which
-    additional code entities you have to include in the
-    <a href="#keep"><code>keep</code></a>element. <br/>
-    Note that classes considered as completely obsolete by the shrinking
-    engine are still removed completely - this attribute only
-    affects obsolete methods of non-obsolete classes.
-    </td>
-    <td>
-    No, defaults to <code>false</code>
-    </td>
-</tr>
-</table>
-
-#### Child Elements
-
-- [keep](#the-keep-element)
-- [entrypointjar](#the-entrypointjar-element)
-
-## The `entrypointjar` Element
-
-The `entrypointjar` element can be used for convenience if your application uses libraries that are to be shrinked, but the jarfile using these libraries should be left untouched by the shrinking engine. Such a jarfile could be specified as an `entrypointjar`.
-
-#### Attributes
-
-<table class="listing">
-<thead>
-<tr>
-    <th width="12%"><b>Attribute</b></th>
-    <th width="78%"><b>Description</b></th>
-    <th width="10%"><b>Required</b></th>
-</tr>
-</thead>
-
-<tr>
-    <td><code>name</code></td>
-    <td>Path to to the jar file to use as entrypointjar.</td>
-    <td>Yes</td>
-</tr>
-</table>
-
-#### Child Elements
-
-The `entrypointjar` element has no child elements.
-
-#### Example
-
-```xml
-<yguard>
-  <inoutpair in="lib-in.jar" out="lib-out.jar" />
-  <shrink>
-    <entrypointjar name="myApp.jar"/>
-  </shrink>
-</yguard>
-```
-
 ## The `rename` Element
 The basic idea is, that all elements will be renamed by this task. There are different use cases, where you sometimes want to exclude or simply just have to exclude some elements from name obfuscation, i.e. **not** rename them but keep in the API as is. See the [examples]() for explanation of some common use cases. If your code uses reflection, please read the [troubleshooting](troubleshooting.md) section for information on this topic. Excluding elements can be achieved by using the [keep](#the-keep-element) element, the `mainclass` attribute of the `rename` element and by annotating elements in the source code with the annotation that is specified in the `annotationClass` attribute of the `rename` element. Using the nested `keep` element, you have to specify all classes, methods, fields, and attributes that should be excluded from name obfuscation. Another way is to [annotate the elements directly in the source code](#annotate) that should be obfuscated or excluded. You can use the yFiles obfuscation annotation `com.yworks.util.annotation.Obfuscation` for that or specify your own annotation in the `annotationClass` attribute of this element.
 
-<table class="listing">
+#### Attributes
+
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
@@ -465,7 +298,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 
 #### Attributes
 
-<table class="listing">
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
@@ -494,7 +327,7 @@ The basic idea is, that all elements will be renamed by this task. There are dif
 
 #### Supported properties
 
- <table class="listing">
+ <table>
 <thead>
 <tr>
     <th width="10%"><b>Name</b></th>
@@ -648,20 +481,19 @@ The `property` element has no child elements.
 
 ## The `keep` Element
 
-This element is a child of the [rename](#the-rename-element) or [shrink](#the-shrink-element) element. It can be used to specify elements that are excluded from the parent `rename` or `shrink` task. The excluded classes, methods and fields are defined using nested [package](#the-package-element), [class](#the-class-element), [method](#the-method-element) and [field](#the-field-element) elements.
+This element is a child of the [rename](#the-rename-element) element. It can be used to specify elements that are excluded from the parent `rename` task. The excluded classes, methods and fields are defined using nested [package](#the-package-element), [class](#the-class-element), [method](#the-method-element) and [field](#the-field-element) elements.
 
 #### Attributes
 
-The `keep` element provides a number of boolean attributes that determine whether debug information and annotations present in the input class files are to be retained in the output files. The default behavior of the `rename` and `shrink` elements for the respective attributes is explained in the table below.
-Note that a more fine-grained control over which attributes to keep for which class files is possible using the [attribute](#the-attribute-element) element. Also, the `attribute` element allows to define attributes to keep for both the rename and the shrink element in a common place.
+The `keep` element provides a number of attributes that determine whether debug information present in the input class files is to be retained in the output files. The default behavior of the `rename` element for the respective attributes is explained in the table below.
+Note that a more fine-grained control over which attributes to keep for which class files is possible using the [attribute](#the-attribute-element) element.
 
-<table class="listing">
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
     <th width="58%"><b>Description</b></th>
-    <th width="15%"><b>Default (<code>rename</code>)</b></th>
-    <th width="15%"><b>Default (<code>shrink</code>)</b></th>
+    <th width="15%"><b>Default</b></th>
 </tr>
 </thead>
 
@@ -673,7 +505,6 @@ Note that a more fine-grained control over which attributes to keep for which cl
     be included in the output class files.
     </td>
     <td><code>remove</code></td>
-    <td><code>remove</code></td>
 </tr>
 <tr>
     <td><code>linenumbertable</code></td>
@@ -683,7 +514,6 @@ Note that a more fine-grained control over which attributes to keep for which cl
     original source code file should be included in the output class
     files.
     </td>
-    <td><code>remove</code></td>
     <td><code>remove</code></td>
 </tr>
 <tr>
@@ -695,7 +525,6 @@ Note that a more fine-grained control over which attributes to keep for which cl
     output class files.
     </td>
     <td><code>remove</code></td>
-    <td><code>remove</code></td>
 </tr>
 <tr>
     <td><code>localvariabletypetable</code></td>
@@ -706,80 +535,16 @@ Note that a more fine-grained control over which attributes to keep for which cl
     code file should be included in the output class files.
     </td>
     <td><code>remove</code></td>
-    <td><code>remove</code></td>
-</tr>
-<tr>
-    <td><code>runtimevisibleannotations</code></td>
-    <td>
-    Determines whether annotations with the retention policy
-    <code>RetentionPolicy.RUNTIME</code>should be included in the output
-    class files.
-    </td>
-    <td><code>keep<sup>1</sup></code></td>
-    <td><code>keep</code></td>
-</tr>
-<tr>
-    <td><code>runtimevisibleparameterannotations</code></td>
-    <td>
-    Determines whether method paramater annotations with the retention
-    policy <code>RetentionPolicy.RUNTIME</code> should be included in
-    the output class files.
-    </td>
-    <td><code>keep<sup>1</sup></code></td>
-    <td><code>keep</code></td>
-</tr>
-<tr>
-    <td><code>runtimevisibletypeannotations</code></td>
-    <td>
-    Determines whether type annotations with the retention
-    policy <code>RetentionPolicy.RUNTIME</code> should be included in
-    the output class files.
-    </td>
-    <td><code>keep<sup>1</sup></code></td>
-    <td><code>keep</code></td>
-</tr>
-<tr>
-    <td><code>runtimeinvisibleannotations</code></td>
-    <td>
-    Determines whether annotations with the retention policy
-    <code>RetentionPolicy.CLASS</code>should be included in the output
-    class files.
-    </td>
-    <td><code>keep<sup>1</sup></code></td>
-    <td><code>remove</code></td>
-</tr>
-<tr>
-    <td><code>runtimeinvisibleparameterannotations</code></td>
-    <td>
-    Determines whether method paramater annotations with the retention
-    policy <code>RetentionPolicy.CLASS</code> should be included in the
-    output class files.
-    </td>
-    <td><code>keep<sup>1</sup></code></td>
-    <td><code>remove</code></td>
-</tr>
-<tr>
-    <td><code>runtimeinvisibletypeannotations</code></td>
-    <td>
-    Determines whether type annotations with the retention
-    policy <code>RetentionPolicy.CLASS</code> should be included in the
-    output class files.
-    </td>
-    <td><code>keep<sup>1</sup></code></td>
-    <td><code>remove</code></td>
 </tr>
 </tbody>
 </table>
 
-<sup>1</sup> `rename` always keeps annotations irrespective of its
-`runtime*annotations` attribute values.
-
 ## The `class` Element
 
-The `class` element can be used for excluding certain classes and/or their fields and methods from the renaming or shrinking process.
+The `class` element can be used for excluding certain classes and/or their fields and methods from the renaming process.
 If no `name`, `extends` or `implements` attribute is given and the `class` element contains no nested `patternset`, a `class` element matches all class names.
 
-The `classes`, `methods` and `fields` attributes tell the shrinking and renaming engines which classes, methods and fields to keep based on their visibility. The following table lists the possible values for all of these attributes and shows which elements will be excluded. A '*' denotes, that elements that have the given visibility will be excluded for the specified attribute value. A '-' denotes that the these elements will not be excluded from the process.
+The `classes`, `methods` and `fields` attributes tell the renaming engine which classes, methods and fields to keep based on their visibility. The following table lists the possible values for all of these attributes and shows which elements will be excluded. A '*' denotes, that elements that have the given visibility will be excluded for the specified attribute value. A '-' denotes that the these elements will not be excluded from the process.
 
 <table class="matrix">
 <tr>
@@ -828,7 +593,7 @@ The `classes`, `methods` and `fields` attributes tell the shrinking and renaming
 
 #### Attributes
 
- <table class="listing">
+ <table>
 <thead>
 <tr>
     <th width="12%">Attribute</th>
@@ -894,7 +659,7 @@ The `classes`, `methods` and `fields` attributes tell the shrinking and renaming
 
 #### Explanation
 
-There are three possible ways of specifying which classes will be excluded from the shrinking and obfuscation process:
+There are three possible ways of specifying which classes will be excluded from the obfuscation process:
 
 _1)_ One can specify a single java class using the fully qualified name in java syntax with the name attribute. For example:
 ```xml
@@ -946,7 +711,7 @@ This will keep all class names, that are either `public` or `protected` and whic
 </class>
 ```
 
-This example shows the very common use case of excluding a complete public API from the shrinking and obfuscation process. There is an abbreviation for this use case: you can omit the `patternset` element, since in the case where the `classes` attribute is specified and there is no `patternset` child element used, the task will automatically apply this rule. In this example all classes will be exposed, that are either `public` or `protected`. Their methods and fields will be exposed as long as they are declared `public` or `protected`. If a class is `package-private` or `private` (inner classes), neither itself nor its methods or fields will be exposed.
+This example shows the very common use case of excluding a complete public API from the obfuscation process. There is an abbreviation for this use case: you can omit the `patternset` element, since in the case where the `classes` attribute is specified and there is no `patternset` child element used, the task will automatically apply this rule. In this example all classes will be exposed, that are either `public` or `protected`. Their methods and fields will be exposed as long as they are declared `public` or `protected`. If a class is `package-private` or `private` (inner classes), neither itself nor its methods or fields will be exposed.
 
 The last example shows how to keep the `public` methods of certain classes only, but neither field names nor the class names themselves.
 ```xml
@@ -958,10 +723,10 @@ The last example shows how to keep the `public` methods of certain classes only,
 ```
 
 ## The `method` Element
-Using the `method` element you can specify methods by signature which should be excluded from shrinking or name obfuscation.
+Using the `method` element you can specify methods by signature which should be excluded from name obfuscation.
 
 #### Attributes
-<table class="listing">
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
@@ -1014,15 +779,15 @@ Using the `method` element you can specify methods by signature which should be 
 </method>
 ```
 
-This will keep the main method of the `MyClass` class and the `foo` method. Additionally all `readObject` and `writeObject` methods (used for serialization) will be kept in all classes of the `com.mycompany.myapp.data` package. Note that you have to specify the return argument's type, even if it is void and that you have to use the fully qualified name for all classes, even those, that are in the `java.lang package`.
+This will keep the main method of the `MyClass` class and the `foo` method. Additionally, all `readObject` and `writeObject` methods (used for serialization) will be kept in all classes of the `com.mycompany.myapp.data` package. Note that you have to specify the return argument's type, even if it is void and that you have to use the fully qualified name for all classes, even those, that are in the `java.lang package`.
 
 ## The `field` Element
 
-Using the `field` element you can specify fields by name which should be excluded from shrinking or name obfuscation.
+Using the `field` element you can specify fields by name which should be excluded from name obfuscation.
 
 #### Attributes
 
-<table class="listing">
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
@@ -1072,7 +837,7 @@ Using the `field` element you can specify fields by name which should be exclude
 This will keep the field named `field` of the `MyClass` class. Additionally all the `serialVersionUID` fields (used for serialization) will be kept in all classes of the `com.mycompany.myapp.data` package.
 
 ## The `package` Element
-The `package` element can be used for excluding certain package's names from the renaming process. It cannot be used for the shrinking process.
+The `package` element can be used for excluding certain package's names from the renaming process.
 
 All packages that are matched be the nested patternset element will not be obfuscated. This has no influence on the class, method, or field names but will only result in the package's name not being obfuscated. Normally, it is not necessary to use this element, instead the [class element](#the-class-element) is used to keep class names (and thus their package names) from being obfuscated.
 
@@ -1099,7 +864,7 @@ Using nested property elements, the mapping of sourceFile attributes in obfuscat
 
 #### Attributes
 
-<table class="listing">
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Name</b></th>
@@ -1144,7 +909,7 @@ Using nested `property` elements, the mapping of `linenumbertable` attributes in
 
 #### Attributes
 
- <table class="listing">
+ <table>
 <thead>
 <tr>
     <th width="12%"><b>Name</b></th>
@@ -1236,7 +1001,7 @@ Using the `adjust` element one can specify resource files whose names and/or con
 
 #### Attributes
 
-<table class="listing">
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
@@ -1616,7 +1381,7 @@ This class is also the default annotation yGuard is looking for when obfuscating
 
 The convention for annotation classes that yGuard understands as obfuscation controlling annotations requires two attributes:
 
-<table class="listing">
+<table>
 <thead>
 <tr>
     <th width="12%"><b>Attribute</b></th>
@@ -1697,34 +1462,23 @@ The lower part of the window contains an editable text area that can be used to 
 
 # DTD used for Ant `<yguard>`
 
-The obfuscation and shrinking process can be completely configured inside your Ant script. The yguard task and nested elements should be used according to the following DTD. Note that this is for information purposes only, i.e. you do not have to include the following lines anywhere. This DTD should just provide a quick overview of the yGuard syntax. Due to restrictions of the DTD specification, the given DTD does not describe all available yGuard options. Please browse through the documentation above for complete documentation of the yGuard Ant task elements.
+The obfuscation process can be completely configured inside your Ant script. The yguard task and nested elements should be used according to the following DTD. Note that this is for information purposes only, i.e. you do not have to include the following lines anywhere. This DTD should just provide a quick overview of the yGuard syntax. Due to restrictions of the DTD specification, the given DTD does not describe all available yGuard options. Please browse through the documentation above for complete documentation of the yGuard Ant task elements.
 
 ```xml
-<!ELEMENT yguard (inoutpair+,externalclasses?,attribute*,(shrink|rename)+)>
+<!ELEMENT yguard (inoutpair+,externalclasses?,attribute*,rename)>
 
 <!ELEMENT inoutpair EMPTY>
 <!ATTLIST inoutpair
 in CDATA #REQUIRED
-out CDATA #REQUIRED
-resources CDATA #IMPLIED>
-<!--
-NOTE: the resources attribute only has an effect if a shrink element is present inside the yguard element.
--->
+out CDATA #REQUIRED>
 
 <!ELEMENT externalclasses ANY>
-<!-- the externalclasses element is used just like Ant's classpath
-element. See the Ant documentation for further details-->
+<!--
+The externalclasses element is used just like Ant's classpath element.
+See the Ant documentation for further details.
+-->
 
 <!ELEMENT attribute (patternset)*>
-name CDATA #REQUIRED>
-
-<!ELEMENT shrink (entrypointjar*,keep?)>
-<!ATTLIST shrink
-logfile CDATA #IMPLIED
-createStubs CDATA #IMPLIED>
-
-<!ELEMENT entrypointjar>
-<!ATTLIST entrypointjar
 name CDATA #REQUIRED>
 
 <!ELEMENT rename (property*,patch?,adjust*,map?,keep?)>
@@ -1754,24 +1508,16 @@ replacePath CDATA #REQUIRED>
 name CDATA #REQUIRED
 map CDATA #REQUIRED>
 <!--
-NOTE: the map attribute is only supported
-if the <package> element is nested inside a <map> element, whereas the patternset is
-only supported inside the <keep>/<expose> sections.
+NOTE: the map attribute is only supported if the <package> element is nested
+inside a <map> element, whereas the patternset is only supported inside the
+<keep>/<expose> sections.
 -->
 
 <!ELEMENT keep (package|class|method|field|sourcefile|linenumbertable)*>
-<!--
-NOTE: the nested <package>,<sourcefile>,<linenumbertable> and <attribute> sections are only
-supported in the <rename> element.
--->
 <!ATTLIST keep
 linenumbertable CDATA #IMPLIED
 localvariabletable CDATA #IMPLIED
 localvariabletypetable CDATA #IMPLIED
-runtimeinvisibleannotations CDATA #IMPLIED
-runtimeinvisibletypeannotations CDATA #IMPLIED
-runtimevisibleannotations CDATA #IMPLIED
-runtimevisibletypeannotations CDATA #IMPLIED
 sourcefile CDATA #IMPLIED>
 
 <!ELEMENT class (patternset)*>
@@ -1781,30 +1527,18 @@ fields CDATA #IMPLIED
 map CDATA #IMPLIED
 methods CDATA #IMPLIED
 name CDATA #IMPLIED>
-<!--
-NOTE: the map attribute is only supported
-if the <class> element is nested inside an <rename> element.
--->
 
 <!ELEMENT method (patternset)*>
 <!ATTLIST method
 class CDATA #IMPLIED
 map CDATA #IMPLIED
 name CDATA #IMPLIED>
-<!--
-NOTE: the map attribute is only supported
-if the <method> element is nested inside an <rename> element.
--->
 
 <!ELEMENT field (patternset)*>
 <!ATTLIST field
 class CDATA #IMPLIED
 map CDATA #IMPLIED
 name CDATA #IMPLIED>
-<!--
-NOTE: the field attribute is only supported
-if the <method> element is nested inside an <rename> element.
--->
 ```
 
 **Attention** users of IDEs that "support" the creation of Ant files (e.g. IDEA's IntelliJ): Your IDE may indicate some errors inside your ANT file when you use yGuard specific elements. This is because the IDE does not know about the DTD used by yGuard. However this is not a real problem, since the Ant file should nevertheless work as expected.
