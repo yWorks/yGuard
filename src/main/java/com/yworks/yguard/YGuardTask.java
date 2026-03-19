@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Y guard task.
+ * Container task for configuring in-out-pairs and external classes.
+ * The actual obfuscation task is created as a rename child of this task.
  *
  * @author Michael Schroeder, yWorks GmbH http://www.yworks.com
  */
@@ -24,6 +25,10 @@ public class YGuardTask extends YGuardBaseTask {
 
   @Override
   public void execute() throws BuildException {
+    final int noOfTasks = subTasks.size();
+    if (noOfTasks < 1) {
+      throw new BuildException("No rename element given. At least one rename element has to be specified.");
+    }
 
     super.execute();
 
@@ -52,23 +57,16 @@ public class YGuardTask extends YGuardBaseTask {
       }
     }
 
-    // exclude
-//    if ( null != exclude ) {
-//      for ( YGuardBaseTask subTask : subTasks ) {
-//        if ( subTask instanceof ObfuscatorTask ) {
-//          subTask.
-//        }
-//      }
-//    }
-
     // execute
     int taskNum = 0;
-    File[] outFiles  = new File[ pairs.size() ];
-    File[] tempFiles = new File[ pairs.size() ];
+    final int noOfPairs = pairs.size();
+
+    File[] outFiles  = new File[ noOfPairs ];
+    File[] tempFiles = new File[ noOfPairs ];
 
     for ( YGuardBaseTask subTask : subTasks ) {
 
-      for ( int i = 0; i < pairs.size(); i++ ) {
+      for (int i = 0; i < noOfPairs; i++ ) {
         ShrinkBag pair = pairs.get( i );
 
         if ( 0 == taskNum ) {
@@ -80,7 +78,7 @@ public class YGuardTask extends YGuardBaseTask {
           pair.setIn( pair.getOut() );
         }
 
-        if ( taskNum == ( subTasks.size() - 1 ) ) {
+        if (taskNum == ( noOfTasks - 1 ) ) {
           pair.setOut( outFiles[ i ] );
         } else {
           File tempFile = getTempFile( pair.getOut() );
@@ -89,7 +87,7 @@ public class YGuardTask extends YGuardBaseTask {
         }
 
         if ( taskNum > 1 ) {
-          tempFiles[ ( taskNum * ( pairs.size() - 1 ) ) + i ].delete();
+          tempFiles[( taskNum * (noOfPairs - 1 ) ) + i ].delete();
         }
       }
 
@@ -100,7 +98,7 @@ public class YGuardTask extends YGuardBaseTask {
       taskNum++;
     }
 
-    if ( subTasks.size() > 1 ) {
+    if ( noOfTasks > 1 ) {
       for ( File tempFile : tempFiles ) {
         tempFile.delete();
       }
