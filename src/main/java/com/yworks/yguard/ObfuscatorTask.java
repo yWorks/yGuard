@@ -92,7 +92,6 @@ import javax.xml.parsers.SAXParserFactory;
 public class ObfuscatorTask extends YGuardBaseTask
 {
 
-  //private List pairs = new ArrayList();
   private String mainClass;
   private boolean conserveManifest = false;
   private File logFile = new File("yguardlog.xml");
@@ -100,9 +99,6 @@ public class ObfuscatorTask extends YGuardBaseTask
   protected List<AdjustSection> adjustSections = new ArrayList<AdjustSection>();
   protected MapSection map = null;
   protected PatchSection patch = null;
-  //private Path resourceClassPath;
-
-  private boolean useExposeAsEntryPoints = true;
 
   private static final String LOG_TITLE_PRE_VERSION = "  yGuard Bytecode Obfuscator, v";
   private static final String LOG_TITLE_POST_VERSION = ", a Product of yWorks GmbH - http://www.yworks.com";
@@ -116,7 +112,6 @@ public class ObfuscatorTask extends YGuardBaseTask
 
   /** Holds value of property replaceClassNameStrings. */
   private boolean replaceClassNameStrings = true;
-  private File[] tempJars;
   private boolean needYShrinkModel;
   private YShrinkModel yShrinkModel;
 
@@ -1300,15 +1295,6 @@ public class ObfuscatorTask extends YGuardBaseTask
         }
       }
     }
-  }
-
-  /**
-   * Sets use expose as entry points.
-   *
-   * @param useExposeAsEntryPoints the use expose as entry points
-   */
-  public void setUseExposeAsEntryPoints( boolean useExposeAsEntryPoints ) {
-    this.useExposeAsEntryPoints = useExposeAsEntryPoints;
   }
 
   /**
