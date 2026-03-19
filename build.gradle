@@ -114,11 +114,7 @@ task yguardJavaDoc(type: Jar) {
 publishing {
   repositories {
     maven {
-      url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-      credentials {
-        username SONATYPE_NEXUS_USERNAME
-        password SONATYPE_NEXUS_PASSWORD
-      }
+      url LOCAL_MAVEN_REPOSITORY
     }
   }
   publications {
