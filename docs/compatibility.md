@@ -4,6 +4,10 @@
 
 yGuard requires JDK 1.7.x or greater and Ant 1.5 or greater installed on your system. It may work with earlier versions of these pieces of software as well, however this has not been tested thoroughly. yGuard 1.3.x and upwards works together with Ant 1.6.
 
+## Java 22 - Java 25 Compatibility
+
+Beginning with version 5.0.0, yGuard supports obfuscation of Java class files up to and including class file version 69.
+
 ## Java 18 - Java 21 Compatibility
 
 Beginning with version 4.1.0, yGuard supports obfuscation of Java class files that use `ClassDesc`, `Enum.EnumDesc`, and `SwitchBootstraps` bootstrap method factories which were introduced in Java 12 and Java 21.

@@ -23,7 +23,7 @@ configurations {
 }
 
 dependencies {
-  yguard 'com.yworks:yguard:4.1.1'
+  yguard 'com.yworks:yguard:5.0.0'
 }
 
 task obfuscate {

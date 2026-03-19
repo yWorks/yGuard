@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0]
+
+### Added
+- Added support for obfuscating Java 25 class files.
+
+### Removed
+- Removed support for shrinking.
+
 ## [4.1.1]
 
 ### Fixed
@@ -368,7 +376,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implemented more robust handling of Manifest files. Implementation now makes use of `java.util.jar.Manifest`.
 - The `conserveManifest` attribute of the obfuscate task now conserves the manifest in a better way.
 
-[Unreleased]: https://github.com/yworks/yguard/compare/4.0.0...HEAD
+[Unreleased]: https://github.com/yworks/yguard/compare/5.0.0...HEAD
+[5.0.0]: https://github.com/yworks/yguard/compare/4.1.0...5.0.0
+[4.1.1]: https://github.com/yworks/yguard/compare/4.1.0...4.1.1
+[4.1.0]: https://github.com/yworks/yguard/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/yworks/yguard/compare/3.1.0...4.0.0
 [3.1.0]: https://github.com/yworks/yguard/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/yworks/yguard/compare/2.10.0...3.0.0
