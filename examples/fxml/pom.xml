@@ -3,25 +3,22 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>com.yworks.example</groupId>
   <artifactId>fxml</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>fxml</name>
   <url>http://maven.apache.org</url>
+
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <mainclass>com.yworks.example.HelloWorld</mainclass>
     <javafx.version>11.0.2</javafx.version>
   </properties>
+
   <dependencies>
-    <dependency>
-      <groupId>com.yworks</groupId>
-      <artifactId>yguard</artifactId>
-      <version>5.0.0</version>
-      <scope>compile</scope>
-    </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-base</artifactId>
@@ -74,66 +71,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <id>obfuscate</id>
-            <configuration>
-              <tasks>
-                <property name="controller" value="com.yworks.example.HelloWorldController"/>
-
-                <property
-                 name="project.jar"
-                 value="${project.build.directory}/${project.build.finalName}.jar"/>
-                <property
-                 name="project.jar.unobf"
-                 value="${project.build.directory}/${project.build.finalName}_unobf.jar"/>
-                <move
-                 file="${project.jar}"
-                 tofile="${project.jar.unobf}"
-                 verbose="true"/>
-
-                <property
-                 name="runtime_classpath"
-                 refid="maven.runtime.classpath"/>
-                <taskdef
-                 name="yguard"
-                 classname="com.yworks.yguard.YGuardTask"
-                 classpath="${runtime_classpath}"/>
-                <yguard>
-                  <inoutpair in="${project.jar.unobf}" out="${project.jar}" />
-
-                  <rename logfile="${project.build.directory}/${project.build.finalName}_renamelog.xml">
-                    <!--
-                      Adjust the qualified name of the controller class used in FXML files.
-                      -->
-                    <adjust replaceContent="true" replaceContentSeparator="." includes="**/*.fxml"/>
-                    <keep>
-                      <!--
-                        FXML bindings are based on reflection.
-                        While yGuard is able to adjust qualified class names in resource
-                        files (like e.g. *.fxml files), it is not able to recognize and
-                        adjust member names in such files. Thus, field and method names
-                        that are used in *.fxml files have to be excluded from obfuscation.
-                        -->
-                      <field name="clickCountLabel" class="${controller}"/>
-                      <method name="void onClicked(javafx.event.ActionEvent)" class="${controller}"/>
-
-                      <method name="void main(java.lang.String[])" class="${mainclass}"/>
-                    </keep>
-                  </rename>
-                </yguard>
-              </tasks>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.4</version>
@@ -143,6 +80,78 @@
               <mainClass>${mainclass}</mainClass>
             </manifest>
           </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>prepare-obfuscation</id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target name="prepare-obfuscation">
+                <move
+                 file="${project.build.directory}/${project.build.finalName}.jar"
+                 tofile="${project.build.directory}/${project.build.finalName}_unobf.jar"
+                 verbose="true"/>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.yworks.maven.plugins</groupId>
+        <artifactId>yguard-maven-plugin</artifactId>
+        <version>1.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <yguardVersion>5.0.0</yguardVersion>
+          <yguard>
+            <inoutpair
+             in="${project.build.directory}/${project.build.finalName}_unobf.jar"
+             out="${project.build.directory}/${project.build.finalName}.jar"/>
+
+            <externalclasses>
+              <pathelement location="${com.google.code.gson:gson:jar}"/>
+            </externalclasses>
+
+            <rename logfile="${project.build.directory}/${project.build.finalName}_renamelog.xml">
+              <property name="digests" value="none"/>
+              <!--
+                Adjust the qualified name of the controller class used in FXML files.
+                -->
+              <adjust replaceContent="true" replaceContentSeparator="." includes="**/*.fxml"/>
+              <keep>
+                <!--
+                  FXML bindings are based on reflection.
+                  While yGuard is able to adjust qualified class names in resource
+                  files (like e.g. *.fxml files), it is not able to recognize and
+                  adjust member names in such files. Thus, field and method names
+                  that are used in *.fxml files have to be excluded from obfuscation.
+                  -->
+                <field
+                 name="clickCountLabel"
+                 class="com.yworks.example.HelloWorldController"/>
+                <method
+                 name="void onClicked(javafx.event.ActionEvent)"
+                 class="com.yworks.example.HelloWorldController"/>
+
+                <method
+                 name="void main(java.lang.String[])"
+                 class="${mainclass}"/>
+              </keep>
+            </rename>
+          </yguard>
         </configuration>
       </plugin>
     </plugins>

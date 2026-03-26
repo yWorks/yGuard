@@ -6,7 +6,7 @@ Depending on your build system, you will use [`AntRun`](http://maven.apache.org/
 Download the bundle from the [Github release page](https://github.com/yWorks/yguard/releases/latest). After downloading and extracting the `jar` files, place them in a path near to your build script. You may use absolute paths, but our examples expect the jar file to lie in the same directory as your build file. Once extracted, you can use the `yguard` element like so:
 
 ```xml
-<property name="version" value="4.1.1"/>
+<property name="version" value="5.0.0"/>
 
 <target name="yguard">
     <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${projectDir}/yguard-${version}.jar"/>
@@ -17,41 +17,35 @@ Download the bundle from the [Github release page](https://github.com/yWorks/ygu
 ``` 
 
 ### Setup using `Maven`
-You can use `yGuard` directly from `Maven` central. Add the `yGuard` dependency to your `POM`:
+Use the [yGuard Maven Plugin](https://github.com/yWorks/yguard-maven-plugin) to run `yGuard` from `Maven`:
 
 ```xml
-<dependency>
-    <groupId>com.yworks</groupId>
-    <artifactId>yguard</artifactId>
-    <version>4.1.1</version>
-    <scope>compile</scope>
-</dependency>
-```
-
-Once declared, you can use the `antrun` plugin to define the `yGuard` task like so:
-```xml
-<plugin>
-    <artifactId>maven-antrun-plugin</artifactId>
-    <version>1.8</version>
-    <executions>
+<build>
+  [...]
+  <plugins>
+    [...]
+    <plugin>
+      <groupId>com.yworks.maven.plugins</groupId>
+      <artifactId>yguard-maven-plugin</artifactId>
+      <version>1.0.0</version>
+      <executions>
         <execution>
-            <phase>package</phase>
-            <goals>
-                <goal>run</goal>
-            </goals>
-            <id>obfuscate</id>
-            <configuration>
-                <tasks>
-                    <property name="runtime_classpath" refid="maven.runtime.classpath"/>
-                    <taskdef name="yguard" classname="com.yworks.yguard.YGuardTask" classpath="${runtime_classpath}"/>
-                    <yguard>
-                       <!-- see the yGuard task documentation for information about the <yguard> element-->
-                    </yguard>
-                </tasks>
-            </configuration>
+          <goals>
+            <goal>run</goal>
+          </goals>
         </execution>
-    </executions>
-</plugin>
+      </executions>
+      <configuration>
+        <yguardVersion>5.0.0</yguardVersion>
+        <yguard>
+          <!-- see the yGuard task documentation for information about the <yguard> element -->
+        </yguard>
+      </configuration>
+    </plugin>
+    [...]
+  </plugins>
+  [...]
+</build>
 ```
 
 ### Setup using `Gradle`
@@ -64,7 +58,7 @@ repositories {
 }
 
 dependencies {
-  compileOnly 'com.yworks:yguard:4.1.1'
+  compileOnly 'com.yworks:yguard:5.0.0'
 }
 
 task yguard {
