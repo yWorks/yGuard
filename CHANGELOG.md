@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- Fixed obfuscated records whose components could not be used through reflection.
+  The `Signature` of a record component is now renamed like the signatures of fields and methods,
+  so `RecordComponent.getGenericType()` no longer throws `TypeNotPresentException`.
+  A record component is now renamed like its accessor method instead of like its field,
+  so `RecordComponent.getAccessor()` no longer returns `null`.
+
 ## [5.0.0]
 
 ### Added

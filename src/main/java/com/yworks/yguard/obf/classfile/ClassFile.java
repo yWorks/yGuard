@@ -992,21 +992,31 @@ public class ClassFile implements ClassConstants
               for (int j = 0, n = components.length; j < n; ++j) {
                 final int nameIndex = components[j].getNameIndex();
                 final Utf8CpInfo nameUtf = (Utf8CpInfo) getCpEntry(nameIndex);
-                final String remapName = nm.mapField(thisClassName, nameUtf.getString());
+                final int descIndex = components[j].getDescriptorIndex();
+                final Utf8CpInfo descUtf = (Utf8CpInfo) getCpEntry(descIndex);
+                final String name = nameUtf.getString();
+                final String desc = descUtf.getString();
+
+                // A record component has the name of its accessor, the public
+                // no-argument method that returns the component's type, and
+                // RecordComponent.getAccessor() looks the accessor up by that
+                // name. Fields and methods are renamed independently, so the
+                // component has to be renamed like its accessor, not like its
+                // field.
+                final String remapName = nm.mapMethod(thisClassName, name, "()" + desc);
                 final int remapNameIndex = constantPool.remapUtf8To(remapName, nameIndex);
                 components[j].setNameIndex(remapNameIndex);
 
-                final int descIndex = components[j].getDescriptorIndex();
-                final Utf8CpInfo descUtf = (Utf8CpInfo) getCpEntry(descIndex);
-                final String remapDesc = nm.mapDescriptor(descUtf.getString());
+                final String remapDesc = nm.mapDescriptor(desc);
                 final int remapDescIndex = constantPool.remapUtf8To(remapDesc, descIndex);
                 components[j].setDescriptorIndex(remapDescIndex);
 
                 // attributes:
                 // - Signature
-                //   Nothing to do.
-                //   Such a signature is always a simple name that does not
-                //   need to be changed.
+                //   The generic type of the component, e.g.
+                //   Ljava/util/List<Lcom/acme/Item;>;
+                //   It names classes and has to be remapped like the
+                //   signatures of fields and methods.
 
                 // - RuntimeVisibleAnnotations
                 // - RuntimeInvisibleAnnotations
@@ -1014,7 +1024,9 @@ public class ClassFile implements ClassConstants
                 // - RuntimeInvisibleTypeAnnotations
                 final AttrInfo[] attributes = components[j].getAttributes();
                 for (int k = 0; k < attributes.length; ++k) {
-                  if (attributes[k] instanceof RuntimeVisibleAnnotationsAttrInfo) {
+                  if (attributes[k] instanceof SignatureAttrInfo) {
+                    remapSignature(nm, (SignatureAttrInfo) attributes[k]);
+                  } else if (attributes[k] instanceof RuntimeVisibleAnnotationsAttrInfo) {
                     remapAnnotations((RuntimeVisibleAnnotationsAttrInfo) attributes[k], nm);
                   } else if (attributes[k] instanceof RuntimeVisibleTypeAnnotationsAttrInfo) {
                     remapTypeAnnotations((RuntimeVisibleTypeAnnotationsAttrInfo) attributes[k], nm);

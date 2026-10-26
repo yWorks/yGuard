@@ -1,0 +1,166 @@
+package com.yworks.yguard.obf;
+
+import java.io.PrintStream;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.RecordComponent;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.Arrays;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class RecordComponents {
+  public static void main( String[] args ) throws Exception {
+    run(System.out);
+  }
+
+  /**
+   * Prints, for every component of every record below, its generic type and
+   * the value its accessor returns. Class names are printed through a fixed
+   * table so that the output does not change when the classes are renamed.
+   */
+  public static void run( final PrintStream out ) throws Exception {
+    final Item item = new Item("item");
+    final Object[] records = {
+      new Box(List.of(item), "box"),
+      new Pair("left", "right"),
+      new Holder<Item>(item, Map.of("key", List.of(item))),
+      new Trimmed("  trimmed  "),
+      new Person("person"),
+      new Alias("alias"),
+      new Numbers(7, 2.5, new long[] {1L, 2L}),
+      new Empty(),
+      new Outer(new Pair("inner-left", "inner-right"), new Box[0]),
+    };
+    for (int i = 0; i < records.length; ++i) {
+      print(out, i, records[i]);
+    }
+  }
+
+  private static void print(
+    final PrintStream out, final int index, final Object record
+  ) throws Exception {
+    final RecordComponent[] components = record.getClass().getRecordComponents();
+    out.println(index + ": " + components.length + " components");
+    for (int j = 0; j < components.length; ++j) {
+      final RecordComponent component = components[j];
+      final String prefix = index + "." + j + " ";
+
+      final Type type;
+      try {
+        type = component.getGenericType();
+      } catch (TypeNotPresentException ex) {
+        out.println(prefix + "TypeNotPresentException");
+        continue;
+      }
+
+      final Method accessor = component.getAccessor();
+      if (accessor == null) {
+        out.println(prefix + describe(type) + " has no accessor");
+        continue;
+      }
+      if (!type.equals(accessor.getGenericReturnType())) {
+        out.println(prefix + describe(type) + " accessor returns "
+          + describe(accessor.getGenericReturnType()));
+        continue;
+      }
+      out.println(prefix + describe(type) + " = " + format(accessor.invoke(record)));
+    }
+  }
+
+  private static final Map<Class<?>, String> NAMES = new IdentityHashMap<>();
+  static {
+    NAMES.put(Item.class, "Item");
+    NAMES.put(Box.class, "Box");
+    NAMES.put(Pair.class, "Pair");
+    NAMES.put(Holder.class, "Holder");
+    NAMES.put(Trimmed.class, "Trimmed");
+    NAMES.put(Person.class, "Person");
+    NAMES.put(Alias.class, "Alias");
+    NAMES.put(Numbers.class, "Numbers");
+    NAMES.put(Empty.class, "Empty");
+    NAMES.put(Outer.class, "Outer");
+  }
+
+  private static String describe( final Type type ) {
+    if (type instanceof Class<?> c) {
+      if (c.isArray()) {
+        return describe(c.getComponentType()) + "[]";
+      }
+      final String name = NAMES.get(c);
+      return name == null ? c.getName() : name;
+    } else if (type instanceof ParameterizedType p) {
+      final StringBuilder sb = new StringBuilder(describe(p.getRawType())).append('<');
+      final Type[] arguments = p.getActualTypeArguments();
+      for (int i = 0; i < arguments.length; ++i) {
+        sb.append(i == 0 ? "" : ", ").append(describe(arguments[i]));
+      }
+      return sb.append('>').toString();
+    } else if (type instanceof GenericArrayType g) {
+      return describe(g.getGenericComponentType()) + "[]";
+    } else if (type instanceof TypeVariable<?> v) {
+      return "type variable bounded by " + describe(v.getBounds()[0]);
+    } else {
+      return String.valueOf(type);
+    }
+  }
+
+  private static String format( final Object value ) {
+    if (value instanceof long[] longs) {
+      return Arrays.toString(longs);
+    } else if (value instanceof Object[] objects) {
+      return Arrays.toString(objects);
+    } else if (value != null && NAMES.containsKey(value.getClass())) {
+      return NAMES.get(value.getClass()) + " value";
+    } else {
+      return String.valueOf(value);
+    }
+  }
+
+  public static final class Item {
+    private final String label;
+
+    Item( final String label ) {
+      this.label = label;
+    }
+
+    @Override
+    public String toString() {
+      return "item " + label;
+    }
+  }
+
+  public interface Named {
+    String name();
+  }
+
+  public record Box( List<Item> items, String label ) {}
+
+  public record Pair( String left, String right ) {}
+
+  public record Holder<T extends Item>( T value, Map<String, List<T>> index ) {}
+
+  public record Trimmed( String value ) {
+    @Override
+    public String value() {
+      return value.trim();
+    }
+  }
+
+  public record Person( String name ) implements Named {}
+
+  public record Alias( String value ) {
+    public String copy() {
+      return value;
+    }
+  }
+
+  public record Numbers( int count, double ratio, long[] ids ) {}
+
+  public record Empty() {}
+
+  public record Outer( Pair pair, Box[] boxes ) {}
+}
